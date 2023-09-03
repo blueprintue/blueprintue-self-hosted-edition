@@ -1,0 +1,42 @@
+name: validate
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mariadb:10.4
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_USER: blueprintue-self-hosted-edition
+          MYSQL_PASSWORD: blueprintue-self-hosted-edition
+          MYSQL_DATABASE: blueprintue-self-hosted-edition
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Validate
+        uses: docker/bake-action@v2
+        with:
+          targets: validate
+
+      - name: Build Image Tests E2E
+        uses: docker/bake-action@v2
+        with:
+          targets: test
+
+      - name: Run Image Tests E2E
+        run: docker run --rm -v $(pwd)/coverage:/src/coverage -e XDEBUG_MODE=coverage -e PHP_CS_FIXER_IGNORE_ENV=True --network host blueprintue-self-hosted-edition:test test

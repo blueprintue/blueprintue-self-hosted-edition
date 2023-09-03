@@ -1,0 +1,121 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:2.4
+    container_name: traefik
+    command:
+      - "--global.checknewversion=false"
+      - "--global.sendanonymoususage=false"
+      - "--log=true"
+      - "--log.level=INFO"
+      - "--entrypoints.http=true"
+      - "--entrypoints.http.address=:80"
+      - "--providers.docker"
+      - "--providers.docker.watch=true"
+      - "--providers.docker.exposedbydefault=false"
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: always
+
+  mariadb:
+    image: mariadb:10.4
+    container_name: blueprintue-self-hosted-edition_db
+    volumes:
+      - "blueprintue-self-hosted-edition_db:/var/lib/mysql"
+      - "../tests/sql/start.sql:/docker-entrypoint-initdb.d/init.sql"
+    environment:
+      - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
+      - "MYSQL_DATABASE=blueprintue-self-hosted-edition"
+      - "MYSQL_USER=blueprintue-self-hosted-edition"
+      - "MYSQL_PASSWORD=blueprintue-self-hosted-edition"
+    restart: "always"
+    ports:
+      - 3306:3306
+
+  blueprintue-self-hosted-edition:
+    build: ../
+    container_name: blueprintue-self-hosted-edition
+    depends_on:
+      - mariadb
+      - maildev
+    ports:
+      - "8000:8000"
+    volumes:
+      - "blueprintue-self-hosted-edition_storage:/opt/blueprintue-self-hosted-edition/storage"
+      - "blueprintue-self-hosted-edition_medias:/opt/blueprintue-self-hosted-edition/www/medias"
+      - "../app:/opt/blueprintue-self-hosted-edition/app"
+      - "../www:/opt/blueprintue-self-hosted-edition/www"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.blueprintue-self-hosted-edition.entrypoints=http"
+      - "traefik.http.routers.blueprintue-self-hosted-edition.rule=Host(`blueprintue-self-hosted-edition.test`)"
+      - "traefik.http.services.blueprintue-self-hosted-edition.loadbalancer.server.port=8000"
+      - "traefik.http.services.blueprintue-self-hosted-edition.loadbalancer.passhostheader=true"
+    environment:
+      - "OPCACHE_ENABLE=0"
+      - "REAL_IP_FROM=0.0.0.0/32"
+      - "REAL_IP_HEADER=X-Forwarded-For"
+      - "LOG_IP_VAR=http_x_forwarded_for"
+      - "DATABASE_DRIVER=mysql"
+      - "DATABASE_HOST=blueprintue-self-hosted-edition_db"
+      - "DATABASE_USER=blueprintue-self-hosted-edition"
+      - "DATABASE_PASSWORD=blueprintue-self-hosted-edition"
+      - "DATABASE_NAME=blueprintue-self-hosted-edition"
+      - "DATABASE_PERSISTENT_CONNECTION=false"
+      - "SESSION_DRIVER=database"
+      - "SESSION_ENCRYPT_KEY="
+      - "SESSION_GC_MAXLIFETIME=86400"
+      - "SESSION_LIFETIME=0"
+      - "SESSION_PATH=/"
+      - "SESSION_HTTPS=false"
+      - "SESSION_SAMESITE=Strict"
+      - "SESSION_REMEMBER_NAME=remember_token"
+      - "SESSION_REMEMBER_LIFETIME=2592000"
+      - "SESSION_REMEMBER_PATH=/"
+      - "SESSION_REMEMBER_HTTPS=false"
+      - "SESSION_REMEMBER_SAMESITE=Strict"
+      - "HOST=localhost:8000"
+      - "HTTPS=false"
+      - "SITE_NAME=blueprintUE self-hosted edition"
+      - "SITE_BASE_TITLE="
+      - "SITE_DESCRIPTION="
+      - "ANONYMOUS_ID=1"
+      - "MAIL_USE_SMTP=true"
+      - "MAIL_SMTP_HOST=maildev"
+      - "MAIL_SMTP_PORT=1025"
+      - "MAIL_USE_SMTP_AUTH=false"
+      - "MAIL_FROM_ADDRESS=no-reply@blueprintue-self-hosted-edition.test"
+      - "MAIL_FROM_NAME=blueprintUE self-hosted edition"
+      - "MAIL_CONTACT_TO=contact@blueprintue-self-hosted-edition.test"
+      - "MAIL_HEADER_LOGO_PATH=blueprintue-self-hosted-edition_logo-full.png"
+    restart: "always"
+
+  adminer:
+    container_name: blueprintue-self-hosted-edition_adminer
+    image: adminer
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adminer.entrypoints=http"
+      - "traefik.http.routers.adminer.rule=Host(`adminer.blueprintue-self-hosted-edition.test`)"
+      - "traefik.http.services.adminer.loadbalancer.server.port=8080"
+
+  maildev:
+    container_name: blueprintue-self-hosted-edition_maildev
+    image: maildev/maildev
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.maildev.entrypoints=http"
+      - "traefik.http.routers.maildev.rule=Host(`maildev.blueprintue-self-hosted-edition.test`)"
+      - "traefik.http.services.maildev.loadbalancer.server.port=1080"
+
+volumes:
+  blueprintue-self-hosted-edition_db:
+  blueprintue-self-hosted-edition_storage:
+  blueprintue-self-hosted-edition_medias:

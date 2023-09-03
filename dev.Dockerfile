@@ -1,0 +1,63 @@
+# syntax=docker/dockerfile:1.2
+ARG PHP_VERSION
+
+FROM php:$PHP_VERSION-cli-alpine AS base
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN apk add --no-cache \
+  build-base \
+  curl \
+  freetype-dev \
+  git \
+  jpeg-dev \
+  libjpeg-turbo-dev \
+  libpng-dev \
+  libwebp-dev \
+  libxpm-dev \
+  mariadb \
+  mariadb-client \
+  musl-dev \
+  python3-dev \
+  zlib-dev
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
+  && composer --version
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+RUN if [ "$PHP_VERSION" = "7.4.33" ] ; then pecl install xdebug-3.1.6 && docker-php-ext-enable xdebug ; else pecl install xdebug && docker-php-ext-enable xdebug ; fi
+RUN docker-php-ext-install gd pdo_mysql
+WORKDIR /src
+
+FROM base AS vendored
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN --mount=type=bind,target=.,rw \
+  --mount=type=cache,target=/src/vendor \
+  composer validate \
+  && composer install --no-interaction --no-ansi \
+  && mkdir /out \
+  && cp composer.lock /out
+
+FROM scratch AS vendor-update
+ENV COMPOSER_ALLOW_SUPERUSER=1
+COPY --from=vendored /out /
+
+FROM vendored AS vendor-validate
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN --mount=type=bind,target=.,rw \
+  git add -A && cp -Rf /out/* .; \
+  if [ -n "$(git status --porcelain -- composer.lock)" ]; then \
+    echo >&2 'ERROR: Vendor result differs. Please vendor your package with "docker buildx bake vendor-update"'; \
+    git status --porcelain -- composer.lock; \
+    exit 1; \
+  fi
+
+FROM vendored AS lint
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN --mount=type=bind,target=.,rw \
+  --mount=type=cache,target=/src/vendor \
+  composer lint-validate
+
+FROM vendored AS test
+ENV COMPOSER_ALLOW_SUPERUSER=1
+COPY . .
+RUN composer install --no-interaction --no-ansi \
+  && mkdir tests/storage_test \
+  && mkdir tests/medias
+ENTRYPOINT ["composer"]

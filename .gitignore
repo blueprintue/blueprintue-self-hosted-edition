@@ -1,0 +1,30 @@
+# IntelliJ
+.idea
+*.iml
+
+# Composer
+vendor/
+
+# PHP code sniffer
+.php-cs-fixer.cache
+
+# PHP Unit
+build/
+.phpunit.result.cache
+
+# Dev / Testing
+coverage/
+
+# env
+tests/tests.env.cache.php
+.env
+.env.cache.php
+
+# Storage
+storage/
+tests/storage_test/
+
+# Medias
+www/medias/avatars/
+www/medias/blueprints/
+tests/medias/

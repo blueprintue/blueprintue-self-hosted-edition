@@ -1,0 +1,104 @@
+AddDefaultCharset UTF-8
+IndexIgnore *
+Options All -Indexes
+Options +FollowSymLinks
+ServerSignature Off
+
+<FilesMatch "\.(htm|html|php)$">
+    <IfModule mod_headers.c>
+        BrowserMatch MSIE ie
+        Header set X-UA-Compatible "IE=Edge,chrome=1" env=ie
+    </IfModule>
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options nosniff
+</IfModule>
+
+<IfModule mod_deflate.c>
+    <IfModule mod_filter.c>
+        AddOutputFilterByType DEFLATE application/javascript
+        AddOutputFilterByType DEFLATE application/rss+xml
+        AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+        AddOutputFilterByType DEFLATE application/x-font
+        AddOutputFilterByType DEFLATE application/x-font-opentype
+        AddOutputFilterByType DEFLATE application/x-font-otf
+        AddOutputFilterByType DEFLATE application/x-font-truetype
+        AddOutputFilterByType DEFLATE application/x-font-ttf
+        AddOutputFilterByType DEFLATE application/x-font-woff
+        AddOutputFilterByType DEFLATE application/x-javascript
+        AddOutputFilterByType DEFLATE application/xhtml+xml
+        AddOutputFilterByType DEFLATE application/xml
+        AddOutputFilterByType DEFLATE font/opentype
+        AddOutputFilterByType DEFLATE font/otf
+        AddOutputFilterByType DEFLATE font/ttf
+        AddOutputFilterByType DEFLATE image/svg+xml
+        AddOutputFilterByType DEFLATE image/x-icon
+        AddOutputFilterByType DEFLATE text/css
+        AddOutputFilterByType DEFLATE text/html
+        AddOutputFilterByType DEFLATE text/javascript
+        AddOutputFilterByType DEFLATE text/plain
+        AddOutputFilterByType DEFLATE text/xml
+    </IfModule>
+
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+
+    <IfModule mod_headers.c>
+        Header append Vary User-Agent
+        Header append Vary User-Agent env=!dont-vary
+        Header unset Pragma
+        FileETag None
+        Header unset ETag
+        Header set Connection keep-alive
+    </IfModule>
+
+    <IfModule mod_filter.c>
+        AddOutputFilterByType DEFLATE text/css text/x-component application/x-javascript application/javascript text/javascript text/x-js text/html text/richtext image/svg+xml text/plain text/xsd text/xsl text/xml image/x-icon application/json
+        <IfModule mod_mime.c>
+            AddOutputFilter DEFLATE js css htm html xml
+        </IfModule>
+    </IfModule>
+</IfModule>
+
+<Files ~ "^.*\.([Hh][Tt][Aa])">
+    Order allow,deny
+    Deny from all
+    Satisfy all
+</Files>
+
+<Files ~ "(\.env|\.env.template|\.env\.cache\.php)$">
+    Order allow,deny
+    Deny from all
+    Satisfy all
+</Files>
+
+<Files error_log>
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files xmlrpc.php>
+    Order allow,deny
+    Deny from all
+</Files>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    RewriteCond %{THE_REQUEST} ^[A-Z]+\ /(([^/\ ]+/)*)/+([^\ ]*)
+    RewriteRule ^ /%1%3 [L,R=301]
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.php [L]
+</IfModule>
