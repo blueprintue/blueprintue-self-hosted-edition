@@ -202,6 +202,7 @@ class UserService
             // @codeCoverageIgnoreStart
         } catch (\Exception $exception) {
             $forceRollback = true;
+
             /*
              * In end 2 end testing we can't arrive here because user requirements has been done before
              * For covering we have to test the function outside

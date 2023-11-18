@@ -484,6 +484,7 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
     protected function getHTMLFieldBio(string $value): string
     {
         $v = Security::escHTML($value);
+
         // phpcs:disable
         return <<<HTML
 <div class="form__element">
@@ -504,6 +505,7 @@ HTML;
     protected function getHTMLFieldWebsite(string $value): string
     {
         $v = Security::escAttr($value);
+
         // phpcs:disable
         return <<<HTML
 <div class="form__element">

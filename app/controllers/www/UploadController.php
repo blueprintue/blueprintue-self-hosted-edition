@@ -175,9 +175,9 @@ class UploadController implements MiddlewareInterface
         }
 
         if (
-            $uploadParameters['canvas_width'] !== 310 || $uploadParameters['canvas_height'] !== 310 ||
-            $uploadParameters['mask_width'] !== 200 || $uploadParameters['mask_height'] !== 200 ||
-            $uploadParameters['mask_x'] !== 55 || $uploadParameters['mask_y'] !== 55
+            $uploadParameters['canvas_width'] !== 310 || $uploadParameters['canvas_height'] !== 310
+            || $uploadParameters['mask_width'] !== 200 || $uploadParameters['mask_height'] !== 200
+            || $uploadParameters['mask_x'] !== 55 || $uploadParameters['mask_y'] !== 55
         ) {
             return [null, 'invalid constraints parameters'];
         }
@@ -363,7 +363,7 @@ class UploadController implements MiddlewareInterface
     }
 
     /**
-     * @param $imgDest
+     * @param        $imgDest
      * @param string $folder
      *
      * @throws \Exception
