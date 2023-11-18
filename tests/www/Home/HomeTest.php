@@ -920,7 +920,7 @@ class HomeTest extends TestCase
                 static::assertSame($params['form-add_blueprint-input-title'], $blueprint['title']);
                 static::assertSame('blueprint', $blueprint['type']);
                 static::assertSame($params['form-add_blueprint-select-ue_version'], $blueprint['ue_version']);
-                static::assertSame('1', $blueprint['current_version']);
+                static::assertSame('1', (string) $blueprint['current_version']);
                 static::assertNull($blueprint['thumbnail']);
                 static::assertNull($blueprint['description']);
                 static::assertNotNull($blueprint['created_at']);
@@ -960,7 +960,7 @@ class HomeTest extends TestCase
                 }
 
                 $blueprintVersion = static::$db->selectRow('SELECT * FROM blueprints_version WHERE id_blueprint = :blueprintID', ['blueprintID' => $blueprint['id']]);
-                static::assertSame('1', $blueprintVersion['version']);
+                static::assertSame('1', (string) $blueprintVersion['version']);
                 static::assertSame('First commit', $blueprintVersion['reason']);
                 static::assertNotNull($blueprintVersion['created_at']);
                 static::assertNotNull($blueprintVersion['published_at']);

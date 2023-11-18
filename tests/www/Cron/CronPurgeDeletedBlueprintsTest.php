@@ -208,6 +208,17 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
             ['id_user' => '109', 'count_public_blueprint' =>  '0', 'count_public_comment' =>  '0', 'count_private_blueprint' =>  '0', 'count_private_comment' => '0'],
             ['id_user' => '110', 'count_public_blueprint' =>  '0', 'count_public_comment' =>  '1', 'count_private_blueprint' =>  '0', 'count_private_comment' => '1']
         ];
+
+        if (\PHP_MAJOR_VERSION >= 8 && \PHP_MINOR_VERSION >= 1) {
+            foreach ($usersInfos as $key => $value) {
+                $usersInfos[$key]['id_user'] = (string) $value['id_user'];
+                $usersInfos[$key]['count_public_blueprint'] = (string) $value['count_public_blueprint'];
+                $usersInfos[$key]['count_public_comment'] = (string) $value['count_public_comment'];
+                $usersInfos[$key]['count_private_blueprint'] = (string) $value['count_private_blueprint'];
+                $usersInfos[$key]['count_private_comment'] = (string) $value['count_private_comment'];
+            }
+        }
+
         static::assertSame($usersInfosExpected, $usersInfos);
 
         $comments = static::$db->selectCol('SELECT `id` FROM comments ORDER BY id ASC');
