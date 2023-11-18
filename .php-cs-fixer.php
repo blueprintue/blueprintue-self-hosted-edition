@@ -16,11 +16,11 @@ $rules = [
             '=>' => 'align'
         ]
     ],
-    'braces'       => false,
     'concat_space' => [
         'spacing' => 'one'
     ],
     'declare_strict_types'        => true,
+    'global_namespace_import'     => false,
     'linebreak_after_opening_tag' => true,
     'mb_str_functions'            => true,
     'native_function_invocation'  => [
@@ -55,6 +55,7 @@ $finder = Finder::create()
         __DIR__ . '/tests',
     ])
     ->name('*.php')
+    ->exclude(['views/www/pages', 'views/www/parts'])
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 

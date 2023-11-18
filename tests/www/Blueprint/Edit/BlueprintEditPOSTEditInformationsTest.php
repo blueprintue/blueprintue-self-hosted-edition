@@ -919,6 +919,12 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
 
             if (!empty($tags)) {
                 $tagRows = static::$db->selectAll('SELECT * FROM tags');
+                if (\PHP_MAJOR_VERSION >= 8 && \PHP_MINOR_VERSION >= 1) {
+                    foreach ($tagRows as $key => $value) {
+                        $tagRows[$key]['id'] = (string) $value['id'];
+                    }
+                }
+
                 static::assertSame($tags, $tagRows);
             }
 

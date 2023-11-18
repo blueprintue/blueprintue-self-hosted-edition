@@ -1,5 +1,13 @@
 # blueprintUE self-hosted edition
 
+![PHP Version Support](https://img.shields.io/badge/%3E%3D7.4.0-777BB4?label=php)
+![MariaDB Version Support](https://img.shields.io/badge/%3E%3D10.6-003545?label=MariaDB)
+![MySQL Version Support](https://img.shields.io/badge/%3E%3D8-005C84?label=MySQL)
+![Use Docker](https://img.shields.io/badge/Docker-0db7ed)
+[![Composer dependencies](https://img.shields.io/badge/dependencies-9-brightgreen)](https://github.com/blueprintue/blueprintue-self-hosted-edition/blob/main/composer.json)
+[![Test workflow](https://img.shields.io/github/actions/workflow/status/blueprintue/blueprintue-self-hosted-edition/validate.yml?branch=main)](https://github.com/blueprintue/blueprintue-self-hosted-edition/actions/workflows/validate.yml)
+[![Codecov](https://img.shields.io/codecov/c/github/blueprintue/blueprintue-self-hosted-edition?logo=codecov)](https://codecov.io/gh/blueprintue/blueprintue-self-hosted-edition)
+
 ## Minimum requirements
 * \>= PHP 7.4
 * \>= MySQL 8 or >= MariaDB 10.6

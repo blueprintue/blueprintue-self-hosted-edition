@@ -138,6 +138,14 @@ class TagsTextareaTest extends TestCase
         }
 
         static::assertSame($tagsIDs, TagService::createAndFindTagsWithTextareaTags($textarea));
-        static::assertSame($tagsAfter, static::$db->selectAll('SELECT * FROM tags'));
+
+        $tagRows = static::$db->selectAll('SELECT * FROM tags');
+        if (\PHP_MAJOR_VERSION >= 8 && \PHP_MINOR_VERSION >= 1) {
+            foreach ($tagRows as $key => $value) {
+                $tagRows[$key]['id'] = (string) $value['id'];
+            }
+        }
+
+        static::assertSame($tagsAfter, $tagRows);
     }
 }

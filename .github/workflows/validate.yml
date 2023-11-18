@@ -12,6 +12,17 @@ jobs:
   validate:
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+        php-version:
+          - '7.4'
+          - '8.0'
+          - '8.1'
+          - '8.2'
+
     services:
       mysql:
         image: mariadb:10.4
@@ -26,17 +37,26 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Validate
-        uses: docker/bake-action@v2
+        uses: docker/bake-action@v4
         with:
+          set: php-version.args.PHP_VERSION=${{ matrix.php-version }}
           targets: validate
 
       - name: Build Image Tests E2E
-        uses: docker/bake-action@v2
+        uses: docker/bake-action@v4
         with:
+          set: php-version.args.PHP_VERSION=${{ matrix.php-version }}
           targets: test
 
       - name: Run Image Tests E2E
         run: docker run --rm -v $(pwd)/coverage:/src/coverage -e XDEBUG_MODE=coverage -e PHP_CS_FIXER_IGNORE_ENV=True --network host blueprintue-self-hosted-edition:test test
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        if: success()
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/clover.xml

@@ -484,14 +484,14 @@ class BlueprintPOSTAddCommentTest extends TestCase
             static::assertSame($blueprintCommentsCountAfter, $blueprintCommentsCountBefore + 1);
             static::assertEqualsCanonicalizing($countersUsersAfter[1], $countersUsersBefore[1]);
 
-            static::assertSame('13', $commentsAfter[3]['id']);
-            static::assertSame('65', $commentsAfter[3]['id_author']);
+            static::assertSame('13', (string) $commentsAfter[3]['id']);
+            static::assertSame('65', (string) $commentsAfter[3]['id_author']);
             if ($slug === 'slug_public') {
-                static::assertSame('966', $commentsAfter[3]['id_blueprint']);
+                static::assertSame('966', (string) $commentsAfter[3]['id_blueprint']);
             } elseif ($slug === 'slug_unlisted') {
-                static::assertSame('967', $commentsAfter[3]['id_blueprint']);
+                static::assertSame('967', (string) $commentsAfter[3]['id_blueprint']);
             } elseif ($slug === 'slug_private') {
-                static::assertSame('968', $commentsAfter[3]['id_blueprint']);
+                static::assertSame('968', (string) $commentsAfter[3]['id_blueprint']);
             }
             static::assertNull($commentsAfter[3]['name_fallback']);
             static::assertSame('my comment', $commentsAfter[3]['content']);

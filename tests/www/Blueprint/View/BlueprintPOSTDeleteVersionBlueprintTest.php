@@ -614,9 +614,9 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
             $blueprintVersions = static::$db->selectAll('SELECT * FROM blueprints_version WHERE id_blueprint = 1');
             static::assertCount(1, $blueprintVersions);
             if ($params['form-delete_version_blueprint-hidden-version'] === '1') {
-                static::assertSame('2', $blueprintVersions[0]['version']);
+                static::assertSame('2', (string) $blueprintVersions[0]['version']);
             } else {
-                static::assertSame('1', $blueprintVersions[0]['version']);
+                static::assertSame('1', (string) $blueprintVersions[0]['version']);
             }
 
             // file check

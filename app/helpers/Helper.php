@@ -18,7 +18,7 @@ class Helper
      *
      * @return string
      */
-    public static function getBlueprintLink(string $slug, ?int $version = null): string
+    public static function getBlueprintLink(string $slug, int $version = null): string
     {
         if ($version !== null) {
             return Application::getRouter()->generateUrl('blueprint', ['blueprint_slug' => $slug, 'version' => $version]); // phpcs:ignore
@@ -37,7 +37,7 @@ class Helper
      *
      * @return string
      */
-    public static function getBlueprintRenderLink(string $slug, ?int $version = null): string
+    public static function getBlueprintRenderLink(string $slug, int $version = null): string
     {
         if ($version !== null) {
             return Application::getRouter()->generateUrl('render', ['blueprint_slug' => $slug, 'version' => $version]);
