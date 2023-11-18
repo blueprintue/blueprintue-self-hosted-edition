@@ -3,6 +3,7 @@ ARG PHP_VERSION
 
 FROM php:$PHP_VERSION-cli-alpine AS base
 ENV COMPOSER_ALLOW_SUPERUSER=1
+
 RUN apk add --no-cache \
   build-base \
   curl \
@@ -17,12 +18,14 @@ RUN apk add --no-cache \
   mariadb-client \
   musl-dev \
   python3-dev \
-  zlib-dev
+  zlib-dev \
+  linux-headers
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
   && composer --version
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN if [ "$PHP_VERSION" = "7.4.33" ] ; then pecl install xdebug-3.1.6 && docker-php-ext-enable xdebug ; else pecl install xdebug && docker-php-ext-enable xdebug ; fi
 RUN docker-php-ext-install gd pdo_mysql
+RUN echo 'memory_limit = -1' >> $PHP_INI_DIR/conf.d/php.ini
 WORKDIR /src
 
 FROM base AS vendored

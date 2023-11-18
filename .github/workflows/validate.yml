@@ -48,6 +48,7 @@ jobs:
       - name: Build Image Tests E2E
         uses: docker/bake-action@v4
         with:
+          set: php-version.args.PHP_VERSION=${{ matrix.php-version }}
           targets: test
 
       - name: Run Image Tests E2E
