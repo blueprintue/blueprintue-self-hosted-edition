@@ -43,7 +43,6 @@ try {
         (new Factory())->createResponse(404)->withBody(Rancoud\Http\Message\Stream::create('404'))->send();
     }
 } catch (\Throwable $t) {
-    var_dump($t);
     // phpcs:disable
     echo <<<HTML
 <!DOCTYPE html>
