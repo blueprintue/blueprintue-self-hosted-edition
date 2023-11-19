@@ -186,7 +186,7 @@ class Helper
      */
     public static function getCurrentUEVersion(): string
     {
-        return '5.2';
+        return '5.3';
     }
 
     /**
