@@ -290,7 +290,7 @@ use Rancoud\Session\Session;
                     <form action="#form-change_password" data-form-speak-error="Form is invalid:" id="form-change_password" method="post">
                         <h2 class="block__title block__title--form"><?php echo ($data['has_password'] === false) ? 'Add' : 'Change'; ?> <span class="block__title--emphasis">password</span></h2>
                         <hr class="block__hr block__hr--form"/>
-                        <p>This is used to login with your username.</p>
+                        <p>This is used to log in with your username.</p>
 
                         <?php
                         /** @var FormHelper $formChangePassword */

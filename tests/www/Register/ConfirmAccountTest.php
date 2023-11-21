@@ -78,7 +78,7 @@ class ConfirmAccountTest extends TestCase
                 ],
                 'has_redirection'      => false,
                 'is_confirmed_account' => null,
-                'text'                 => '<p>Welcome to this_site_name</p><p>Before login to your account you need to confirm it.<br />You will receive an email with a link for the confirmation.</p>',
+                'text'                 => '<p>Welcome to this_site_name</p><p>Before log in to your account you need to confirm it.<br />You will receive an email with a link for the confirmation.</p>',
                 'js_redirect'          => "<script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>",
             ],
             'token invalid - Your account is maybe already confirmed' => [
@@ -92,7 +92,7 @@ class ConfirmAccountTest extends TestCase
                 ],
                 'has_redirection'      => false,
                 'is_confirmed_account' => false,
-                'text'                 => '<p>Your account is maybe already confirmed or your confirmed token is invalid.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for login.</a></p>',
+                'text'                 => '<p>Your account is maybe already confirmed or your confirmed token is invalid.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>',
                 'js_redirect'          => "<script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>",
             ],
             'token valid - Your account is now confirmed!' => [
@@ -106,7 +106,7 @@ class ConfirmAccountTest extends TestCase
                 ],
                 'has_redirection'      => false,
                 'is_confirmed_account' => true,
-                'text'                 => '<p>Your account is now confirmed!<br />You can now log to your account.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for login.</a></p>',
+                'text'                 => '<p>Your account is now confirmed!<br />You can now log to your account.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>',
                 'js_redirect'          => "<script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>",
             ],
         ];
@@ -184,7 +184,7 @@ class ConfirmAccountTest extends TestCase
             static::assertNotNull($userAfter['confirmed_at']);
 
             $response = $this->getResponseFromApplication('GET', $slug, [], [], [], $queryParams);
-            $this->doTestHtmlMain($response, '<p>Your account is maybe already confirmed or your confirmed token is invalid.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for login.</a></p>');
+            $this->doTestHtmlMain($response, '<p>Your account is maybe already confirmed or your confirmed token is invalid.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>');
         } else {
             static::assertSame($userBefore, $userAfter);
         }

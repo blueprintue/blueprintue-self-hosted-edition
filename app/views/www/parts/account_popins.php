@@ -19,7 +19,7 @@ use Rancoud\Session\Session;
             <div class="popin__container">
                 <div class="popin__body">
                     <div class="popin__header">
-                        <h2 class="popin__title" id="popin-login-h2">Log in to <span class="popin__title--span"><?php echo Security::escHTML(Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition')); ?></span></h2>
+                        <h2 class="popin__title" id="popin-login-h2">Log in</h2>
                     </div>
                     <div class="popin__content">
                         <?php
@@ -64,7 +64,7 @@ use Rancoud\Session\Session;
                 </div>
 
                 <div class="popin__body popin__body--bottom popin__body--bg-grey">
-                    <p>New to <?php echo Security::escHTML(Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition')); ?>? <a class="popin__link" href="#popin-register">Create your account</a></p>
+                    <p><a class="popin__link" href="#popin-register">Create your account</a></p>
                 </div>
 
                 <a aria-label="Close" class="popin__close" href="#">
@@ -82,8 +82,7 @@ use Rancoud\Session\Session;
             <div class="popin__container">
                 <div class="popin__body">
                     <div class="popin__header">
-                        <h2 class="popin__title" id="popin-register-h2">Join <span class="popin__title--span"><?php echo Security::escHTML(Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition')); ?></span></h2>
-                        <h3 class="popin__subtitle">share your blueprint in new visual way!</h3>
+                        <h2 class="popin__title" id="popin-register-h2">Register</h2>
                     </div>
                     <div class="popin__content">
                         <?php
