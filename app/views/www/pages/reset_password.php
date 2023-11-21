@@ -34,7 +34,7 @@ use Rancoud\Security\Security;
 
                 <?php if ($formResetPassword->hasSuccessMessage()) { ?>
                     <div class="block__info block__info--success" data-flash-success-for="form-reset_password"><?php echo Security::escHTML($formResetPassword->getSuccessMessage()); ?></div>
-                    <p><a href="/#popin-login">Now you can go back to the home page to login with your new password (or click on this link).</a></p>
+                    <p><a href="/#popin-login">Now you can go back to the home page to log in with your new password (or click on this link).</a></p>
                 <?php } else { ?>
                 <form action="/reset-password/?reset_token=<?php echo Security::escAttr($data['reset_token']); ?>" data-form-speak-error="Form is invalid:" id="form-reset_password" method="post">
                     <div class="form__element">

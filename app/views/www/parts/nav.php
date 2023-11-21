@@ -54,7 +54,7 @@ use Rancoud\Session\Session;
             </div>
             <div class="nav__user-container">
                 <?php if (!Session::has('userID')) { ?>
-                <a class="nav__user-button nav__user-button--left" href="#popin-login">Login</a>
+                <a class="nav__user-button nav__user-button--left" href="#popin-login">Log in</a>
                 <a class="nav__user-button nav__user-button--right" href="#popin-register">Register</a>
                 <?php } else { ?>
                 <a class="nav__user-button nav__user-button--left" href="/profile/<?php echo Security::escAttr(Session::get('slug')); ?>/">Profile</a>
