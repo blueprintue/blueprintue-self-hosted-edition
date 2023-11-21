@@ -375,7 +375,7 @@ use Rancoud\Session\Session;
                             <label class="form__label" for="form-delete_profile-select-blueprints_ownership" id="form-delete_profile-label-blueprints_ownership">Blueprints ownership</label>
                             <div class="form__container form__container--select">
                                 <select aria-invalid="false" aria-labelledby="form-delete_profile-label-blueprints_ownership<?php echo $formDeleteProfile->getClassError('blueprints_ownership', ' form-delete_profile-label-blueprints_ownership-error'); ?>" aria-required="true" class="form__input form__input--select<?php echo $formDeleteProfile->getClassError('blueprints_ownership', ' form__input--error'); ?>" id="form-delete_profile-select-blueprints_ownership" name="form-delete_profile-select-blueprints_ownership">
-                                    <option value="give"<?php echo $formDeleteProfile->getSelectedValue('blueprints_ownership', 'give'); ?><?php echo ($formDeleteProfile->getInputValue('blueprints_ownership') === '') ? ' selected="selected"' : ''; ?>>Give my blueprints to anonymous user</option>
+                                    <option value="give"<?php echo ($data['has_not_anonymous_user']) ? ' disabled="disabled"' : $formDeleteProfile->getSelectedValue('blueprints_ownership', 'give'); ?><?php echo (!$data['has_not_anonymous_user'] && $formDeleteProfile->getInputValue('blueprints_ownership') === '') ? ' selected="selected"' : ''; ?>>Give my blueprints to anonymous user</option>
                                     <option value="delete"<?php echo $formDeleteProfile->getSelectedValue('blueprints_ownership', 'delete'); ?>>Delete my blueprints</option>
                                 </select>
                             </div>

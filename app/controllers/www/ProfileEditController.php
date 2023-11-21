@@ -830,6 +830,7 @@ class ProfileEditController implements MiddlewareInterface
         ];
 
         $this->data += ['links' => $links];
+        $this->data += ['has_not_anonymous_user' => ((int) Application::getConfig()->get('ANONYMOUS_ID')) === 0];
     }
 
     /**
