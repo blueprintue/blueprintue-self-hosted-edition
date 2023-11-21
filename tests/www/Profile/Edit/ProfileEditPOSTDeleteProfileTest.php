@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\Profile\Edit;
 
 use PHPUnit\Framework\TestCase;
+use Rancoud\Application\Application;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
 use Rancoud\Database\DatabaseException;
@@ -112,6 +113,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'delete OK - delete blueprints - keep comments' => [
                 'sql_queries' => [
@@ -143,6 +145,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'delete OK - give blueprints - anonymize comments' => [
                 'sql_queries' => [
@@ -174,6 +177,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'delete OK - delete blueprints - anonymize comments' => [
                 'sql_queries' => [
@@ -205,6 +209,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'delete OK - give blueprints - delete comments' => [
                 'sql_queries' => [
@@ -236,6 +241,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'delete OK - delete blueprints - delete comments' => [
                 'sql_queries' => [
@@ -267,6 +273,39 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
+            ],
+            'delete OK - no anonymous user - delete blueprints even if "give" sent - anonymize comments' => [
+                'sql_queries' => [
+                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+                ],
+                'user_id'     => 189,
+                'params'      => [
+                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                    'form-delete_profile-select-blueprints_ownership' => 'give',
+                    'form-delete_profile-select-comments_ownership'   => 'anonymize',
+                ],
+                'use_csrf_from_session' => true,
+                'has_redirection'       => true,
+                'is_form_success'       => true,
+                'flash_messages'        => [
+                    'success' => [
+                        'has'     => false,
+                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                    ],
+                    'error' => [
+                        'has'     => false,
+                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
+                    ]
+                ],
+                'fields_has_error'      => [],
+                'fields_has_value'      => [],
+                'fields_label_error'    => [],
+                'has_anonymous_user'    => false
             ],
             'csrf incorrect' => [
                 'sql_queries' => [
@@ -298,6 +337,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'missing fields - no csrf' => [
                 'sql_queries' => [
@@ -328,6 +368,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'missing fields - no blueprints_ownership' => [
                 'sql_queries' => [
@@ -358,6 +399,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'missing fields - no comments_ownership' => [
                 'sql_queries' => [
@@ -388,6 +430,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'empty fields - blueprints_ownership' => [
                 'sql_queries' => [
@@ -421,6 +464,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_label_error'    => [
                     'blueprints_ownership' => 'Blueprints Ownership is invalid'
                 ],
+                'has_anonymous_user'    => true
             ],
             'empty fields - comments_ownership' => [
                 'sql_queries' => [
@@ -454,6 +498,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_label_error'    => [
                     'comments_ownership' => 'Comments Ownership is invalid'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid fields - blueprints_ownership invalid (keep-comments)' => [
                 'sql_queries' => [
@@ -487,6 +532,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_label_error'    => [
                     'blueprints_ownership' => 'Blueprints Ownership is invalid'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid fields - blueprints_ownership invalid (anonymize-comments)' => [
                 'sql_queries' => [
@@ -520,6 +566,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_label_error'    => [
                     'blueprints_ownership' => 'Blueprints Ownership is invalid'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid fields - blueprints_ownership invalid (delete-comments)' => [
                 'sql_queries' => [
@@ -553,6 +600,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_label_error'    => [
                     'blueprints_ownership' => 'Blueprints Ownership is invalid'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid fields - comments_ownership invalid (give-blueprints)' => [
                 'sql_queries' => [
@@ -586,6 +634,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_label_error'    => [
                     'comments_ownership' => 'Comments Ownership is invalid'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid fields - comments_ownership invalid (delete-blueprints)' => [
                 'sql_queries' => [
@@ -619,6 +668,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_label_error'    => [
                     'comments_ownership' => 'Comments Ownership is invalid'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid encoding fields - blueprints_ownership' => [
                 'sql_queries' => [
@@ -650,6 +700,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'invalid encoding fields - comments_ownership' => [
                 'sql_queries' => [
@@ -681,6 +732,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
         ];
     }
@@ -698,13 +750,14 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
      * @param array $fieldsHasError
      * @param array $fieldsHasValue
      * @param array $fieldsLabelError
+     * @param bool  $hasAnonymousUser
      *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    public function testProfileEditPOSTDeleteProfile(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
+    public function testProfileEditPOSTDeleteProfile(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError, bool $hasAnonymousUser): void
     {
         static::setDatabase();
 
@@ -718,8 +771,13 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
             'remove' => []
         ];
 
+        $envFile = 'tests.env';
+        if (!$hasAnonymousUser) {
+            $envFile = 'tests-no-anonymous-user.env';
+        }
+
         // generate csrf
-        $this->getResponseFromApplication('GET', '/', [], $sessionValues);
+        $this->getResponseFromApplication('GET', '/', [], $sessionValues, [], [], [], [], [], $envFile);
 
         // put csrf
         if ($useCsrfFromSession) {
@@ -734,7 +792,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
         $commentsBefore = static::$db->selectRow('SELECT * FROM comments WHERE id_author = ' . $userID);
 
         // test response / redirection
-        $response = $this->getResponseFromApplication('POST', '/profile/user_' . $userID . '/edit/', $params);
+        $response = $this->getResponseFromApplication('POST', '/profile/user_' . $userID . '/edit/', $params, [], [], [], [], [], [], $envFile);
 
         if ($hasRedirection) {
             if ($isFormSuccess) {
@@ -744,7 +802,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
             }
 
             $this->doTestHasResponseWithStatusCode($response, 301);
-            $response = $this->getResponseFromApplication('GET', $response->getHeaderLine('Location'));
+            $response = $this->getResponseFromApplication('GET', $response->getHeaderLine('Location'), [], [], [], [], [], [], [], $envFile);
             $this->doTestHasResponseWithStatusCode($response, 200);
         } else {
             $this->doTestHasResponseWithStatusCode($response, 200);
@@ -764,7 +822,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
             static::assertNotSame($blueprintsBefore, $blueprintsAfter);
             static::assertNotSame($commentsBefore, $commentsAfter);
 
-            if ($params['form-delete_profile-select-blueprints_ownership'] === 'give') {
+            if ($params['form-delete_profile-select-blueprints_ownership'] === 'give' && ((int) Application::getConfig()->get('ANONYMOUS_ID') !== 0)) {
                 $blueprint = static::$db->selectRow('SELECT * FROM blueprints WHERE id = ' . $blueprintsBefore['id']);
                 static::assertSame(static::$anonymousID, (int) $blueprint['id_author']);
             } elseif ($params['form-delete_profile-select-blueprints_ownership'] === 'delete') {

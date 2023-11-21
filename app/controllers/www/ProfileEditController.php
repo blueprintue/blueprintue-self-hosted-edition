@@ -741,8 +741,10 @@ class ProfileEditController implements MiddlewareInterface
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
 
-            if ($params['blueprints_ownership'] === 'give') {
-                BlueprintService::changeAuthor($this->userID, (int) Application::getConfig()->get('ANONYMOUS_ID'));
+            $anonymousID = (int) Application::getConfig()->get('ANONYMOUS_ID');
+
+            if ($params['blueprints_ownership'] === 'give' && $anonymousID > 0) {
+                BlueprintService::changeAuthor($this->userID, $anonymousID);
             } else {
                 BlueprintService::softDeleteFromAuthor($this->userID);
             }
@@ -828,6 +830,7 @@ class ProfileEditController implements MiddlewareInterface
         ];
 
         $this->data += ['links' => $links];
+        $this->data += ['has_not_anonymous_user' => ((int) Application::getConfig()->get('ANONYMOUS_ID')) === 0];
     }
 
     /**

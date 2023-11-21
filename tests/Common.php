@@ -108,6 +108,7 @@ HTML;
      * @param array  $uploadedFiles
      * @param array  $additionalsFolders
      * @param array  $headers
+     * @param string $envFile
      *
      * @throws ApplicationException
      * @throws EnvironmentException
@@ -116,7 +117,7 @@ HTML;
      *
      * @return Response|null
      */
-    protected function getResponseFromApplication(string $method, string $url, array $params = [], array $session = [], array $cookies = [], array $queryParams = [], array $uploadedFiles = [], array $additionalsFolders = [], array $headers = []): ?Response
+    protected function getResponseFromApplication(string $method, string $url, array $params = [], array $session = [], array $cookies = [], array $queryParams = [], array $uploadedFiles = [], array $additionalsFolders = [], array $headers = [], string $envFile = 'tests.env'): ?Response
     {
         $ds = \DIRECTORY_SEPARATOR;
         $folders = [
@@ -128,7 +129,7 @@ HTML;
 
         $folders += $additionalsFolders;
 
-        $env = new Environment(__DIR__, 'tests.env');
+        $env = new Environment(__DIR__, $envFile);
 
         $_SERVER['HTTP_HOST'] = $env->get('HOST');
         $_SERVER['HTTPS'] = ($env->get('HTTPS') === true) ? 'on' : 'off';

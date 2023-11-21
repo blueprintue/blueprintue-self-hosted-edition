@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\Blueprint\Edit;
 
 use PHPUnit\Framework\TestCase;
+use Rancoud\Application\Application;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
 use Rancoud\Database\DatabaseException;
@@ -87,6 +88,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'delete OK - give blueprint - unlisted blueprint' => [
                 'sql_queries' => [
@@ -115,6 +117,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'delete KO - give blueprint - private blueprint' => [
                 'sql_queries' => [
@@ -145,6 +148,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 'fields_label_error'    => [
                     'ownership' => 'Ownership is invalid, you can&#039;t give blueprint when having private exposure'
                 ],
+                'has_anonymous_user'    => true
             ],
             'delete OK - delete blueprint - public blueprint' => [
                 'sql_queries' => [
@@ -173,6 +177,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'delete OK - delete blueprint - unlisted blueprint' => [
                 'sql_queries' => [
@@ -201,6 +206,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'delete OK - delete blueprint - private blueprint' => [
                 'sql_queries' => [
@@ -229,6 +235,36 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
+            ],
+            'delete OK - no anonymous user - delete blueprint even if "give" sent - public blueprint' => [
+                'sql_queries' => [
+                    'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
+                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+                ],
+                'user_id'     => 189,
+                'params'      => [
+                    'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                    'form-delete_blueprint-select-ownership' => 'give',
+                ],
+                'use_csrf_from_session' => true,
+                'has_redirection'       => true,
+                'is_form_success'       => true,
+                'flash_messages'        => [
+                    'success' => [
+                        'has'     => false,
+                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                    ],
+                    'error' => [
+                        'has'     => false,
+                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                    ]
+                ],
+                'fields_has_error'      => [],
+                'fields_has_value'      => [],
+                'fields_label_error'    => [],
+                'has_anonymous_user'    => false
             ],
             'csrf incorrect' => [
                 'sql_queries' => [
@@ -257,6 +293,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'missing fields - no csrf' => [
                 'sql_queries' => [
@@ -284,6 +321,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'missing fields - no ownership' => [
                 'sql_queries' => [
@@ -311,6 +349,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'empty fields - ownership' => [
                 'sql_queries' => [
@@ -341,6 +380,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 'fields_label_error'    => [
                     'ownership' => 'Ownership is invalid'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid fields - ownership invalid' => [
                 'sql_queries' => [
@@ -371,6 +411,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 'fields_label_error'    => [
                     'ownership' => 'Ownership is invalid'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid fields - ownership give is not possible with private exposure' => [
                 'sql_queries' => [
@@ -401,6 +442,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 'fields_label_error'    => [
                     'ownership' => 'Ownership is invalid, you can&#039;t give blueprint when having private exposure'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid encoding fields - select-ownership' => [
                 'sql_queries' => [
@@ -429,6 +471,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
         ];
     }
@@ -446,13 +489,14 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
      * @param array $fieldsHasError
      * @param array $fieldsHasValue
      * @param array $fieldsLabelError
+     * @param bool  $hasAnonymousUser
      *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    public function testBlueprintEditPOSTDeleteBlueprint(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
+    public function testBlueprintEditPOSTDeleteBlueprint(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError, bool $hasAnonymousUser): void
     {
         static::setDatabase();
 
@@ -466,8 +510,13 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
             'remove' => []
         ];
 
+        $envFile = 'tests.env';
+        if (!$hasAnonymousUser) {
+            $envFile = 'tests-no-anonymous-user.env';
+        }
+
         // generate csrf
-        $this->getResponseFromApplication('GET', '/', [], $sessionValues);
+        $this->getResponseFromApplication('GET', '/', [], $sessionValues, [], [], [], [], [], $envFile);
 
         // put csrf
         if ($useCsrfFromSession) {
@@ -480,7 +529,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
         $userInfosAnonymousBefore = static::$db->selectRow('SELECT * FROM users_infos WHERE id_user = ' . static::$anonymousID);
 
         // test response / redirection
-        $response = $this->getResponseFromApplication('POST', '/blueprint/slug_1/edit/', $params);
+        $response = $this->getResponseFromApplication('POST', '/blueprint/slug_1/edit/', $params, [], [], [], [], [], [], $envFile);
 
         if ($hasRedirection) {
             if ($isFormSuccess) {
@@ -490,7 +539,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
             }
 
             $this->doTestHasResponseWithStatusCode($response, 301);
-            $response = $this->getResponseFromApplication('GET', $response->getHeaderLine('Location'));
+            $response = $this->getResponseFromApplication('GET', $response->getHeaderLine('Location'), [], [], [], [], [], [], [], $envFile);
             $this->doTestHasResponseWithStatusCode($response, 200);
         } else {
             $this->doTestHasResponseWithStatusCode($response, 200);
@@ -505,7 +554,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
             static::assertNotSame($blueprintBefore, $blueprintAfter);
             static::assertNotSame($userInfosBefore, $userInfosAfter);
 
-            if ($params['form-delete_blueprint-select-ownership'] === 'give') {
+            if ($params['form-delete_blueprint-select-ownership'] === 'give' && ((int) Application::getConfig()->get('ANONYMOUS_ID') !== 0)) {
                 // blueprint
                 static::assertSame(static::$anonymousID, (int) $blueprintAfter['id_author']);
 

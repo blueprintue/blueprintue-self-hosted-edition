@@ -665,8 +665,9 @@ class BlueprintEditController implements MiddlewareInterface
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
 
-            if ($params['ownership'] === 'give') {
-                $anonymousID = (int) Application::getConfig()->get('ANONYMOUS_ID');
+            $anonymousID = (int) Application::getConfig()->get('ANONYMOUS_ID');
+
+            if ($params['ownership'] === 'give' && $anonymousID > 0) {
                 BlueprintService::changeBlueprintAuthor($this->blueprintID, $anonymousID); // phpcs:ignore
                 UserService::updatePublicAndPrivateBlueprintCount($anonymousID, 1);
             } else {
@@ -755,6 +756,8 @@ class BlueprintEditController implements MiddlewareInterface
         $formDeleteBlueprint->setInputsErrors(Session::getFlash('form-delete_blueprint-errors'));
         $formDeleteBlueprint->setErrorMessage(Session::getFlash('error-form-delete_blueprint'));
         $this->data += ['form-delete_blueprint' => $formDeleteBlueprint];
+
+        $this->data += ['has_not_anonymous_user' => ((int) Application::getConfig()->get('ANONYMOUS_ID')) === 0];
 
         $this->setTemplateProperties([
             'slug'  => $this->data['blueprint']['slug'],
