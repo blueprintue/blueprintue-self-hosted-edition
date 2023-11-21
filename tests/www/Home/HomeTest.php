@@ -87,6 +87,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => ['exposure', 'expiration', 'ue_version'],
                 'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'xss form - KO' => [
                 'user_id' => static::$anonymousID,
@@ -119,6 +120,7 @@ class HomeTest extends TestCase
                     'ue_version' => 'UE version is invalid',
                     'blueprint'  => 'Blueprint is invalid',
                 ],
+                'has_anonymous_user'    => true
             ],
             'anonymous - create blueprint OK - 1 hour' => [
                 'user_id' => static::$anonymousID,
@@ -146,6 +148,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'anonymous - create blueprint OK - 1 day' => [
                 'user_id' => static::$anonymousID,
@@ -173,6 +176,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'anonymous - create blueprint OK - 1 week' => [
                 'user_id' => static::$anonymousID,
@@ -200,6 +204,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'user - create blueprint OK' => [
                 'user_id' => static::$userID,
@@ -227,6 +232,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'csrf incorrect' => [
                 'user_id' => static::$anonymousID,
@@ -254,6 +260,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'missing fields - no fields' => [
                 'user_id'               => static::$anonymousID,
@@ -274,6 +281,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'missing fields - no csrf' => [
                 'user_id' => static::$anonymousID,
@@ -300,6 +308,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'missing fields - no title' => [
                 'user_id' => static::$anonymousID,
@@ -326,6 +335,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'missing fields - no exposure' => [
                 'user_id' => static::$anonymousID,
@@ -352,6 +362,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'missing fields - no ue_version' => [
                 'user_id' => static::$anonymousID,
@@ -378,6 +389,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'missing fields - no blueprint' => [
                 'user_id' => static::$anonymousID,
@@ -404,6 +416,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'empty fields - title empty' => [
                 'user_id' => static::$anonymousID,
@@ -433,6 +446,7 @@ class HomeTest extends TestCase
                 'fields_label_error'    => [
                     'title' => 'Title is required'
                 ],
+                'has_anonymous_user'    => true
             ],
             'empty fields - exposure empty' => [
                 'user_id' => static::$anonymousID,
@@ -462,6 +476,7 @@ class HomeTest extends TestCase
                 'fields_label_error'    => [
                     'exposure' => 'Exposure is required'
                 ],
+                'has_anonymous_user'    => true
             ],
             'empty fields - expiration empty' => [
                 'user_id' => static::$anonymousID,
@@ -491,6 +506,7 @@ class HomeTest extends TestCase
                 'fields_label_error'    => [
                     'expiration' => 'Expiration is required'
                 ],
+                'has_anonymous_user'    => true
             ],
             'empty fields - ue_version empty' => [
                 'user_id' => static::$anonymousID,
@@ -520,6 +536,7 @@ class HomeTest extends TestCase
                 'fields_label_error'    => [
                     'ue_version' => 'UE version is required'
                 ],
+                'has_anonymous_user'    => true
             ],
             'empty fields - blueprint empty' => [
                 'user_id' => static::$anonymousID,
@@ -549,6 +566,7 @@ class HomeTest extends TestCase
                 'fields_label_error'    => [
                     'blueprint' => 'Blueprint is required'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid fields - exposure invalid' => [
                 'user_id' => static::$userID,
@@ -578,6 +596,7 @@ class HomeTest extends TestCase
                 'fields_label_error'    => [
                     'exposure' => 'Exposure is invalid'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid fields - exposure private for anonymous' => [
                 'user_id' => static::$anonymousID,
@@ -607,6 +626,7 @@ class HomeTest extends TestCase
                 'fields_label_error'    => [
                     'exposure' => 'Private is for member only'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid fields - expiration invalid' => [
                 'user_id' => static::$anonymousID,
@@ -636,6 +656,7 @@ class HomeTest extends TestCase
                 'fields_label_error'    => [
                     'expiration' => 'Expiration is invalid'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid fields - ue_version invalid' => [
                 'user_id' => static::$anonymousID,
@@ -665,6 +686,7 @@ class HomeTest extends TestCase
                 'fields_label_error'    => [
                     'ue_version' => 'UE version is invalid'
                 ],
+                'has_anonymous_user'    => true
             ],
             'invalid fields - blueprint invalid' => [
                 'user_id' => static::$anonymousID,
@@ -694,6 +716,7 @@ class HomeTest extends TestCase
                 'fields_label_error'    => [
                     'blueprint' => 'Blueprint is invalid'
                 ],
+                'has_anonymous_user'    => true
             ],
             'throw exception in blueprint creation' => [
                 'user_id' => static::$anonymousID,
@@ -721,6 +744,35 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
+            ],
+            'throw exception in blueprint creation when no anonymous user set' => [
+                'user_id' => 0,
+                'params'  => [
+                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                    'form-add_blueprint-input-title'        => 'title 1 hour',
+                    'form-add_blueprint-select-exposure'    => 'unlisted',
+                    'form-add_blueprint-select-expiration'  => 'never',
+                    'form-add_blueprint-select-ue_version'  => '4.14',
+                    'form-add_blueprint-textarea-blueprint' => 'Begin Object throw exception'
+                ],
+                'use_csrf_from_session' => true,
+                'has_redirection'       => true,
+                'is_form_success'       => false,
+                'flash_messages'        => [
+                    'success' => [
+                        'has'     => false,
+                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                    ],
+                    'error' => [
+                        'has'     => true,
+                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, could not create blueprint, anonymous user not supported (#50)</div>'
+                    ]
+                ],
+                'fields_has_error'      => [],
+                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fields_label_error'    => [],
+                'has_anonymous_user'    => false
             ],
             'invalid encoding fields - title' => [
                 'user_id' => static::$anonymousID,
@@ -748,6 +800,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'invalid encoding fields - exposure' => [
                 'user_id' => static::$anonymousID,
@@ -775,6 +828,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'invalid encoding fields - expiration' => [
                 'user_id' => static::$anonymousID,
@@ -802,6 +856,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'invalid encoding fields - ue_version' => [
                 'user_id' => static::$anonymousID,
@@ -829,6 +884,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
             'invalid encoding fields - blueprint' => [
                 'user_id' => static::$anonymousID,
@@ -856,6 +912,7 @@ class HomeTest extends TestCase
                 'fields_has_error'      => [],
                 'fields_has_value'      => [],
                 'fields_label_error'    => [],
+                'has_anonymous_user'    => true
             ],
         ];
     }
@@ -872,11 +929,12 @@ class HomeTest extends TestCase
      * @param array $fieldsHasError
      * @param array $fieldsHasValue
      * @param array $fieldsLabelError
+     * @param bool  $hasAnonymousUser
      *
      * @throws DatabaseException
      * @throws \Exception
      */
-    public function testHomePOSTCreateBlueprint(int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
+    public function testHomePOSTCreateBlueprint(int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError, bool $hasAnonymousUser): void
     {
         // set user in $_SESSION
         $session = ['remove' => ['anonymous_blueprints'], 'set' => []];
@@ -886,8 +944,13 @@ class HomeTest extends TestCase
             $session['remove'][] = 'userID';
         }
 
+        $envFile = 'tests.env';
+        if (!$hasAnonymousUser) {
+            $envFile = 'tests-no-anonymous-user.env';
+        }
+
         // generate csrf
-        $this->getResponseFromApplication('GET', '/', [], $session);
+        $this->getResponseFromApplication('GET', '/', [], $session, [], [], [], [], [], $envFile);
 
         // put csrf
         if ($useCsrfFromSession) {
@@ -903,7 +966,7 @@ class HomeTest extends TestCase
             static::$db->exec('ALTER TABLE blueprints CHANGE COLUMN `expiration` `expiration` DATETIME NOT NULL ;');
         }
 
-        $response = $this->getResponseFromApplication('POST', '/', $params);
+        $response = $this->getResponseFromApplication('POST', '/', $params, [], [], [], [], [], [], $envFile);
 
         if (isset($params['form-add_blueprint-textarea-blueprint']) && $params['form-add_blueprint-textarea-blueprint'] === 'Begin Object throw exception') {
             static::$db->exec('ALTER TABLE blueprints CHANGE COLUMN `expiration` `expiration` DATETIME NULL ;');

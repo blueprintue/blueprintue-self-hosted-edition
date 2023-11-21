@@ -182,6 +182,12 @@ class HomeController implements MiddlewareInterface
             Application::getDatabase()->startTransaction();
 
             $params['id_author'] = Session::get('userID') ?? (int) Application::getConfig()->get('ANONYMOUS_ID');
+            if ($params['id_author'] === 0) {
+                $errorMessage = 'Error, could not create blueprint, anonymous user not supported (#50)';
+
+                throw new \Exception($errorMessage);
+            }
+
             [$blueprint, $errorCode] = BlueprintService::createFromHome($params);
             if ($blueprint === null) {
                 $errorMessage = 'Error, could not create blueprint (' . $errorCode . ')';
