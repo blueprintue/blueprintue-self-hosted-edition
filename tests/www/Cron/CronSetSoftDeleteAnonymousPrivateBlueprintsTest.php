@@ -11,6 +11,7 @@ namespace tests\www\Cron;
 
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
+use Rancoud\Database\DatabaseException;
 use Rancoud\Environment\EnvironmentException;
 use Rancoud\Router\RouterException;
 use tests\Common;
@@ -26,6 +27,18 @@ class CronSetSoftDeleteAnonymousPrivateBlueprintsTest extends TestCase
     {
         static::setDatabaseEmptyStructure();
         static::addUsers();
+    }
+
+    /**
+     * @throws DatabaseException
+     */
+    protected function setUp(): void
+    {
+        $sql = <<<SQL
+            TRUNCATE TABLE blueprints
+        SQL;
+
+        static::$db->exec($sql);
     }
 
     /**
