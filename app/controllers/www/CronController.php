@@ -281,6 +281,9 @@ class CronController
     protected function setSoftDeleteAnonymousPrivateBlueprints(): void
     {
         $anonymousID = (int) Application::getConfig()->get('ANONYMOUS_ID');
+        if ($anonymousID === 0) {
+            return;
+        }
 
         $forceRollback = false;
         $sqlSetSoftDeletedAnonymousPrivateBlueprints = <<<SQL
