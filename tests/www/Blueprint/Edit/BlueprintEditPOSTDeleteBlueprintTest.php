@@ -510,9 +510,9 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
             'remove' => []
         ];
 
-        $envFile = "tests.env";
+        $envFile = 'tests.env';
         if (!$hasAnonymousUser) {
-            $envFile = "tests-no-anonymous-user.env";
+            $envFile = 'tests-no-anonymous-user.env';
         }
 
         // generate csrf
