@@ -308,7 +308,7 @@ use Rancoud\Security\Security;
                             <label class="form__label" for="form-delete_blueprint-select-ownership" id="form-delete_blueprint-label-ownership">Blueprints ownership</label>
                             <div class="form__container form__container--select">
                                 <select aria-invalid="false" aria-labelledby="form-delete_blueprint-label-ownership<?php echo $formDeleteBlueprint->getClassError('ownership', ' form-delete_blueprint-label-ownership-error'); ?>" aria-required="true" class="form__input form__input--select<?php echo $formDeleteBlueprint->getClassError('ownership', ' form__input--error'); ?>" id="form-delete_blueprint-select-ownership" name="form-delete_blueprint-select-ownership">
-                                    <option value="give"<?php echo ($data['blueprint']['exposure'] === 'private') ? ' disabled="disabled"' : $formDeleteBlueprint->getSelectedValue('ownership', 'give'); ?>>Give my blueprint to anonymous user</option>
+                                    <option value="give"<?php echo ($data['blueprint']['exposure'] === 'private' || $data['has_not_anonymous_user']) ? ' disabled="disabled"' : $formDeleteBlueprint->getSelectedValue('ownership', 'give'); ?>>Give my blueprint to anonymous user</option>
                                     <option value="delete"<?php echo $formDeleteBlueprint->getSelectedValue('ownership', 'delete'); ?>>Delete my blueprint</option>
                                 </select>
                             </div>
