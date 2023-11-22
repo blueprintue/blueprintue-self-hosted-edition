@@ -93,7 +93,7 @@ class HelperTest extends TestCase
                 'in'  => $past,
                 'out' => 'few seconds left',
             ],
-            'now + 2 hours = 2 h and 30 min left' => [
+            'now + 2 hours and 30 minutes = 2 h and 30 min left' => [
                 'in'  => $nowPlus2Hours,
                 'out' => '2 h and 30 min left',
             ],

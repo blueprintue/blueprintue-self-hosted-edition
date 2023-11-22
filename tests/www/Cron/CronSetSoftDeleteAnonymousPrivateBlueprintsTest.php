@@ -11,7 +11,6 @@ namespace tests\www\Cron;
 
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
-use Rancoud\Database\DatabaseException;
 use Rancoud\Environment\EnvironmentException;
 use Rancoud\Router\RouterException;
 use tests\Common;
