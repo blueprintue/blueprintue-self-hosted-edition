@@ -277,7 +277,13 @@ class BlueprintService
             }
 
             if ($attempts > 50) {
+                // @codeCoverageIgnoreStart
+                /*
+                 * In end 2 end testing we can't arrive here because filesystem is not filed with all folders
+                 * For covering we have to mock the filesystem
+                 */
                 throw new \Exception('no more space');
+                // @codeCoverageIgnoreEnd
             }
 
             ++$attempts;

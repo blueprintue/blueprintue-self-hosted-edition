@@ -109,6 +109,16 @@ class ConfirmAccountTest extends TestCase
                 'text'                 => '<p>Your account is now confirmed!<br />You can now log to your account.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>',
                 'js_redirect'          => "<script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>",
             ],
+            'token invalid - bad encoding - redirect home' => [
+                'slug'                 => '/confirm-account/?confirmed_token=' . \chr(99999999),
+                'location'             => '/',
+                'user_id'              => null,
+                'content_head'         => [],
+                'has_redirection'      => true,
+                'is_confirmed_account' => null,
+                'text'                 => null,
+                'js_redirect'          => null,
+            ],
         ];
     }
 

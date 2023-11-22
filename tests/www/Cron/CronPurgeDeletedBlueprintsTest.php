@@ -22,7 +22,7 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
     /**
      * @throws \Rancoud\Database\DatabaseException
      */
-    public static function setUpBeforeClass(): void
+    protected function setUp(): void
     {
         static::setDatabaseEmptyStructure();
     }
@@ -273,5 +273,110 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
                 static::assertSame(0, $countFiles, 'still_exists=false failed for ' . $dir['fileID']);
             }
         }
+    }
+
+    /**
+     * @throws ApplicationException
+     * @throws EnvironmentException
+     * @throws RouterException
+     * @throws \Rancoud\Database\DatabaseException
+     * @throws \Exception
+     */
+    public function testAbortCronPurgeDeletedBlueprintsGET(): void
+    {
+        $sqls = [
+            <<<SQL
+                INSERT INTO `users` (`id`, `username`, `password`, `slug`, `email`, `password_reset`, `password_reset_at`, `grade`, `avatar`, `remember_token`, `created_at`, `confirmed_token`, `confirmed_sent_at`, `confirmed_at`, `last_login_at`)
+                VALUES (101, 'user_101', NULL, 'user_101', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
+                       (102, 'user_102', NULL, 'user_102', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
+                       (103, 'user_103', NULL, 'user_103', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
+                       (104, 'user_104', NULL, 'user_104', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
+                       (105, 'user_105', NULL, 'user_105', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
+                       (106, 'user_106', NULL, 'user_106', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
+                       (107, 'user_107', NULL, 'user_107', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
+                       (108, 'user_108', NULL, 'user_108', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
+                       (109, 'user_109', NULL, 'user_109', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
+                       (110, 'user_110', NULL, 'user_110', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL);
+            SQL,
+            <<<SQL
+                INSERT INTO `users_infos` (`id_user`, `count_public_blueprint`, `count_public_comment`, `count_private_blueprint`, `count_private_comment`)
+                VALUES (101,  5,  6,  2, 3),
+                       (102,  7, 60, 32, 0),
+                       (103,  9, 80, 15, 0),
+                       (104, 10, 15,  0, 9),
+                       (105, 23, 66,  0, 4),
+                       (106, 15, 44, 14, 5),
+                       (107, 65,  4, 41, 1),
+                       (108, 99,  0,  2, 2),
+                       (109,  0, 10,  3, 0),
+                       (110,  0,  1,  4, 0);
+            SQL,
+            <<<SQL
+                INSERT INTO `blueprints` (`id`, `id_author`, `slug`, `file_id`, `title`, `type`, `ue_version`, `current_version`, `thumbnail`, `created_at`, `published_at`, `exposure`, `deleted_at`, `expiration`)
+                VALUES (201, 101, 'bp_01', 'azerty01', 'title_01', 'blueprint', '5.1', '2', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'public',   NULL, NULL),
+                       (202, 101, 'bp_02', 'azerty02', 'title_02', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'private',  NULL, '2000-01-01 00:00:00'),
+                       (203, 102, 'bp_03', 'azerty03', 'title_03', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'public',   NULL, NULL),
+                       (204, 102, 'bp_04', 'azerty04', 'title_04', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'private',  '2000-01-01 00:00:00', NULL),
+                       (205, 106, 'bp_05', 'azerty05', 'title_05', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'public',   NULL, NULL),
+                       (206, 103, 'bp_06', 'azerty06', 'title_06', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'public',   NULL, '2000-01-01 00:00:00'),
+                       (207, 104, 'bp_07', 'azerty07', 'title_07', 'blueprint', '5.1', '2', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'unlisted', '2000-01-01 00:00:00', NULL),
+                       (208, 109, 'bp_08', 'azerty08', 'title_08', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'public',   '2000-01-01 00:00:00', NULL),
+                       (209, 105, 'bp_09', 'azerty09', 'title_08', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'public',   NULL, NULL),
+                       (210, 110, 'bp_10', 'azerty10', 'title_10', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'private',  NULL, '2000-01-01 00:00:00'),
+                       (211, 101, 'bp_11', 'azerty11', 'title_11', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'private',  NULL, UTC_TIMESTAMP() + interval 60 day),
+                       (212, 102, 'bp_12', 'azerty12', 'title_12', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'public',   NULL, UTC_TIMESTAMP() + interval 60 day);
+            SQL,
+            <<<SQL
+                INSERT INTO `blueprints_version` (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES
+                (700, 201, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (701, 201, '2', 'Second commit', UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (702, 202, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (703, 203, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (704, 204, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (705, 205, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (706, 206, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (707, 207, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (708, 208, '1', 'Second commit', UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (709, 208, '2', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (710, 209, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (711, 210, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (712, 211, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (713, 212, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (714, 251, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
+                (715, 261, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP())
+            SQL,
+            <<<SQL
+                INSERT INTO `comments` (`id`, `id_author`, `id_blueprint`, `name_fallback`, `content`, `created_at`)
+                VALUES (301, 110, 201, NULL, 'a', UTC_TIMESTAMP()),
+                       (302, 110, 202, NULL, 'b', UTC_TIMESTAMP()),
+                       (303, 103, 204, NULL, 'c', UTC_TIMESTAMP()),
+                       (304, 104,   2, NULL, 'd', UTC_TIMESTAMP()),
+                       (305, 104,   3, NULL, 'e', UTC_TIMESTAMP()),
+                       (306, 101,   4, NULL, 'f', UTC_TIMESTAMP()),
+                       (307, 109,   9, NULL, 'g', UTC_TIMESTAMP()),
+                       (308, 106, 206, NULL, 'h', UTC_TIMESTAMP()),
+                       (309, 106,   1, NULL, 'i', UTC_TIMESTAMP()),
+                       (310, 106, 210, NULL, 'j', UTC_TIMESTAMP()),
+                       (311, 101, 210, NULL, 'k', UTC_TIMESTAMP()),
+                       (312, 104, 211, NULL, 'l', UTC_TIMESTAMP())
+            SQL
+        ];
+
+        // database
+        foreach ($sqls as $sql) {
+            static::$db->exec($sql);
+        }
+
+        static::$db->dropTables('blueprints');
+
+        $usersInfosExpected = static::$db->selectAll('SELECT `id_user`, `count_public_blueprint`, `count_public_comment`, `count_private_blueprint`, `count_private_comment` FROM users_infos ORDER BY id_user ASC');
+
+        // launch cron
+        $this->getResponseFromApplication('GET', '/cron/purge_deleted_blueprints/');
+
+        // check database
+        $usersInfos = static::$db->selectAll('SELECT `id_user`, `count_public_blueprint`, `count_public_comment`, `count_private_blueprint`, `count_private_comment` FROM users_infos ORDER BY id_user ASC');
+
+        static::assertSame($usersInfosExpected, $usersInfos);
     }
 }

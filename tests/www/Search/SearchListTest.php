@@ -87,6 +87,7 @@ class SearchListTest extends TestCase
     {
         $cases = [];
 
+        $cases = $this->addSearchError($cases);
         $cases = $this->addSearchQuery($cases);
         $cases = $this->addSearchQueryType($cases);
         $cases = $this->addSearchQueryTypeVersion($cases);
@@ -95,6 +96,28 @@ class SearchListTest extends TestCase
         $cases = $this->addSearchTypeVersion($cases);
 
         return $this->addSearchVersion($cases);
+    }
+
+    /**
+     * @param array $cases
+     *
+     * @throws \Exception
+     *
+     * @return array
+     */
+    protected function addSearchError(array $cases): array
+    {
+        $cases['Search - Error Invalid Term'] = [
+            'sql_queries'             => [],
+            'slug'                    => '/search/?form-search-input-query=tle&aze=' . \chr(99999999),
+            'location'                => '/',
+            'user_id'                 => null,
+            'content_head'            => [],
+            'content_blueprints_html' => '',
+            'content_pagination_html' => '',
+        ];
+
+        return $cases;
     }
 
     /**

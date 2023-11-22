@@ -43,8 +43,6 @@ class CronController
             case 'cron_set_soft_delete_anonymous_private_blueprints':
                 $this->setSoftDeleteAnonymousPrivateBlueprints();
                 break;
-            default:
-                return (new Factory())->createResponse(204);
         }
 
         return (new Factory())->createResponse(204);
@@ -182,9 +180,15 @@ class CronController
      */
     protected function updateUserCounters(int $userID): void
     {
+        // @codeCoverageIgnoreStart
+        /*
+         * In end 2 end testing we can't arrive here because user requirements has been done before
+         * For covering we have to test the function outside
+         */
         if ($userID === 0) {
             return;
         }
+        // @codeCoverageIgnoreEnd
 
         $paramsSetUserCounters = [
             'userID'                => $userID,
