@@ -204,7 +204,7 @@ class ResetPasswordController implements MiddlewareInterface
             Session::keepFlash(['error-form-reset_password', 'form-reset_password-values']);
 
             return;
-            // @codeCoverageIgnoreStart
+            // @codeCoverageIgnoreEnd
         }
 
         Session::setFlash('success-form-reset_password', 'Your new password has been saved successfully');

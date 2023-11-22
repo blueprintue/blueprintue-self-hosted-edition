@@ -734,6 +734,39 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                 'fields_label_error'    => [],
                 'has_anonymous_user'    => true
             ],
+            'delete KO - delete user failed with exception (always to run last)' => [
+                'sql_queries' => [
+                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                    'TRUNCATE TABLE comments',
+                ],
+                'user_id'     => 189,
+                'params'      => [
+                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                    'form-delete_profile-select-blueprints_ownership' => 'delete',
+                    'form-delete_profile-select-comments_ownership'   => 'delete',
+                    'raise_exception'                                 => true,
+                ],
+                'use_csrf_from_session' => true,
+                'has_redirection'       => true,
+                'is_form_success'       => false,
+                'flash_messages'        => [
+                    'success' => [
+                        'has'     => false,
+                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                    ],
+                    'error' => [
+                        'has'     => true,
+                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error, could not delete your profile</div>'
+                    ]
+                ],
+                'fields_has_error'      => [],
+                'fields_has_value'      => [],
+                'fields_label_error'    => [],
+                'has_anonymous_user'    => true
+            ],
         ];
     }
 
@@ -791,6 +824,10 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
         $blueprintsBefore = static::$db->selectRow('SELECT * FROM blueprints WHERE id_author = ' . $userID);
         $commentsBefore = static::$db->selectRow('SELECT * FROM comments WHERE id_author = ' . $userID);
 
+        if (isset($params['raise_exception'])) {
+            static::$db->dropTables('comments');
+        }
+
         // test response / redirection
         $response = $this->getResponseFromApplication('POST', '/profile/user_' . $userID . '/edit/', $params, [], [], [], [], [], [], $envFile);
 
@@ -806,6 +843,24 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
             $this->doTestHasResponseWithStatusCode($response, 200);
         } else {
             $this->doTestHasResponseWithStatusCode($response, 200);
+        }
+
+        if (isset($params['raise_exception'])) {
+            $sql = <<<SQL
+                create table if not exists comments
+                (
+                    id int unsigned auto_increment
+                        primary key,
+                    id_author int unsigned null,
+                    id_blueprint int unsigned not null,
+                    name_fallback varchar(255) null,
+                    content text not null,
+                    created_at datetime not null
+                )
+                charset=utf8mb4;
+            SQL;
+
+            static::$db->exec($sql);
         }
 
         // user after

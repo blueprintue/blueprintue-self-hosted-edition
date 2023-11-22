@@ -187,5 +187,6 @@ class ContactController implements MiddlewareInterface
         } else {
             $this->setAndKeepInfos('error-form-contact', 'Error, could not sent message, try later');
         }
+        // @codeCoverageIgnoreEnd
     }
 }
