@@ -740,6 +740,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                     'REPLACE INTO users_infos (`id_user`) VALUES (189)',
                     "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                    'TRUNCATE TABLE comments',
                 ],
                 'user_id'     => 189,
                 'params'      => [
