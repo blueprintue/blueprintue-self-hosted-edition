@@ -235,47 +235,21 @@ You have to update your `hosts` file those values
 127.0.0.1 blueprintue-self-hosted-edition.test
 ```
 
-Create `.env` file with those values
-```dotenv
-# database
-DATABASE_DRIVER=mysql
-DATABASE_HOST="127.0.0.1"
-DATABASE_USER=root
-DATABASE_PASSWORD=""
-DATABASE_NAME=blueprintue
-DATABASE_PERSISTENT_CONNECTION=false
-
-# session
-SESSION_DRIVER="database"
-SESSION_ENCRYPT_KEY=""
-SESSION_REMEMBER_NAME="remember_token"
-SESSION_REMEMBER_LIFETIME=2592000
-SESSION_REMEMBER_PATH="/"
-SESSION_REMEMBER_HTTPS=true
-SESSION_SAMESITE="Lax"
-
-# host
-HOST="blueprintue-self-hosted-edition.test"
-HTTPS=false
-
-# anonymous user
-ANONYMOUS_ID=2
-```
+Follow [How to install](#how-to-install).
 
 ## How to test
 `docker buildx bake test` create image  
 `docker run --rm -v $(pwd)/coverage:/src/coverage -e XDEBUG_MODE=coverage --network host blueprintue-self-hosted-edition:test test` launch tests
 
-## Docker commands
+## Docker
 ### Buildx
 * `docker buildx bake` create image-local
 * `docker buildx bake validate` launch 2 subtasks vendor-update && vendor-validate
-* `docker buildx bake vendor-update`
 * `docker buildx bake vendor-validate` check if there is a drift with composer.lock
 * `docker buildx bake lint` check if code is matching with lint rules
 * `docker buildx bake test` end 2 end testing
-* `docker buildx bake image` nothing
-* `docker buildx bake image-local` create a docker image
+* `docker buildx bake image` create a docker image for registry
+* `docker buildx bake image-local` create a local docker image
 
 ### Docker-compose
 `docker-compose build && docker-compose run lib composer ci` for launching tests
@@ -283,25 +257,25 @@ ANONYMOUS_ID=2
 ### Run image-local
 `docker buildx bake && docker run --rm -it -p 8000:8000 blueprintue-self-hosted-edition:local`
 
-## Env variables
-### Rootfs
-#### User rights
+### Env variables
+#### Rootfs
+##### User rights
 * `PUID` user id
 * `PGID` group id
 
-#### Timezone
+##### Timezone
 * `TZ` timezone (by default: UTC)
 
-#### PHP-FPM
+##### PHP-FPM
 * `MEMORY_LIMIT` memory limit (by default: 256M)
 * `POST_MAX_SIZE` post max size (by default: 16M)
 * `UPLOAD_MAX_SIZE` upload max size (by default: 16M)
 
-#### OPCache
+##### OPCache
 * `OPCACHE_ENABLE` opcache enable (by default: 1)
 * `OPCACHE_MEM_SIZE` opcache memory consumption (by default: 128)
 
-#### Nginx
+##### Nginx
 * `REAL_IP_FROM` real ip from (by default: 0.0.0.0/32)
 * `REAL_IP_HEADER` real ip header (by default: X-Forwarded-For)
 * `LOG_IP_VAR` log ip var (by default: remote_addr)
