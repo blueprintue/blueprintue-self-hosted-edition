@@ -1,11 +1,15 @@
 variable "PHP_VERSION" {
-  default = "7.4"
+  default = "8.2"
 }
 
 target "php-version" {
   args = {
     PHP_VERSION = PHP_VERSION
   }
+}
+
+target "docker-meta-action" {
+  tags = ["blueprintue-self-hosted-edition:local"]
 }
 
 group "default" {
@@ -44,11 +48,20 @@ target "test" {
 }
 
 target "image" {
-  inherits = ["ghaction-docker-meta"]
+  inherits = ["docker-meta-action"]
   dockerfile = "./Dockerfile"
 }
 
 target "image-local" {
   inherits = ["image"]
   output = ["type=docker"]
+}
+
+target "image-all" {
+  inherits = ["image"]
+  platforms = [
+    "linux/amd64",
+    "linux/arm/v7",
+    "linux/arm64",
+  ]
 }

@@ -1,4 +1,4 @@
-FROM crazymax/alpine-s6:3.13 AS base
+FROM crazymax/alpine-s6:latest AS base
 
 ENV S6_BEHAVIOR_IF_STAGE2_FAILS="2" \
   TZ="UTC" \
@@ -6,29 +6,30 @@ ENV S6_BEHAVIOR_IF_STAGE2_FAILS="2" \
   PGID="1500"
 
 RUN apk --update --no-cache add \
+    curl \
     nginx \
-    php7 \
-    php7-cli \
-    php7-ctype \
-    php7-curl \
-    php7-dom \
-    php7-exif \
-    php7-fileinfo \
-    php7-fpm \
-    php7-gd \
-    php7-iconv \
-    php7-intl \
-    php7-json \
-    php7-mbstring \
-    php7-opcache \
-    php7-openssl \
-    php7-pdo \
-    php7-pdo_mysql \
-    php7-phar \
-    php7-session \
-    php7-sodium \
-    php7-xml \
-    php7-zlib \
+    php \
+    php-cli \
+    php-ctype \
+    php-curl \
+    php-dom \
+    php-exif \
+    php-fileinfo \
+    php-fpm \
+    php-gd \
+    php-iconv \
+    php-intl \
+    php-json \
+    php-mbstring \
+    php-opcache \
+    php-openssl \
+    php-pdo \
+    php-pdo_mysql \
+    php-phar \
+    php-session \
+    php-sodium \
+    php-xml \
+    php-zlib \
     mariadb-client \
     shadow \
     tzdata \
@@ -46,7 +47,7 @@ RUN apk --update --no-cache add curl \
   && chown -R blueprintue-self-hosted-edition. /opt/blueprintue-self-hosted-edition
 COPY app ./app
 COPY www ./www
-COPY .env.template ./.env
+RUN touch .env
 
 FROM base
 
@@ -57,5 +58,8 @@ RUN chmod +x /etc/cont-init.d/fix-logs.sh && chmod +x /etc/cont-init.d/fix-perms
 EXPOSE 8000
 WORKDIR /opt/blueprintue-self-hosted-edition
 VOLUME [ "/opt/blueprintue-self-hosted-edition/storage" ]
+
+COPY cronscript.sh /etc/periodic/15min/crons
+CMD [ "crond", "-l", "2", "-f" ]
 
 ENTRYPOINT ["/init"]
