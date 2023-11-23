@@ -23,8 +23,13 @@ tests/tests.env.cache.php
 # Storage
 storage/
 tests/storage_test/
+docker-examples/storage/
 
 # Medias
 www/medias/avatars/
 www/medias/blueprints/
 tests/medias/
+docker-examples/medias/
+
+# Examples
+docker-examples/db/
