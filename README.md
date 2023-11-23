@@ -88,25 +88,25 @@ Because GDPR you will need to:
 
 #### Anonymous user
 | Parameter    | Mandatory | Type   | Default value  | Specific values | Description                                 |
-| ------------ | --------- | ------ | -------------- | --------------- | ------------------------------------------- |
-| ANONYMOUS_ID | YES       | int    |                |                 | user_id for all anonymous blueprints pasted |
+| ------------ |-----------| ------ | -------------- | --------------- | ------------------------------------------- |
+| ANONYMOUS_ID | NO        | int    |                |                 | user_id for all anonymous blueprints pasted |
 
 #### Mail
 PHPMailer is used as library for sending mails.  
 You can use msmtp as service docker for smtp relay and set smtp authentication inside.
 
-| Parameter             | Mandatory | Type   | Default value                                 | Specific values | Description                                         |
-| --------------------- | --------- | ------ |-----------------------------------------------| --------------- | --------------------------------------------------- |
-| MAIL_USE_SMTP         | NO        | bool   | false                                         |                 | set PHPMailer to use SMTP                           |
-| MAIL_SMTP_HOST        | NO        | string | localhost                                     |                 | SMTP host                                           |
-| MAIL_SMTP_PORT        | NO        | int    | 25                                            |                 | SMTP port                                           |
-| MAIL_USE_SMTP_AUTH    | NO        | bool   | false                                         |                 | for SMTP authentication                             |
-| MAIL_SMTP_USER        | NO        | string |                                               |                 | user for SMTP authentication                        |
-| MAIL_SMTP_PASSWORD    | NO        | string |                                               |                 | password for SMTP authentication                    |
-| MAIL_FROM_ADDRESS     | YES       | string |                                               |                 | email display for sending emails                    |
-| MAIL_FROM_NAME        | NO        | string |                                               |                 | name display for sendings emails                    |
-| MAIL_CONTACT_TO       | YES       | string |                                               |                 | email receiver for the contact page                 |
-| MAIL_HEADER_LOGO_PATH | YES       | string | blueprintue-self-hosted-edition_logo-full.png |                 | header image in emails (complete by HOST parameter) |
+| Parameter             | Mandatory | Type   | Default value                                 | Specific values | Description                                                    |
+| --------------------- | --------- | ------ |-----------------------------------------------| --------------- |----------------------------------------------------------------|
+| MAIL_USE_SMTP         | NO        | bool   | false                                         |                 | set PHPMailer to use SMTP                                      |
+| MAIL_SMTP_HOST        | NO        | string | localhost                                     |                 | SMTP host                                                      |
+| MAIL_SMTP_PORT        | NO        | int    | 25                                            |                 | SMTP port                                                      |
+| MAIL_USE_SMTP_AUTH    | NO        | bool   | false                                         |                 | for SMTP authentication                                        |
+| MAIL_SMTP_USER        | NO        | string |                                               |                 | user for SMTP authentication                                   |
+| MAIL_SMTP_PASSWORD    | NO        | string |                                               |                 | password for SMTP authentication                               |
+| MAIL_FROM_ADDRESS     | YES       | string |                                               |                 | email display for sending emails (register and reset password) |
+| MAIL_FROM_NAME        | NO        | string |                                               |                 | name display for sendings emails (register and reset password) |
+| MAIL_CONTACT_TO       | YES       | string |                                               |                 | email receiver for the contact page                            |
+| MAIL_HEADER_LOGO_PATH | YES       | string | blueprintue-self-hosted-edition_logo-full.png |                 | header image in emails (complete by HOST parameter)            |
 
 ## Crons
 * GET `/cron/purge_sessions/`: remove old sessions in database (if using sessions database)
@@ -263,7 +263,7 @@ ANONYMOUS_ID=2
 ```
 
 ## How to test
-`docker buildx bake test` create image
+`docker buildx bake test` create image  
 `docker run --rm -v $(pwd)/coverage:/src/coverage -e XDEBUG_MODE=coverage --network host blueprintue-self-hosted-edition:test test` launch tests
 
 ## Docker commands
