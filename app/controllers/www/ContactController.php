@@ -59,6 +59,20 @@ class ContactController implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        $to = (string) Application::getConfig()->get('MAIL_CONTACT_TO');
+        $posArobase = \mb_strpos($to, '@');
+        if (!$posArobase || ($posArobase < 1 || $posArobase === \mb_strlen($to) - 1)) {
+            $this->setTemplateProperties();
+
+            $this->data += [$this->inputs['CSRF'] => Session::get('csrf')];
+
+            $formContact = new FormHelper();
+            $formContact->setErrorMessage('Error, could not use this form, missing MAIL_CONTACT_TO configuration');
+            $this->data += ['form-contact' => $formContact];
+
+            return $this->sendPage();
+        }
+
         if ($this->hasSentForm($request, 'POST', $this->inputs, 'error-form-contact')) {
             $cleanedParams = $this->treatFormContact($request);
             $this->doProcessContact($request, $cleanedParams);
