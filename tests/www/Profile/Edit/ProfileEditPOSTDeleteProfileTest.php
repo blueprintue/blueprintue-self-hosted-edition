@@ -740,7 +740,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
                     'REPLACE INTO users_infos (`id_user`) VALUES (189)',
                     "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    'TRUNCATE TABLE comments',
+                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
                 ],
                 'user_id'     => 189,
                 'params'      => [
@@ -825,11 +825,28 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
         $commentsBefore = static::$db->selectRow('SELECT * FROM comments WHERE id_author = ' . $userID);
 
         if (isset($params['raise_exception'])) {
-            static::$db->dropTables('comments');
+            static::$db->dropTables('users_api');
         }
 
         // test response / redirection
         $response = $this->getResponseFromApplication('POST', '/profile/user_' . $userID . '/edit/', $params, [], [], [], [], [], [], $envFile);
+
+        if (isset($params['raise_exception'])) {
+            $sql = <<<SQL
+                create table if not exists users_api
+                (
+                    id_user int unsigned not null
+                        primary key,
+                    api_key varchar(100) not null,
+                    constraint api_key_UNIQUE
+                        unique (api_key)
+                )
+                charset=utf8mb4;
+                REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC');
+            SQL;
+
+            static::$db->exec($sql);
+        }
 
         if ($hasRedirection) {
             if ($isFormSuccess) {
@@ -843,24 +860,6 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
             $this->doTestHasResponseWithStatusCode($response, 200);
         } else {
             $this->doTestHasResponseWithStatusCode($response, 200);
-        }
-
-        if (isset($params['raise_exception'])) {
-            $sql = <<<SQL
-                create table if not exists comments
-                (
-                    id int unsigned auto_increment
-                        primary key,
-                    id_author int unsigned null,
-                    id_blueprint int unsigned not null,
-                    name_fallback varchar(255) null,
-                    content text not null,
-                    created_at datetime not null
-                )
-                charset=utf8mb4;
-            SQL;
-
-            static::$db->exec($sql);
         }
 
         // user after
