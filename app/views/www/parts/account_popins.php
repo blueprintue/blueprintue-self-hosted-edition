@@ -85,6 +85,9 @@ use Rancoud\Session\Session;
                         <h2 class="popin__title" id="popin-register-h2">Register</h2>
                     </div>
                     <div class="popin__content">
+                        <?php if ($data['has_invalid_configuration_mail_from_address']) { ?>
+                            <div class="block__info block__info--error" data-flash-error-for="form-register" role="alert">Error, could not use this form, "MAIL_FROM_ADDRESS" env variable is invalid.</div>
+                        <?php } ?>
                         <?php
                         /** @var FormHelper $formRegister */
                         $formRegister = $data['form-register'];
@@ -161,7 +164,9 @@ use Rancoud\Session\Session;
                         <h2 class="popin__title" id="popin-forgot_password-h2">Reset your <span class="popin__title--span">password</span></h2>
                     </div>
                     <div class="popin__content">
-
+                        <?php if ($data['has_invalid_configuration_mail_from_address']) { ?>
+                            <div class="block__info block__info--error" data-flash-error-for="form-forgot_password" role="alert">Error, could not use this form, "MAIL_FROM_ADDRESS" env variable is invalid.</div>
+                        <?php } ?>
                         <?php
                         /** @var FormHelper $formForgotPassword */
                         $formForgotPassword = $data['form-forgot_password'];

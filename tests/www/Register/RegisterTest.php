@@ -67,6 +67,18 @@ class RegisterTest extends TestCase
     }
 
     /**
+     * @throws ApplicationException
+     * @throws EnvironmentException
+     * @throws RouterException
+     */
+    public function testRegisterGETInvalidConfigurationEmail(): void
+    {
+        $response = $this->getResponseFromApplication('GET', '/', [], [], [], [], [], [], [], 'tests-invalid-mail-from-address.env');
+        $this->doTestHasResponseWithStatusCode($response, 200);
+        $this->doTestHtmlBody($response, '<div class="block__info block__info--error" data-flash-error-for="form-register" role="alert">Error, could not use this form, "MAIL_FROM_ADDRESS" env variable is invalid.</div>');
+    }
+
+    /**
      * @throws \Exception
      *
      * @return array[]
