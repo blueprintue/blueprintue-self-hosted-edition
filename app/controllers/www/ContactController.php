@@ -67,7 +67,7 @@ class ContactController implements MiddlewareInterface
             $this->data += [$this->inputs['CSRF'] => Session::get('csrf')];
 
             $formContact = new FormHelper();
-            $formContact->setErrorMessage('Error, could not use this form, missing MAIL_CONTACT_TO configuration');
+            $formContact->setErrorMessage('Error, could not use this form, "MAIL_CONTACT_TO" env variable is invalid.');
             $this->data += ['form-contact' => $formContact];
 
             return $this->sendPage();
