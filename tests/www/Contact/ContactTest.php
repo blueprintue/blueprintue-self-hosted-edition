@@ -52,7 +52,7 @@ class ContactTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
-    public function testContactGET_InvalidConfigurationEmail(): void
+    public function testContactGETInvalidConfigurationEmail(): void
     {
         $response = $this->getResponseFromApplication('GET', '/contact/', [], [], [], [], [], [], [], 'tests-invalid-mail-contact-to.env');
         $this->doTestHasResponseWithStatusCode($response, 200);
