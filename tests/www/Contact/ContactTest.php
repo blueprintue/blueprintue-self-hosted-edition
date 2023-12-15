@@ -47,6 +47,25 @@ class ContactTest extends TestCase
         $this->doTestNavBarHasNoLinkActive($response);
     }
 
+    /**
+     * @throws ApplicationException
+     * @throws EnvironmentException
+     * @throws RouterException
+     */
+    public function testContactGETInvalidConfigurationEmail(): void
+    {
+        $response = $this->getResponseFromApplication('GET', '/contact/', [], [], [], [], [], [], [], 'tests-invalid-mail-contact-to.env');
+        $this->doTestHasResponseWithStatusCode($response, 200);
+        $this->doTestHtmlHead($response, [
+            'title'       => 'Contact us | This is a base title',
+            'description' => 'Contact&#x20;us'
+        ]);
+        $this->doTestHtmlBody($response, '<h2 class="block__title">Contact</h2>');
+        $this->doTestHtmlBody($response, '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, could not use this form, &quot;MAIL_CONTACT_TO&quot; env variable is invalid.</div>');
+        $this->doTestNavBarIsComplete($response);
+        $this->doTestNavBarHasNoLinkActive($response);
+    }
+
     public function dataCases(): array
     {
         return [
