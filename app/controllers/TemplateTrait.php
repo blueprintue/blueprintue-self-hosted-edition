@@ -90,6 +90,7 @@ trait TemplateTrait
         $this->addFormRegisterData();
         $this->addFormLogoutData();
         $this->addFormForgotPasswordData();
+        $this->addInvalidEmailData();
 
         $page = $this->getFullTemplate($this->pageFile, $this->data);
 
@@ -174,5 +175,17 @@ trait TemplateTrait
         $this->data += ['form-forgot_password' => $formForgotPassword];
 
         $this->data += ['form-forgot_password-hidden-csrf' => (string) Session::get('csrf')];
+    }
+
+    /**
+     * @throws \Exception
+     */
+    protected function addInvalidEmailData(): void
+    {
+        $to = (string) Application::getConfig()->get('MAIL_FROM_ADDRESS');
+        $posArobase = \mb_strpos($to, '@');
+        $hasInvalidEmail = !$posArobase || ($posArobase < 1 || $posArobase === \mb_strlen($to) - 1);
+
+        $this->data += ['has_invalid_configuration_mail_from_address' => $hasInvalidEmail];
     }
 }
