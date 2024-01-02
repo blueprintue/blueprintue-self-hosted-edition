@@ -146,6 +146,7 @@ class Helper
     public static function getAllUEVersion(): array
     {
         return [
+            '5.4',
             '5.3',
             '5.2',
             '5.1',
