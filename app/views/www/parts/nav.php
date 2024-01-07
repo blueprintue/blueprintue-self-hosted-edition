@@ -23,7 +23,7 @@ use Rancoud\Session\Session;
         </div>
         <ul class="nav__center-side-container" id="nav__center-side-container">
             <li>
-                <a class="nav__link nav__link--add-margin-right<?php echo ($data['navbar_current_page'] === 'home') ? ' nav__link--active' : ''; ?>" href="/">Create pastebin</a>
+                <a class="nav__link nav__link--add-margin-right<?php echo ($data['navbar_current_page'] === 'home') ? ' nav__link--active' : ''; ?>" href="/">Create blueprint</a>
             </li>
             <li>
                 <a class="nav__link<?php echo ($data['navbar_current_page'] === 'blueprints_list' || $data['navbar_current_page'] === 'blueprint') ? ' nav__link--active' : ''; ?>" href="/type/blueprint/">Blueprints</a>

@@ -117,7 +117,7 @@ use Rancoud\Session\Session;
             <div class="block__element block__element--home">
                 <h2 class="block__title">Last public pasted <span class="block__title--emphasis">blueprints</span></h2>
                 <div>
-                    <a class="block__link block__link--home" href="/last-blueprints/">Last pastebins</a>
+                    <a class="block__link block__link--home" href="/last-blueprints/">Last blueprints</a>
                     <a class="block__link block__link--home" href="/search/">Advanced Search</a>
                     <a class="block__link block__link--home" href="/most-discussed-blueprints/">Most discussed</a>
                     <a class="block__link block__link--home" href="/type/material/">Material blueprint</a>
