@@ -305,8 +305,8 @@ HTML;
         $body = $this->getContentBetweenTags($body, '<header>', '</header>');
         $body = $this->getContentBetweenTags($body, '<nav class="nav">', '</nav>');
         $body = $this->getContentBetweenTags($body, '<ul class="nav__center-side-container" id="nav__center-side-container">', '</ul>');
-        $linkHome = $this->getContentBetweenTags($body, '<a', '>Create pastebin</a>');
-        $linkBlueprints = $this->getContentBetweenTags($body, 'pastebin</a>', '>Blueprints</a>');
+        $linkHome = $this->getContentBetweenTags($body, '<a', '>Create blueprint</a>');
+        $linkBlueprints = $this->getContentBetweenTags($body, 'blueprint</a>', '>Blueprints</a>');
 
         static::assertStringContainsString('nav__link--active', $linkHome);
         static::assertStringNotContainsString('nav__link--active', $linkBlueprints);
@@ -319,7 +319,7 @@ HTML;
         $body = $this->getContentBetweenTags($body, '<header>', '</header>');
         $body = $this->getContentBetweenTags($body, '<nav class="nav">', '</nav>');
         $body = $this->getContentBetweenTags($body, '<ul class="nav__center-side-container" id="nav__center-side-container">', '</ul>');
-        $linkHome = $this->getContentBetweenTags($body, '<a', '>Create pastebin</a>');
+        $linkHome = $this->getContentBetweenTags($body, '<a', '>Create blueprint</a>');
         $linkBlueprints = $this->getContentBetweenTags($body, '<a', '>Blueprints</a>');
 
         static::assertStringNotContainsString('nav__link--active', $linkHome);
