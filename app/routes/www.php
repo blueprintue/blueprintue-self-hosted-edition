@@ -11,12 +11,12 @@ $config = [
             'callback'    => app\controllers\www\HomeController::class,
             'name'        => 'home',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
-                \app\middlewares\LoginMiddleware::class,
-                \app\middlewares\ForgotPasswordMiddleware::class,
-                \app\middlewares\RegisterMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
+                app\middlewares\LoginMiddleware::class,
+                app\middlewares\ForgotPasswordMiddleware::class,
+                app\middlewares\RegisterMiddleware::class,
             ]
         ],
         // endregion
@@ -30,12 +30,12 @@ $config = [
                 'version' => 'last',
             ],
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
-                \app\middlewares\LoginMiddleware::class,
-                \app\middlewares\ForgotPasswordMiddleware::class,
-                \app\middlewares\RegisterMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
+                app\middlewares\LoginMiddleware::class,
+                app\middlewares\ForgotPasswordMiddleware::class,
+                app\middlewares\RegisterMiddleware::class,
             ]
         ],
         [
@@ -44,9 +44,9 @@ $config = [
             'callback'    => app\controllers\www\BlueprintEditController::class,
             'name'        => 'blueprint-edit',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
             ]
         ],
         [
@@ -58,8 +58,8 @@ $config = [
                 'version' => 'last',
             ],
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
             ]
         ],
         [
@@ -68,12 +68,12 @@ $config = [
             'callback'    => app\controllers\www\BlueprintDiffController::class,
             'name'        => 'blueprint-diff',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
-                \app\middlewares\LoginMiddleware::class,
-                \app\middlewares\ForgotPasswordMiddleware::class,
-                \app\middlewares\RegisterMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
+                app\middlewares\LoginMiddleware::class,
+                app\middlewares\ForgotPasswordMiddleware::class,
+                app\middlewares\RegisterMiddleware::class,
             ]
         ],
         // endregion
@@ -84,12 +84,12 @@ $config = [
             'callback'    => app\controllers\www\ProfileController::class,
             'name'        => 'profile',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
-                \app\middlewares\LoginMiddleware::class,
-                \app\middlewares\ForgotPasswordMiddleware::class,
-                \app\middlewares\RegisterMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
+                app\middlewares\LoginMiddleware::class,
+                app\middlewares\ForgotPasswordMiddleware::class,
+                app\middlewares\RegisterMiddleware::class,
             ]
         ],
         [
@@ -98,9 +98,9 @@ $config = [
             'callback'    => app\controllers\www\ProfileEditController::class,
             'name'        => 'profile-edit',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
             ]
         ],
         // endregion
@@ -111,12 +111,12 @@ $config = [
             'callback'    => app\controllers\www\BlueprintListController::class,
             'name'        => 'search',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
-                \app\middlewares\LoginMiddleware::class,
-                \app\middlewares\ForgotPasswordMiddleware::class,
-                \app\middlewares\RegisterMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
+                app\middlewares\LoginMiddleware::class,
+                app\middlewares\ForgotPasswordMiddleware::class,
+                app\middlewares\RegisterMiddleware::class,
             ]
         ],
         // endregion
@@ -130,12 +130,12 @@ $config = [
                 'page' => 1
             ],
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
-                \app\middlewares\LoginMiddleware::class,
-                \app\middlewares\ForgotPasswordMiddleware::class,
-                \app\middlewares\RegisterMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
+                app\middlewares\LoginMiddleware::class,
+                app\middlewares\ForgotPasswordMiddleware::class,
+                app\middlewares\RegisterMiddleware::class,
             ]
         ],
         [
@@ -147,12 +147,12 @@ $config = [
                 'page' => 1
             ],
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
-                \app\middlewares\LoginMiddleware::class,
-                \app\middlewares\ForgotPasswordMiddleware::class,
-                \app\middlewares\RegisterMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
+                app\middlewares\LoginMiddleware::class,
+                app\middlewares\ForgotPasswordMiddleware::class,
+                app\middlewares\RegisterMiddleware::class,
             ]
         ],
         [
@@ -165,12 +165,12 @@ $config = [
             ],
             'constraints' => ['type' => 'animation|behavior-tree|blueprint|material|metasound|niagara'],
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
-                \app\middlewares\LoginMiddleware::class,
-                \app\middlewares\ForgotPasswordMiddleware::class,
-                \app\middlewares\RegisterMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
+                app\middlewares\LoginMiddleware::class,
+                app\middlewares\ForgotPasswordMiddleware::class,
+                app\middlewares\RegisterMiddleware::class,
             ]
         ],
         [
@@ -182,12 +182,12 @@ $config = [
                 'page' => 1
             ],
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
-                \app\middlewares\LoginMiddleware::class,
-                \app\middlewares\ForgotPasswordMiddleware::class,
-                \app\middlewares\RegisterMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
+                app\middlewares\LoginMiddleware::class,
+                app\middlewares\ForgotPasswordMiddleware::class,
+                app\middlewares\RegisterMiddleware::class,
             ]
         ],
         [
@@ -199,12 +199,12 @@ $config = [
                 'page' => 1
             ],
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
-                \app\middlewares\LoginMiddleware::class,
-                \app\middlewares\ForgotPasswordMiddleware::class,
-                \app\middlewares\RegisterMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
+                app\middlewares\LoginMiddleware::class,
+                app\middlewares\ForgotPasswordMiddleware::class,
+                app\middlewares\RegisterMiddleware::class,
             ]
         ],
         // endregion
@@ -215,12 +215,12 @@ $config = [
             'callback'    => app\controllers\www\ContactController::class,
             'name'        => 'contact',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
-                \app\middlewares\LoginMiddleware::class,
-                \app\middlewares\ForgotPasswordMiddleware::class,
-                \app\middlewares\RegisterMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
+                app\middlewares\LoginMiddleware::class,
+                app\middlewares\ForgotPasswordMiddleware::class,
+                app\middlewares\RegisterMiddleware::class,
             ]
         ],
         [
@@ -230,12 +230,12 @@ $config = [
             'callback'    => app\controllers\www\StaticController::class,
             'name'        => 'static-pages',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
-                \app\middlewares\LogoutMiddleware::class,
-                \app\middlewares\LoginMiddleware::class,
-                \app\middlewares\ForgotPasswordMiddleware::class,
-                \app\middlewares\RegisterMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
+                app\middlewares\LogoutMiddleware::class,
+                app\middlewares\LoginMiddleware::class,
+                app\middlewares\ForgotPasswordMiddleware::class,
+                app\middlewares\RegisterMiddleware::class,
             ]
         ],
         // endregion
@@ -250,8 +250,8 @@ $config = [
             'callback'    => app\controllers\www\UploadController::class,
             'name'        => 'upload-image',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
             ]
         ],
         // endregion
@@ -262,8 +262,8 @@ $config = [
             'callback'    => app\controllers\www\ErrorController::class,
             'name'        => 'error',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
             ]
         ],
         // endregion
@@ -274,8 +274,8 @@ $config = [
             'callback'    => app\controllers\www\ResetPasswordController::class,
             'name'        => 'reset-password',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
             ]
         ],
         // endregion
@@ -286,8 +286,8 @@ $config = [
             'callback'    => app\controllers\www\ConfirmAccountController::class,
             'name'        => 'confirm-account',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
             ]
         ],
         // endregion
@@ -298,7 +298,7 @@ $config = [
             'callback'    => app\controllers\www\APIController::class,
             'name'        => 'api_upload',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
             ]
         ],
         [
@@ -307,7 +307,7 @@ $config = [
             'callback'    => app\controllers\www\APIController::class,
             'name'        => 'api_render',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
             ]
         ],
         // endregion
@@ -318,8 +318,8 @@ $config = [
             'callback'    => app\controllers\www\CronController::class,
             'name'        => 'cron_purge_sessions',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
-                \app\middlewares\SessionMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\SessionMiddleware::class,
             ]
         ],
         [
@@ -328,7 +328,7 @@ $config = [
             'callback'    => app\controllers\www\CronController::class,
             'name'        => 'cron_purge_users_not_confirmed',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
             ]
         ],
         [
@@ -337,7 +337,7 @@ $config = [
             'callback'    => app\controllers\www\CronController::class,
             'name'        => 'cron_purge_deleted_blueprints',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
             ]
         ],
         [
@@ -346,13 +346,13 @@ $config = [
             'callback'    => app\controllers\www\CronController::class,
             'name'        => 'cron_set_soft_delete_anonymous_private_blueprints',
             'middlewares' => [
-                \app\middlewares\DatabaseMiddleware::class,
+                app\middlewares\DatabaseMiddleware::class,
             ]
         ]
         // endregion
     ]
 ];
-$subRouter = new \Rancoud\Router\Router();
+$subRouter = new Rancoud\Router\Router();
 $subRouter->setupRouterAndRoutesWithConfigArray($config);
 /* @var \Rancoud\Router\Router $router */
 $router->any('/(.*)', $subRouter);
