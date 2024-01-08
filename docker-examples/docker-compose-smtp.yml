@@ -1,0 +1,97 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik
+    container_name: traefik
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+    volumes:
+      - "./traefik-http.yml:/etc/traefik/traefik.yml:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: always
+
+  mariadb:
+    image: mariadb
+    container_name: database
+    volumes:
+      - "./db:/var/lib/mysql"
+      - "./dump-with-anonymous-user.sql:/docker-entrypoint-initdb.d/init.sql"
+    env_file:
+      - "./database.env"
+    restart: "always"
+    ports:
+      - "3306:3306"
+
+  msmtpd:
+    image: crazymax/msmtpd
+    container_name: msmtpd
+    env_file:
+      - "./msmtpd.env"
+    restart: always
+
+  blueprintue-self-hosted-edition:
+    image: blueprintue/blueprintue-self-hosted-edition
+    container_name: blueprintue-self-hosted-edition
+    depends_on:
+      - mariadb
+      - msmtpd
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./storage:/opt/blueprintue-self-hosted-edition/storage"
+      - "./medias:/opt/blueprintue-self-hosted-edition/www/medias"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.blueprintue-self-hosted-edition.entrypoints=http"
+      - "traefik.http.routers.blueprintue-self-hosted-edition.rule=Host(`_____REPLACE_ME_____`)"
+      - "traefik.http.services.blueprintue-self-hosted-edition.loadbalancer.server.port=8000"
+      - "traefik.http.services.blueprintue-self-hosted-edition.loadbalancer.passhostheader=true"
+    environment:
+      - "OPCACHE_ENABLE=0"
+      - "REAL_IP_FROM=0.0.0.0/32"
+      - "REAL_IP_HEADER=X-Forwarded-For"
+      - "LOG_IP_VAR=http_x_forwarded_for"
+      - "TIMEZONE=UTC"
+      - "DATABASE_DRIVER=mysql"
+      - "DATABASE_HOST=database"
+      - "DATABASE_USER=database_user"
+      - "DATABASE_PASSWORD=database_password"
+      - "DATABASE_NAME=database_name"
+      - "DATABASE_PERSISTENT_CONNECTION=false"
+      - "SESSION_DRIVER=default"
+      - "SESSION_ENCRYPT_KEY="
+      - "SESSION_GC_MAXLIFETIME=86400"
+      - "SESSION_LIFETIME=0"
+      - "SESSION_PATH=/"
+      - "SESSION_HTTPS=false"
+      - "SESSION_SAMESITE=Strict"
+      - "SESSION_REMEMBER_NAME=remember_token"
+      - "SESSION_REMEMBER_LIFETIME=2592000"
+      - "SESSION_REMEMBER_PATH=/"
+      - "SESSION_REMEMBER_HTTPS=false"
+      - "SESSION_REMEMBER_SAMESITE=Strict"
+      - "HOST=_____REPLACE_ME_____"
+      - "HTTPS=false"
+      - "SITE_NAME=blueprintUE self-hosted edition"
+      - "SITE_BASE_TITLE="
+      - "SITE_DESCRIPTION="
+      - "ANONYMOUS_ID=1"
+      - "MAIL_USE_SMTP=false"
+      - "MAIL_SMTP_HOST=msmtpd"
+      - "MAIL_SMTP_PORT=2500"
+      - "MAIL_USE_SMTP_AUTH=false"
+      - "MAIL_SMTP_USER="
+      - "MAIL_SMTP_PASSWORD="
+      - "MAIL_FROM_ADDRESS=_____REPLACE_ME_____"
+      - "MAIL_FROM_NAME=blueprintue-self-hosted-edition"
+      - "MAIL_CONTACT_TO=_____REPLACE_ME_____"
+      - "MAIL_HEADER_LOGO_PATH=blueprintue-self-hosted-edition_logo-full.png"
+    restart: "always"
+
+volumes:
+  database:
+  blueprintue-self-hosted-edition_storage:
+  blueprintue-self-hosted-edition_medias:

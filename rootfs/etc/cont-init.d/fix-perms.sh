@@ -19,6 +19,6 @@ chown -R blueprintue-self-hosted-edition. \
   /tpls \
   /var/lib/nginx \
   /var/log/nginx \
-  /var/log/php7 \
+  /var/log/php82 \
   /var/run/nginx \
   /var/run/php-fpm

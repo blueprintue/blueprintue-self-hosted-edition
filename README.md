@@ -13,13 +13,22 @@
 * \>= MySQL 8 or >= MariaDB 10.6
 
 ## How to install?
+### Docker Image
+| Registry                                                                                                                     | Image                                                 |
+|------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------|
+| [Docker Hub](https://hub.docker.com/r/blueprintue/blueprintue-self-hosted-edition/)                                          | `blueprintue/blueprintue-self-hosted-edition`         |
+| [GitHub Container Registry](https://github.com/users/blueprintue/packages/container/package/blueprintue-self-hosted-edition) | `ghcr.io/blueprintue/blueprintue-self-hosted-edition` |
+
+Read [docker-examples](https://github.com/blueprintue/blueprintue-self-hosted-edition/blob/main/docker-examples) about documentation and docker-compose file example.
+
+### FTP / localhost
 Download zip file from last [release](https://github.com/blueprintue/blueprintue-self-hosted-edition/releases) or run a `composer install` to have `vendor` folder.  
 1. copy folders `app`, `storage`, `vendor` and paste **outside** of the public folder of your server
 2. copy folder content `www` and paste **inside** the public folder of your server
 3. copy `dump-with-anonymous-user.sql` or `dump-without-anonymous-user.sql` and paste file in your database
 4. copy `.env.template` and paste file **outside** of the public folder of your server
 5. fill values in `.env.template` file with what you need (database and email)
-6. rename `.env.template` to `.env`
+6. rename `.env.template` to `.env` (see [Configuration explanations](#configuration-explanations))
 7. done
 
 The `public folder` means what your http server can show you, usually it is called is `www` or `public_html`
@@ -41,9 +50,9 @@ blueprintUE self-hosted edition is like blueprintUE but without
 
 ## GDPR
 Because GDPR you will need to:
-* fill contact email
-* fill page privacy policy
-* fill page terms of service
+* fill contact email [(in .env file)](https://github.com/blueprintue/blueprintue-self-hosted-edition/blob/main/.env.template#L46)
+* fill page privacy policy [(in /app/views/www/pages/privacy_policy.php)](https://github.com/blueprintue/blueprintue-self-hosted-edition/blob/main/app/views/www/pages/privacy_policy.php#L25)
+* fill page terms of service [(in /app/views/www/pages/terms_of_service.php)](https://github.com/blueprintue/blueprintue-self-hosted-edition/blob/main/app/views/www/pages/terms_of_service.php#L25)
 
 ## Configuration explanations
 ### .env file
@@ -74,10 +83,10 @@ Because GDPR you will need to:
 | SESSION_REMEMBER_SAMESITE | NO        | string | Strict         | None \| Lax \| Strict | security policies on how cookies are shared, Lax is mandatory for Twitter OAuth |
 
 #### Host
-| Parameter | Mandatory | Type   | Default value  | Specific values | Description                                         |
-| --------- | --------- | ------ | -------------- | --------------- |-----------------------------------------------------|
-| HOST      | YES       | string |                |                 | hostname (e.g. blueprintue-self-hosted-edition.com) |
-| HTTPS     | YES       | bool   |                |                 | use for detect scheme (http or https)               |
+| Parameter | Mandatory | Type   | Default value  | Specific values | Description                                          |
+| --------- | --------- | ------ | -------------- | --------------- |------------------------------------------------------|
+| HOST      | YES       | string |                |                 | hostname (e.g. blueprintue-self-hosted-edition.test) |
+| HTTPS     | YES       | bool   |                |                 | use for detect scheme (http or https)                |
 
 #### Site
 | Parameter          | Mandatory | Type   | Default value                   | Specific values | Description                                                                         |
@@ -225,7 +234,7 @@ After you can launch dev environment
 ```shell
 cd .dev
 touch .env
-docker-compose up --build
+docker-compose up -d --build --force-recreate
 ```
 
 ### Neard / Wamp / Old school
@@ -236,46 +245,3 @@ You have to update your `hosts` file those values
 ```
 
 Follow [How to install](#how-to-install).
-
-## How to test
-`docker buildx bake test` create image  
-`docker run --rm -v $(pwd)/coverage:/src/coverage -e XDEBUG_MODE=coverage --network host blueprintue-self-hosted-edition:test test` launch tests
-
-## Docker
-### Buildx
-* `docker buildx bake` create image-local
-* `docker buildx bake validate` launch 2 subtasks vendor-update && vendor-validate
-* `docker buildx bake vendor-validate` check if there is a drift with composer.lock
-* `docker buildx bake lint` check if code is matching with lint rules
-* `docker buildx bake test` end 2 end testing
-* `docker buildx bake image` create a docker image for registry
-* `docker buildx bake image-local` create a local docker image
-
-### Docker-compose
-`docker-compose build && docker-compose run lib composer ci` for launching tests
-
-### Run image-local
-`docker buildx bake && docker run --rm -it -p 8000:8000 blueprintue-self-hosted-edition:local`
-
-### Env variables
-#### Rootfs
-##### User rights
-* `PUID` user id
-* `PGID` group id
-
-##### Timezone
-* `TZ` timezone (by default: UTC)
-
-##### PHP-FPM
-* `MEMORY_LIMIT` memory limit (by default: 256M)
-* `POST_MAX_SIZE` post max size (by default: 16M)
-* `UPLOAD_MAX_SIZE` upload max size (by default: 16M)
-
-##### OPCache
-* `OPCACHE_ENABLE` opcache enable (by default: 1)
-* `OPCACHE_MEM_SIZE` opcache memory consumption (by default: 128)
-
-##### Nginx
-* `REAL_IP_FROM` real ip from (by default: 0.0.0.0/32)
-* `REAL_IP_HEADER` real ip header (by default: X-Forwarded-For)
-* `LOG_IP_VAR` log ip var (by default: remote_addr)
