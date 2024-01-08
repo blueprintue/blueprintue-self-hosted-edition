@@ -163,7 +163,7 @@ $config = [
             'optionals_parameters' => [
                 'page' => 1
             ],
-            'constraints' => ['type' => 'animation|behavior-tree|blueprint|material|metasound|niagara'],
+            'constraints' => ['type' => 'animation|behavior-tree|blueprint|material|metasound|niagara|pcg'],
             'middlewares' => [
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,

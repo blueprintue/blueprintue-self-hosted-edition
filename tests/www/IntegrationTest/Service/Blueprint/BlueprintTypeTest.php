@@ -41,6 +41,10 @@ class BlueprintTypeTest extends TestCase
                 'content' => '/Script/NiagaraEditor',
                 'type'    => 'niagara',
             ],
+            'PCGEditorGraphNode = pcg' => [
+                'content' => 'PCGEditorGraphNode',
+                'type'    => 'pcg',
+            ],
             'empty = blueprint' => [
                 'content' => '',
                 'type'    => 'blueprint',

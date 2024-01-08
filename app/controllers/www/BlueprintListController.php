@@ -242,7 +242,7 @@ class BlueprintListController implements MiddlewareInterface
         }
 
         $this->params['type_slug'] = '';
-        if (isset($queryParams['form-search-select-type']) && \in_array($queryParams['form-search-select-type'], ['animation', 'behavior-tree', 'blueprint', 'material', 'metasound', 'niagara'], true)) { // phpcs:ignore
+        if (isset($queryParams['form-search-select-type']) && \in_array($queryParams['form-search-select-type'], ['animation', 'behavior-tree', 'blueprint', 'material', 'metasound', 'niagara', 'pcg'], true)) { // phpcs:ignore
             $this->params['type_slug'] = \trim($queryParams['form-search-select-type']);
             $urlParts[] = 'form-search-select-type=' . $this->params['type_slug'];
 
