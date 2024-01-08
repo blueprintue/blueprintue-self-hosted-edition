@@ -6,7 +6,7 @@ create table if not exists blueprints
     slug varchar(100) not null,
     file_id varchar(100) not null,
     title varchar(255) not null,
-    type enum('animation', 'behavior_tree', 'blueprint', 'material', 'metasound', 'niagara') default 'blueprint' not null,
+    type enum('animation', 'behavior_tree', 'blueprint', 'material', 'metasound', 'niagara', 'pcg') default 'blueprint' not null,
     ue_version char(5) default '4.0' not null,
     current_version int unsigned not null,
     thumbnail varchar(255) null,
