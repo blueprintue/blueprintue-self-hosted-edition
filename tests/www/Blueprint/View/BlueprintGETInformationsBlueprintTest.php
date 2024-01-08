@@ -96,6 +96,22 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
                 'expiration' => null,
                 'ue_version' => '5.0',
             ],
+            'no thumbnail / type pcg / exposure public / no expiration / ue version 5.0' => [
+                'sql_queries' => [
+                    'TRUNCATE TABLE blueprints',
+                    'TRUNCATE TABLE blueprints_version',
+                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg', '5.0')",
+                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+                ],
+                'slug'       => 'slug_public',
+                'thumbnail'  => null,
+                'type'       => 'pcg',
+                'title'      => '<script>alert(1)</script>my title',
+                'exposure'   => 'public',
+                'expiration' => null,
+                'ue_version' => '5.0',
+            ],
             'has thumbnail / type material / exposure unlisted / expiration in 1h / ue version 4.14' => [
                 'sql_queries' => [
                     'TRUNCATE TABLE blueprints',

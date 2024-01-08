@@ -1216,8 +1216,9 @@ HTML;
         $material = ($value === 'material') ? ' selected="selected"' : '';
         $metasound = ($value === 'metasound') ? ' selected="selected"' : '';
         $niagara = ($value === 'niagara') ? ' selected="selected"' : '';
+        $pcg = ($value === 'pcg') ? ' selected="selected"' : '';
 
-        if ($animation === '' && $behaviorTree === '' && $blueprint === '' && $material === '' && $metasound === '' && $niagara === '') { // phpcs:ignore
+        if ($animation === '' && $behaviorTree === '' && $blueprint === '' && $material === '' && $metasound === '' && $niagara === '' && $pcg === '') { // phpcs:ignore
             $all = ' selected="selected"';
         }
 
@@ -1234,6 +1235,7 @@ HTML;
 <option value="material"$material>Material</option>
 <option value="metasound"$metasound>Metasound</option>
 <option value="niagara"$niagara>Niagara</option>
+<option value="pcg"$pcg>PCG</option>
 </select>
 </div>
 </div>

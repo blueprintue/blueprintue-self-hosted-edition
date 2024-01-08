@@ -2452,6 +2452,411 @@ HTML,
      *
      * @return array[]
      */
+    public function dataCases3PublicUnlistedPrivatePCGBlueprint(): array
+    {
+        return [
+            '3 pcg blueprints public/unlisted/private - created but not published - (visitor profile)' => [
+                'sql_queries'             => [
+                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`, `ue_version`) VALUES
+                                            (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation', '4.21'),
+                                            (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'pcg', '4.21'),
+                                            (159, 'slug_502', 'file_502', 'title_502', 1, utc_timestamp(), 'public', 'pcg', '4.12'),
+                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'pcg', '4.21'),
+                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'pcg', '4.21'),
+                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'pcg', '4.21')",
+                ],
+                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&form-search-select-ue_version=4.21&page=1',
+                'location'                => null,
+                'user_id'                 => null,
+                'content_head'            => [
+                    'title'       => 'Search "tle" | Page 1 | This is a base title',
+                    'description' => 'Search "tle" in blueprints pasted'
+                ],
+                'content_blueprints_html' => <<<HTML
+<div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
+<div class="block__element">
+<h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
+<hr class="block__hr block__hr--small"/>
+</div>
+<div class="block__element">
+<p>No blueprints for the moment</p>
+HTML,
+                'content_pagination_html' => <<<HTML
+<nav aria-label="Pagination" class="pagination">
+<ul class="pagination__items">
+</ul>
+HTML,
+            ],
+            '3 pcg blueprints public/unlisted/private - created but not published - (public profile)' => [
+                'sql_queries'             => [
+                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`, `ue_version`) VALUES
+                                            (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation', '4.21'),
+                                            (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'pcg', '4.21'),
+                                            (159, 'slug_502', 'file_502', 'title_502', 1, utc_timestamp(), 'public', 'pcg', '4.12'),
+                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'pcg', '4.21'),
+                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'pcg', '4.21'),
+                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'pcg', '4.21')",
+                ],
+                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&form-search-select-ue_version=4.21&page=1',
+                'location'                => null,
+                'user_id'                 => 179,
+                'content_head'            => [
+                    'title'       => 'Search "tle" | Page 1 | This is a base title',
+                    'description' => 'Search "tle" in blueprints pasted'
+                ],
+                'content_blueprints_html' => <<<HTML
+<div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
+<div class="block__element">
+<h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
+<hr class="block__hr block__hr--small"/>
+</div>
+<div class="block__element">
+<p>No blueprints for the moment</p>
+HTML,
+                'content_pagination_html' => <<<HTML
+<nav aria-label="Pagination" class="pagination">
+<ul class="pagination__items">
+</ul>
+HTML,
+            ],
+            '3 pcg blueprints public/unlisted/private - created but not published - (author profile)' => [
+                'sql_queries'             => [
+                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`, `ue_version`) VALUES
+                                            (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation', '4.21'),
+                                            (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'pcg', '4.21'),
+                                            (159, 'slug_502', 'file_502', 'title_502', 1, utc_timestamp(), 'public', 'pcg', '4.12'),
+                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'pcg', '4.21'),
+                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'pcg', '4.21'),
+                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'pcg', '4.21')",
+                ],
+                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&form-search-select-ue_version=4.21&page=1',
+                'location'                => null,
+                'user_id'                 => 159,
+                'content_head'            => [
+                    'title'       => 'Search "tle" | Page 1 | This is a base title',
+                    'description' => 'Search "tle" in blueprints pasted'
+                ],
+                'content_blueprints_html' => <<<HTML
+<div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
+<div class="block__element">
+<h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
+<hr class="block__hr block__hr--small"/>
+</div>
+<div class="block__element">
+<p>No blueprints for the moment</p>
+HTML,
+                'content_pagination_html' => <<<HTML
+<nav aria-label="Pagination" class="pagination">
+<ul class="pagination__items">
+</ul>
+HTML,
+            ],
+            '3 pcg blueprints public/unlisted/private - deleted - (visitor profile)' => [
+                'sql_queries'             => [
+                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`, `ue_version`) VALUES
+                                            (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation', '4.21'),
+                                            (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'pcg', '4.21'),
+                                            (159, 'slug_502', 'file_502', 'title_502', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'pcg', '4.12'),
+                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'pcg', '4.21'),
+                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'pcg', '4.21'),
+                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'pcg', '4.21')",
+                ],
+                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&form-search-select-ue_version=4.21&page=1',
+                'location'                => null,
+                'user_id'                 => null,
+                'content_head'            => [
+                    'title'       => 'Search "tle" | Page 1 | This is a base title',
+                    'description' => 'Search "tle" in blueprints pasted'
+                ],
+                'content_blueprints_html' => <<<HTML
+<div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
+<div class="block__element">
+<h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
+<hr class="block__hr block__hr--small"/>
+</div>
+<div class="block__element">
+<p>No blueprints for the moment</p>
+HTML,
+                'content_pagination_html' => <<<HTML
+<nav aria-label="Pagination" class="pagination">
+<ul class="pagination__items">
+</ul>
+HTML,
+            ],
+            '3 pcg blueprints public/unlisted/private - deleted - (public profile)' => [
+                'sql_queries'             => [
+                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`, `ue_version`) VALUES
+                                            (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation', '4.21'),
+                                            (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'pcg', '4.21'),
+                                            (159, 'slug_502', 'file_502', 'title_502', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'pcg', '4.12'),
+                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'pcg', '4.21'),
+                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'pcg', '4.21'),
+                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'pcg', '4.21')",
+                ],
+                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&form-search-select-ue_version=4.21&page=1',
+                'location'                => null,
+                'user_id'                 => 179,
+                'content_head'            => [
+                    'title'       => 'Search "tle" | Page 1 | This is a base title',
+                    'description' => 'Search "tle" in blueprints pasted'
+                ],
+                'content_blueprints_html' => <<<HTML
+<div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
+<div class="block__element">
+<h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
+<hr class="block__hr block__hr--small"/>
+</div>
+<div class="block__element">
+<p>No blueprints for the moment</p>
+HTML,
+                'content_pagination_html' => <<<HTML
+<nav aria-label="Pagination" class="pagination">
+<ul class="pagination__items">
+</ul>
+HTML,
+            ],
+            '3 pcg blueprints public/unlisted/private - deleted - (author profile)' => [
+                'sql_queries'             => [
+                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`, `ue_version`) VALUES
+                                            (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation', '4.21'),
+                                            (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'pcg', '4.21'),
+                                            (159, 'slug_502', 'file_502', 'title_502', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'pcg', '4.12'),
+                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'pcg', '4.21'),
+                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'pcg', '4.21'),
+                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'pcg', '4.21')",
+                ],
+                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&form-search-select-ue_version=4.21&page=1',
+                'location'                => null,
+                'user_id'                 => 159,
+                'content_head'            => [
+                    'title'       => 'Search "tle" | Page 1 | This is a base title',
+                    'description' => 'Search "tle" in blueprints pasted'
+                ],
+                'content_blueprints_html' => <<<HTML
+<div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
+<div class="block__element">
+<h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
+<hr class="block__hr block__hr--small"/>
+</div>
+<div class="block__element">
+<p>No blueprints for the moment</p>
+HTML,
+                'content_pagination_html' => <<<HTML
+<nav aria-label="Pagination" class="pagination">
+<ul class="pagination__items">
+</ul>
+HTML,
+            ],
+            '3 pcg blueprints public/unlisted/private - (visitor profile)' => [
+                'sql_queries'             => [
+                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`, `ue_version`) VALUES
+                                            (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation', '4.21'),
+                                            (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg', '4.21'),
+                                            (159, 'slug_502', 'file_502', 'title_502', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg', '4.12'),
+                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg', '4.21'),
+                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'pcg', '4.21'),
+                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'pcg', '4.21')",
+                ],
+                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&form-search-select-ue_version=4.21&page=1',
+                'location'                => null,
+                'user_id'                 => null,
+                'content_head'            => [
+                    'title'       => 'Search "tle" | Page 1 | This is a base title',
+                    'description' => 'Search "tle" in blueprints pasted'
+                ],
+                'content_blueprints_html' => <<<HTML
+<div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
+<div class="block__element">
+<h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
+<hr class="block__hr block__hr--small"/>
+</div>
+<div class="block__element">
+<ul class="list">
+<li class="list__row list__row--header">
+<div class="list__col list__col--header list__col--first">Image</div>
+<div class="list__col list__col--header">Type</div>
+<div class="list__col list__col--header">UE Version</div>
+<div class="list__col list__col--header">Title</div>
+<div class="list__col list__col--header">Author</div>
+<div class="list__col list__col--header">Date</div>
+</li>
+<li class="list__row list__row--data">
+<div class="list__col list__col--first" data-name="Image">
+<a class="list__link-on-placeholder" href="&#x2F;blueprint&#x2F;slug_1&#x2F;">
+<svg aria-label="Blueprint thumbnail" class="list__thumbnail list__thumbnail--placeholder">
+<use href="/sprite/sprite.svg#blueprint-placeholder"></use>
+</svg>
+</a>
+</div>
+<div class="list__col" data-name="Type">pcg</div>
+<div class="list__col" data-name="UE Version">4.21</div>
+<div class="list__col" data-name="Title"><a class="list__link" href="&#x2F;blueprint&#x2F;slug_1&#x2F;">title_1</a></div>
+<div class="list__col" data-name="Author"><a class="list__link" href="&#x2F;profile&#x2F;user_159&#x2F;">user_159</a></div>
+<div class="list__col" data-name="Date">few seconds ago</div>
+</li>
+</ul>
+HTML,
+                'content_pagination_html' => <<<HTML
+<nav aria-label="Pagination" class="pagination">
+<ul class="pagination__items">
+<li class="pagination__item pagination__item--current">
+<a class="pagination__link pagination__link--current" href="&#x23;" aria-label="Page&#x20;1" aria-current="page">1</a>
+</li>
+</ul>
+HTML,
+            ],
+            '3 pcg blueprints public/unlisted/private - (public profile)' => [
+                'sql_queries'             => [
+                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`, `ue_version`) VALUES
+                                            (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation', '4.21'),
+                                            (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg', '4.21'),
+                                            (159, 'slug_502', 'file_502', 'title_502', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg', '4.12'),
+                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg', '4.21'),
+                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'pcg', '4.21'),
+                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'pcg', '4.21')",
+                ],
+                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&form-search-select-ue_version=4.21&page=1',
+                'location'                => null,
+                'user_id'                 => 179,
+                'content_head'            => [
+                    'title'       => 'Search "tle" | Page 1 | This is a base title',
+                    'description' => 'Search "tle" in blueprints pasted'
+                ],
+                'content_blueprints_html' => <<<HTML
+<div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
+<div class="block__element">
+<h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
+<hr class="block__hr block__hr--small"/>
+</div>
+<div class="block__element">
+<ul class="list">
+<li class="list__row list__row--header">
+<div class="list__col list__col--header list__col--first">Image</div>
+<div class="list__col list__col--header">Type</div>
+<div class="list__col list__col--header">UE Version</div>
+<div class="list__col list__col--header">Title</div>
+<div class="list__col list__col--header">Author</div>
+<div class="list__col list__col--header">Date</div>
+</li>
+<li class="list__row list__row--data">
+<div class="list__col list__col--first" data-name="Image">
+<a class="list__link-on-placeholder" href="&#x2F;blueprint&#x2F;slug_1&#x2F;">
+<svg aria-label="Blueprint thumbnail" class="list__thumbnail list__thumbnail--placeholder">
+<use href="/sprite/sprite.svg#blueprint-placeholder"></use>
+</svg>
+</a>
+</div>
+<div class="list__col" data-name="Type">pcg</div>
+<div class="list__col" data-name="UE Version">4.21</div>
+<div class="list__col" data-name="Title"><a class="list__link" href="&#x2F;blueprint&#x2F;slug_1&#x2F;">title_1</a></div>
+<div class="list__col" data-name="Author"><a class="list__link" href="&#x2F;profile&#x2F;user_159&#x2F;">user_159</a></div>
+<div class="list__col" data-name="Date">few seconds ago</div>
+</li>
+</ul>
+HTML,
+                'content_pagination_html' => <<<HTML
+<nav aria-label="Pagination" class="pagination">
+<ul class="pagination__items">
+<li class="pagination__item pagination__item--current">
+<a class="pagination__link pagination__link--current" href="&#x23;" aria-label="Page&#x20;1" aria-current="page">1</a>
+</li>
+</ul>
+HTML,
+            ],
+            '3 pcg blueprints public/unlisted/private - (author profile)' => [
+                'sql_queries'             => [
+                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`, `ue_version`) VALUES
+                                            (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation', '4.21'),
+                                            (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg', '4.21'),
+                                            (159, 'slug_502', 'file_502', 'title_502', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg', '4.12'),
+                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg', '4.21'),
+                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'pcg', '4.21'),
+                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'pcg', '4.21')",
+                ],
+                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&form-search-select-ue_version=4.21&page=1',
+                'location'                => null,
+                'user_id'                 => 159,
+                'content_head'            => [
+                    'title'       => 'Search "tle" | Page 1 | This is a base title',
+                    'description' => 'Search "tle" in blueprints pasted'
+                ],
+                'content_blueprints_html' => <<<HTML
+<div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
+<div class="block__element">
+<h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
+<hr class="block__hr block__hr--small"/>
+</div>
+<div class="block__element">
+<ul class="list">
+<li class="list__row list__row--header">
+<div class="list__col list__col--header list__col--first">Image</div>
+<div class="list__col list__col--header">Type</div>
+<div class="list__col list__col--header">UE Version</div>
+<div class="list__col list__col--header">Title</div>
+<div class="list__col list__col--header">Author</div>
+<div class="list__col list__col--header">Date</div>
+</li>
+<li class="list__row list__row--data">
+<div class="list__col list__col--first" data-name="Image">
+<a class="list__link-on-placeholder" href="&#x2F;blueprint&#x2F;slug_1&#x2F;">
+<svg aria-label="Blueprint thumbnail" class="list__thumbnail list__thumbnail--placeholder">
+<use href="/sprite/sprite.svg#blueprint-placeholder"></use>
+</svg>
+</a>
+</div>
+<div class="list__col" data-name="Type">pcg</div>
+<div class="list__col" data-name="UE Version">4.21</div>
+<div class="list__col" data-name="Title"><a class="list__link" href="&#x2F;blueprint&#x2F;slug_1&#x2F;">title_1</a></div>
+<div class="list__col" data-name="Author"><a class="list__link" href="&#x2F;profile&#x2F;user_159&#x2F;">user_159</a></div>
+<div class="list__col" data-name="Date">few seconds ago</div>
+</li>
+<li class="list__row list__row--data">
+<div class="list__col list__col--first" data-name="Image">
+<a class="list__link-on-placeholder" href="&#x2F;blueprint&#x2F;slug_2&#x2F;">
+<svg aria-label="Blueprint thumbnail" class="list__thumbnail list__thumbnail--placeholder">
+<use href="/sprite/sprite.svg#blueprint-placeholder"></use>
+</svg>
+</a>
+</div>
+<div class="list__col" data-name="Type">pcg</div>
+<div class="list__col" data-name="UE Version">4.21</div>
+<div class="list__col" data-name="Title"><a class="list__link" href="&#x2F;blueprint&#x2F;slug_2&#x2F;">title_2</a></div>
+<div class="list__col" data-name="Author"><a class="list__link" href="&#x2F;profile&#x2F;user_159&#x2F;">user_159</a></div>
+<div class="list__col" data-name="Date">few seconds ago</div>
+</li>
+<li class="list__row list__row--data">
+<div class="list__col list__col--first" data-name="Image">
+<a class="list__link-on-placeholder" href="&#x2F;blueprint&#x2F;slug_3&#x2F;">
+<svg aria-label="Blueprint thumbnail" class="list__thumbnail list__thumbnail--placeholder">
+<use href="/sprite/sprite.svg#blueprint-placeholder"></use>
+</svg>
+</a>
+</div>
+<div class="list__col" data-name="Type">pcg</div>
+<div class="list__col" data-name="UE Version">4.21</div>
+<div class="list__col" data-name="Title"><a class="list__link" href="&#x2F;blueprint&#x2F;slug_3&#x2F;">title_3</a></div>
+<div class="list__col" data-name="Author"><a class="list__link" href="&#x2F;profile&#x2F;user_159&#x2F;">user_159</a></div>
+<div class="list__col" data-name="Date">few seconds ago</div>
+</li>
+</ul>
+HTML,
+                'content_pagination_html' => <<<HTML
+<nav aria-label="Pagination" class="pagination">
+<ul class="pagination__items">
+<li class="pagination__item pagination__item--current">
+<a class="pagination__link pagination__link--current" href="&#x23;" aria-label="Page&#x20;1" aria-current="page">1</a>
+</li>
+</ul>
+HTML,
+            ],
+        ];
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return array[]
+     */
     public function dataCases30PublicUnlistedPrivateBlueprintPage1(): array
     {
         $formattedDates = [];

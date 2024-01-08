@@ -173,6 +173,9 @@ class SearchListTest extends TestCase
         foreach ($searchQueryType->dataCases3PublicUnlistedPrivateNiagaraBlueprint() as $k => $v) {
             $cases['Search - Query + Type - ' . $k] = $v;
         }
+        foreach ($searchQueryType->dataCases3PublicUnlistedPrivatePCGBlueprint() as $k => $v) {
+            $cases['Search - Query + Type - ' . $k] = $v;
+        }
         foreach ($searchQueryType->dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
             $cases['Search - Query + Type - ' . $k] = $v;
         }
@@ -210,6 +213,9 @@ class SearchListTest extends TestCase
             $cases['Search - Query + Type + Version - ' . $k] = $v;
         }
         foreach ($searchQueryTypeVersion->dataCases3PublicUnlistedPrivateNiagaraBlueprint() as $k => $v) {
+            $cases['Search - Query + Type + Version - ' . $k] = $v;
+        }
+        foreach ($searchQueryTypeVersion->dataCases3PublicUnlistedPrivatePCGBlueprint() as $k => $v) {
             $cases['Search - Query + Type + Version - ' . $k] = $v;
         }
         foreach ($searchQueryTypeVersion->dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
@@ -275,6 +281,9 @@ class SearchListTest extends TestCase
         foreach ($searchType->dataCases3PublicUnlistedPrivateNiagaraBlueprint() as $k => $v) {
             $cases['Search - Type - ' . $k] = $v;
         }
+        foreach ($searchType->dataCases3PublicUnlistedPrivatePCGBlueprint() as $k => $v) {
+            $cases['Search - Type - ' . $k] = $v;
+        }
         foreach ($searchType->dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
             $cases['Search - Type - ' . $k] = $v;
         }
@@ -312,6 +321,9 @@ class SearchListTest extends TestCase
             $cases['Search - Type + Version - ' . $k] = $v;
         }
         foreach ($searchTypeVersion->dataCases3PublicUnlistedPrivateNiagaraBlueprint() as $k => $v) {
+            $cases['Search - Type + Version - ' . $k] = $v;
+        }
+        foreach ($searchTypeVersion->dataCases3PublicUnlistedPrivatePCGBlueprint() as $k => $v) {
             $cases['Search - Type + Version - ' . $k] = $v;
         }
         foreach ($searchTypeVersion->dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
@@ -454,8 +466,9 @@ HTML;
         $material = ($value === 'material') ? ' selected="selected"' : '';
         $metasound = ($value === 'metasound') ? ' selected="selected"' : '';
         $niagara = ($value === 'niagara') ? ' selected="selected"' : '';
+        $pcg = ($value === 'pcg') ? ' selected="selected"' : '';
 
-        if ($animation === '' && $behaviorTree === '' && $blueprint === '' && $material === '' && $metasound === '' && $niagara === '') { // phpcs:ignore
+        if ($animation === '' && $behaviorTree === '' && $blueprint === '' && $material === '' && $metasound === '' && $niagara === '' && $pcg === '') { // phpcs:ignore
             $all = ' selected="selected"';
         }
 
@@ -472,6 +485,7 @@ HTML;
 <option value="material"$material>Material</option>
 <option value="metasound"$metasound>Metasound</option>
 <option value="niagara"$niagara>Niagara</option>
+<option value="pcg"$pcg>PCG</option>
 </select>
 </div>
 </div>

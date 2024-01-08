@@ -241,6 +241,10 @@ class BlueprintService
             return 'niagara';
         }
 
+        if (\mb_strpos($content, 'PCGEditorGraphNode') !== false) {
+            return 'pcg';
+        }
+
         return 'blueprint';
     }
 

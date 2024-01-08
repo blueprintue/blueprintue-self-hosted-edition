@@ -42,6 +42,7 @@ use Rancoud\Security\Security;
                                     <option value="material"<?php echo ($data['form-search-select-type'] === 'material') ? ' selected="selected"' : ''; ?>>Material</option>
                                     <option value="metasound"<?php echo ($data['form-search-select-type'] === 'metasound') ? ' selected="selected"' : ''; ?>>Metasound</option>
                                     <option value="niagara"<?php echo ($data['form-search-select-type'] === 'niagara') ? ' selected="selected"' : ''; ?>>Niagara</option>
+                                    <option value="pcg"<?php echo ($data['form-search-select-type'] === 'pcg') ? ' selected="selected"' : ''; ?>>PCG</option>
                                 </select>
                             </div>
                         </div>
@@ -86,6 +87,7 @@ use Rancoud\Security\Security;
                     <?php if ($data['type'] !== 'material') { // phpcs:ignore?><a class="block__link" href="/type/material/">Material</a><?php } // phpcs:ignore?>
                     <?php if ($data['type'] !== 'metasound') { // phpcs:ignore?><a class="block__link" href="/type/metasound/">Metasound</a><?php } // phpcs:ignore?>
                     <?php if ($data['type'] !== 'niagara') { // phpcs:ignore?><a class="block__link" href="/type/niagara/">Niagara</a><?php } // phpcs:ignore?>
+                    <?php if ($data['type'] !== 'pcg') { // phpcs:ignore?><a class="block__link" href="/type/pcg/">PCG</a><?php } // phpcs:ignore?>
                 </div>
             </div>
             <?php } ?>
