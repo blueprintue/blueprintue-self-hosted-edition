@@ -35,3 +35,6 @@ tests/medias/
 # Dump for installation
 dump-with-anonymous-user.sql
 dump-without-anonymous-user.sql
+
+# Examples
+docker-examples/

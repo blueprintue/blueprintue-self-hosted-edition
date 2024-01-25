@@ -1,0 +1,18 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+log:
+  level: "INFO"
+
+entryPoints:
+  http:
+    address: ":80"
+
+providers:
+  file:
+    filename: "/etc/traefik/traefik.yml"
+    watch: true
+  docker:
+    watch: true
+    exposedByDefault: false

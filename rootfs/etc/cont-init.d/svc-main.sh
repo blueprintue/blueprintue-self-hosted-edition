@@ -20,17 +20,17 @@ echo "Setting PHP-FPM configuration..."
 sed -e "s/@MEMORY_LIMIT@/$MEMORY_LIMIT/g" \
   -e "s/@POST_MAX_SIZE@/$POST_MAX_SIZE/g" \
   -e "s/@UPLOAD_MAX_FILESIZE@/$UPLOAD_MAX_FILESIZE/g" \
-  /tpls/etc/php7/php-fpm.d/www.conf > /etc/php7/php-fpm.d/www.conf
+  /tpls/etc/php82/php-fpm.d/www.conf > /etc/php82/php-fpm.d/www.conf
 
 echo "Setting php.ini configuration..."
-sed -i "s|memory_limit.*|memory_limit = ${MEMORY_LIMIT}|g" /etc/php7/php.ini
-sed -i "s|;date\.timezone.*|date\.timezone = ${TZ}|g" /etc/php7/php.ini
+sed -i "s|memory_limit.*|memory_limit = ${MEMORY_LIMIT}|g" /etc/php82/php.ini
+sed -i "s|;date\.timezone.*|date\.timezone = ${TZ}|g" /etc/php82/php.ini
 
 # OpCache
 echo "Setting OpCache configuration..."
 sed -e "s/@OPCACHE_MEM_SIZE@/$OPCACHE_MEM_SIZE/g" \
   -e "s/@OPCACHE_ENABLE@/$OPCACHE_ENABLE/g" \
-  /tpls/etc/php7/conf.d/opcache.ini > /etc/php7/conf.d/opcache.ini
+  /tpls/etc/php82/conf.d/opcache.ini > /etc/php82/conf.d/opcache.ini
 
 # Nginx
 echo "Setting Nginx configuration..."
@@ -54,6 +54,6 @@ cat > /etc/services.d/php-fpm/run <<EOL
 #!/usr/bin/execlineb -P
 with-contenv
 s6-setuidgid ${PUID}:${PGID}
-php-fpm7 -F
+php-fpm82 -F
 EOL
 chmod +x /etc/services.d/php-fpm/run
