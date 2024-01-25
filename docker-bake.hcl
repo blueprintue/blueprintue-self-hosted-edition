@@ -8,7 +8,7 @@ target "php-version" {
   }
 }
 
-target "docker-meta-action" {
+target "docker-metadata-action" {
   tags = ["blueprintue-self-hosted-edition:local"]
 }
 
@@ -48,7 +48,7 @@ target "test" {
 }
 
 target "image" {
-  inherits = ["docker-meta-action"]
+  inherits = ["docker-metadata-action"]
   dockerfile = "./Dockerfile"
 }
 
