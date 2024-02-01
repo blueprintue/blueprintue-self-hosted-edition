@@ -55,7 +55,7 @@ jobs:
         run: docker run --rm -v $(pwd)/coverage:/src/coverage -e XDEBUG_MODE=coverage -e PHP_CS_FIXER_IGNORE_ENV=True --network host blueprintue-self-hosted-edition:test test
 
       - name: Upload coverage
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         if: success()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
