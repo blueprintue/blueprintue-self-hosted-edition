@@ -1,9 +1,12 @@
 # blueprintUE self-hosted edition
 
+[![GitHub release](https://img.shields.io/github/release/blueprintue/blueprintue-self-hosted-edition.svg?logo=github)](https://github.com/blueprintue/blueprintue-self-hosted-edition/releases/latest)
+[![Docker Stars](https://img.shields.io/docker/stars/blueprintue/blueprintue-self-hosted-edition?logo=docker)](https://hub.docker.com/r/blueprintue/blueprintue-self-hosted-edition/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/blueprintue/blueprintue-self-hosted-edition?logo=docker)](https://hub.docker.com/r/blueprintue/blueprintue-self-hosted-edition/)
+[![Total downloads](https://img.shields.io/github/downloads/blueprintue/blueprintue-self-hosted-edition/total.svg?logo=github)](https://github.com/blueprintue/blueprintue-self-hosted-edition/releases/latest)
 ![PHP Version Support](https://img.shields.io/badge/%3E%3D7.4.0-777BB4?label=php)
 ![MariaDB Version Support](https://img.shields.io/badge/%3E%3D10.6-003545?label=MariaDB)
 ![MySQL Version Support](https://img.shields.io/badge/%3E%3D8-005C84?label=MySQL)
-![Use Docker](https://img.shields.io/badge/Docker-0db7ed)
 [![Composer dependencies](https://img.shields.io/badge/dependencies-9-brightgreen)](https://github.com/blueprintue/blueprintue-self-hosted-edition/blob/main/composer.json)
 [![Test workflow](https://img.shields.io/github/actions/workflow/status/blueprintue/blueprintue-self-hosted-edition/validate.yml?branch=main)](https://github.com/blueprintue/blueprintue-self-hosted-edition/actions/workflows/validate.yml)
 [![Codecov](https://img.shields.io/codecov/c/github/blueprintue/blueprintue-self-hosted-edition?logo=codecov)](https://codecov.io/gh/blueprintue/blueprintue-self-hosted-edition)
@@ -58,7 +61,7 @@ Because GDPR you will need to:
 ### .env file
 #### Database
 | Parameter                      | Mandatory | Type   | Default value | Specific values             | Description                                                |
-| ------------------------------ | --------- | ------ | ------------- | --------------------------- | ---------------------------------------------------------- |
+|--------------------------------|-----------|--------|---------------|-----------------------------|------------------------------------------------------------|
 | DATABASE_DRIVER                | YES       | string |               | mysql \| pgsqlite \| sqlite | database engine used                                       |
 | DATABASE_HOST                  | YES       | string |               |                             | host                                                       |
 | DATABASE_USER                  | YES       | string |               |                             | user                                                       |
@@ -68,7 +71,7 @@ Because GDPR you will need to:
 
 #### Session
 | Parameter                 | Mandatory | Type   | Default value  | Specific values       | Description                                                                     |
-| ------------------------- | --------- | ------ | -------------- | --------------------- | ------------------------------------------------------------------------------- |
+|---------------------------|-----------|--------|----------------|-----------------------|---------------------------------------------------------------------------------|
 | SESSION_DRIVER            | NO        | string | default        | default \| database   | session driver used                                                             |
 | SESSION_ENCRYPT_KEY       | NO        | string |                |                       | if empty there is no encryption                                                 |
 | SESSION_GC_MAXLIFETIME    | NO        | int    | 3600 * 24      |                       | session's lifetime before deletion by garbage collector                         |
@@ -83,29 +86,29 @@ Because GDPR you will need to:
 | SESSION_REMEMBER_SAMESITE | NO        | string | Strict         | None \| Lax \| Strict | security policies on how cookies are shared, Lax is mandatory for Twitter OAuth |
 
 #### Host
-| Parameter | Mandatory | Type   | Default value  | Specific values | Description                                          |
-| --------- | --------- | ------ | -------------- | --------------- |------------------------------------------------------|
-| HOST      | YES       | string |                |                 | hostname (e.g. blueprintue-self-hosted-edition.test) |
-| HTTPS     | YES       | bool   |                |                 | use for detect scheme (http or https)                |
+| Parameter | Mandatory | Type   | Default value | Specific values | Description                                          |
+|-----------|-----------|--------|---------------|-----------------|------------------------------------------------------|
+| HOST      | YES       | string |               |                 | hostname (e.g. blueprintue-self-hosted-edition.test) |
+| HTTPS     | YES       | bool   |               |                 | use for detect scheme (http or https)                |
 
 #### Site
-| Parameter          | Mandatory | Type   | Default value                   | Specific values | Description                                                                         |
-| ------------------ | --------- | ------ |---------------------------------| --------------- |-------------------------------------------------------------------------------------|
-| SITE_NAME          | YES       | string | blueprintUE self-hosted edition |                 | name of the site, used for email/description (e.g. blueprintUE self-hosted edition) |
-| SITE_BASE_TITLE    | NO        | string |                                 |                 | use for complete the title tag                                                      |
-| SITE_DESCRIPTION   | NO        | string |                                 |                 | use for description tag in home page                                                |
+| Parameter        | Mandatory | Type   | Default value                   | Specific values | Description                                                                         |
+|------------------|-----------|--------|---------------------------------|-----------------|-------------------------------------------------------------------------------------|
+| SITE_NAME        | YES       | string | blueprintUE self-hosted edition |                 | name of the site, used for email/description (e.g. blueprintUE self-hosted edition) |
+| SITE_BASE_TITLE  | NO        | string |                                 |                 | use for complete the title tag                                                      |
+| SITE_DESCRIPTION | NO        | string |                                 |                 | use for description tag in home page                                                |
 
 #### Anonymous user
-| Parameter    | Mandatory | Type   | Default value  | Specific values | Description                                 |
-| ------------ |-----------| ------ | -------------- | --------------- | ------------------------------------------- |
-| ANONYMOUS_ID | NO        | int    |                |                 | user_id for all anonymous blueprints pasted |
+| Parameter    | Mandatory | Type | Default value | Specific values | Description                                 |
+|--------------|-----------|------|---------------|-----------------|---------------------------------------------|
+| ANONYMOUS_ID | NO        | int  |               |                 | user_id for all anonymous blueprints pasted |
 
 #### Mail
 PHPMailer is used as library for sending mails.  
 You can use msmtp as service docker for smtp relay and set smtp authentication inside.
 
 | Parameter             | Mandatory | Type   | Default value                                 | Specific values | Description                                                    |
-| --------------------- | --------- | ------ |-----------------------------------------------| --------------- |----------------------------------------------------------------|
+|-----------------------|-----------|--------|-----------------------------------------------|-----------------|----------------------------------------------------------------|
 | MAIL_USE_SMTP         | NO        | bool   | false                                         |                 | set PHPMailer to use SMTP                                      |
 | MAIL_SMTP_HOST        | NO        | string | localhost                                     |                 | SMTP host                                                      |
 | MAIL_SMTP_PORT        | NO        | int    | 25                                            |                 | SMTP port                                                      |
