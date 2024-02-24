@@ -8,6 +8,17 @@ target "php-version" {
   }
 }
 
+// GitHub reference as defined in GitHub Actions (eg. refs/head/master)
+variable "GITHUB_REF" {
+  default = ""
+}
+
+target "git-ref" {
+  args = {
+    GIT_REF = GITHUB_REF
+  }
+}
+
 target "docker-metadata-action" {
   tags = ["blueprintue-self-hosted-edition:local"]
 }

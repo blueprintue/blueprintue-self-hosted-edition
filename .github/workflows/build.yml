@@ -9,7 +9,7 @@ on:
     branches:
       - main
     tags:
-      - '*'
+      - 'v*'
     paths-ignore:
       - '**.md'
   pull_request:
@@ -40,8 +40,7 @@ jobs:
             ${{ env.GHCR_SLUG }}
             ${{ env.DOCKERHUB_SLUG }}
           tags: |
-            type=match,pattern=(.*)-r,group=1
-            type=ref,event=pr
+            type=semver,pattern={{version}}
             type=edge
 
       - name: Set up QEMU
