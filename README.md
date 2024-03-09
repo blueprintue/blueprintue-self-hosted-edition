@@ -113,6 +113,7 @@ You can use msmtp as service docker for smtp relay and set smtp authentication i
 | MAIL_SMTP_HOST        | NO        | string | localhost                                     |                 | SMTP host                                                      |
 | MAIL_SMTP_PORT        | NO        | int    | 25                                            |                 | SMTP port                                                      |
 | MAIL_USE_SMTP_AUTH    | NO        | bool   | false                                         |                 | for SMTP authentication                                        |
+| MAIL_USE_SMTP_TLS     | NO        | bool   | false                                         |                 | set to true if you need TLS like Gmail or any mail provider    |
 | MAIL_SMTP_USER        | NO        | string |                                               |                 | user for SMTP authentication                                   |
 | MAIL_SMTP_PASSWORD    | NO        | string |                                               |                 | password for SMTP authentication                               |
 | MAIL_FROM_ADDRESS     | YES       | string |                                               |                 | email display for sending emails (register and reset password) |

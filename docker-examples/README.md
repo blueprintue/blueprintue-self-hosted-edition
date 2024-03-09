@@ -45,6 +45,8 @@ You will have in that file [docker-compose-smtp.yml]:
   - emails will be sent using smtp relay
   - use `msmtpd.env`
 
+If you want to use Gmail or any other mail provider that need TLS you need to set `MAIL_USE_SMTP_TLS=true`.
+
 ## Env variables
 ### Rootfs
 #### User rights

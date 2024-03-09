@@ -92,6 +92,7 @@ services:
       - "MAIL_SMTP_HOST=maildev"
       - "MAIL_SMTP_PORT=1025"
       - "MAIL_USE_SMTP_AUTH=false"
+      - "MAIL_USE_SMTP_TLS=false"
       - "MAIL_SMTP_USER="
       - "MAIL_SMTP_PASSWORD="
       - "MAIL_FROM_ADDRESS=_____REPLACE_ME_____"
