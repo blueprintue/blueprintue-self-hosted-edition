@@ -89,6 +89,7 @@ services:
       - "MAIL_SMTP_HOST=maildev"
       - "MAIL_SMTP_PORT=1025"
       - "MAIL_USE_SMTP_AUTH=false"
+      - "MAIL_USE_SMTP_TLS=false"
       - "MAIL_FROM_ADDRESS=no-reply@blueprintue-self-hosted-edition.test"
       - "MAIL_FROM_NAME=blueprintUE self-hosted edition"
       - "MAIL_CONTACT_TO=contact@blueprintue-self-hosted-edition.test"

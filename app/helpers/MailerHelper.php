@@ -33,6 +33,10 @@ class MailerHelper
                 $this->mailer->Username = (string) Application::getConfig()->get('MAIL_SMTP_USER');
                 $this->mailer->Password = (string) Application::getConfig()->get('MAIL_SMTP_PASSWORD');
             }
+
+            if ((bool) Application::getConfig()->get('MAIL_USE_SMTP_TLS', false) === true) {
+                $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            }
         }
 
         $this->mailer->CharSet = PHPMailer::CHARSET_UTF8;
