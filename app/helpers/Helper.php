@@ -146,6 +146,7 @@ class Helper
     public static function getAllUEVersion(): array
     {
         return [
+            '5.5',
             '5.4',
             '5.3',
             '5.2',
@@ -187,7 +188,7 @@ class Helper
      */
     public static function getCurrentUEVersion(): string
     {
-        return '5.3';
+        return '5.4';
     }
 
     /**
