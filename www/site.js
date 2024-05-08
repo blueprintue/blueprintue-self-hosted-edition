@@ -2929,3 +2929,124 @@ if(window.navigator.userAgent.toUpperCase().indexOf("TRIDENT") !== -1 || window.
         }
     }
 })();
+(function(){
+    'use strict';
+
+    function Expander(rootHTMLElement, handlerHTMLElement, minHeight) {
+        if (!(rootHTMLElement instanceof HTMLElement)) {
+            return new TypeError("Argument 'rootHTMLElement', expect HTMLElement, get " + typeof htmlElement);
+        }
+
+        if (!(handlerHTMLElement instanceof HTMLElement)) {
+            return new TypeError("Argument 'handlerHTMLElement', expect HTMLElement, get " + typeof htmlElement);
+        }
+
+        minHeight = minHeight >> 0;
+        if (minHeight === 0) {
+            minHeight = 643;
+        }
+
+        this.dom = {
+            root: rootHTMLElement,
+            handler: handlerHTMLElement,
+            render: null,
+        };
+
+        this.isHandlerDragging = false;
+
+        this.bpHeight = null;
+        this.minHeight = minHeight;
+
+        this.eventsBinding = {
+            mouseDown: this.eventMouseDown.bind(this),
+            mouseMove: this.eventMouseMove.bind(this),
+            mouseUp: this.eventMouseUp.bind(this)
+        };
+    }
+
+    Expander.prototype.start = function start() {
+        document.addEventListener("mousedown", this.eventsBinding.mouseDown);
+        document.addEventListener("mousemove", this.eventsBinding.mouseMove);
+        document.addEventListener("mouseup", this.eventsBinding.mouseUp);
+
+        this.dom.render = this.dom.root.querySelector(".bue-render .frame");
+
+        this.bpHeight = localStorage.getItem('bp-height') >> 0;
+        if (this.bpHeight >= this.minHeight) {
+            this.dom.root.style.height = this.bpHeight + "px";
+            this.dom.render.style.height = this.bpHeight + "px";
+        }
+
+        this.startObserver();
+    };
+
+    Expander.prototype.eventMouseDown = function eventMouseDown(event) {
+        if (event.target === this.dom.handler) {
+            this.isHandlerDragging = true;
+        }
+    };
+
+    Expander.prototype.eventMouseMove = function eventMouseMove(event) {
+        if (!this.isHandlerDragging) {
+            return false;
+        }
+
+        var pointerRelativeYpos = event.pageY - this.dom.root.offsetTop;
+
+        if (pointerRelativeYpos < this.minHeight) {
+            return;
+        }
+
+        this.dom.root.style.height = pointerRelativeYpos + "px";
+        this.dom.render.style.height = pointerRelativeYpos + "px";
+
+        this.bpHeight = pointerRelativeYpos;
+    };
+
+    Expander.prototype.eventMouseUp = function eventMouseUp() {
+        if (this.isHandlerDragging && this.bpHeight !== null) {
+            localStorage.setItem("bp-height", this.bpHeight);
+        }
+
+        this.isHandlerDragging = false;
+    };
+
+    Expander.prototype.startObserver = function startObserver() {
+        var observer = new MutationObserver(function(mutationList){
+            var idx = 0;
+            var len = mutationList.length;
+            var bpHeight = 0;
+
+            for (;idx < len; ++idx) {
+                if (mutationList[idx].type !== "attributes") {
+                    continue;
+                }
+
+                if (mutationList[idx].target.classList.contains("frame-header__buttons-fullscreen") &&
+                    !mutationList[idx].target.classList.contains("frame-header__buttons-fullscreen--exit")) {
+                    bpHeight = localStorage.getItem('bp-height') >> 0;
+                    if (bpHeight === 0) {
+                        bpHeight = this.minHeight;
+                    }
+
+                    this.dom.root.style.height = bpHeight + "px";
+                    this.dom.render.style.height = bpHeight + "px";
+
+                    break;
+                }
+            }
+        }.bind(this));
+
+        observer.observe(this.dom.root.querySelector(".frame-header__buttons-fullscreen"), {
+            attributes: true,
+            childList: false,
+            subtree: false
+        });
+    };
+
+    // Freeze prototype for security issue about prototype pollution.
+    Object.freeze(Expander.prototype);
+    Object.freeze(Expander);
+
+    window.blueprintUE.www.Expander = Expander;
+})();
