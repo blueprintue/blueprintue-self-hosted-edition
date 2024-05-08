@@ -22,6 +22,7 @@ use Rancoud\Security\Security;
     <main class="main">
         <div class="block__container block__container--first block__container--black block__container--no-padding">
             <div class="block__element--iframe" id="blueprint-render-playground"></div>
+            <div class="expander-bar-handler" id="handler"></div>
         </div>
         <div class="block__container">
             <?php
@@ -393,6 +394,12 @@ use Rancoud\Security\Security;
             document.getElementById('code_to_copy').value,
             document.getElementById('blueprint-render-playground'),
             {height:"643px"}
-        ).start();
+        ).start(function(){
+            new window.blueprintUE.www.Expander(
+                document.getElementById("blueprint-render-playground"),
+                document.getElementById("handler"),
+                643
+            ).start();
+        });
     </script>
 </body>
