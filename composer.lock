@@ -384,16 +384,16 @@
         },
         {
             "name": "rancoud/model",
-            "version": "4.1.5",
+            "version": "4.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Model.git",
-                "reference": "3033a55789fa96c58c69a6e9628eb68236846c69"
+                "reference": "7575ef33b68a72a889ee83c75b61f3c7b8c4dcbd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Model/zipball/3033a55789fa96c58c69a6e9628eb68236846c69",
-                "reference": "3033a55789fa96c58c69a6e9628eb68236846c69",
+                "url": "https://api.github.com/repos/rancoud/Model/zipball/7575ef33b68a72a889ee83c75b61f3c7b8c4dcbd",
+                "reference": "7575ef33b68a72a889ee83c75b61f3c7b8c4dcbd",
                 "shasum": ""
             },
             "require": {
@@ -401,11 +401,11 @@
                 "ext-mbstring": "*",
                 "ext-pdo": "*",
                 "php": ">=7.4.0",
-                "rancoud/database": "^5.0 || ^6.0"
+                "rancoud/database": "^6.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16 || ^3.0",
-                "phpunit/phpunit": "^9.1",
+                "phpunit/phpunit": "^9.1 || ^10.0 || ^11.0",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "suggest": {
@@ -432,9 +432,9 @@
             "description": "Model package",
             "support": {
                 "issues": "https://github.com/rancoud/Model/issues",
-                "source": "https://github.com/rancoud/Model/tree/4.1.5"
+                "source": "https://github.com/rancoud/Model/tree/4.1.6"
             },
-            "time": "2024-03-03T19:39:40+00:00"
+            "time": "2024-05-23T19:50:14+00:00"
         },
         {
             "name": "rancoud/pagination",
