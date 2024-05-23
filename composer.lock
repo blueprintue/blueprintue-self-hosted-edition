@@ -531,16 +531,16 @@
         },
         {
             "name": "rancoud/security",
-            "version": "3.0.11",
+            "version": "3.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Security.git",
-                "reference": "855e55e3fd194207690a102487807d280d63f5cc"
+                "reference": "b3acd0f8d498ec1301c04d37f78f0a36c4f8a16a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Security/zipball/855e55e3fd194207690a102487807d280d63f5cc",
-                "reference": "855e55e3fd194207690a102487807d280d63f5cc",
+                "url": "https://api.github.com/repos/rancoud/Security/zipball/b3acd0f8d498ec1301c04d37f78f0a36c4f8a16a",
+                "reference": "b3acd0f8d498ec1301c04d37f78f0a36c4f8a16a",
                 "shasum": ""
             },
             "require": {
@@ -549,7 +549,7 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16 || ^3.0",
-                "phpunit/phpunit": "^9.1",
+                "phpunit/phpunit": "^9.1 || ^10.0 || ^11.0",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
@@ -571,9 +571,9 @@
             "description": "Security package",
             "support": {
                 "issues": "https://github.com/rancoud/Security/issues",
-                "source": "https://github.com/rancoud/Security/tree/3.0.11"
+                "source": "https://github.com/rancoud/Security/tree/3.0.12"
             },
-            "time": "2024-03-03T18:41:11+00:00"
+            "time": "2024-05-23T15:59:28+00:00"
         },
         {
             "name": "rancoud/session",
