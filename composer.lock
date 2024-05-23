@@ -577,16 +577,16 @@
         },
         {
             "name": "rancoud/session",
-            "version": "5.0.6",
+            "version": "5.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Session.git",
-                "reference": "38758dc43e8fcf06a17b1e337bbf9969e3e04183"
+                "reference": "91c072bd6b21f65317487de88b8d71088eabe232"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Session/zipball/38758dc43e8fcf06a17b1e337bbf9969e3e04183",
-                "reference": "38758dc43e8fcf06a17b1e337bbf9969e3e04183",
+                "url": "https://api.github.com/repos/rancoud/Session/zipball/91c072bd6b21f65317487de88b8d71088eabe232",
+                "reference": "91c072bd6b21f65317487de88b8d71088eabe232",
                 "shasum": ""
             },
             "require": {
@@ -597,9 +597,9 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16 || ^3.0",
-                "phpunit/phpunit": "^9.1",
+                "phpunit/phpunit": "^9.1 || ^10.0 || ^11.0",
                 "predis/predis": "^1.1 || ^2.0",
-                "rancoud/database": "^5.0 || ^6.0",
+                "rancoud/database": "^6.0",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
@@ -621,9 +621,9 @@
             "description": "Session package",
             "support": {
                 "issues": "https://github.com/rancoud/Session/issues",
-                "source": "https://github.com/rancoud/Session/tree/5.0.6"
+                "source": "https://github.com/rancoud/Session/tree/5.0.7"
             },
-            "time": "2024-03-03T20:19:48+00:00"
+            "time": "2024-05-23T21:04:28+00:00"
         }
     ],
     "packages-dev": [
