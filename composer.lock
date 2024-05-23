@@ -438,16 +438,16 @@
         },
         {
             "name": "rancoud/pagination",
-            "version": "3.1.6",
+            "version": "3.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Pagination.git",
-                "reference": "b7415b334350e133e25e24671a4aac905d2a42c0"
+                "reference": "f5443aaace7cd413c22f3a6ae6fd13738e04ba1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Pagination/zipball/b7415b334350e133e25e24671a4aac905d2a42c0",
-                "reference": "b7415b334350e133e25e24671a4aac905d2a42c0",
+                "url": "https://api.github.com/repos/rancoud/Pagination/zipball/f5443aaace7cd413c22f3a6ae6fd13738e04ba1e",
+                "reference": "f5443aaace7cd413c22f3a6ae6fd13738e04ba1e",
                 "shasum": ""
             },
             "require": {
@@ -457,7 +457,7 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16 || ^3.0",
-                "phpunit/phpunit": "^9.1",
+                "phpunit/phpunit": "^9.1 || ^10.0 || ^11.0",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
@@ -479,9 +479,9 @@
             "description": "Pagination package",
             "support": {
                 "issues": "https://github.com/rancoud/Pagination/issues",
-                "source": "https://github.com/rancoud/Pagination/tree/3.1.6"
+                "source": "https://github.com/rancoud/Pagination/tree/3.1.7"
             },
-            "time": "2024-03-03T19:03:39+00:00"
+            "time": "2024-05-23T18:29:48+00:00"
         },
         {
             "name": "rancoud/router",
