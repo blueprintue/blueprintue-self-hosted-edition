@@ -188,16 +188,16 @@
         },
         {
             "name": "rancoud/crypt",
-            "version": "3.2.7",
+            "version": "3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Crypt.git",
-                "reference": "d1658e20182c1f260a6b422ab5199fbb9f8e0048"
+                "reference": "3c8eda2761153e8e3c19b848d3b4b4c0fc206072"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Crypt/zipball/d1658e20182c1f260a6b422ab5199fbb9f8e0048",
-                "reference": "d1658e20182c1f260a6b422ab5199fbb9f8e0048",
+                "url": "https://api.github.com/repos/rancoud/Crypt/zipball/3c8eda2761153e8e3c19b848d3b4b4c0fc206072",
+                "reference": "3c8eda2761153e8e3c19b848d3b4b4c0fc206072",
                 "shasum": ""
             },
             "require": {
@@ -206,7 +206,7 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16 || ^3.0",
-                "phpunit/phpunit": "^9.1",
+                "phpunit/phpunit": "^9.1 || ^10.0 || ^11.0",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
@@ -228,9 +228,9 @@
             "description": "Crypt package",
             "support": {
                 "issues": "https://github.com/rancoud/Crypt/issues",
-                "source": "https://github.com/rancoud/Crypt/tree/3.2.7"
+                "source": "https://github.com/rancoud/Crypt/tree/3.2.8"
             },
-            "time": "2024-03-03T17:48:30+00:00"
+            "time": "2024-05-23T15:59:19+00:00"
         },
         {
             "name": "rancoud/database",
