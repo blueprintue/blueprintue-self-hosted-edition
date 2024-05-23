@@ -485,25 +485,25 @@
         },
         {
             "name": "rancoud/router",
-            "version": "3.1.4",
+            "version": "3.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Router.git",
-                "reference": "b94332349dc19af624bdf78e18af1a0caa73c257"
+                "reference": "6322abc3dc1781cac1add3c0fc3798926a6c0e54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Router/zipball/b94332349dc19af624bdf78e18af1a0caa73c257",
-                "reference": "b94332349dc19af624bdf78e18af1a0caa73c257",
+                "url": "https://api.github.com/repos/rancoud/Router/zipball/6322abc3dc1781cac1add3c0fc3798926a6c0e54",
+                "reference": "6322abc3dc1781cac1add3c0fc3798926a6c0e54",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4.0",
-                "rancoud/http": "^3.0"
+                "rancoud/http": "^3.2"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16 || ^3.0",
-                "phpunit/phpunit": "^9.1",
+                "phpunit/phpunit": "^9.1 || ^10.0 || ^11.0",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
@@ -525,9 +525,9 @@
             "description": "Router package",
             "support": {
                 "issues": "https://github.com/rancoud/Router/issues",
-                "source": "https://github.com/rancoud/Router/tree/3.1.4"
+                "source": "https://github.com/rancoud/Router/tree/3.1.5"
             },
-            "time": "2024-03-03T21:00:23+00:00"
+            "time": "2024-05-23T21:14:12+00:00"
         },
         {
             "name": "rancoud/security",
