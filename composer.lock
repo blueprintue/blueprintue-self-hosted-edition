@@ -139,16 +139,16 @@
         },
         {
             "name": "rancoud/application",
-            "version": "5.2.6",
+            "version": "5.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Application.git",
-                "reference": "15bd406130018a8b97154f8a3a223ef42aa57dbe"
+                "reference": "71dbd2377733aeba5521a881b1ae515e2908e21e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Application/zipball/15bd406130018a8b97154f8a3a223ef42aa57dbe",
-                "reference": "15bd406130018a8b97154f8a3a223ef42aa57dbe",
+                "url": "https://api.github.com/repos/rancoud/Application/zipball/71dbd2377733aeba5521a881b1ae515e2908e21e",
+                "reference": "71dbd2377733aeba5521a881b1ae515e2908e21e",
                 "shasum": ""
             },
             "require": {
@@ -158,9 +158,9 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16 || ^3.0",
-                "phpunit/phpunit": "^9.1",
-                "rancoud/database": "^5.0 || ^6.0",
-                "rancoud/session": "^3.0 || ^4.0 || ^5.0",
+                "phpunit/phpunit": "^9.1 || ^10.0 || ^11.0",
+                "rancoud/database": "^6.0",
+                "rancoud/session": "^5.0",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
@@ -182,9 +182,9 @@
             "description": "Application package",
             "support": {
                 "issues": "https://github.com/rancoud/Application/issues",
-                "source": "https://github.com/rancoud/Application/tree/5.2.6"
+                "source": "https://github.com/rancoud/Application/tree/5.2.7"
             },
-            "time": "2024-03-03T21:16:52+00:00"
+            "time": "2024-05-23T21:30:37+00:00"
         },
         {
             "name": "rancoud/crypt",
