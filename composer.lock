@@ -285,16 +285,16 @@
         },
         {
             "name": "rancoud/environment",
-            "version": "2.1.10",
+            "version": "2.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Environment.git",
-                "reference": "81d98ace065a952db6c79bdb05d0c81ddd941212"
+                "reference": "dd55a5c7d1aa8e3c464f7ab84857687b3ee01ce7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Environment/zipball/81d98ace065a952db6c79bdb05d0c81ddd941212",
-                "reference": "81d98ace065a952db6c79bdb05d0c81ddd941212",
+                "url": "https://api.github.com/repos/rancoud/Environment/zipball/dd55a5c7d1aa8e3c464f7ab84857687b3ee01ce7",
+                "reference": "dd55a5c7d1aa8e3c464f7ab84857687b3ee01ce7",
                 "shasum": ""
             },
             "require": {
@@ -303,7 +303,7 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16 || ^3.0",
-                "phpunit/phpunit": "^9.1",
+                "phpunit/phpunit": "^9.1 || ^10.0 || ^11.0",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
@@ -325,9 +325,9 @@
             "description": "Environment package",
             "support": {
                 "issues": "https://github.com/rancoud/Environment/issues",
-                "source": "https://github.com/rancoud/Environment/tree/2.1.10"
+                "source": "https://github.com/rancoud/Environment/tree/2.1.11"
             },
-            "time": "2024-03-03T20:27:54+00:00"
+            "time": "2024-05-23T16:00:41+00:00"
         },
         {
             "name": "rancoud/http",
