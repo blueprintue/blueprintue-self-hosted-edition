@@ -4,7 +4,7 @@
 ```shell
 docker login ghcr.io
 docker pull ghcr.io/blueprintue/blueprintue-self-hosted-edition:edge
-docker-compose pull
+docker compose pull
 ```
 
 ## Docker Compose variations

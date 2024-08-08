@@ -238,7 +238,7 @@ After you can launch dev environment
 ```shell
 cd .dev
 touch .env
-docker-compose up -d --build --force-recreate
+docker compose up -d --build --force-recreate
 ```
 
 ### Neard / Wamp / Old school
