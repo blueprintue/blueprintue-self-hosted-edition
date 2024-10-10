@@ -1,4 +1,4 @@
-FROM crazymax/alpine-s6:latest AS base
+FROM crazymax/alpine-s6:3.19 AS base
 
 ENV S6_BEHAVIOR_IF_STAGE2_FAILS="2" \
   TZ="UTC" \
