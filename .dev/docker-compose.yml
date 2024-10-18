@@ -115,6 +115,8 @@ services:
       - "traefik.http.routers.maildev.entrypoints=http"
       - "traefik.http.routers.maildev.rule=Host(`maildev.blueprintue-self-hosted-edition.test`)"
       - "traefik.http.services.maildev.loadbalancer.server.port=1080"
+    environment:
+      MAILDEV_IP: "::"
 
 volumes:
   blueprintue-self-hosted-edition_db:
