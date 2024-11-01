@@ -21,13 +21,16 @@ tests/tests.env.cache.php
 .env.cache.php
 
 # Storage
-storage/
+storage/*
+!storage/.gitkeep
 tests/storage_test/
 docker-examples/storage/
 
 # Medias
-www/medias/avatars/
-www/medias/blueprints/
+www/medias/avatars/*
+!www/medias/avatars/.gitkeep
+www/medias/blueprints/*
+!www/medias/blueprints/.gitkeep
 tests/medias/
 docker-examples/medias/
 

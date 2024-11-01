@@ -43,7 +43,7 @@ services:
     container_name: blueprintue-self-hosted-edition
     depends_on:
       - mariadb
-      - msmtpd
+      - maildev
     ports:
       - "8000:8000"
     volumes:
