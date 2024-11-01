@@ -1,21 +1,30 @@
-# Self-hosted install with Nginx
+# Self-hosted install with Nginx without Docker
+
+Authors: [@unquietwiki](https://github.com/unquietwiki)
 
 ## Introduction
 
-The basic instructions for using this software, assume you are either using Docker, or uploading to a shared Apache host. These instructions are geared towards a fully self-hosted install, using Nginx. This example assumes you are doing a fresh install, using the latest version of [Nginx](https://nginx.org/en/), and [Debian 12 Linux](https://www.debian.org/). For editing text files, we'll assume you'll be using [nano](https://www.nano-editor.org/).
+The basic instructions for using this software, assume you are either using Docker, or uploading to a shared Apache host.
 
-Actual system requirements are quite low. This example was largely developed on an AWS **t4g.medium** [ARM64 instance](https://aws.amazon.com/ec2/instance-types/t4/). AWS provides a "admin" user with sudo-privileges; you should have a similar user on your own setup.
+These instructions are geared towards a fully self-hosted install, using Nginx. This example assumes you are doing a fresh install, using the latest version of [Nginx](https://nginx.org/en/), and [Debian 12 Linux](https://www.debian.org/). For editing text files, we'll assume you'll be using [nano](https://www.nano-editor.org/).
+
+Actual system requirements are quite low. This example was largely developed on an AWS [**t4g.medium** ARM64 instance](https://aws.amazon.com/ec2/instance-types/t4/). AWS provides a `admin` user with sudo-privileges; you should have a similar user on your own setup.
 
 ## Installing pre-requisites
 
-[Nginx installation](https://nginx.org/en/linux_packages.html#Debian); note, the vendor-provided Nginx uses **/etc/nginx/conf.d** instead of "sites-available" or "sites-enabled" for site configuration. We'll be using the **default.conf** for this install.
+[Nginx installation](https://nginx.org/en/linux_packages.html#Debian); note, the vendor-provided Nginx uses `/etc/nginx/conf.d` instead of `sites-available` or `sites-enabled` for site configuration. We'll be using the `default.conf` for this install.
 
 If you're planning on hosting this on an external HTTPS website, you'll need to [setup Let's Encrypt](https://linuxcapable.com/how-to-secure-nginx-with-lets-encrypt-on-debian-linux/); please adjust for the new config file location.
 
-You'll also need PHP & MariaDB...
+You'll also need PHP 8.2 and MariaDB.
 
-```console
+First of all, you need to be up to date with apt:
+```shell
 sudo apt update
+```
+
+Then you can install packages:
+```shell
 sudo apt install -y mariadb-server mariadb-client php-composer php-curl php-fpm php-gd php-mbstring php-mysql php-xml
 ```
 
@@ -23,41 +32,80 @@ sudo apt install -y mariadb-server mariadb-client php-composer php-curl php-fpm 
 
 ### Software install
 
-Make a location to extract BlueprintUE to; it can even be a mount on an external partition (compressed BTRFS is a good use for this). For this example, we'll use **/opt/blueprintue**; download and extract the latest version to that location. Run **cd /opt/blueprintue && composer install**; this has to be done outside of root/sudo. Afterwards, you'll want to **chown -R admin:nginx /opt/blueprintue**.
-
-### MariaDB data import
-
-```console
-sudo su -
-cd /opt/blueprintue
-mysql
-CREATE DATABASE blueprintue;
-GRANT ALL PRIVILEGES ON blueprintue.* TO 'blueprintue'@localhost IDENTIFIED BY 'randompassword';
-\q
-mysql -u blueprintue -p blueprintue < dump-with-anonymous-user.sql
-exit
+Make a location to extract BlueprintUE to; it can even be a mount on an external partition (compressed BTRFS is a good use for this). For this example, we'll use `/opt/blueprintue`; download and extract the latest version to that location:
+```shell
+cd /opt/blueprintue && composer install
 ```
 
-### Follow-up
+This has to be done outside of root/sudo. Afterwards, you'll want to change the owner:
+```shell
+chown -R admin:nginx /opt/blueprintue
+```
 
-1. **cd /opt/blueprintue**
-2. **nano www/index.php** and comment out the **$env->enableCache();** line.
-3. **cp .env.template .env**
-4. **nano .env** and set the values there accordingly; be sure to account for using HTTPS or not.
+### MariaDB import database
+Connect to MariaDB with mysql command:
+```shell
+mysql
+```
+
+Create database, user and permissions:
+```shell
+CREATE DATABASE blueprintue;
+GRANT ALL PRIVILEGES ON blueprintue.* TO 'blueprintue'@localhost IDENTIFIED BY 'randompassword';
+exit;
+```
+
+Now you can import the dump file:
+```shell
+mysql -u blueprintue -p blueprintue < dump-with-anonymous-user.sql
+```
+
+### Setup .env file
+
+#### Disabling env caching file
+
+You can disable the caching env file:
+```shell
+nano www/index.php
+```
+Then you comment the line `$env->enableCache();` and save.
+
+Finally you can remove the `.env.cache.php` if it was generated:
+```shell
+rm .env.cache.php
+```
+
+#### Fill .env file
+
+You copy the `.env.template` to `.env`:
+```shell
+cp .env.template .env
+```
+
+Then you set the values there accordingly (see README.md for more details); be sure to account for using HTTPS or not.
+```shell
+nano .env
+```
 
 ## Configuration of PHP and Nginx
 
 ### PHP
+Update values of `user`, `group`, `listen.owner`, and `listen.group` to equal `nginx`.
+```shell
+sudo nano /etc/php/8.2/fpm/pool.d/www.conf
+```
 
-1. **sudo nano /etc/php/8.2/fpm/pool.d/www.conf** : change **user**, **group**, **listen.owner**, and **listen.group** to equal **nginx**.
-2. **sudo systemctl enable php8.2-fpm.service**
-3. **sudo systemctl restart php8.2-fpm.service**
+When the configuration is done, make sure PHP fpm is running:
+```shell
+sudo systemctl enable php8.2-fpm.service
+sudo systemctl restart php8.2-fpm.service
+```
 
 ### Nginx
 
-The following is a basic **default.conf** for Nginx; not including the HTTPS changes you may have made before. You'll need to adjust accordingly. An external tool was used to convert valid .htaccess rules to Nginx format.
+The following is a basic `default.conf` for Nginx; not including the HTTPS changes you may have made before. You'll need to adjust accordingly. An external tool was used to convert valid `.htaccess` rules to Nginx format.
 
-```console
+```nginx
 server {
     listen       80;
     listen       [::]:80;
@@ -104,20 +152,19 @@ server {
 }
 ```
 
-Also, for **/etc/nginx/nginx.conf** , add the following to the http section...
+Also, for `/etc/nginx/nginx.conf`, add the following to the http section:
 
-```console
+```nginx
     client_body_buffer_size     8M;
     client_max_body_size        8M;
 ```
 
-When the configuration is done, make sure nginx is running.
-
-```console
+When the configuration is done, make sure Nginx is running:
+```shell
 sudo systemctl enable nginx
 sudo systemctl restart nginx
 ```
 
 ## Conclusion
 
-At this point, you should have a largely working setup. You may need to tweak some additional things or permissions to make things work correctly. Instructions from the README doc will help in this regard.
+At this point, you should have a largely working setup. You may need to tweak some additional things or permissions to make things work correctly. Instructions from the `README.md` will help in this regard.
