@@ -188,16 +188,16 @@
         },
         {
             "name": "rancoud/crypt",
-            "version": "3.2.10",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Crypt.git",
-                "reference": "2bf9e748c01e6e516ec3f4cd0d617b7ccc6da6ce"
+                "reference": "db63a5bd3ec244ae739045d1aa44e363fbcb71d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Crypt/zipball/2bf9e748c01e6e516ec3f4cd0d617b7ccc6da6ce",
-                "reference": "2bf9e748c01e6e516ec3f4cd0d617b7ccc6da6ce",
+                "url": "https://api.github.com/repos/rancoud/Crypt/zipball/db63a5bd3ec244ae739045d1aa44e363fbcb71d6",
+                "reference": "db63a5bd3ec244ae739045d1aa44e363fbcb71d6",
                 "shasum": ""
             },
             "require": {
@@ -228,9 +228,9 @@
             "description": "Crypt package",
             "support": {
                 "issues": "https://github.com/rancoud/Crypt/issues",
-                "source": "https://github.com/rancoud/Crypt/tree/3.2.10"
+                "source": "https://github.com/rancoud/Crypt/tree/3.3.0"
             },
-            "time": "2024-11-09T21:08:04+00:00"
+            "time": "2024-12-05T00:14:58+00:00"
         },
         {
             "name": "rancoud/database",
