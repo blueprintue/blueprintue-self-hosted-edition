@@ -438,16 +438,16 @@
         },
         {
             "name": "rancoud/pagination",
-            "version": "3.1.10",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Pagination.git",
-                "reference": "041ae5e2e9b3837a46a2c6f8ddd2fcff48faf080"
+                "reference": "3d579309cc9085433735248f5f510a0e205002bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Pagination/zipball/041ae5e2e9b3837a46a2c6f8ddd2fcff48faf080",
-                "reference": "041ae5e2e9b3837a46a2c6f8ddd2fcff48faf080",
+                "url": "https://api.github.com/repos/rancoud/Pagination/zipball/3d579309cc9085433735248f5f510a0e205002bf",
+                "reference": "3d579309cc9085433735248f5f510a0e205002bf",
                 "shasum": ""
             },
             "require": {
@@ -479,9 +479,9 @@
             "description": "Pagination package",
             "support": {
                 "issues": "https://github.com/rancoud/Pagination/issues",
-                "source": "https://github.com/rancoud/Pagination/tree/3.1.10"
+                "source": "https://github.com/rancoud/Pagination/tree/3.2.0"
             },
-            "time": "2024-11-09T21:14:33+00:00"
+            "time": "2024-12-05T21:40:45+00:00"
         },
         {
             "name": "rancoud/router",
@@ -531,16 +531,16 @@
         },
         {
             "name": "rancoud/security",
-            "version": "3.0.14",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Security.git",
-                "reference": "d95a999f80e18ebc1acf42165b669ec61aed185c"
+                "reference": "679fd33c1523d0b8caab5d73aa80f527fb60c17b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Security/zipball/d95a999f80e18ebc1acf42165b669ec61aed185c",
-                "reference": "d95a999f80e18ebc1acf42165b669ec61aed185c",
+                "url": "https://api.github.com/repos/rancoud/Security/zipball/679fd33c1523d0b8caab5d73aa80f527fb60c17b",
+                "reference": "679fd33c1523d0b8caab5d73aa80f527fb60c17b",
                 "shasum": ""
             },
             "require": {
@@ -571,9 +571,9 @@
             "description": "Security package",
             "support": {
                 "issues": "https://github.com/rancoud/Security/issues",
-                "source": "https://github.com/rancoud/Security/tree/3.0.14"
+                "source": "https://github.com/rancoud/Security/tree/3.1.0"
             },
-            "time": "2024-11-09T21:09:18+00:00"
+            "time": "2024-12-05T21:28:03+00:00"
         },
         {
             "name": "rancoud/session",
