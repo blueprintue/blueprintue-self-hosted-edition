@@ -234,16 +234,16 @@
         },
         {
             "name": "rancoud/database",
-            "version": "6.0.12",
+            "version": "6.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Database.git",
-                "reference": "0061dbafea21cf6166ff0291ff0086015a8572f5"
+                "reference": "f3a98000b6ba4e70247579a10774cc856618908b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Database/zipball/0061dbafea21cf6166ff0291ff0086015a8572f5",
-                "reference": "0061dbafea21cf6166ff0291ff0086015a8572f5",
+                "url": "https://api.github.com/repos/rancoud/Database/zipball/f3a98000b6ba4e70247579a10774cc856618908b",
+                "reference": "f3a98000b6ba4e70247579a10774cc856618908b",
                 "shasum": ""
             },
             "require": {
@@ -279,9 +279,9 @@
             "description": "Database package",
             "support": {
                 "issues": "https://github.com/rancoud/Database/issues",
-                "source": "https://github.com/rancoud/Database/tree/6.0.12"
+                "source": "https://github.com/rancoud/Database/tree/6.1.0"
             },
-            "time": "2024-11-09T21:16:24+00:00"
+            "time": "2024-12-05T21:45:37+00:00"
         },
         {
             "name": "rancoud/environment",
@@ -384,16 +384,16 @@
         },
         {
             "name": "rancoud/model",
-            "version": "4.1.8",
+            "version": "4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Model.git",
-                "reference": "541463281e0c932c11b94168e16364a79a794041"
+                "reference": "abcb25750d10f1e102e2e6df7b8fcc017c818b40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Model/zipball/541463281e0c932c11b94168e16364a79a794041",
-                "reference": "541463281e0c932c11b94168e16364a79a794041",
+                "url": "https://api.github.com/repos/rancoud/Model/zipball/abcb25750d10f1e102e2e6df7b8fcc017c818b40",
+                "reference": "abcb25750d10f1e102e2e6df7b8fcc017c818b40",
                 "shasum": ""
             },
             "require": {
@@ -432,9 +432,9 @@
             "description": "Model package",
             "support": {
                 "issues": "https://github.com/rancoud/Model/issues",
-                "source": "https://github.com/rancoud/Model/tree/4.1.8"
+                "source": "https://github.com/rancoud/Model/tree/4.2.0"
             },
-            "time": "2024-11-09T21:21:36+00:00"
+            "time": "2024-12-05T22:12:56+00:00"
         },
         {
             "name": "rancoud/pagination",
