@@ -531,16 +531,16 @@
         },
         {
             "name": "rancoud/security",
-            "version": "3.0.14",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Security.git",
-                "reference": "d95a999f80e18ebc1acf42165b669ec61aed185c"
+                "reference": "679fd33c1523d0b8caab5d73aa80f527fb60c17b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Security/zipball/d95a999f80e18ebc1acf42165b669ec61aed185c",
-                "reference": "d95a999f80e18ebc1acf42165b669ec61aed185c",
+                "url": "https://api.github.com/repos/rancoud/Security/zipball/679fd33c1523d0b8caab5d73aa80f527fb60c17b",
+                "reference": "679fd33c1523d0b8caab5d73aa80f527fb60c17b",
                 "shasum": ""
             },
             "require": {
@@ -571,9 +571,9 @@
             "description": "Security package",
             "support": {
                 "issues": "https://github.com/rancoud/Security/issues",
-                "source": "https://github.com/rancoud/Security/tree/3.0.14"
+                "source": "https://github.com/rancoud/Security/tree/3.1.0"
             },
-            "time": "2024-11-09T21:09:18+00:00"
+            "time": "2024-12-05T21:28:03+00:00"
         },
         {
             "name": "rancoud/session",
