@@ -20,7 +20,7 @@ class MailerTest extends TestCase
     use Common;
 
     /**
-     * @return \string[][]
+     * @return string[][]
      */
     public function dataCases(): array
     {
