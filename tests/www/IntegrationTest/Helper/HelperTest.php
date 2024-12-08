@@ -22,7 +22,7 @@ class HelperTest extends TestCase
      *
      * @throws \Exception
      *
-     * @return \string[][]
+     * @return string[][]
      */
     public function dataCasesSince(): array
     {
