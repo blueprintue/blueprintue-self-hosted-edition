@@ -104,7 +104,7 @@ class ResetPasswordController implements MiddlewareInterface
         $rawParams = $request->getParsedBody();
         foreach ($rawParams as $key => $rawParam) {
             if (\in_array($key, $htmlNames, true)) {
-                $params[$key] = \trim($rawParam);
+                $params[$key] = Helper::trim($rawParam);
             }
         }
 
@@ -124,7 +124,7 @@ class ResetPasswordController implements MiddlewareInterface
         }
 
         // token
-        $values['token'] = \trim($request->getQueryParams()['reset_token']);
+        $values['token'] = Helper::trim($request->getQueryParams()['reset_token']);
 
         // password
         $values['password'] = $params[$this->inputs['password']];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace tests\www\Blueprint\View;
 
+use app\helpers\Helper;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -521,7 +522,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'comment') {
-                $value = $hasValue ? \trim($params['form-add_comment-textarea-comment']) : '';
+                $value = $hasValue ? Helper::trim($params['form-add_comment-textarea-comment']) : '';
                 $this->doTestHtmlMain($response, $this->getHTMLFormAddComment($value, $hasError, $labelError));
             }
         }

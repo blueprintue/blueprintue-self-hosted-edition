@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace tests\www\Profile\Edit;
 
+use app\helpers\Helper;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -411,7 +412,7 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
 
         if ($isFormSuccess) {
             static::assertNotSame($userBefore, $userAfter);
-            static::assertSame(\trim($params['form-change_username-input-new_username']), $userAfter['username']);
+            static::assertSame(Helper::trim($params['form-change_username-input-new_username']), $userAfter['username']);
         } else {
             static::assertSame($userBefore, $userAfter);
         }
@@ -446,7 +447,7 @@ HTML);
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'new_username') {
-                $value = $hasValue ? \trim($params['form-change_username-input-new_username']) : '';
+                $value = $hasValue ? Helper::trim($params['form-change_username-input-new_username']) : '';
                 $this->doTestHtmlForm($response, '#form-change_username', $this->getHTMLFieldNewUsername($value, $hasError, $labelError));
             }
         }

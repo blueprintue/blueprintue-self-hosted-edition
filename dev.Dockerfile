@@ -3,6 +3,7 @@ ARG PHP_VERSION
 
 FROM php:$PHP_VERSION-cli-alpine AS base
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PHP_CS_FIXER_IGNORE_ENV=True
 
 RUN apk add --no-cache \
   build-base \
@@ -30,6 +31,7 @@ WORKDIR /src
 
 FROM base AS vendored
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PHP_CS_FIXER_IGNORE_ENV=True
 RUN --mount=type=bind,target=.,rw \
   --mount=type=cache,target=/src/vendor \
   composer validate \
@@ -39,10 +41,12 @@ RUN --mount=type=bind,target=.,rw \
 
 FROM scratch AS vendor-update
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PHP_CS_FIXER_IGNORE_ENV=True
 COPY --from=vendored /out /
 
 FROM vendored AS vendor-validate
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PHP_CS_FIXER_IGNORE_ENV=True
 RUN --mount=type=bind,target=.,rw \
   git add -A && cp -Rf /out/* .; \
   if [ -n "$(git status --porcelain -- composer.lock)" ]; then \
@@ -53,12 +57,14 @@ RUN --mount=type=bind,target=.,rw \
 
 FROM vendored AS lint
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PHP_CS_FIXER_IGNORE_ENV=True
 RUN --mount=type=bind,target=.,rw \
   --mount=type=cache,target=/src/vendor \
   composer lint-validate
 
 FROM vendored AS test
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PHP_CS_FIXER_IGNORE_ENV=True
 COPY . .
 RUN composer install --no-interaction --no-ansi \
   && mkdir tests/storage_test \

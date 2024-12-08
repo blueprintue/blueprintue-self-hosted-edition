@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace tests\www\ForgotPassword;
 
+use app\helpers\Helper;
 use DateTime;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
@@ -523,7 +524,7 @@ class ForgotPasswordTest extends TestCase
                 $labelError = $fieldsLabelError[$field] ?? '';
 
                 if ($field === 'email') {
-                    $value = $hasValue ? \trim($params['form-forgot_password-input-email']) : '';
+                    $value = $hasValue ? Helper::trim($params['form-forgot_password-input-email']) : '';
                     $this->doTestHtmlForm($response, '#popin-forgot_password', $this->getHTMLFieldEmail($value, $hasError, $labelError));
                 }
             }

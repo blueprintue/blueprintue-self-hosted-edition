@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace tests\www\Blueprint\View;
 
+use app\helpers\Helper;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -701,7 +702,7 @@ HTML;
 
             if ($field === 'comment') {
                 if ($isFormSuccess) {
-                    $value = $hasValue ? \trim($params['form-edit_comment-textarea-comment']) : '';
+                    $value = $hasValue ? Helper::trim($params['form-edit_comment-textarea-comment']) : '';
                 } elseif (isset($params['form-edit_comment-textarea-comment']) && $params['form-edit_comment-textarea-comment'] === ' ') {
                     $value = '';
                 } else {
