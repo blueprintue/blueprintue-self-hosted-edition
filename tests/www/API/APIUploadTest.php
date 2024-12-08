@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\API;
 
 use app\helpers\Helper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\Application;
 use Rancoud\Application\ApplicationException;
@@ -34,7 +35,7 @@ class APIUploadTest extends TestCase
         static::$db->insert('INSERT INTO users_infos (id_user) VALUES (1)');
     }
 
-    public function dataCases(): array
+    public static function dataCases(): array
     {
         return [
             'upload - OK' => [
@@ -45,8 +46,8 @@ class APIUploadTest extends TestCase
                     'title'     => 'my title',
                     'blueprint' => 'begin object 1',
                 ],
-                'response_code'    => 200,
-                'response_content' => '{"key":"xxxxxxxx"}',
+                'responseCode'    => 200,
+                'responseContent' => '{"key":"xxxxxxxx"}',
             ],
             'upload with extra infos - OK' => [
                 'headers' => [
@@ -59,8 +60,8 @@ class APIUploadTest extends TestCase
                     'expiration' => '3600',
                     'version'    => '4.12',
                 ],
-                'response_code'    => 200,
-                'response_content' => '{"key":"xxxxxxxx"}',
+                'responseCode'    => 200,
+                'responseContent' => '{"key":"xxxxxxxx"}',
             ],
             'api key incorrect' => [
                 'headers' => [
@@ -69,16 +70,16 @@ class APIUploadTest extends TestCase
                 'params'  => [
                     'blueprint' => 'begin object 1',
                 ],
-                'response_code'    => 401,
-                'response_content' => '{"error":"api_key_incorrect"}',
+                'responseCode'    => 401,
+                'responseContent' => '{"error":"api_key_incorrect"}',
             ],
             'headers empty' => [
                 'headers' => [],
                 'params'  => [
                     'blueprint' => 'begin object 1',
                 ],
-                'response_code'    => 401,
-                'response_content' => '{"error":"api_key_empty"}',
+                'responseCode'    => 401,
+                'responseContent' => '{"error":"api_key_empty"}',
             ],
             'api key empty' => [
                 'headers' => [
@@ -87,8 +88,8 @@ class APIUploadTest extends TestCase
                 'params'  => [
                     'blueprint' => 'begin object 1',
                 ],
-                'response_code'    => 401,
-                'response_content' => '{"error":"api_key_empty"}',
+                'responseCode'    => 401,
+                'responseContent' => '{"error":"api_key_empty"}',
             ],
             'api key invalid encoding' => [
                 'headers' => [
@@ -97,16 +98,16 @@ class APIUploadTest extends TestCase
                 'params'  => [
                     'blueprint' => 'begin object 1',
                 ],
-                'response_code'    => 401,
-                'response_content' => '{"error":"api_key_incorrect"}',
+                'responseCode'    => 401,
+                'responseContent' => '{"error":"api_key_incorrect"}',
             ],
             'missing fields - no fields' => [
                 'headers' => [
                     'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
                 ],
                 'params'           => [],
-                'response_code'    => 400,
-                'response_content' => '{"error":"required_title"}',
+                'responseCode'     => 400,
+                'responseContent'  => '{"error":"required_title"}',
             ],
             'missing fields - no title' => [
                 'headers' => [
@@ -115,8 +116,8 @@ class APIUploadTest extends TestCase
                 'params'           => [
                     'blueprint' => 'begin object 1',
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"required_title"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"required_title"}',
             ],
             'missing fields - no blueprint' => [
                 'headers' => [
@@ -125,8 +126,8 @@ class APIUploadTest extends TestCase
                 'params'           => [
                     'title'     => 'my title',
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"invalid_blueprint"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"invalid_blueprint"}',
             ],
             'empty fields - title empty' => [
                 'headers' => [
@@ -136,8 +137,8 @@ class APIUploadTest extends TestCase
                     'title'     => ' ',
                     'blueprint' => 'begin object 1',
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"required_title"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"required_title"}',
             ],
             'empty fields - blueprint empty' => [
                 'headers' => [
@@ -147,8 +148,8 @@ class APIUploadTest extends TestCase
                     'title'     => 'my title',
                     'blueprint' => ' ',
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"invalid_blueprint"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"invalid_blueprint"}',
             ],
             'invalid fields - blueprint' => [
                 'headers' => [
@@ -158,8 +159,8 @@ class APIUploadTest extends TestCase
                     'title'     => 'my title',
                     'blueprint' => 'aze',
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"invalid_blueprint"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"invalid_blueprint"}',
             ],
             'invalid fields - exposure' => [
                 'headers' => [
@@ -170,8 +171,8 @@ class APIUploadTest extends TestCase
                     'blueprint'  => 'begin object 1',
                     'exposure'   => 'xxx',
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"invalid_exposure"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"invalid_exposure"}',
             ],
             'invalid fields - expiration' => [
                 'headers' => [
@@ -182,8 +183,8 @@ class APIUploadTest extends TestCase
                     'blueprint'  => 'begin object 1',
                     'expiration' => 'xxx'
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"invalid_expiration"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"invalid_expiration"}',
             ],
             'invalid fields - version' => [
                 'headers' => [
@@ -195,8 +196,8 @@ class APIUploadTest extends TestCase
                     'version'    => 'xxx',
                     'expiration' => '604800'
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"invalid_version"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"invalid_version"}',
             ],
             'do throw exception' => [
                 'headers' => [
@@ -207,8 +208,8 @@ class APIUploadTest extends TestCase
                     'blueprint'          => 'begin object 1',
                     'do throw exception' => 'do throw exception'
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"error_insert_blueprint_#200"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"error_insert_blueprint_#200"}',
             ],
             'invalid encoding fields - title' => [
                 'headers' => [
@@ -220,8 +221,8 @@ class APIUploadTest extends TestCase
                     'version'    => 'public',
                     'expiration' => '604800'
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"invalid"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"invalid"}',
             ],
             'invalid encoding fields - blueprint' => [
                 'headers' => [
@@ -233,8 +234,8 @@ class APIUploadTest extends TestCase
                     'version'    => 'public',
                     'expiration' => '604800'
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"invalid"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"invalid"}',
             ],
             'invalid encoding fields - version' => [
                 'headers' => [
@@ -246,8 +247,8 @@ class APIUploadTest extends TestCase
                     'version'    => \chr(99999999),
                     'expiration' => '604800'
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"invalid"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"invalid"}',
             ],
             'invalid encoding fields - expiration' => [
                 'headers' => [
@@ -259,8 +260,8 @@ class APIUploadTest extends TestCase
                     'version'    => 'public',
                     'expiration' => \chr(99999999)
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"invalid"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"invalid"}',
             ]
         ];
     }
@@ -279,6 +280,7 @@ class APIUploadTest extends TestCase
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      */
+    #[DataProvider('dataCases')]
     public function testUploadPOST(array $headers, array $params, int $responseCode, string $responseContent): void
     {
         $ds = \DIRECTORY_SEPARATOR;
