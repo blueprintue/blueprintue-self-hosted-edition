@@ -318,7 +318,7 @@ class RenderTest extends TestCase
      *
      * @param array       $sqlQueries
      * @param int|null    $userID
-     * @param string      $slugBlueprint
+     * @param string      $slug
      * @param int         $statusCode
      * @param string|null $location
      * @param string|null $headerTitle
@@ -331,7 +331,7 @@ class RenderTest extends TestCase
      * @throws SecurityException
      */
     #[DataProvider('dataCasesRenderGET_Access')]
-    public function testRenderGETAccess(array $sqlQueries, ?int $userID, string $slugBlueprint, int $statusCode, ?string $location, ?string $headerTitle, ?string $headerDescription): void
+    public function testRenderGETAccess(array $sqlQueries, ?int $userID, string $slug, int $statusCode, ?string $location, ?string $headerTitle, ?string $headerDescription): void
     {
         // sql queries
         static::setDatabase();
@@ -351,7 +351,7 @@ class RenderTest extends TestCase
         $this->getResponseFromApplication('GET', '/', [], $session);
 
         // get blueprint
-        $response = $this->getResponseFromApplication('GET', '/render/' . $slugBlueprint . '/');
+        $response = $this->getResponseFromApplication('GET', '/render/' . $slug . '/');
         $this->doTestHasResponseWithStatusCode($response, $statusCode);
         if ($location !== null) {
             static::assertSame($location, $response->getHeaderLine('Location'));

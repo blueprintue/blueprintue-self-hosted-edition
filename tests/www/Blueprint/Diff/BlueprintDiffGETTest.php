@@ -520,7 +520,7 @@ class BlueprintDiffGETTest extends TestCase
      *
      * @param array       $sqlQueries
      * @param int|null    $userID
-     * @param string      $slugBlueprint
+     * @param string      $slug
      * @param int         $statusCode
      * @param string|null $location
      * @param string|null $headerTitle
@@ -534,7 +534,7 @@ class BlueprintDiffGETTest extends TestCase
      */
     #[DataProvider('dataCasesBlueprintGET')]
     #[DataProvider('dataCasesBlueprintGETVersionAccess')]
-    public function testBlueprintGET(array $sqlQueries, ?int $userID, string $slugBlueprint, int $statusCode, ?string $location, ?string $headerTitle, ?string $headerDescription): void
+    public function testBlueprintGET(array $sqlQueries, ?int $userID, string $slug, int $statusCode, ?string $location, ?string $headerTitle, ?string $headerDescription): void
     {
         // sql queries
         static::setDatabase();
@@ -554,7 +554,7 @@ class BlueprintDiffGETTest extends TestCase
         $this->getResponseFromApplication('GET', '/', [], $session);
 
         // get blueprint
-        $response = $this->getResponseFromApplication('GET', '/blueprint/' . $slugBlueprint);
+        $response = $this->getResponseFromApplication('GET', '/blueprint/' . $slug);
         $this->doTestHasResponseWithStatusCode($response, $statusCode);
         if ($location !== null) {
             static::assertSame($location, $response->getHeaderLine('Location'));
