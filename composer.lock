@@ -139,22 +139,22 @@
         },
         {
             "name": "rancoud/application",
-            "version": "5.2.9",
+            "version": "5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Application.git",
-                "reference": "5175916e7c35706ef38191b7246b82b365153f8a"
+                "reference": "d1784d211675f7f6a7117af253994ac408ec2431"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Application/zipball/5175916e7c35706ef38191b7246b82b365153f8a",
-                "reference": "5175916e7c35706ef38191b7246b82b365153f8a",
+                "url": "https://api.github.com/repos/rancoud/Application/zipball/d1784d211675f7f6a7117af253994ac408ec2431",
+                "reference": "d1784d211675f7f6a7117af253994ac408ec2431",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4.0",
                 "rancoud/environment": "^2.0",
-                "rancoud/router": "^3.0"
+                "rancoud/router": "^4.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16 || ^3.0",
@@ -182,22 +182,22 @@
             "description": "Application package",
             "support": {
                 "issues": "https://github.com/rancoud/Application/issues",
-                "source": "https://github.com/rancoud/Application/tree/5.2.9"
+                "source": "https://github.com/rancoud/Application/tree/5.3.0"
             },
-            "time": "2024-11-09T22:01:47+00:00"
+            "time": "2024-12-08T15:37:07+00:00"
         },
         {
             "name": "rancoud/crypt",
-            "version": "3.2.10",
+            "version": "3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Crypt.git",
-                "reference": "2bf9e748c01e6e516ec3f4cd0d617b7ccc6da6ce"
+                "reference": "715edf94fb5010af8f96ca0bb35f3f361aee432f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Crypt/zipball/2bf9e748c01e6e516ec3f4cd0d617b7ccc6da6ce",
-                "reference": "2bf9e748c01e6e516ec3f4cd0d617b7ccc6da6ce",
+                "url": "https://api.github.com/repos/rancoud/Crypt/zipball/715edf94fb5010af8f96ca0bb35f3f361aee432f",
+                "reference": "715edf94fb5010af8f96ca0bb35f3f361aee432f",
                 "shasum": ""
             },
             "require": {
@@ -228,22 +228,22 @@
             "description": "Crypt package",
             "support": {
                 "issues": "https://github.com/rancoud/Crypt/issues",
-                "source": "https://github.com/rancoud/Crypt/tree/3.2.10"
+                "source": "https://github.com/rancoud/Crypt/tree/3.3.2"
             },
-            "time": "2024-11-09T21:08:04+00:00"
+            "time": "2024-12-07T19:06:10+00:00"
         },
         {
             "name": "rancoud/database",
-            "version": "6.0.12",
+            "version": "6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Database.git",
-                "reference": "0061dbafea21cf6166ff0291ff0086015a8572f5"
+                "reference": "e6e71b3df84b6e485fea83f52305a7686b8b5532"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Database/zipball/0061dbafea21cf6166ff0291ff0086015a8572f5",
-                "reference": "0061dbafea21cf6166ff0291ff0086015a8572f5",
+                "url": "https://api.github.com/repos/rancoud/Database/zipball/e6e71b3df84b6e485fea83f52305a7686b8b5532",
+                "reference": "e6e71b3df84b6e485fea83f52305a7686b8b5532",
                 "shasum": ""
             },
             "require": {
@@ -279,22 +279,22 @@
             "description": "Database package",
             "support": {
                 "issues": "https://github.com/rancoud/Database/issues",
-                "source": "https://github.com/rancoud/Database/tree/6.0.12"
+                "source": "https://github.com/rancoud/Database/tree/6.1.1"
             },
-            "time": "2024-11-09T21:16:24+00:00"
+            "time": "2024-12-07T22:10:08+00:00"
         },
         {
             "name": "rancoud/environment",
-            "version": "2.1.13",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Environment.git",
-                "reference": "6307934f8d68e96971b426aee43294fa4b25887d"
+                "reference": "985bf6dfe19f3ff82a8294b29dc41aa9e4eb40d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Environment/zipball/6307934f8d68e96971b426aee43294fa4b25887d",
-                "reference": "6307934f8d68e96971b426aee43294fa4b25887d",
+                "url": "https://api.github.com/repos/rancoud/Environment/zipball/985bf6dfe19f3ff82a8294b29dc41aa9e4eb40d5",
+                "reference": "985bf6dfe19f3ff82a8294b29dc41aa9e4eb40d5",
                 "shasum": ""
             },
             "require": {
@@ -325,22 +325,22 @@
             "description": "Environment package",
             "support": {
                 "issues": "https://github.com/rancoud/Environment/issues",
-                "source": "https://github.com/rancoud/Environment/tree/2.1.13"
+                "source": "https://github.com/rancoud/Environment/tree/2.2.1"
             },
-            "time": "2024-11-09T21:35:01+00:00"
+            "time": "2024-12-08T13:31:09+00:00"
         },
         {
             "name": "rancoud/http",
-            "version": "3.2.5",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Http.git",
-                "reference": "69f403d74acca98f8c74b64f47c5d9bdd004c2a0"
+                "reference": "d1d904c9911e816b91136c26e91ef0845843e8cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Http/zipball/69f403d74acca98f8c74b64f47c5d9bdd004c2a0",
-                "reference": "69f403d74acca98f8c74b64f47c5d9bdd004c2a0",
+                "url": "https://api.github.com/repos/rancoud/Http/zipball/d1d904c9911e816b91136c26e91ef0845843e8cf",
+                "reference": "d1d904c9911e816b91136c26e91ef0845843e8cf",
                 "shasum": ""
             },
             "require": {
@@ -350,7 +350,7 @@
             },
             "provide": {
                 "psr/http-factory-implementation": "1.0",
-                "psr/http-message-implementation": "1.0"
+                "psr/http-message-implementation": "2.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16 || ^3.0",
@@ -378,22 +378,22 @@
             "description": "Http package",
             "support": {
                 "issues": "https://github.com/rancoud/Http/issues",
-                "source": "https://github.com/rancoud/Http/tree/3.2.5"
+                "source": "https://github.com/rancoud/Http/tree/4.0.1"
             },
-            "time": "2024-11-09T21:46:53+00:00"
+            "time": "2024-12-08T14:32:14+00:00"
         },
         {
             "name": "rancoud/model",
-            "version": "4.1.8",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Model.git",
-                "reference": "541463281e0c932c11b94168e16364a79a794041"
+                "reference": "4f48e1f34e6f78f7707fbdec035d86b133dbdc95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Model/zipball/541463281e0c932c11b94168e16364a79a794041",
-                "reference": "541463281e0c932c11b94168e16364a79a794041",
+                "url": "https://api.github.com/repos/rancoud/Model/zipball/4f48e1f34e6f78f7707fbdec035d86b133dbdc95",
+                "reference": "4f48e1f34e6f78f7707fbdec035d86b133dbdc95",
                 "shasum": ""
             },
             "require": {
@@ -432,28 +432,28 @@
             "description": "Model package",
             "support": {
                 "issues": "https://github.com/rancoud/Model/issues",
-                "source": "https://github.com/rancoud/Model/tree/4.1.8"
+                "source": "https://github.com/rancoud/Model/tree/4.3.0"
             },
-            "time": "2024-11-09T21:21:36+00:00"
+            "time": "2024-12-07T23:05:07+00:00"
         },
         {
             "name": "rancoud/pagination",
-            "version": "3.1.10",
+            "version": "3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Pagination.git",
-                "reference": "041ae5e2e9b3837a46a2c6f8ddd2fcff48faf080"
+                "reference": "e8218c2cc5b1bb1b2291b5241b04aa08e97dd76a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Pagination/zipball/041ae5e2e9b3837a46a2c6f8ddd2fcff48faf080",
-                "reference": "041ae5e2e9b3837a46a2c6f8ddd2fcff48faf080",
+                "url": "https://api.github.com/repos/rancoud/Pagination/zipball/e8218c2cc5b1bb1b2291b5241b04aa08e97dd76a",
+                "reference": "e8218c2cc5b1bb1b2291b5241b04aa08e97dd76a",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
                 "php": ">=7.4.0",
-                "rancoud/security": "^3.0"
+                "rancoud/security": "^3.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16 || ^3.0",
@@ -479,27 +479,27 @@
             "description": "Pagination package",
             "support": {
                 "issues": "https://github.com/rancoud/Pagination/issues",
-                "source": "https://github.com/rancoud/Pagination/tree/3.1.10"
+                "source": "https://github.com/rancoud/Pagination/tree/3.2.2"
             },
-            "time": "2024-11-09T21:14:33+00:00"
+            "time": "2024-12-07T20:59:44+00:00"
         },
         {
             "name": "rancoud/router",
-            "version": "3.1.7",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Router.git",
-                "reference": "e624ac76c1428d53e6d0b028fe6f645eaa0d1187"
+                "reference": "2ff5ae515673876c259f393336206d47c12d6c0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Router/zipball/e624ac76c1428d53e6d0b028fe6f645eaa0d1187",
-                "reference": "e624ac76c1428d53e6d0b028fe6f645eaa0d1187",
+                "url": "https://api.github.com/repos/rancoud/Router/zipball/2ff5ae515673876c259f393336206d47c12d6c0a",
+                "reference": "2ff5ae515673876c259f393336206d47c12d6c0a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4.0",
-                "rancoud/http": "^3.2"
+                "rancoud/http": "^4.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16 || ^3.0",
@@ -525,22 +525,22 @@
             "description": "Router package",
             "support": {
                 "issues": "https://github.com/rancoud/Router/issues",
-                "source": "https://github.com/rancoud/Router/tree/3.1.7"
+                "source": "https://github.com/rancoud/Router/tree/4.0.1"
             },
-            "time": "2024-11-09T21:50:43+00:00"
+            "time": "2024-12-08T14:41:09+00:00"
         },
         {
             "name": "rancoud/security",
-            "version": "3.0.14",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Security.git",
-                "reference": "d95a999f80e18ebc1acf42165b669ec61aed185c"
+                "reference": "62f9d6f006df4f0382f2cc0f03a1f0d319f64999"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Security/zipball/d95a999f80e18ebc1acf42165b669ec61aed185c",
-                "reference": "d95a999f80e18ebc1acf42165b669ec61aed185c",
+                "url": "https://api.github.com/repos/rancoud/Security/zipball/62f9d6f006df4f0382f2cc0f03a1f0d319f64999",
+                "reference": "62f9d6f006df4f0382f2cc0f03a1f0d319f64999",
                 "shasum": ""
             },
             "require": {
@@ -571,22 +571,22 @@
             "description": "Security package",
             "support": {
                 "issues": "https://github.com/rancoud/Security/issues",
-                "source": "https://github.com/rancoud/Security/tree/3.0.14"
+                "source": "https://github.com/rancoud/Security/tree/3.1.2"
             },
-            "time": "2024-11-09T21:09:18+00:00"
+            "time": "2024-12-07T19:25:13+00:00"
         },
         {
             "name": "rancoud/session",
-            "version": "5.0.9",
+            "version": "5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rancoud/Session.git",
-                "reference": "c0cc93210d18aafacdd42d5f2dff962efb30d5cb"
+                "reference": "fbea55df1534d730443bab53d0c26ef4ba07cdc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rancoud/Session/zipball/c0cc93210d18aafacdd42d5f2dff962efb30d5cb",
-                "reference": "c0cc93210d18aafacdd42d5f2dff962efb30d5cb",
+                "url": "https://api.github.com/repos/rancoud/Session/zipball/fbea55df1534d730443bab53d0c26ef4ba07cdc7",
+                "reference": "fbea55df1534d730443bab53d0c26ef4ba07cdc7",
                 "shasum": ""
             },
             "require": {
@@ -621,9 +621,9 @@
             "description": "Session package",
             "support": {
                 "issues": "https://github.com/rancoud/Session/issues",
-                "source": "https://github.com/rancoud/Session/tree/5.0.9"
+                "source": "https://github.com/rancoud/Session/tree/5.2.1"
             },
-            "time": "2024-11-09T21:29:28+00:00"
+            "time": "2024-12-07T23:44:38+00:00"
         }
     ],
     "packages-dev": [
@@ -5002,7 +5002,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -5010,6 +5010,6 @@
         "ext-gd": "*",
         "ext-json": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
