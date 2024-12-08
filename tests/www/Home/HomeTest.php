@@ -1086,27 +1086,27 @@ class HomeTest extends TestCase
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'title') {
-                $value = $hasValue ? \trim($params['form-add_blueprint-input-title']) : '';
+                $value = $hasValue ? Helper::trim($params['form-add_blueprint-input-title']) : '';
                 $this->doTestHtmlForm($response, '/', $this->getHTMLFieldTitle($value, $hasError, $labelError));
             }
 
             if ($field === 'exposure') {
-                $value = $hasValue ? \trim($params['form-add_blueprint-select-exposure']) : '';
+                $value = $hasValue ? Helper::trim($params['form-add_blueprint-select-exposure']) : '';
                 $this->doTestHtmlForm($response, '/', $this->getHTMLFieldExposure($value, $hasError, $labelError));
             }
 
             if ($field === 'expiration') {
-                $value = $hasValue ? \trim($params['form-add_blueprint-select-expiration']) : '';
+                $value = $hasValue ? Helper::trim($params['form-add_blueprint-select-expiration']) : '';
                 $this->doTestHtmlForm($response, '/', $this->getHTMLFieldExpiration($value, $hasError, $labelError));
             }
 
             if ($field === 'ue_version') {
-                $value = $hasValue ? \trim($params['form-add_blueprint-select-ue_version']) : '';
+                $value = $hasValue ? Helper::trim($params['form-add_blueprint-select-ue_version']) : '';
                 $this->doTestHtmlForm($response, '/', $this->getHTMLFieldUEVersion($value, $hasError, $labelError));
             }
 
             if ($field === 'blueprint') {
-                $value = $hasValue ? \trim($params['form-add_blueprint-textarea-blueprint']) : '';
+                $value = $hasValue ? Helper::trim($params['form-add_blueprint-textarea-blueprint']) : '';
                 $this->doTestHtmlForm($response, '/', $this->getHTMLFieldBlueprint($value, $hasError, $labelError));
             }
         }

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace tests\www\Profile\Edit;
 
+use app\helpers\Helper;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -437,8 +438,8 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
 
         if ($isFormSuccess) {
             static::assertNotSame($usersInfosBefore, $usersInfosAfter);
-            static::assertSame(\trim($params['form-edit_basic_infos-textarea-bio']), $usersInfosAfter['bio']);
-            static::assertSame(\trim($params['form-edit_basic_infos-input-website']), $usersInfosAfter['link_website']);
+            static::assertSame(Helper::trim($params['form-edit_basic_infos-textarea-bio']), $usersInfosAfter['bio']);
+            static::assertSame(Helper::trim($params['form-edit_basic_infos-input-website']), $usersInfosAfter['link_website']);
         } else {
             static::assertSame($usersInfosBefore, $usersInfosAfter);
         }
@@ -463,12 +464,12 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
             $hasValue = \in_array($field, $fieldsHasValue, true);
 
             if ($field === 'bio') {
-                $value = $hasValue ? \trim($params['form-edit_basic_infos-textarea-bio']) : '';
+                $value = $hasValue ? Helper::trim($params['form-edit_basic_infos-textarea-bio']) : '';
                 $this->doTestHtmlForm($response, '#form-edit_basic_infos', $this->getHTMLFieldBio($value));
             }
 
             if ($field === 'website') {
-                $value = $hasValue ? \trim($params['form-edit_basic_infos-input-website']) : '';
+                $value = $hasValue ? Helper::trim($params['form-edit_basic_infos-input-website']) : '';
                 $this->doTestHtmlForm($response, '#form-edit_basic_infos', $this->getHTMLFieldWebsite($value));
             }
         }

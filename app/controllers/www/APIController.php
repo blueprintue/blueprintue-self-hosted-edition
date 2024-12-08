@@ -71,7 +71,7 @@ class APIController implements MiddlewareInterface
      */
     protected function findUserWithApiKey(ServerRequestInterface $request): array
     {
-        $apiKey = \trim($request->getHeaderLine('X-Token'));
+        $apiKey = Helper::trim($request->getHeaderLine('X-Token'));
         if ($apiKey === '') {
             return [null, 'api_key_empty'];
         }
@@ -122,7 +122,7 @@ class APIController implements MiddlewareInterface
             return null;
         }
 
-        $blueprint = \trim($rawParams['blueprint']);
+        $blueprint = Helper::trim($rawParams['blueprint']);
         if (!BlueprintService::isValidBlueprint($blueprint)) {
             return null;
         }
@@ -189,22 +189,22 @@ class APIController implements MiddlewareInterface
             return [null, 'invalid'];
         }
 
-        $title = \trim($rawParams['title'] ?? '');
+        $title = Helper::trim($rawParams['title'] ?? '');
         if ($title === '') {
             return [null, 'required_title'];
         }
 
-        $blueprint = \trim($rawParams['blueprint'] ?? '');
+        $blueprint = Helper::trim($rawParams['blueprint'] ?? '');
         if (!BlueprintService::isValidBlueprint($blueprint)) {
             return [null, 'invalid_blueprint'];
         }
 
-        $exposure = \trim($rawParams['exposure'] ?? 'public');
+        $exposure = Helper::trim($rawParams['exposure'] ?? 'public');
         if (!\in_array($exposure, ['public', 'unlisted', 'private'], true)) {
             return [null, 'invalid_exposure'];
         }
 
-        $expiration = \trim($rawParams['expiration'] ?? 'never');
+        $expiration = Helper::trim($rawParams['expiration'] ?? 'never');
         if (!\in_array($expiration, ['never', '3600', '86400', '604800'], true)) {
             return [null, 'invalid_expiration'];
         }
@@ -212,7 +212,7 @@ class APIController implements MiddlewareInterface
         $oldExpiration = ['never' => 'never', '3600' => '1h', '86400' => '1d', '604800' => '1w'];
         $expiration = $oldExpiration[$expiration];
 
-        $version = \trim($rawParams['version'] ?? Helper::getCurrentUEVersion());
+        $version = Helper::trim($rawParams['version'] ?? Helper::getCurrentUEVersion());
         if (!\in_array($version, Helper::getAllUEVersion(), true)) {
             return [null, 'invalid_version'];
         }

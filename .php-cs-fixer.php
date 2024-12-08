@@ -23,7 +23,7 @@ $rules = [
     'get_class_to_class_keyword'  => false,
     'global_namespace_import'     => false,
     'linebreak_after_opening_tag' => true,
-    'mb_str_functions'            => true,
+    'mb_str_functions'            => false, // turn off because of PHP 8.4
     'native_function_invocation'  => [
         'include' => [
             '@all'

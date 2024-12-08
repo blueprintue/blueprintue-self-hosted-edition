@@ -254,7 +254,7 @@ class BlueprintEditController implements MiddlewareInterface
         $rawParams = $request->getParsedBody();
         foreach ($rawParams as $key => $rawParam) {
             if (\in_array($key, $htmlNames, true)) {
-                $params[$key] = \trim($rawParam);
+                $params[$key] = Helper::trim($rawParam);
             }
         }
 

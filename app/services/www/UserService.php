@@ -511,7 +511,7 @@ class UserService
      */
     public static function slugify(string $string): string
     {
-        $string = \trim($string);
+        $string = Helper::trim($string);
         $string = \mb_strtolower($string);
         $string = \str_replace(['.', ' ', '@'], ['-', '-', ''], $string);
 

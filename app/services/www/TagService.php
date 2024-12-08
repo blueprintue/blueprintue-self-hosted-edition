@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace app\services\www;
 
+use app\helpers\Helper;
 use app\models\TagModel;
 use Rancoud\Application\Application;
 
@@ -18,7 +19,7 @@ class TagService
      */
     public static function slugify(string $string): string
     {
-        $string = \trim($string);
+        $string = Helper::trim($string);
         $string = \mb_strtolower($string);
         $string = \str_replace(['.', ' ', '@'], ['-', '-', ''], $string);
 
@@ -90,7 +91,7 @@ class TagService
         $tagsToSeek = [];
         $itemsCount = 0;
         foreach ($tagsRaw as $tagRaw) {
-            $tagRaw = \trim($tagRaw);
+            $tagRaw = Helper::trim($tagRaw);
             if ($tagRaw === '') {
                 continue;
             }

@@ -413,4 +413,21 @@ class Helper
     {
         return (new DateTime($date, new DateTimeZone($timezone)))->format($format);
     }
+
+    /**
+     * Because of PHP 8.4.
+     *
+     * @param        $string
+     * @param string $characters
+     *
+     * @return string
+     */
+    public static function trim($string, string $characters = " \n\r\t\v\0"): string
+    {
+        if (\PHP_MAJOR_VERSION >= 8 && \PHP_MINOR_VERSION >= 4) {
+            return \mb_trim((string) $string, $characters);
+        }
+
+        return \trim((string) $string, $characters);
+    }
 }
