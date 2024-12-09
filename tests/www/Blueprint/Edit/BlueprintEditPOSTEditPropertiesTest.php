@@ -12,6 +12,7 @@ namespace tests\www\Blueprint\Edit;
 use app\helpers\Helper;
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -62,25 +63,25 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
         }
     }
 
-    public function dataCasesEditProperties(): array
+    public static function dataCasesEditProperties(): array
     {
         return [
             'update OK - edit properties - no changes' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">Properties has been updated</div>'
@@ -90,26 +91,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'update OK - edit properties - unlisted' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'unlisted',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">Properties has been updated</div>'
@@ -119,26 +120,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'update OK - edit properties - public' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'public',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">Properties has been updated</div>'
@@ -148,26 +149,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'update OK - edit properties - ue_version 4.21' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.21',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">Properties has been updated</div>'
@@ -177,26 +178,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'update OK - edit properties - comment hide' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'hide',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">Properties has been updated</div>'
@@ -206,26 +207,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'update OK - edit properties - comment close' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'close',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">Properties has been updated</div>'
@@ -235,26 +236,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'update OK - edit properties - expiration null -> add 1h' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => '1h',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">Properties has been updated</div>'
@@ -264,26 +265,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'update OK - edit properties - expiration null -> add 1d' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => '1d',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">Properties has been updated</div>'
@@ -293,26 +294,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'update OK - edit properties - expiration null -> add 1w' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => '1w',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">Properties has been updated</div>'
@@ -322,26 +323,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'update OK - edit properties - expiration not null -> add 1h' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `expiration`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp() + interval 1 hour)",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => '1h',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">Properties has been updated</div>'
@@ -351,26 +352,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'update OK - edit properties - expiration not null -> add 1d' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `expiration`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp() + interval 1 hour)",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => '1d',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">Properties has been updated</div>'
@@ -380,26 +381,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'update OK - edit properties - expiration not null -> add 1w' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `expiration`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp() + interval 1 hour)",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => '1w',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">Properties has been updated</div>'
@@ -409,26 +410,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'update OK - edit properties - expiration not null -> remove' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `expiration`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp() + interval 1 hour)",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'remove',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">Properties has been updated</div>'
@@ -438,26 +439,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'csrf incorrect' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'incorrect_csrf',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -467,25 +468,25 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no csrf' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -495,25 +496,25 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no exposure' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -523,25 +524,25 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['ue_version', 'exposure', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['ue_version', 'exposure', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no expiration' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -551,25 +552,25 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no ue_version' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -579,25 +580,25 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no comment' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -607,26 +608,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'empty fields - exposure' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => ' ',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -636,28 +637,28 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">Error(s) on exposure</div>'
                     ]
                 ],
-                'fields_has_error'      => ['exposure'],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['exposure'],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [
                     'exposure' => 'Exposure is invalid'
                 ],
             ],
             'empty fields - expiration' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => ' ',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -667,28 +668,28 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">Error(s) on expiration</div>'
                     ]
                 ],
-                'fields_has_error'      => ['expiration'],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['expiration'],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [
                     'expiration' => 'Expiration is invalid'
                 ],
             ],
             'empty fields - ue_version' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => ' ',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -698,28 +699,28 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">Error(s) on UE version</div>'
                     ]
                 ],
-                'fields_has_error'      => ['ue_version'],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['ue_version'],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [
                     'ue_version' => 'UE version is invalid'
                 ],
             ],
             'empty fields - comment' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => ' ',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -729,28 +730,28 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">Error(s) on comment section</div>'
                     ]
                 ],
-                'fields_has_error'      => ['comment'],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['comment'],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [
                     'comment' => 'Comment section is invalid'
                 ],
             ],
             'invalid fields - exposure invalid' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'invalid',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -760,28 +761,28 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">Error(s) on exposure</div>'
                     ]
                 ],
-                'fields_has_error'      => ['exposure'],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['exposure'],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [
                     'exposure' => 'Exposure is invalid'
                 ],
             ],
             'invalid fields - expiration invalid' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'invalid',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -791,28 +792,28 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">Error(s) on expiration</div>'
                     ]
                 ],
-                'fields_has_error'      => ['expiration'],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['expiration'],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [
                     'expiration' => 'Expiration is invalid'
                 ],
             ],
             'invalid fields - expiration invalid - remove sent but no expiration set' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'remove',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -822,28 +823,28 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">Error(s) on expiration</div>'
                     ]
                 ],
-                'fields_has_error'      => ['expiration'],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['expiration'],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [
                     'expiration' => 'Expiration is invalid'
                 ],
             ],
             'invalid fields - ue_version invalid' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => 'invalid',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -853,28 +854,28 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">Error(s) on UE version</div>'
                     ]
                 ],
-                'fields_has_error'      => ['ue_version'],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['ue_version'],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [
                     'ue_version' => 'UE version is invalid'
                 ],
             ],
             'invalid fields - comment invalid' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'               => 189,
-                'params'                => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'invalid',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -884,28 +885,28 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">Error(s) on comment section</div>'
                     ]
                 ],
-                'fields_has_error'      => ['comment'],
-                'fields_has_value'      => ['exposure', 'expiration', 'ue_version', 'comment'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['comment'],
+                'fieldsHasValue'   => ['exposure', 'expiration', 'ue_version', 'comment'],
+                'fieldsLabelError' => [
                     'comment' => 'Comment section is invalid'
                 ],
             ],
             'invalid encoding fields - exposure' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => \chr(99999999),
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -915,26 +916,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - expiration' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => \chr(99999999),
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -944,26 +945,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - ue_version' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => \chr(99999999),
                     'form-edit_properties-select-comment'    => 'open',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -973,26 +974,26 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - comment' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_properties-hidden-csrf'       => 'csrf_is_replaced',
                     'form-edit_properties-select-exposure'   => 'private',
                     'form-edit_properties-select-expiration' => 'keep',
                     'form-edit_properties-select-ue_version' => '4.0',
                     'form-edit_properties-select-comment'    => \chr(99999999),
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_properties">'
@@ -1002,9 +1003,9 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_properties" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['exposure', 'ue_version', 'comment'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['exposure', 'ue_version', 'comment'],
+                'fieldsLabelError' => [],
             ],
         ];
     }
@@ -1030,6 +1031,7 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
      * @throws SecurityException
      * @throws \Exception
      */
+    #[DataProvider('dataCasesEditProperties')]
     public function testBlueprintEditPOSTEditProperties(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();

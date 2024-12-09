@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\Blueprint\Edit;
 
 use app\helpers\Helper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -60,27 +61,27 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
         }
     }
 
-    public function dataCasesAddVersion(): array
+    public static function dataCasesAddVersion(): array
     {
         return [
             'update OK - add version' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                     "INSERT INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'        => 189,
-                'count_versions' => 2,
-                'params'         => [
+                'userID'        => 189,
+                'countVersions' => 2,
+                'params'        => [
                     'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_version-textarea-blueprint' => 'Begin object 1234',
                     'form-add_version-textarea-reason'    => 'new version',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">The new version has been published</div>'
@@ -90,29 +91,29 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'update OK - add version with max id + 1' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 2, utc_timestamp(), utc_timestamp(), 'private')",
                     "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), null)",
                     "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (901, 80, 2, 'Second commit', utc_timestamp(), null)",
                 ],
-                'user_id'        => 189,
-                'count_versions' => 3,
-                'params'         => [
+                'userID'        => 189,
+                'countVersions' => 3,
+                'params'        => [
                     'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_version-textarea-blueprint' => 'Begin object 1234',
                     'form-add_version-textarea-reason'    => 'new version',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">The new version has been published</div>'
@@ -122,27 +123,27 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'update KO - add version failed because blueprint versions keys integrity failed' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 99999, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'user_id'        => 189,
-                'count_versions' => 0,
-                'params'         => [
+                'userID'        => 189,
+                'countVersions' => 0,
+                'params'        => [
                     'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_version-textarea-blueprint' => 'Begin object 1234',
                     'form-add_version-textarea-reason'    => 'new version',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
@@ -152,28 +153,28 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error, could not add version blueprint (#300)</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['blueprint', 'reason'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['blueprint', 'reason'],
+                'fieldsLabelError' => [],
             ],
             'csrf incorrect' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
                     "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'        => 189,
-                'count_versions' => 1,
-                'params'         => [
+                'userID'        => 189,
+                'countVersions' => 1,
+                'params'        => [
                     'form-add_version-hidden-csrf'        => 'incorrect_csrf',
                     'form-add_version-textarea-blueprint' => 'Begin object 1234',
                     'form-add_version-textarea-reason'    => 'new version',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
@@ -183,27 +184,27 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no csrf' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
                     "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'        => 189,
-                'count_versions' => 1,
-                'params'         => [
+                'userID'        => 189,
+                'countVersions' => 1,
+                'params'        => [
                     'form-add_version-textarea-blueprint' => 'Begin object 1234',
                     'form-add_version-textarea-reason'    => 'new version',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
@@ -213,27 +214,27 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no blueprint' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
                     "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'        => 189,
-                'count_versions' => 1,
-                'params'         => [
+                'userID'        => 189,
+                'countVersions' => 1,
+                'params'        => [
                     'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_version-textarea-reason'    => 'new version',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
@@ -243,27 +244,27 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no reason' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
                     "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'        => 189,
-                'count_versions' => 1,
-                'params'         => [
+                'userID'        => 189,
+                'countVersions' => 1,
+                'params'        => [
                     'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_version-textarea-blueprint' => 'Begin object 1234',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
@@ -273,28 +274,28 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'empty fields - blueprint' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
                     "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'        => 189,
-                'count_versions' => 1,
-                'params'         => [
+                'userID'        => 189,
+                'countVersions' => 1,
+                'params'        => [
                     'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_version-textarea-blueprint' => ' ',
                     'form-add_version-textarea-reason'    => 'new version',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
@@ -304,30 +305,30 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error(s) on blueprint</div>'
                     ]
                 ],
-                'fields_has_error'      => ['blueprint'],
-                'fields_has_value'      => ['blueprint', 'reason'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['blueprint'],
+                'fieldsHasValue'   => ['blueprint', 'reason'],
+                'fieldsLabelError' => [
                     'blueprint' => 'Blueprint is required'
                 ],
             ],
             'empty fields - reason' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
                     "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'        => 189,
-                'count_versions' => 1,
-                'params'         => [
+                'userID'        => 189,
+                'countVersions' => 1,
+                'params'        => [
                     'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_version-textarea-blueprint' => 'Begin object 1234',
                     'form-add_version-textarea-reason'    => ' ',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
@@ -337,30 +338,30 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error(s) on reason</div>'
                     ]
                 ],
-                'fields_has_error'      => ['reason'],
-                'fields_has_value'      => ['blueprint', 'reason'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['reason'],
+                'fieldsHasValue'   => ['blueprint', 'reason'],
+                'fieldsLabelError' => [
                     'reason' => 'Reason is required'
                 ],
             ],
             'invalid fields - blueprint invalid' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
                     "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'        => 189,
-                'count_versions' => 1,
-                'params'         => [
+                'userID'        => 189,
+                'countVersions' => 1,
+                'params'        => [
                     'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_version-textarea-blueprint' => '<script>alert(1)</script></textarea><script>alert(1)</script>',
                     'form-add_version-textarea-reason'    => '<script>alert(1)</script></textarea><script>alert(1)</script>',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
@@ -370,30 +371,30 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error(s) on blueprint</div>'
                     ]
                 ],
-                'fields_has_error'      => ['blueprint'],
-                'fields_has_value'      => ['blueprint', 'reason'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['blueprint'],
+                'fieldsHasValue'   => ['blueprint', 'reason'],
+                'fieldsLabelError' => [
                     'blueprint' => 'Blueprint is invalid'
                 ],
             ],
             'invalid encoding fields - blueprint' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
                     "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'        => 189,
-                'count_versions' => 1,
-                'params'         => [
+                'userID'        => 189,
+                'countVersions' => 1,
+                'params'        => [
                     'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_version-textarea-blueprint' => \chr(99999999),
                     'form-add_version-textarea-reason'    => 'new version',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
@@ -403,28 +404,28 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - reason' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
                     "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'        => 189,
-                'count_versions' => 1,
-                'params'         => [
+                'userID'        => 189,
+                'countVersions' => 1,
+                'params'        => [
                     'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_version-textarea-blueprint' => 'Begin object 1234',
                     'form-add_version-textarea-reason'    => \chr(99999999),
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
@@ -434,9 +435,9 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
         ];
     }
@@ -462,6 +463,7 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCasesAddVersion')]
     public function testBlueprintEditPOSTAddVersion(array $sqlQueries, int $userID, int $countVersions, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();

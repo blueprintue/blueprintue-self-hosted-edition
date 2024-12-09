@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace tests\www\StaticPages;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\Application;
 use Rancoud\Application\ApplicationException;
@@ -80,7 +81,7 @@ class StaticTest extends TestCase
         return $response;
     }
 
-    public function dataCases(): array
+    public static function dataCases(): array
     {
         return [
             'terms of service' => [
@@ -89,7 +90,7 @@ class StaticTest extends TestCase
                     'title'       => 'Terms of Service for &lt;strong&gt;this_site_name&lt;&#47;strong&gt; | &lt;strong&gt;This is a base title&lt;&#47;strong&gt;',
                     'description' => 'Terms&#x20;of&#x20;Service&#x20;for&#x20;&lt;strong&gt;this_site_name&lt;&#x2F;strong&gt;',
                 ],
-                'content'            => '<h2 class="block__title">Terms of Service for &lt;strong&gt;this_site_name&lt;&#47;strong&gt;</h2>',
+                'content' => '<h2 class="block__title">Terms of Service for &lt;strong&gt;this_site_name&lt;&#47;strong&gt;</h2>',
             ],
             'privacy policy' => [
                 'url'     => '/privacy-policy/',
@@ -97,7 +98,7 @@ class StaticTest extends TestCase
                     'title'       => 'Privacy Policy for &lt;strong&gt;this_site_name&lt;&#47;strong&gt; | &lt;strong&gt;This is a base title&lt;&#47;strong&gt;',
                     'description' => 'Privacy&#x20;Policy&#x20;for&#x20;&lt;strong&gt;this_site_name&lt;&#x2F;strong&gt;',
                 ],
-                'content'            => '<h2 class="block__title">Privacy Policy for &lt;strong&gt;this_site_name&lt;&#47;strong&gt;</h2>',
+                'content' => '<h2 class="block__title">Privacy Policy for &lt;strong&gt;this_site_name&lt;&#47;strong&gt;</h2>',
             ]
         ];
     }
@@ -114,6 +115,7 @@ class StaticTest extends TestCase
      * @throws RouterException
      * @throws DatabaseException
      */
+    #[DataProvider('dataCases')]
     public function testStaticPage(string $url, array $headers, string $content): void
     {
         $response = $this->getResponseFromApplicationWithStatic($url);
