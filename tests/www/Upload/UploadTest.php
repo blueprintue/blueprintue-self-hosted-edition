@@ -137,7 +137,7 @@ class UploadTest extends TestCase
                 'params'             => [],
                 'file'               => [],
                 'additionalsFolders' => [],
-                'isUploaded'        => false,
+                'isUploaded'         => false,
             ],
             'invalid url - blueprint/avatar' => [
                 'slug'               => '/upload/blueprint/1/avatar/',
