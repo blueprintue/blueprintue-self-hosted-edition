@@ -109,13 +109,13 @@ class SearchListTest extends TestCase
     protected static function addSearchError(array $cases): array
     {
         $cases['Search - Error Invalid Term'] = [
-            'sql_queries'             => [],
-            'slug'                    => '/search/?form-search-input-query=tle&aze=' . \chr(99999999),
-            'location'                => '/',
-            'user_id'                 => null,
-            'content_head'            => [],
-            'content_blueprints_html' => '',
-            'content_pagination_html' => '',
+            'sqlQueries'            => [],
+            'slug'                  => '/search/?form-search-input-query=tle&aze=' . \chr(99999999),
+            'location'              => '/',
+            'userID'                => null,
+            'contentHead'           => [],
+            'contentBlueprintsHTML' => '',
+            'contentPaginationHTML' => ''
         ];
 
         return $cases;
