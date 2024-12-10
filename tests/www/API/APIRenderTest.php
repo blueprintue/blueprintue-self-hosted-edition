@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace tests\www\API;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\Application;
 use Rancoud\Application\ApplicationException;
@@ -32,7 +33,7 @@ class APIRenderTest extends TestCase
         static::$db->insert("INSERT INTO users_api (id_user, api_key) VALUES (1, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')");
     }
 
-    public function dataCases(): array
+    public static function dataCases(): array
     {
         return [
             'render - OK' => [
@@ -42,8 +43,8 @@ class APIRenderTest extends TestCase
                 'params'  => [
                     'blueprint' => 'begin object 1',
                 ],
-                'response_code'    => 200,
-                'response_content' => <<<HTML
+                'responseCode'    => 200,
+                'responseContent' => <<<HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,16 +92,16 @@ HTML,
                 'params'  => [
                     'blueprint' => 'begin object 1',
                 ],
-                'response_code'    => 401,
-                'response_content' => '{"error":"api_key_incorrect"}',
+                'responseCode'    => 401,
+                'responseContent' => '{"error":"api_key_incorrect"}',
             ],
             'headers empty' => [
                 'headers' => [],
                 'params'  => [
                     'blueprint' => 'begin object 1',
                 ],
-                'response_code'    => 401,
-                'response_content' => '{"error":"api_key_empty"}',
+                'responseCode'    => 401,
+                'responseContent' => '{"error":"api_key_empty"}',
             ],
             'api key empty' => [
                 'headers' => [
@@ -109,8 +110,8 @@ HTML,
                 'params'  => [
                     'blueprint' => 'begin object 1',
                 ],
-                'response_code'    => 401,
-                'response_content' => '{"error":"api_key_empty"}',
+                'responseCode'    => 401,
+                'responseContent' => '{"error":"api_key_empty"}',
             ],
             'api key invalid encoding' => [
                 'headers' => [
@@ -119,16 +120,16 @@ HTML,
                 'params'  => [
                     'blueprint' => 'begin object 1',
                 ],
-                'response_code'    => 401,
-                'response_content' => '{"error":"api_key_incorrect"}',
+                'responseCode'    => 401,
+                'responseContent' => '{"error":"api_key_incorrect"}',
             ],
             'missing fields - no fields' => [
                 'headers' => [
                     'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
                 ],
-                'params'           => [],
-                'response_code'    => 400,
-                'response_content' => '{"error":"blueprint_empty"}',
+                'params'          => [],
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"blueprint_empty"}',
             ],
             'empty fields - blueprint empty' => [
                 'headers' => [
@@ -137,8 +138,8 @@ HTML,
                 'params'  => [
                     'blueprint' => ' ',
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"blueprint_empty"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"blueprint_empty"}',
             ],
             'invalid fields - blueprint' => [
                 'headers' => [
@@ -147,8 +148,8 @@ HTML,
                 'params'  => [
                     'blueprint' => 'aze',
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"blueprint_empty"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"blueprint_empty"}',
             ],
             'invalid encoding fields - blueprint' => [
                 'headers' => [
@@ -157,8 +158,8 @@ HTML,
                 'params'  => [
                     'blueprint' => \chr(99999999)
                 ],
-                'response_code'    => 400,
-                'response_content' => '{"error":"blueprint_empty"}',
+                'responseCode'    => 400,
+                'responseContent' => '{"error":"blueprint_empty"}',
             ]
         ];
     }
@@ -176,6 +177,7 @@ HTML,
      * @throws RouterException
      * @throws \Rancoud\Database\DatabaseException
      */
+    #[DataProvider('dataCases')]
     public function testRenderPOST(array $headers, array $params, int $responseCode, string $responseContent): void
     {
         $ds = \DIRECTORY_SEPARATOR;

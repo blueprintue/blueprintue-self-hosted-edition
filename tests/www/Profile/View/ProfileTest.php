@@ -3025,11 +3025,11 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases20Public10PrivateBlueprintsPage1(): array
+    public static function dataCases20Public10PrivateBlueprintsPage1(): array
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
-            $formattedDates['-' . $i . ' days'] = $this->getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
+            $formattedDates['-' . $i . ' days'] = static::getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
         }
 
         return [
@@ -4056,11 +4056,11 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases20Public10PrivateBlueprintsPage2(): array
+    public static function dataCases20Public10PrivateBlueprintsPage2(): array
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
-            $formattedDates['-' . $i . ' days'] = $this->getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
+            $formattedDates['-' . $i . ' days'] = static::getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
         }
 
         return [

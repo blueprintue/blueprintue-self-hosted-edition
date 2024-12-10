@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\Blueprint\Edit;
 
 use app\helpers\Helper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -85,7 +86,7 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCasesDeleteThumbnail(): array
+    public static function dataCasesDeleteThumbnail(): array
     {
         $randomThumbailsName = [];
         for ($i = 0; $i < 2; ++$i) {
@@ -101,18 +102,18 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
 
         return [
             'delete thumbnail OK - no thumbnail before' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public')",
                     "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-delete_thumbnail-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">Blueprint thumbnail is now deleted</div>'
@@ -122,22 +123,22 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
                         'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
                     ]
                 ],
-                'file_or_dir_on_disk' => null,
-                'is_file'             => false,
+                'fileOrDirOnDisk' => null,
+                'isFile'          => false,
             ],
             'delete thumbnail OK - has thumbnail before (file is not in disk)' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '<script>alert(1)</script>')",
                     "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-delete_thumbnail-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">Blueprint thumbnail is now deleted</div>'
@@ -147,22 +148,22 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
                         'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
                     ]
                 ],
-                'file_or_dir_on_disk' => null,
-                'is_file'             => false,
+                'fileOrDirOnDisk' => null,
+                'isFile'          => false,
             ],
             'delete thumbnail OK - has thumbnail before (file is in disk)' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '" . $randomThumbailsName[0] . "')",
                     "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-delete_thumbnail-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">Blueprint thumbnail is now deleted</div>'
@@ -172,22 +173,22 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
                         'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
                     ]
                 ],
-                'file_or_dir_on_disk' => $randomThumbailsName[0],
-                'is_file'             => true,
+                'fileOrDirOnDisk' => $randomThumbailsName[0],
+                'isFile'          => true,
             ],
             'delete thumbnail OK - has thumbnail before (file is in disk as dir but not delete)' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '" . $randomThumbailsName[1] . "')",
                     "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-delete_thumbnail-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">Blueprint thumbnail is now deleted</div>'
@@ -197,22 +198,22 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
                         'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
                     ]
                 ],
-                'file_or_dir_on_disk' => $randomThumbailsName[1],
-                'is_file'             => false,
+                'fileOrDirOnDisk' => $randomThumbailsName[1],
+                'isFile'          => false,
             ],
             'csrf incorrect' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '<script>alert(1)</script>')",
                     "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-delete_thumbnail-hidden-csrf' => 'incorrect_csrf',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">'
@@ -222,20 +223,20 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
                         'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
                     ]
                 ],
-                'file_or_dir_on_disk' => null,
-                'is_file'             => false,
+                'fileOrDirOnDisk' => null,
+                'isFile'          => false,
             ],
             'missing fields - no csrf' => [
-                'sql_queries'           => [
+                'sqlQueries'           => [
                     "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '<script>alert(1)</script>')",
                     "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
                 ],
-                'user_id'               => 189,
-                'params'                => [],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'userID'             => 189,
+                'params'             => [],
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">'
@@ -245,8 +246,8 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
                         'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
                     ]
                 ],
-                'file_or_dir_on_disk' => null,
-                'is_file'             => false,
+                'fileOrDirOnDisk' => null,
+                'isFile'          => false,
             ],
         ];
     }
@@ -269,6 +270,7 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
+    #[DataProvider('dataCasesDeleteThumbnail')]
     public function testBlueprintEditPOSTDeleteThumbnail(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, ?string $fileOrDirOnDisk, bool $isFile): void
     {
         static::setDatabase();
