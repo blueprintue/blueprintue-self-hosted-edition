@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\Search;
 
 use app\helpers\Helper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -83,19 +84,19 @@ class SearchListTest extends TestCase
      *
      * @return array
      */
-    public function dataCases(): array
+    public static function dataCases(): array
     {
         $cases = [];
 
-        $cases = $this->addSearchError($cases);
-        $cases = $this->addSearchQuery($cases);
-        $cases = $this->addSearchQueryType($cases);
-        $cases = $this->addSearchQueryTypeVersion($cases);
-        $cases = $this->addSearchQueryVersion($cases);
-        $cases = $this->addSearchType($cases);
-        $cases = $this->addSearchTypeVersion($cases);
+        $cases = static::addSearchError($cases);
+        $cases = static::addSearchQuery($cases);
+        $cases = static::addSearchQueryType($cases);
+        $cases = static::addSearchQueryTypeVersion($cases);
+        $cases = static::addSearchQueryVersion($cases);
+        $cases = static::addSearchType($cases);
+        $cases = static::addSearchTypeVersion($cases);
 
-        return $this->addSearchVersion($cases);
+        return static::addSearchVersion($cases);
     }
 
     /**
@@ -105,7 +106,7 @@ class SearchListTest extends TestCase
      *
      * @return array
      */
-    protected function addSearchError(array $cases): array
+    protected static function addSearchError(array $cases): array
     {
         $cases['Search - Error Invalid Term'] = [
             'sql_queries'             => [],
@@ -127,17 +128,17 @@ class SearchListTest extends TestCase
      *
      * @return array
      */
-    protected function addSearchQuery(array $cases): array
+    protected static function addSearchQuery(array $cases): array
     {
         $searchQuery = new SearchQueryCases();
 
-        foreach ($searchQuery->dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
+        foreach ($searchQuery::dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
             $cases['Search - Query - ' . $k] = $v;
         }
-        foreach ($searchQuery->dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
+        foreach ($searchQuery::dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
             $cases['Search - Query - ' . $k] = $v;
         }
-        foreach ($searchQuery->dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
+        foreach ($searchQuery::dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
             $cases['Search - Query - ' . $k] = $v;
         }
 
@@ -151,35 +152,35 @@ class SearchListTest extends TestCase
      *
      * @return array
      */
-    protected function addSearchQueryType(array $cases): array
+    protected static function addSearchQueryType(array $cases): array
     {
         $searchQueryType = new SearchQueryTypeCases();
 
-        foreach ($searchQueryType->dataCases3PublicUnlistedPrivateAnimationBlueprint() as $k => $v) {
+        foreach ($searchQueryType::dataCases3PublicUnlistedPrivateAnimationBlueprint() as $k => $v) {
             $cases['Search - Query + Type - ' . $k] = $v;
         }
-        foreach ($searchQueryType->dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint() as $k => $v) {
+        foreach ($searchQueryType::dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint() as $k => $v) {
             $cases['Search - Query + Type - ' . $k] = $v;
         }
-        foreach ($searchQueryType->dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
+        foreach ($searchQueryType::dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
             $cases['Search - Query + Type - ' . $k] = $v;
         }
-        foreach ($searchQueryType->dataCases3PublicUnlistedPrivateMaterialBlueprint() as $k => $v) {
+        foreach ($searchQueryType::dataCases3PublicUnlistedPrivateMaterialBlueprint() as $k => $v) {
             $cases['Search - Query + Type - ' . $k] = $v;
         }
-        foreach ($searchQueryType->dataCases3PublicUnlistedPrivateMetasoundBlueprint() as $k => $v) {
+        foreach ($searchQueryType::dataCases3PublicUnlistedPrivateMetasoundBlueprint() as $k => $v) {
             $cases['Search - Query + Type - ' . $k] = $v;
         }
-        foreach ($searchQueryType->dataCases3PublicUnlistedPrivateNiagaraBlueprint() as $k => $v) {
+        foreach ($searchQueryType::dataCases3PublicUnlistedPrivateNiagaraBlueprint() as $k => $v) {
             $cases['Search - Query + Type - ' . $k] = $v;
         }
-        foreach ($searchQueryType->dataCases3PublicUnlistedPrivatePCGBlueprint() as $k => $v) {
+        foreach ($searchQueryType::dataCases3PublicUnlistedPrivatePCGBlueprint() as $k => $v) {
             $cases['Search - Query + Type - ' . $k] = $v;
         }
-        foreach ($searchQueryType->dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
+        foreach ($searchQueryType::dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
             $cases['Search - Query + Type - ' . $k] = $v;
         }
-        foreach ($searchQueryType->dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
+        foreach ($searchQueryType::dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
             $cases['Search - Query + Type - ' . $k] = $v;
         }
 
@@ -193,35 +194,35 @@ class SearchListTest extends TestCase
      *
      * @return array
      */
-    protected function addSearchQueryTypeVersion(array $cases): array
+    protected static function addSearchQueryTypeVersion(array $cases): array
     {
         $searchQueryTypeVersion = new SearchQueryTypeVersionCases();
 
-        foreach ($searchQueryTypeVersion->dataCases3PublicUnlistedPrivateAnimationBlueprint() as $k => $v) {
+        foreach ($searchQueryTypeVersion::dataCases3PublicUnlistedPrivateAnimationBlueprint() as $k => $v) {
             $cases['Search - Query + Type + Version - ' . $k] = $v;
         }
-        foreach ($searchQueryTypeVersion->dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint() as $k => $v) {
+        foreach ($searchQueryTypeVersion::dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint() as $k => $v) {
             $cases['Search - Query + Type + Version - ' . $k] = $v;
         }
-        foreach ($searchQueryTypeVersion->dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
+        foreach ($searchQueryTypeVersion::dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
             $cases['Search - Query + Type + Version - ' . $k] = $v;
         }
-        foreach ($searchQueryTypeVersion->dataCases3PublicUnlistedPrivateMaterialBlueprint() as $k => $v) {
+        foreach ($searchQueryTypeVersion::dataCases3PublicUnlistedPrivateMaterialBlueprint() as $k => $v) {
             $cases['Search - Query + Type + Version - ' . $k] = $v;
         }
-        foreach ($searchQueryTypeVersion->dataCases3PublicUnlistedPrivateMetasoundBlueprint() as $k => $v) {
+        foreach ($searchQueryTypeVersion::dataCases3PublicUnlistedPrivateMetasoundBlueprint() as $k => $v) {
             $cases['Search - Query + Type + Version - ' . $k] = $v;
         }
-        foreach ($searchQueryTypeVersion->dataCases3PublicUnlistedPrivateNiagaraBlueprint() as $k => $v) {
+        foreach ($searchQueryTypeVersion::dataCases3PublicUnlistedPrivateNiagaraBlueprint() as $k => $v) {
             $cases['Search - Query + Type + Version - ' . $k] = $v;
         }
-        foreach ($searchQueryTypeVersion->dataCases3PublicUnlistedPrivatePCGBlueprint() as $k => $v) {
+        foreach ($searchQueryTypeVersion::dataCases3PublicUnlistedPrivatePCGBlueprint() as $k => $v) {
             $cases['Search - Query + Type + Version - ' . $k] = $v;
         }
-        foreach ($searchQueryTypeVersion->dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
+        foreach ($searchQueryTypeVersion::dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
             $cases['Search - Query + Type + Version - ' . $k] = $v;
         }
-        foreach ($searchQueryTypeVersion->dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
+        foreach ($searchQueryTypeVersion::dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
             $cases['Search - Query + Type + Version - ' . $k] = $v;
         }
 
@@ -235,17 +236,17 @@ class SearchListTest extends TestCase
      *
      * @return array
      */
-    protected function addSearchQueryVersion(array $cases): array
+    protected static function addSearchQueryVersion(array $cases): array
     {
         $searchQueryVersion = new SearchQueryVersionCases();
 
-        foreach ($searchQueryVersion->dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
+        foreach ($searchQueryVersion::dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
             $cases['Search - Query + Version - ' . $k] = $v;
         }
-        foreach ($searchQueryVersion->dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
+        foreach ($searchQueryVersion::dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
             $cases['Search - Query + Version - ' . $k] = $v;
         }
-        foreach ($searchQueryVersion->dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
+        foreach ($searchQueryVersion::dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
             $cases['Search - Query + Version - ' . $k] = $v;
         }
 
@@ -259,35 +260,35 @@ class SearchListTest extends TestCase
      *
      * @return array
      */
-    protected function addSearchType(array $cases): array
+    protected static function addSearchType(array $cases): array
     {
         $searchType = new SearchTypeCases();
 
-        foreach ($searchType->dataCases3PublicUnlistedPrivateAnimationBlueprint() as $k => $v) {
+        foreach ($searchType::dataCases3PublicUnlistedPrivateAnimationBlueprint() as $k => $v) {
             $cases['Search - Type - ' . $k] = $v;
         }
-        foreach ($searchType->dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint() as $k => $v) {
+        foreach ($searchType::dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint() as $k => $v) {
             $cases['Search - Type - ' . $k] = $v;
         }
-        foreach ($searchType->dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
+        foreach ($searchType::dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
             $cases['Search - Type - ' . $k] = $v;
         }
-        foreach ($searchType->dataCases3PublicUnlistedPrivateMaterialBlueprint() as $k => $v) {
+        foreach ($searchType::dataCases3PublicUnlistedPrivateMaterialBlueprint() as $k => $v) {
             $cases['Search - Type - ' . $k] = $v;
         }
-        foreach ($searchType->dataCases3PublicUnlistedPrivateMetasoundBlueprint() as $k => $v) {
+        foreach ($searchType::dataCases3PublicUnlistedPrivateMetasoundBlueprint() as $k => $v) {
             $cases['Search - Type - ' . $k] = $v;
         }
-        foreach ($searchType->dataCases3PublicUnlistedPrivateNiagaraBlueprint() as $k => $v) {
+        foreach ($searchType::dataCases3PublicUnlistedPrivateNiagaraBlueprint() as $k => $v) {
             $cases['Search - Type - ' . $k] = $v;
         }
-        foreach ($searchType->dataCases3PublicUnlistedPrivatePCGBlueprint() as $k => $v) {
+        foreach ($searchType::dataCases3PublicUnlistedPrivatePCGBlueprint() as $k => $v) {
             $cases['Search - Type - ' . $k] = $v;
         }
-        foreach ($searchType->dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
+        foreach ($searchType::dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
             $cases['Search - Type - ' . $k] = $v;
         }
-        foreach ($searchType->dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
+        foreach ($searchType::dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
             $cases['Search - Type - ' . $k] = $v;
         }
 
@@ -301,35 +302,35 @@ class SearchListTest extends TestCase
      *
      * @return array
      */
-    protected function addSearchTypeVersion(array $cases): array
+    protected static function addSearchTypeVersion(array $cases): array
     {
         $searchTypeVersion = new SearchTypeVersionCases();
 
-        foreach ($searchTypeVersion->dataCases3PublicUnlistedPrivateAnimationBlueprint() as $k => $v) {
+        foreach ($searchTypeVersion::dataCases3PublicUnlistedPrivateAnimationBlueprint() as $k => $v) {
             $cases['Search - Type + Version - ' . $k] = $v;
         }
-        foreach ($searchTypeVersion->dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint() as $k => $v) {
+        foreach ($searchTypeVersion::dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint() as $k => $v) {
             $cases['Search - Type + Version - ' . $k] = $v;
         }
-        foreach ($searchTypeVersion->dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
+        foreach ($searchTypeVersion::dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
             $cases['Search - Type + Version - ' . $k] = $v;
         }
-        foreach ($searchTypeVersion->dataCases3PublicUnlistedPrivateMaterialBlueprint() as $k => $v) {
+        foreach ($searchTypeVersion::dataCases3PublicUnlistedPrivateMaterialBlueprint() as $k => $v) {
             $cases['Search - Type + Version - ' . $k] = $v;
         }
-        foreach ($searchTypeVersion->dataCases3PublicUnlistedPrivateMetasoundBlueprint() as $k => $v) {
+        foreach ($searchTypeVersion::dataCases3PublicUnlistedPrivateMetasoundBlueprint() as $k => $v) {
             $cases['Search - Type + Version - ' . $k] = $v;
         }
-        foreach ($searchTypeVersion->dataCases3PublicUnlistedPrivateNiagaraBlueprint() as $k => $v) {
+        foreach ($searchTypeVersion::dataCases3PublicUnlistedPrivateNiagaraBlueprint() as $k => $v) {
             $cases['Search - Type + Version - ' . $k] = $v;
         }
-        foreach ($searchTypeVersion->dataCases3PublicUnlistedPrivatePCGBlueprint() as $k => $v) {
+        foreach ($searchTypeVersion::dataCases3PublicUnlistedPrivatePCGBlueprint() as $k => $v) {
             $cases['Search - Type + Version - ' . $k] = $v;
         }
-        foreach ($searchTypeVersion->dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
+        foreach ($searchTypeVersion::dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
             $cases['Search - Type + Version - ' . $k] = $v;
         }
-        foreach ($searchTypeVersion->dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
+        foreach ($searchTypeVersion::dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
             $cases['Search - Type + Version - ' . $k] = $v;
         }
 
@@ -343,17 +344,17 @@ class SearchListTest extends TestCase
      *
      * @return array
      */
-    protected function addSearchVersion(array $cases): array
+    protected static function addSearchVersion(array $cases): array
     {
         $searchVersion = new SearchVersionCases();
 
-        foreach ($searchVersion->dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
+        foreach ($searchVersion::dataCases3PublicUnlistedPrivateBlueprint() as $k => $v) {
             $cases['Search - Version - ' . $k] = $v;
         }
-        foreach ($searchVersion->dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
+        foreach ($searchVersion::dataCases30PublicUnlistedPrivateBlueprintPage1() as $k => $v) {
             $cases['Search - Version - ' . $k] = $v;
         }
-        foreach ($searchVersion->dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
+        foreach ($searchVersion::dataCases30PublicUnlistedPrivateBlueprintPage2() as $k => $v) {
             $cases['Search - Version - ' . $k] = $v;
         }
 
@@ -377,6 +378,7 @@ class SearchListTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCases')]
     public function testSearchQueryListGET(array $sqlQueries, string $slug, ?string $location, ?int $userID, ?array $contentHead, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();

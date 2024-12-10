@@ -22,7 +22,7 @@ class SearchQueryVersionCases
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateBlueprint(): array
     {
         return [
             '3 blueprints public/unlisted/private - created but not published - (visitor profile)' => [

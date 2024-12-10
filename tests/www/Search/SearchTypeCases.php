@@ -22,7 +22,7 @@ class SearchTypeCases
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateAnimationBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateAnimationBlueprint(): array
     {
         return [
             '3 animation blueprints public/unlisted/private - created but not published - (visitor profile)' => [
@@ -409,7 +409,7 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint(): array
     {
         return [
             '3 behavior-tree blueprints public/unlisted/private - created but not published - (visitor profile)' => [
@@ -796,7 +796,7 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateBlueprint(): array
     {
         return [
             '3 blueprints public/unlisted/private - created but not published - (visitor profile)' => [
@@ -1183,7 +1183,7 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateMaterialBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateMaterialBlueprint(): array
     {
         return [
             '3 material blueprints public/unlisted/private - created but not published - (visitor profile)' => [
@@ -1570,7 +1570,7 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateMetasoundBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateMetasoundBlueprint(): array
     {
         return [
             '3 metasound blueprints public/unlisted/private - created but not published - (visitor profile)' => [
@@ -1957,7 +1957,7 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateNiagaraBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateNiagaraBlueprint(): array
     {
         return [
             '3 niagara blueprints public/unlisted/private - created but not published - (visitor profile)' => [
@@ -2344,7 +2344,7 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivatePCGBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivatePCGBlueprint(): array
     {
         return [
             '3 pcg blueprints public/unlisted/private - created but not published - (visitor profile)' => [
