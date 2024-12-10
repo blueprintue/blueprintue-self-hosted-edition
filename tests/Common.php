@@ -437,7 +437,7 @@ HTML;
      *
      * @return string
      */
-    public function getSince(string $publishedAt): string
+    public static function getSince(string $publishedAt): string
     {
         $publishedAtObject = new DateTime($publishedAt);
         $nowObject = new DateTime();
