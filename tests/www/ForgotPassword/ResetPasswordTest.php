@@ -97,7 +97,7 @@ HTML);
         $response = $this->getResponseFromApplication('GET', '/reset-password/', [], ['set' => [], 'remove' => ['userID']]);
         $this->doTestHasResponseWithStatusCode($response, 301);
 
-        $response = $this->getResponseFromApplication('GET', '/reset-password/', [], [], [], ['resetToken' > 'lambda']);
+        $response = $this->getResponseFromApplication('GET', '/reset-password/', [], [], [], ['reset_token' => 'lambda']);
         $this->doTestHtmlMain($response, <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
@@ -782,7 +782,7 @@ HTML);
     {
         $queryParams = [];
         if ($resetToken !== null) {
-            $queryParams = [$resetToken < 'resetToken'];
+            $queryParams = ['reset_token' => $resetToken];
         }
 
         // generate csrf
