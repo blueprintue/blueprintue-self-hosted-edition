@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\IntegrationTest\Helper;
 
 use app\helpers\MailerHelper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\Application;
 use Rancoud\Environment\Environment;
@@ -22,13 +23,13 @@ class MailerTest extends TestCase
     /**
      * @return string[][]
      */
-    public function dataCases(): array
+    public static function dataCases(): array
     {
         return [
             'mail text' => [
-                'env_file'                    => 'mail.env',
-                'use_custom_email_validation' => false,
-                'construct_assertions'        => [
+                'envFile'                  => 'mail.env',
+                'useCustomEmailValidation' => false,
+                'constructAssertions'      => [
                     'Mailer'      => 'mail',
                     'Host'        => 'localhost',
                     'Port'        => 25,
@@ -47,9 +48,9 @@ class MailerTest extends TestCase
                 ],
             ],
             'smtp html' => [
-                'env_file'                    => 'mail_smtp.env',
-                'use_custom_email_validation' => false,
-                'construct_assertions'        => [
+                'envFile'                  => 'mail_smtp.env',
+                'useCustomEmailValidation' => false,
+                'constructAssertions'      => [
                     'Mailer'      => 'smtp',
                     'Host'        => 'smtp_host.com',
                     'Port'        => 72,
@@ -69,9 +70,9 @@ class MailerTest extends TestCase
                 ],
             ],
             'smtp + auth' => [
-                'env_file'                    => 'mail_smtp_auth.env',
-                'use_custom_email_validation' => false,
-                'construct_assertions'        => [
+                'envFile'                  => 'mail_smtp_auth.env',
+                'useCustomEmailValidation' => false,
+                'constructAssertions'      => [
                     'Mailer'      => 'smtp',
                     'Host'        => 'smtp_auth_host.com',
                     'Port'        => 954,
@@ -90,9 +91,9 @@ class MailerTest extends TestCase
                 ],
             ],
             'smtp + auth + tls' => [
-                'env_file'                    => 'mail_smtp_auth_tls.env',
-                'use_custom_email_validation' => false,
-                'construct_assertions'        => [
+                'envFile'                  => 'mail_smtp_auth_tls.env',
+                'useCustomEmailValidation' => false,
+                'constructAssertions'      => [
                     'Mailer'      => 'smtp',
                     'Host'        => 'smtp_auth_host.com',
                     'Port'        => 954,
@@ -111,9 +112,9 @@ class MailerTest extends TestCase
                 ],
             ],
             'exception because subject and body are empty' => [
-                'env_file'                    => 'mail.env',
-                'use_custom_email_validation' => false,
-                'construct_assertions'        => [
+                'envFile'                  => 'mail.env',
+                'useCustomEmailValidation' => false,
+                'constructAssertions'      => [
                     'Mailer'      => 'mail',
                     'Host'        => 'localhost',
                     'Port'        => 25,
@@ -130,9 +131,9 @@ class MailerTest extends TestCase
                 ],
             ],
             'invalid address' => [
-                'env_file'                    => 'mail_invalid_address.env',
-                'use_custom_email_validation' => false,
-                'construct_assertions'        => [
+                'envFile'                  => 'mail_invalid_address.env',
+                'useCustomEmailValidation' => false,
+                'constructAssertions'      => [
                     'Mailer'      => 'mail',
                     'Host'        => 'localhost',
                     'Port'        => 25,
@@ -151,9 +152,9 @@ class MailerTest extends TestCase
                 ],
             ],
             'use custom email validation' => [
-                'env_file'                    => 'mail.env',
-                'use_custom_email_validation' => true,
-                'construct_assertions'        => [
+                'envFile'                  => 'mail.env',
+                'useCustomEmailValidation' => true,
+                'constructAssertions'      => [
                     'Mailer'      => 'mail',
                     'Host'        => 'localhost',
                     'Port'        => 25,
@@ -186,6 +187,7 @@ class MailerTest extends TestCase
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      */
+    #[DataProvider('dataCases')]
     public function testMailer(string $envFile, bool $useCustomEmailValidation, array $constructAssertions, array $content): void
     {
         // setup app

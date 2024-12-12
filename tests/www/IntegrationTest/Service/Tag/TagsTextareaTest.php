@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\IntegrationTest\Service\Tag;
 
 use app\services\www\TagService;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Session\Session;
 use tests\Common;
@@ -18,86 +19,86 @@ class TagsTextareaTest extends TestCase
 {
     use Common;
 
-    public function dataCasesEmptyTextarea(): array
+    public static function dataCasesEmptyTextarea(): array
     {
         return [
             'empty textarea - no tag before' => [
-                'tags_sql_before' => null,
-                'textarea'        => '',
-                'tags_ids'        => null,
-                'tags_after'      => [],
+                'tagsSQLBefore' => null,
+                'textarea'      => '',
+                'tagsIDs'       => null,
+                'tagsAfter'     => [],
             ],
             'empty textarea - tag before' => [
-                'tags_sql_before' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'a', 'a')",
-                'textarea'        => '',
-                'tags_ids'        => null,
-                'tags_after'      => [['id' => '1', 'name' => 'a', 'slug' => 'a']],
+                'tagsSQLBefore' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'a', 'a')",
+                'textarea'      => '',
+                'tagsIDs'       => null,
+                'tagsAfter'     => [['id' => '1', 'name' => 'a', 'slug' => 'a']],
             ],
         ];
     }
 
-    public function dataCasesOneTagInTextarea(): array
+    public static function dataCasesOneTagInTextarea(): array
     {
         return [
             '1 tag in textarea - no tag before' => [
-                'tags_sql_before' => null,
-                'textarea'        => 'a',
-                'tags_ids'        => '1',
-                'tags_after'      => [['id' => '1', 'name' => 'a', 'slug' => 'a']],
+                'tagsSQLBefore' => null,
+                'textarea'      => 'a',
+                'tagsIDs'       => '1',
+                'tagsAfter'     => [['id' => '1', 'name' => 'a', 'slug' => 'a']],
             ],
             '1 tag in textarea - tag before - no creation' => [
-                'tags_sql_before' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'a', 'a')",
-                'textarea'        => 'a',
-                'tags_ids'        => '1',
-                'tags_after'      => [['id' => '1', 'name' => 'a', 'slug' => 'a']],
+                'tagsSQLBefore' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'a', 'a')",
+                'textarea'      => 'a',
+                'tagsIDs'       => '1',
+                'tagsAfter'     => [['id' => '1', 'name' => 'a', 'slug' => 'a']],
             ],
             '1 tag in textarea - tag before - 1 creation' => [
-                'tags_sql_before' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'a', 'a')",
-                'textarea'        => 'b',
-                'tags_ids'        => '2',
-                'tags_after'      => [['id' => '1', 'name' => 'a', 'slug' => 'a'], ['id' => '2', 'name' => 'b', 'slug' => 'b']],
+                'tagsSQLBefore' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'a', 'a')",
+                'textarea'      => 'b',
+                'tagsIDs'       => '2',
+                'tagsAfter'     => [['id' => '1', 'name' => 'a', 'slug' => 'a'], ['id' => '2', 'name' => 'b', 'slug' => 'b']],
             ],
         ];
     }
 
-    public function dataCasesTwoTagsInTextarea(): array
+    public static function dataCasesTwoTagsInTextarea(): array
     {
         return [
             '2 tags in textarea - no tag before' => [
-                'tags_sql_before' => null,
-                'textarea'        => <<<TEXTAREA
+                'tagsSQLBefore' => null,
+                'textarea'      => <<<TEXTAREA
                                      a
                                      b
                                      TEXTAREA,
-                'tags_ids'        => '1,2',
-                'tags_after'      => [['id' => '1', 'name' => 'a', 'slug' => 'a'], ['id' => '2', 'name' => 'b', 'slug' => 'b']],
+                'tagsIDs'   => '1,2',
+                'tagsAfter' => [['id' => '1', 'name' => 'a', 'slug' => 'a'], ['id' => '2', 'name' => 'b', 'slug' => 'b']],
             ],
             '2 tags in textarea - 2 tag before - no creation' => [
-                'tags_sql_before' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'a', 'a'), (2, 'b', 'b')",
-                'textarea'        => <<<TEXTAREA
+                'tagsSQLBefore' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'a', 'a'), (2, 'b', 'b')",
+                'textarea'      => <<<TEXTAREA
                                      a
                                      b
                                      TEXTAREA,
-                'tags_ids'        => '1,2',
-                'tags_after'      => [['id' => '1', 'name' => 'a', 'slug' => 'a'], ['id' => '2', 'name' => 'b', 'slug' => 'b']],
+                'tagsIDs'   => '1,2',
+                'tagsAfter' => [['id' => '1', 'name' => 'a', 'slug' => 'a'], ['id' => '2', 'name' => 'b', 'slug' => 'b']],
             ],
             '2 tags in textarea - 1 tag (a) before - 1 creation' => [
-                'tags_sql_before' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'a', 'a')",
-                'textarea'        => <<<TEXTAREA
+                'tagsSQLBefore' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'a', 'a')",
+                'textarea'      => <<<TEXTAREA
                                      a
                                      b
                                      TEXTAREA,
-                'tags_ids'        => '1,2',
-                'tags_after'      => [['id' => '1', 'name' => 'a', 'slug' => 'a'], ['id' => '2', 'name' => 'b', 'slug' => 'b']],
+                'tagsIDs'   => '1,2',
+                'tagsAfter' => [['id' => '1', 'name' => 'a', 'slug' => 'a'], ['id' => '2', 'name' => 'b', 'slug' => 'b']],
             ],
             '2 tags in textarea - 1 tag (b) before - 1 creation' => [
-                'tags_sql_before' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'b', 'b')",
-                'textarea'        => <<<TEXTAREA
+                'tagsSQLBefore' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'b', 'b')",
+                'textarea'      => <<<TEXTAREA
                                      a
                                      b
                                      TEXTAREA,
-                'tags_ids'        => '1,2',
-                'tags_after'      => [['id' => '1', 'name' => 'b', 'slug' => 'b'], ['id' => '2', 'name' => 'a', 'slug' => 'a']],
+                'tagsIDs'   => '1,2',
+                'tagsAfter' => [['id' => '1', 'name' => 'b', 'slug' => 'b'], ['id' => '2', 'name' => 'a', 'slug' => 'a']],
             ],
         ];
     }
@@ -118,6 +119,9 @@ class TagsTextareaTest extends TestCase
      * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Router\RouterException
      */
+    #[DataProvider('dataCasesEmptyTextarea')]
+    #[DataProvider('dataCasesOneTagInTextarea')]
+    #[DataProvider('dataCasesTwoTagsInTextarea')]
     public function testCreate(?string $tagsSQLBefore, string $textarea, ?string $tagsIDs, array $tagsAfter): void
     {
         static::setDatabase();

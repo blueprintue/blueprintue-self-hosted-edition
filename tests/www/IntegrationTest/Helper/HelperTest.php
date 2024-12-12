@@ -12,6 +12,7 @@ namespace tests\www\IntegrationTest\Helper;
 use app\helpers\Helper;
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class HelperTest extends TestCase
@@ -24,7 +25,7 @@ class HelperTest extends TestCase
      *
      * @return string[][]
      */
-    public function dataCasesSince(): array
+    public static function dataCasesSince(): array
     {
         $future = (new DateTime('now', new DateTimeZone('UTC')))->modify('+1 minutes')->format('Y-m-d H:i:s');
         $nowMinus5Years = (new DateTime('now', new DateTimeZone('UTC')))->modify('-5 years')->format('Y-m-d H:i:s');
@@ -57,6 +58,7 @@ class HelperTest extends TestCase
      *
      * @throws \Exception
      */
+    #[DataProvider('dataCasesSince')]
     public function testSince(string $in, string $out): void
     {
         static::assertSame($out, Helper::getSince($in));
@@ -71,7 +73,7 @@ class HelperTest extends TestCase
      *
      * @return array
      */
-    public function dataCasesTimeleft(): array
+    public static function dataCasesTimeleft(): array
     {
         $past = (new DateTime('now', new DateTimeZone('UTC')))->modify('-1 minutes')->format('Y-m-d H:i:s');
         $nowPlus2Hours = (new DateTime('now', new DateTimeZone('UTC')))->modify('+2 hours +30 minutes +59 seconds')->format('Y-m-d H:i:s');
@@ -108,6 +110,7 @@ class HelperTest extends TestCase
      *
      * @throws \Exception
      */
+    #[DataProvider('dataCasesTimeleft')]
     public function testTimeleft(?string $in, ?string $out): void
     {
         try {
@@ -123,7 +126,7 @@ class HelperTest extends TestCase
     // endregion
 
     // region getFitSentence
-    public function dataCasesFitSentence(): array
+    public static function dataCasesFitSentence(): array
     {
         return [
             'empty string + max 0 = empty string' => [
@@ -166,6 +169,7 @@ class HelperTest extends TestCase
      * @param int    $max
      * @param string $out
      */
+    #[DataProvider('dataCasesFitSentence')]
     public function testFitSentence(string $in, int $max, string $out): void
     {
         static::assertSame($out, Helper::getFitSentence($in, $max));
