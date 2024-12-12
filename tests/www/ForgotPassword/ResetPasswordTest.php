@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\ForgotPassword;
 
 use app\helpers\Helper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -96,7 +97,7 @@ HTML);
         $response = $this->getResponseFromApplication('GET', '/reset-password/', [], ['set' => [], 'remove' => ['userID']]);
         $this->doTestHasResponseWithStatusCode($response, 301);
 
-        $response = $this->getResponseFromApplication('GET', '/reset-password/', [], [], [], ['reset_token' => 'lambda']);
+        $response = $this->getResponseFromApplication('GET', '/reset-password/', [], [], [], ['resetToken' > 'lambda']);
         $this->doTestHtmlMain($response, <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
@@ -107,7 +108,7 @@ HTML);
 HTML);
     }
 
-    public function dataCasesResetPasswordPOST(): array
+    public static function dataCasesResetPasswordPOST(): array
     {
         return [
             'reset password OK' => [
@@ -117,11 +118,11 @@ HTML);
                     'form-reset_password-input-password'         => 'My_password01$',
                     'form-reset_password-input-password_confirm' => 'My_password01$'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -131,9 +132,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'reset password KO - invalid email' => [
                 'params' => [
@@ -142,11 +143,11 @@ HTML);
                     'form-reset_password-input-password'         => 'My_password01$',
                     'form-reset_password-input-password_confirm' => 'My_password01$'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -156,9 +157,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error, email and&#47;or reset token are invalid</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['email'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['email'],
+                'fieldsLabelError' => [],
             ],
             'reset password KO - invalid token' => [
                 'params' => [
@@ -167,11 +168,11 @@ HTML);
                     'form-reset_password-input-password'         => 'My_password01$',
                     'form-reset_password-input-password_confirm' => 'My_password01$'
                 ],
-                'reset_token'           => 'token',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'token',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -181,9 +182,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error, email and&#47;or reset token are invalid</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['email'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['email'],
+                'fieldsLabelError' => [],
             ],
             'xss - reset password KO' => [
                 'params' => [
@@ -192,11 +193,11 @@ HTML);
                     'form-reset_password-input-password'         => '0<script>alert("password");</script>',
                     'form-reset_password-input-password_confirm' => '0<script>alert("password_confirm");</script>'
                 ],
-                'reset_token'           => '0<script>alert("reset_token");</script>',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => '0<script>alert("reset_token");</script>',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -206,9 +207,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error(s) on email, password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['email', 'password_confirm'],
-                'fields_has_value'      => ['email', 'token'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['email', 'password_confirm'],
+                'fieldsHasValue'   => ['email', 'token'],
+                'fieldsLabelError' => [
                     'email'            => 'Email is invalid',
                     'password_confirm' => 'Confirm New Password must be the same as New Password'
                 ],
@@ -220,11 +221,11 @@ HTML);
                     'form-reset_password-input-password'         => 'My_password01$',
                     'form-reset_password-input-password_confirm' => 'My_password01$'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -234,17 +235,17 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no fields' => [
-                'params'                => [],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'params'             => [],
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -254,9 +255,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no csrf' => [
                 'params' => [
@@ -264,11 +265,11 @@ HTML);
                     'form-reset_password-input-password'         => 'My_password01$',
                     'form-reset_password-input-password_confirm' => 'My_password01$'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -278,9 +279,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no email' => [
                 'params' => [
@@ -288,11 +289,11 @@ HTML);
                     'form-reset_password-input-password'         => 'My_password01$',
                     'form-reset_password-input-password_confirm' => 'My_password01$'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -302,9 +303,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no password' => [
                 'params' => [
@@ -312,11 +313,11 @@ HTML);
                     'form-reset_password-input-email'            => 'user_30@example.com',
                     'form-reset_password-input-password_confirm' => 'My_password01$'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -326,9 +327,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no password_confirm' => [
                 'params' => [
@@ -336,11 +337,11 @@ HTML);
                     'form-reset_password-input-email'            => 'user_30@example.com',
                     'form-reset_password-input-password'         => 'My_password01$'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -350,9 +351,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'empty fields - email empty' => [
                 'params' => [
@@ -361,11 +362,11 @@ HTML);
                     'form-reset_password-input-password'         => 'My_password01$',
                     'form-reset_password-input-password_confirm' => 'My_password01$'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -375,9 +376,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error(s) on email</div>'
                     ]
                 ],
-                'fields_has_error'      => ['email'],
-                'fields_has_value'      => ['email', 'token'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['email'],
+                'fieldsHasValue'   => ['email', 'token'],
+                'fieldsLabelError' => [
                     'email' => 'Email is required'
                 ],
             ],
@@ -388,11 +389,11 @@ HTML);
                     'form-reset_password-input-password'         => ' ',
                     'form-reset_password-input-password_confirm' => 'My_password01$'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -402,9 +403,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password'],
-                'fields_has_value'      => ['email', 'token'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password'],
+                'fieldsHasValue'   => ['email', 'token'],
+                'fieldsLabelError' => [
                     'password' => 'Password must be at least 10 characters in length'
                 ],
             ],
@@ -415,11 +416,11 @@ HTML);
                     'form-reset_password-input-password'         => 'My_password01$',
                     'form-reset_password-input-password_confirm' => ' '
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -429,9 +430,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password_confirm'],
-                'fields_has_value'      => ['email', 'token'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password_confirm'],
+                'fieldsHasValue'   => ['email', 'token'],
+                'fieldsLabelError' => [
                     'password_confirm' => 'Password must be at least 10 characters in length'
                 ],
             ],
@@ -442,11 +443,11 @@ HTML);
                     'form-reset_password-input-password'         => 'My_password01$',
                     'form-reset_password-input-password_confirm' => 'My_password01$'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -456,9 +457,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error(s) on email</div>'
                     ]
                 ],
-                'fields_has_error'      => ['email'],
-                'fields_has_value'      => ['email', 'token'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['email'],
+                'fieldsHasValue'   => ['email', 'token'],
+                'fieldsLabelError' => [
                     'email' => 'Email is invalid'
                 ],
             ],
@@ -469,11 +470,11 @@ HTML);
                     'form-reset_password-input-password'         => 'my',
                     'form-reset_password-input-password_confirm' => 'My_password01$'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -483,9 +484,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password'],
-                'fields_has_value'      => ['email', 'token'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password'],
+                'fieldsHasValue'   => ['email', 'token'],
+                'fieldsLabelError' => [
                     'password' => 'Password must be at least 10 characters in length'
                 ],
             ],
@@ -496,11 +497,11 @@ HTML);
                     'form-reset_password-input-password'         => '_*_123RTYY',
                     'form-reset_password-input-password_confirm' => '_*_123RTYY'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -510,9 +511,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password'],
-                'fields_has_value'      => ['email', 'token'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password'],
+                'fieldsHasValue'   => ['email', 'token'],
+                'fieldsLabelError' => [
                     'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
                 ],
             ],
@@ -523,11 +524,11 @@ HTML);
                     'form-reset_password-input-password'         => 'aaze123_*_',
                     'form-reset_password-input-password_confirm' => 'aaze123_*_'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -537,9 +538,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password'],
-                'fields_has_value'      => ['email', 'token'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password'],
+                'fieldsHasValue'   => ['email', 'token'],
+                'fieldsLabelError' => [
                     'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
                 ],
             ],
@@ -550,11 +551,11 @@ HTML);
                     'form-reset_password-input-password'         => 'aaze_*_RTY',
                     'form-reset_password-input-password_confirm' => 'aaze_*_RTY'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -564,9 +565,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password'],
-                'fields_has_value'      => ['email', 'token'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password'],
+                'fieldsHasValue'   => ['email', 'token'],
+                'fieldsLabelError' => [
                     'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
                 ],
             ],
@@ -577,11 +578,11 @@ HTML);
                     'form-reset_password-input-password'         => 'aaze123RTY',
                     'form-reset_password-input-password_confirm' => 'aaze123RTY'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -591,9 +592,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password'],
-                'fields_has_value'      => ['email', 'token'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password'],
+                'fieldsHasValue'   => ['email', 'token'],
+                'fieldsLabelError' => [
                     'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
                 ],
             ],
@@ -604,11 +605,11 @@ HTML);
                     'form-reset_password-input-password'         => 'My_password01$',
                     'form-reset_password-input-password_confirm' => 'my'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -618,9 +619,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password_confirm'],
-                'fields_has_value'      => ['email', 'token'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password_confirm'],
+                'fieldsHasValue'   => ['email', 'token'],
+                'fieldsLabelError' => [
                     'password_confirm' => 'Password must be at least 10 characters in length'
                 ],
             ],
@@ -631,11 +632,11 @@ HTML);
                     'form-reset_password-input-password'         => 'my',
                     'form-reset_password-input-password_confirm' => 'my'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -645,9 +646,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password', 'password_confirm'],
-                'fields_has_value'      => ['email', 'token'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password', 'password_confirm'],
+                'fieldsHasValue'   => ['email', 'token'],
+                'fieldsLabelError' => [
                     'password'         => 'Password must be at least 10 characters in length',
                     'password_confirm' => 'Password must be at least 10 characters in length'
                 ],
@@ -659,11 +660,11 @@ HTML);
                     'form-reset_password-input-password'         => 'my_password_01',
                     'form-reset_password-input-password_confirm' => 'my_password_02'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
@@ -673,9 +674,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password_confirm'],
-                'fields_has_value'      => ['email', 'token'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password_confirm'],
+                'fieldsHasValue'   => ['email', 'token'],
+                'fieldsLabelError' => [
                     'password_confirm' => 'Confirm New Password must be the same as New Password'
                 ],
             ],
@@ -686,11 +687,11 @@ HTML);
                     'form-reset_password-input-password'         => 'My_password01$',
                     'form-reset_password-input-password_confirm' => 'My_password01$'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">'
@@ -700,9 +701,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - password' => [
                 'params' => [
@@ -711,11 +712,11 @@ HTML);
                     'form-reset_password-input-password'         => \chr(99999999),
                     'form-reset_password-input-password_confirm' => 'My_password01$'
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">'
@@ -725,9 +726,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - password_confirm' => [
                 'params' => [
@@ -736,11 +737,11 @@ HTML);
                     'form-reset_password-input-password'         => 'My_password01$',
                     'form-reset_password-input-password_confirm' => \chr(99999999)
                 ],
-                'reset_token'           => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'resetToken'         => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">'
@@ -750,9 +751,9 @@ HTML);
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
         ];
     }
@@ -776,11 +777,12 @@ HTML);
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCasesResetPasswordPOST')]
     public function testResetPasswordPOST(array $params, ?string $resetToken, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         $queryParams = [];
         if ($resetToken !== null) {
-            $queryParams = ['reset_token' => $resetToken];
+            $queryParams = [$resetToken < 'resetToken'];
         }
 
         // generate csrf
