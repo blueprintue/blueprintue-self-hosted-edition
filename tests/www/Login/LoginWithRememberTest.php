@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace tests\www\Login;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -66,18 +67,18 @@ class LoginWithRememberTest extends TestCase
         }
     }
 
-    public function dataCasesLoginWithRemember(): array
+    public static function dataCasesLoginWithRemember(): array
     {
         return [
             'error - no login because remember invalid' => [
-                'remember_token'    => 'poi',
-                'body_contains'     => ['<a class="nav__user-button nav__user-button--left" href="#popin-login">Log in</a>'],
-                'body_not_contains' => ['<button class="nav__user-button-logout" type="submit">Logout</button>'],
+                'rememberToken'   => 'poi',
+                'bodyContains'    => ['<a class="nav__user-button nav__user-button--left" href="#popin-login">Log in</a>'],
+                'bodyNotContains' => ['<button class="nav__user-button-logout" type="submit">Logout</button>'],
             ],
             'success login with remember' => [
-                'remember_token'    => 'XDYtGT691XiPWiUZSUGCt21zWF7svbnEbmqjrxDmdP1Wqs3fkIEuSu98iwSJcddVH8shXtaznY5UNbZlF8Qbyp6m4vxbKlY7GWBLL8V9wAPd4xr0yHfnlZokaPMKfJY3nQkrgHq3xxUkARPe8NhxgaHPpWw8F99rtSn9Tpalf0QiKIwsOG9T0S7ssNUtOENB1lPal2jW4kuqdnAS7Jvy19bYeJasy7koLOyrCo6aqt6UfuSgLI6ClhNVsAtKkm0',
-                'body_contains'     => ['<button class="nav__user-button-logout" type="submit">Logout</button>'],
-                'body_not_contains' => ['<a class="nav__user-button nav__user-button--left" href="#popin-login">Log in</a>'],
+                'rememberToken'   => 'XDYtGT691XiPWiUZSUGCt21zWF7svbnEbmqjrxDmdP1Wqs3fkIEuSu98iwSJcddVH8shXtaznY5UNbZlF8Qbyp6m4vxbKlY7GWBLL8V9wAPd4xr0yHfnlZokaPMKfJY3nQkrgHq3xxUkARPe8NhxgaHPpWw8F99rtSn9Tpalf0QiKIwsOG9T0S7ssNUtOENB1lPal2jW4kuqdnAS7Jvy19bYeJasy7koLOyrCo6aqt6UfuSgLI6ClhNVsAtKkm0',
+                'bodyContains'    => ['<button class="nav__user-button-logout" type="submit">Logout</button>'],
+                'bodyNotContains' => ['<a class="nav__user-button nav__user-button--left" href="#popin-login">Log in</a>'],
             ]
         ];
     }
@@ -94,6 +95,7 @@ class LoginWithRememberTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
+    #[DataProvider('dataCasesLoginWithRemember')]
     public function testLoginGETLoginWithRemember(string $rememberToken, array $bodyContains, array $bodyNotContains): void
     {
         $validRememberToken = 'XDYtGT691XiPWiUZSUGCt21zWF7svbnEbmqjrxDmdP1Wqs3fkIEuSu98iwSJcddVH8shXtaznY5UNbZlF8Qbyp6m4vxbKlY7GWBLL8V9wAPd4xr0yHfnlZokaPMKfJY3nQkrgHq3xxUkARPe8NhxgaHPpWw8F99rtSn9Tpalf0QiKIwsOG9T0S7ssNUtOENB1lPal2jW4kuqdnAS7Jvy19bYeJasy7koLOyrCo6aqt6UfuSgLI6ClhNVsAtKkm0';

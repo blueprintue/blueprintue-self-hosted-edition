@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace tests\www\Login;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -71,36 +72,36 @@ class LogoutTest extends TestCase
         }
     }
 
-    public function dataCasesLogoutPOST(): array
+    public static function dataCasesLogoutPOST(): array
     {
         return [
             'logout OK' => [
                 'params' => [
                     'form-logout-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
             ],
             'csrf incorrect' => [
                 'params' => [
                     'form-logout-hidden-csrf' => 'incorrect_csrf',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
             ],
             'missing fields - no fields' => [
                 'params'                => [],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
+                'useCsrfFromSession'    => false,
+                'hasRedirection'        => false,
+                'isFormSuccess'         => false,
             ],
             'missing fields - no csrf' => [
                 'params'                => [],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
+                'useCsrfFromSession'    => false,
+                'hasRedirection'        => false,
+                'isFormSuccess'         => false,
             ],
         ];
     }
@@ -118,6 +119,7 @@ class LogoutTest extends TestCase
      * @throws RouterException
      * @throws DatabaseException
      */
+    #[DataProvider('dataCasesLogoutPOST')]
     public function testLogoutPOST(array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess): void
     {
         // generate csrf
