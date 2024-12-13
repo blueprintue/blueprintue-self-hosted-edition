@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace tests\www\Lists;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -87,19 +88,19 @@ class TagsListTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCases(): array
+    public static function dataCases(): array
     {
         return [
             'empty page - no tags linked to blueprints (tags null)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     'UPDATE blueprints SET tags = NULL WHERE id > 0'
                 ],
-                'user_id'                 => null,
-                'content_head'            => [
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Blueprint\'s Tags | This is a base title',
                     'description' => 'List of tags associated to blueprints'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -109,15 +110,15 @@ class TagsListTest extends TestCase
 HTML,
             ],
             'empty page - no tags linked to blueprints (tags string empty)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "UPDATE blueprints SET tags = '' WHERE id > 0"
                 ],
-                'user_id'                 => null,
-                'content_head'            => [
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Blueprint\'s Tags | This is a base title',
                     'description' => 'List of tags associated to blueprints'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -127,16 +128,16 @@ HTML,
 HTML,
             ],
             'empty page - tags linked to private / unlisted blueprints' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     'UPDATE blueprints SET tags = NULL WHERE id = 1',
                     "UPDATE blueprints SET tags = '14' WHERE id > 1"
                 ],
-                'user_id'                 => null,
-                'content_head'            => [
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Blueprint\'s Tags | This is a base title',
                     'description' => 'List of tags associated to blueprints'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -146,17 +147,17 @@ HTML,
 HTML,
             ],
             '1 tag - tags linked to private / unlisted blueprints - user private blueprint' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     'UPDATE blueprints SET tags = NULL WHERE id = 1',
                     "UPDATE blueprints SET tags = '14' WHERE id = 2",
                     "UPDATE blueprints SET tags = '34' WHERE id = 3"
                 ],
-                'user_id'                 => 179,
-                'content_head'            => [
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Blueprint\'s Tags | This is a base title',
                     'description' => 'List of tags associated to blueprints'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -173,17 +174,17 @@ HTML,
 HTML,
             ],
             '3 tags - tags linked to public blueprints' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "UPDATE blueprints SET tags = '14,24' WHERE id = 1",
                     "UPDATE blueprints SET tags = '14' WHERE id = 2",
                     "UPDATE blueprints SET tags = '34' WHERE id = 3"
                 ],
-                'user_id'                 => 169,
-                'content_head'            => [
+                'userID'      => 169,
+                'contentHead' => [
                     'title'       => 'Blueprint\'s Tags | This is a base title',
                     'description' => 'List of tags associated to blueprints'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -222,6 +223,7 @@ HTML,
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCases')]
     public function testTagsListGET(array $sqlQueries, ?int $userID, ?array $contentHead, string $contentHTML): void
     {
         static::setDatabase();

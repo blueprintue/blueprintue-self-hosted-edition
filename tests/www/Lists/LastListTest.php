@@ -11,6 +11,7 @@ namespace tests\www\Lists;
 
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -84,24 +85,24 @@ class LastListTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateBlueprint(): array
     {
         return [
             '3 blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private')",
                 ],
-                'slug'                    => '/last-blueprints/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 1 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -110,27 +111,27 @@ class LastListTest extends TestCase
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private')",
                 ],
-                'slug'                    => '/last-blueprints/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 1 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -139,27 +140,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private')",
                 ],
-                'slug'                    => '/last-blueprints/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 1 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -168,27 +169,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp()),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp()),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp())",
                 ],
-                'slug'                    => '/last-blueprints/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 1 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -197,27 +198,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp()),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp()),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp())",
                 ],
-                'slug'                    => '/last-blueprints/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 1 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -226,27 +227,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp()),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp()),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp())",
                 ],
-                'slug'                    => '/last-blueprints/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 1 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -255,27 +256,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'slug'                    => '/last-blueprints/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 1 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -307,7 +308,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -317,20 +318,20 @@ HTML,
 HTML,
             ],
             '3 blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'slug'                    => '/last-blueprints/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 1 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -362,7 +363,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -372,20 +373,20 @@ HTML,
 HTML,
             ],
             '3 blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 ],
-                'slug'                    => '/last-blueprints/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 1 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -445,7 +446,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -471,7 +472,7 @@ HTML,
 
         return [
             '30 blueprints public/unlisted/private - (visitor profile) - page 1' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
@@ -517,14 +518,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public')",
                 ],
-                'slug'                    => '/last-blueprints/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 1 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -822,7 +823,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -838,7 +839,7 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - (public profile) - page 1' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
@@ -884,14 +885,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public')",
                 ],
-                'slug'                    => '/last-blueprints/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 1 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -1189,7 +1190,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1205,7 +1206,7 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - (author profile) - page 1' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
@@ -1251,14 +1252,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public')",
                 ],
-                'slug'                    => '/last-blueprints/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 1 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -1556,7 +1557,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1588,7 +1589,7 @@ HTML,
 
         return [
             '30 blueprints public/unlisted/private - (visitor profile) - page 2' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
@@ -1634,14 +1635,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public')",
                 ],
-                'slug'                    => '/last-blueprints/2/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/2/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 2 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -1799,7 +1800,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -1815,7 +1816,7 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - (public profile) - page 2' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
@@ -1861,14 +1862,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public')",
                 ],
-                'slug'                    => '/last-blueprints/2/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/2/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 2 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -2040,7 +2041,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -2056,7 +2057,7 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - (author profile) - page 2' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
@@ -2102,14 +2103,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public')",
                 ],
-                'slug'                    => '/last-blueprints/2/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/last-blueprints/2/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Last blueprints | Page 2 | This is a base title',
                     'description' => 'Last blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Last pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -2407,7 +2408,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -2444,6 +2445,9 @@ HTML,
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCases3PublicUnlistedPrivateBlueprint')]
+    #[DataProvider('dataCases30PublicUnlistedPrivateBlueprintPage1')]
+    #[DataProvider('dataCases30PublicUnlistedPrivateBlueprintPage2')]
     public function testLastListGET(array $sqlQueries, string $slug, ?string $location, ?int $userID, ?array $contentHead, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();

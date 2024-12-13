@@ -11,6 +11,7 @@ namespace tests\www\Lists;
 
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -84,24 +85,24 @@ class TypeListTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateAnimationBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateAnimationBlueprint(): array
     {
         return [
             '3 animation blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'animation')",
                 ],
-                'slug'                    => '/type/animation/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/animation/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Animation blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as animation'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">animation</span></h2>
@@ -110,27 +111,27 @@ class TypeListTest extends TestCase
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'animation')",
                 ],
-                'slug'                    => '/type/animation/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/animation/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Animation blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as animation'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">animation</span></h2>
@@ -139,27 +140,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'animation')",
                 ],
-                'slug'                    => '/type/animation/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/animation/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Animation blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as animation'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">animation</span></h2>
@@ -168,27 +169,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'animation')",
                 ],
-                'slug'                    => '/type/animation/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/animation/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Animation blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as animation'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">animation</span></h2>
@@ -197,27 +198,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'animation')",
                 ],
-                'slug'                    => '/type/animation/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/animation/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Animation blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as animation'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">animation</span></h2>
@@ -226,27 +227,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'animation')",
                 ],
-                'slug'                    => '/type/animation/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/animation/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Animation blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as animation'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">animation</span></h2>
@@ -255,27 +256,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'animation')",
                 ],
-                'slug'                    => '/type/animation/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/animation/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Animation blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as animation'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">animation</span></h2>
@@ -307,7 +308,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -317,20 +318,20 @@ HTML,
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'animation')",
                 ],
-                'slug'                    => '/type/animation/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/animation/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Animation blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as animation'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">animation</span></h2>
@@ -362,7 +363,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -372,20 +373,20 @@ HTML,
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'animation')",
                 ],
-                'slug'                    => '/type/animation/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/animation/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Animation blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as animation'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">animation</span></h2>
@@ -445,7 +446,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -462,24 +463,24 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint(): array
     {
         return [
             '3 behavior-tree blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'behavior_tree'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'behavior_tree')",
                 ],
-                'slug'                    => '/type/behavior-tree/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/behavior-tree/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Behavior Tree blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as behavior tree'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">behavior-tree</span></h2>
@@ -488,27 +489,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'behavior_tree'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'behavior_tree')",
                 ],
-                'slug'                    => '/type/behavior-tree/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/behavior-tree/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Behavior Tree blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as behavior tree'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">behavior-tree</span></h2>
@@ -517,27 +518,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'behavior_tree'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'behavior_tree')",
                 ],
-                'slug'                    => '/type/behavior-tree/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/behavior-tree/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Behavior Tree blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as behavior tree'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">behavior-tree</span></h2>
@@ -546,27 +547,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'behavior_tree'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'behavior_tree')",
                 ],
-                'slug'                    => '/type/behavior-tree/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/behavior-tree/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Behavior Tree blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as behavior tree'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">behavior-tree</span></h2>
@@ -575,27 +576,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'behavior_tree'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'behavior_tree')",
                 ],
-                'slug'                    => '/type/behavior-tree/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/behavior-tree/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Behavior Tree blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as behavior tree'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">behavior-tree</span></h2>
@@ -604,27 +605,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'behavior_tree'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'behavior_tree')",
                 ],
-                'slug'                    => '/type/behavior-tree/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/behavior-tree/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Behavior Tree blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as behavior tree'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">behavior-tree</span></h2>
@@ -633,27 +634,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'behavior_tree'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'behavior_tree')",
                 ],
-                'slug'                    => '/type/behavior-tree/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/behavior-tree/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Behavior Tree blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as behavior tree'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">behavior-tree</span></h2>
@@ -685,7 +686,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -695,20 +696,20 @@ HTML,
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'behavior_tree'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'behavior_tree')",
                 ],
-                'slug'                    => '/type/behavior-tree/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/behavior-tree/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Behavior Tree blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as behavior tree'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">behavior-tree</span></h2>
@@ -740,7 +741,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -750,20 +751,20 @@ HTML,
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'behavior_tree'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'behavior_tree')",
                 ],
-                'slug'                    => '/type/behavior-tree/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/behavior-tree/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Behavior Tree blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as behavior tree'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">behavior-tree</span></h2>
@@ -823,7 +824,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -840,24 +841,24 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateBlueprint(): array
     {
         return [
             '3 blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'blueprint')",
                 ],
-                'slug'                    => '/type/blueprint/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -866,27 +867,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'blueprint')",
                 ],
-                'slug'                    => '/type/blueprint/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -895,27 +896,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'blueprint')",
                 ],
-                'slug'                    => '/type/blueprint/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -924,27 +925,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'blueprint')",
                 ],
-                'slug'                    => '/type/blueprint/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -953,27 +954,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'blueprint')",
                 ],
-                'slug'                    => '/type/blueprint/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -982,27 +983,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'blueprint')",
                 ],
-                'slug'                    => '/type/blueprint/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -1011,27 +1012,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'blueprint')",
                 ],
-                'slug'                    => '/type/blueprint/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -1063,7 +1064,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1073,20 +1074,20 @@ HTML,
 HTML,
             ],
             '3 blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'blueprint')",
                 ],
-                'slug'                    => '/type/blueprint/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -1118,7 +1119,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1128,20 +1129,20 @@ HTML,
 HTML,
             ],
             '3 blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'blueprint')",
                 ],
-                'slug'                    => '/type/blueprint/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -1201,7 +1202,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1218,24 +1219,24 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateMaterialBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateMaterialBlueprint(): array
     {
         return [
             '3 material blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'material'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'material')",
                 ],
-                'slug'                    => '/type/material/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/material/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Material blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as material'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">material</span></h2>
@@ -1244,27 +1245,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 material blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'material'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'material')",
                 ],
-                'slug'                    => '/type/material/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/material/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Material blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as material'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">material</span></h2>
@@ -1273,27 +1274,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 material blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'material'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'material')",
                 ],
-                'slug'                    => '/type/material/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/material/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Material blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as material'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">material</span></h2>
@@ -1302,27 +1303,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 material blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'material'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'material')",
                 ],
-                'slug'                    => '/type/material/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/material/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Material blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as material'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">material</span></h2>
@@ -1331,27 +1332,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 material blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'material'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'material')",
                 ],
-                'slug'                    => '/type/material/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/material/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Material blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as material'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">material</span></h2>
@@ -1360,27 +1361,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 material blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'material'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'material')",
                 ],
-                'slug'                    => '/type/material/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/material/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Material blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as material'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">material</span></h2>
@@ -1389,27 +1390,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 material blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'material'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'material')",
                 ],
-                'slug'                    => '/type/material/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/material/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Material blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as material'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">material</span></h2>
@@ -1441,7 +1442,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1451,20 +1452,20 @@ HTML,
 HTML,
             ],
             '3 material blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'material'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'material')",
                 ],
-                'slug'                    => '/type/material/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/material/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Material blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as material'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">material</span></h2>
@@ -1496,7 +1497,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1506,20 +1507,20 @@ HTML,
 HTML,
             ],
             '3 material blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'material'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'material')",
                 ],
-                'slug'                    => '/type/material/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/material/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Material blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as material'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">material</span></h2>
@@ -1579,7 +1580,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1596,24 +1597,24 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateMetasoundBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateMetasoundBlueprint(): array
     {
         return [
             '3 metasound blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'metasound'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'metasound')",
                 ],
-                'slug'                    => '/type/metasound/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/metasound/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Metasound blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as metasound'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">metasound</span></h2>
@@ -1622,27 +1623,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'metasound'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'metasound')",
                 ],
-                'slug'                    => '/type/metasound/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/metasound/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Metasound blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as metasound'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">metasound</span></h2>
@@ -1651,27 +1652,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'metasound'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'metasound')",
                 ],
-                'slug'                    => '/type/metasound/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/metasound/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Metasound blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as metasound'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">metasound</span></h2>
@@ -1680,27 +1681,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'metasound'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'metasound')",
                 ],
-                'slug'                    => '/type/metasound/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/metasound/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Metasound blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as metasound'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">metasound</span></h2>
@@ -1709,27 +1710,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'metasound'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'metasound')",
                 ],
-                'slug'                    => '/type/metasound/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/metasound/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Metasound blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as metasound'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">metasound</span></h2>
@@ -1738,27 +1739,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'metasound'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'metasound')",
                 ],
-                'slug'                    => '/type/metasound/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/metasound/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Metasound blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as metasound'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">metasound</span></h2>
@@ -1767,27 +1768,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'metasound'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'metasound')",
                 ],
-                'slug'                    => '/type/metasound/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/metasound/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Metasound blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as metasound'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">metasound</span></h2>
@@ -1819,7 +1820,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1829,20 +1830,20 @@ HTML,
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'metasound'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'metasound')",
                 ],
-                'slug'                    => '/type/metasound/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/metasound/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Metasound blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as metasound'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">metasound</span></h2>
@@ -1874,7 +1875,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1884,20 +1885,20 @@ HTML,
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'metasound'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'metasound')",
                 ],
-                'slug'                    => '/type/metasound/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/metasound/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Metasound blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as metasound'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">metasound</span></h2>
@@ -1957,7 +1958,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1974,24 +1975,24 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateNiagaraBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateNiagaraBlueprint(): array
     {
         return [
             '3 niagara blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'niagara'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'niagara')",
                 ],
-                'slug'                    => '/type/niagara/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/niagara/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Niagara blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as niagara'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">niagara</span></h2>
@@ -2000,27 +2001,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'niagara'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'niagara')",
                 ],
-                'slug'                    => '/type/niagara/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/niagara/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Niagara blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as niagara'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">niagara</span></h2>
@@ -2029,27 +2030,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', 'niagara'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'niagara')",
                 ],
-                'slug'                    => '/type/niagara/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/niagara/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Niagara blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as niagara'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">niagara</span></h2>
@@ -2058,27 +2059,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'niagara'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'niagara')",
                 ],
-                'slug'                    => '/type/niagara/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/niagara/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Niagara blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as niagara'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">niagara</span></h2>
@@ -2087,27 +2088,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'niagara'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'niagara')",
                 ],
-                'slug'                    => '/type/niagara/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/niagara/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Niagara blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as niagara'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">niagara</span></h2>
@@ -2116,27 +2117,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'niagara'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'niagara')",
                 ],
-                'slug'                    => '/type/niagara/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/niagara/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Niagara blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as niagara'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">niagara</span></h2>
@@ -2145,27 +2146,27 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'niagara'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'niagara')",
                 ],
-                'slug'                    => '/type/niagara/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/niagara/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Niagara blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as niagara'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">niagara</span></h2>
@@ -2197,7 +2198,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2207,20 +2208,20 @@ HTML,
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'niagara'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'niagara')",
                 ],
-                'slug'                    => '/type/niagara/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/niagara/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Niagara blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as niagara'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">niagara</span></h2>
@@ -2252,7 +2253,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2262,20 +2263,20 @@ HTML,
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 'niagara'),
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'niagara')",
                 ],
-                'slug'                    => '/type/niagara/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/niagara/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Niagara blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as niagara'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">niagara</span></h2>
@@ -2335,7 +2336,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2361,7 +2362,7 @@ HTML,
 
         return [
             '30 blueprints public/unlisted/private - (visitor profile) - page 1' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
@@ -2407,14 +2408,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public')",
                 ],
-                'slug'                    => '/type/blueprint/1/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/1/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -2712,7 +2713,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2728,7 +2729,7 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - (public profile) - page 1' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
@@ -2774,14 +2775,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public')",
                 ],
-                'slug'                    => '/type/blueprint/1/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/1/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -3079,7 +3080,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -3095,7 +3096,7 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - (author profile) - page 1' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
@@ -3141,14 +3142,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public')",
                 ],
-                'slug'                    => '/type/blueprint/1/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/1/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 1 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -3446,7 +3447,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -3478,7 +3479,7 @@ HTML,
 
         return [
             '30 blueprints public/unlisted/private - (visitor profile) - page 2' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
@@ -3524,14 +3525,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public')",
                 ],
-                'slug'                    => '/type/blueprint/2/',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/2/',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 2 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -3689,7 +3690,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -3705,7 +3706,7 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - (public profile) - page 2' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
@@ -3751,14 +3752,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public')",
                 ],
-                'slug'                    => '/type/blueprint/2/',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/2/',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 2 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -3930,7 +3931,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -3946,7 +3947,7 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - (author profile) - page 2' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
@@ -3992,14 +3993,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public')",
                 ],
-                'slug'                    => '/type/blueprint/2/',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/type/blueprint/2/',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Blueprints | Page 2 | This is a base title',
                     'description' => 'List of blueprints categorized as blueprint'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint type: <span class="block__title--emphasis">blueprint</span></h2>
@@ -4297,7 +4298,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -4339,6 +4340,14 @@ HTML,
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCases3PublicUnlistedPrivateAnimationBlueprint')]
+    #[DataProvider('dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint')]
+    #[DataProvider('dataCases3PublicUnlistedPrivateBlueprint')]
+    #[DataProvider('dataCases3PublicUnlistedPrivateMaterialBlueprint')]
+    #[DataProvider('dataCases3PublicUnlistedPrivateMetasoundBlueprint')]
+    #[DataProvider('dataCases3PublicUnlistedPrivateNiagaraBlueprint')]
+    #[DataProvider('dataCases30PublicUnlistedPrivateBlueprintPage1')]
+    #[DataProvider('dataCases30PublicUnlistedPrivateBlueprintPage2')]
     public function testTypeListGET(array $sqlQueries, string $slug, ?string $location, ?int $userID, ?array $contentHead, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();
