@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\Profile\Edit;
 
 use app\helpers\Helper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -105,7 +106,7 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
     /**
      * @throws \Exception
      */
-    public function dataCasesDeleteAvatar(): array
+    public static function dataCasesDeleteAvatar(): array
     {
         $randomAvatarsName = [];
         for ($i = 0; $i < 2; ++$i) {
@@ -121,17 +122,17 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
 
         return [
             'delete avatar OK - no avatar before' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp())"
                 ],
-                'user_id'     => 489,
-                'params'      => [
+                'userID' => 489,
+                'params' => [
                     'form-delete_avatar-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">Your avatar is now deleted</div>'
@@ -141,21 +142,21 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
                         'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
                     ]
                 ],
-                'file_or_dir_on_disk' => null,
-                'is_file'             => false,
+                'fileOrDirOnDisk' => null,
+                'isFile'          => false,
             ],
             'delete avatar OK - has avatar before  (file is not in disk)' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '<script>alert(1)</script>')"
                 ],
-                'user_id'     => 489,
-                'params'      => [
+                'userID' => 489,
+                'params' => [
                     'form-delete_avatar-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">Your avatar is now deleted</div>'
@@ -165,21 +166,21 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
                         'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
                     ]
                 ],
-                'file_or_dir_on_disk' => null,
-                'is_file'             => false,
+                'fileOrDirOnDisk' => null,
+                'isFile'          => false,
             ],
             'delete avatar OK - has avatar before  (file is in disk)' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '" . $randomAvatarsName[0] . "')"
                 ],
-                'user_id'     => 489,
-                'params'      => [
+                'userID' => 489,
+                'params' => [
                     'form-delete_avatar-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">Your avatar is now deleted</div>'
@@ -189,21 +190,21 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
                         'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
                     ]
                 ],
-                'file_or_dir_on_disk' => $randomAvatarsName[0],
-                'is_file'             => true,
+                'fileOrDirOnDisk' => $randomAvatarsName[0],
+                'isFile'          => true,
             ],
             'delete avatar OK - has avatar before  (file is in disk as dir but not delete)' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '" . $randomAvatarsName[1] . "')"
                 ],
-                'user_id'     => 489,
-                'params'      => [
+                'userID' => 489,
+                'params' => [
                     'form-delete_avatar-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">Your avatar is now deleted</div>'
@@ -213,21 +214,21 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
                         'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
                     ]
                 ],
-                'file_or_dir_on_disk' => $randomAvatarsName[1],
-                'is_file'             => false,
+                'fileOrDirOnDisk' => $randomAvatarsName[1],
+                'isFile'          => false,
             ],
             'csrf incorrect' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '<script>alert(1)</script>')"
                 ],
-                'user_id'     => 489,
-                'params'      => [
+                'userID' => 489,
+                'params' => [
                     'form-delete_avatar-hidden-csrf' => 'incorrect_csrf',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">'
@@ -237,19 +238,19 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
                         'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
                     ]
                 ],
-                'file_or_dir_on_disk' => null,
-                'is_file'             => false,
+                'fileOrDirOnDisk' => null,
+                'isFile'          => false,
             ],
             'missing fields - no csrf' => [
-                'sql_queries'           => [
+                'sqlQueries' => [
                     "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '<script>alert(1)</script>')"
                 ],
-                'user_id'               => 489,
-                'params'                => [],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'userID'             => 489,
+                'params'             => [],
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">'
@@ -259,8 +260,8 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
                         'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
                     ]
                 ],
-                'file_or_dir_on_disk' => null,
-                'is_file'             => false,
+                'fileOrDirOnDisk' => null,
+                'isFile'          => false,
             ],
         ];
     }
@@ -283,6 +284,7 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
+    #[DataProvider('dataCasesDeleteAvatar')]
     public function testProfileEditPOSTDeleteAvatar(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, ?string $fileOrDirOnDisk, bool $isFile): void
     {
         static::setDatabase();

@@ -12,6 +12,7 @@ namespace tests\www\Search;
 use app\helpers\Helper;
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -130,25 +131,25 @@ class SearchXssListTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCases(): array
+    public static function dataCases(): array
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
-            $formattedDates['-' . $i . ' days'] = $this->getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
+            $formattedDates['-' . $i . ' days'] = static::getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
         }
 
         return [
             '30 blueprints public/unlisted/private - xss form-search-input-query' => [
-                'sql_queries'             => [],
-                'slug_input'              => '/search/?form-search-input-query=<script>alert(1)</script>',
-                'slug_output'             => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'sqlQueries'  => [],
+                'slugInput'   => '/search/?form-search-input-query=<script>alert(1)</script>',
+                'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
                     'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">&lt;script&gt;alert(1)&lt;&#47;script&gt;</span></h2>
@@ -446,7 +447,7 @@ class SearchXssListTest extends TestCase
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -462,16 +463,16 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - xss query' => [
-                'sql_queries'             => [],
-                'slug_input'              => '/search/?query=<script>alert(1)</script>',
-                'slug_output'             => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'sqlQueries'  => [],
+                'slugInput'   => '/search/?query=<script>alert(1)</script>',
+                'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
                     'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">&lt;script&gt;alert(1)&lt;&#47;script&gt;</span></h2>
@@ -769,7 +770,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -785,16 +786,16 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - xss in all fields' => [
-                'sql_queries'             => [],
-                'slug_input'              => '/search/?form-search-input-query=<script>alert(1)</script>&form-search-select-type=<script>alert(1)</script>&form-search-select-ue_version=<script>alert(1)</script>&page=<script>alert(1)</script>',
-                'slug_output'             => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'sqlQueries'  => [],
+                'slugInput'   => '/search/?form-search-input-query=<script>alert(1)</script>&form-search-select-type=<script>alert(1)</script>&form-search-select-ue_version=<script>alert(1)</script>&page=<script>alert(1)</script>',
+                'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
                     'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">&lt;script&gt;alert(1)&lt;&#47;script&gt;</span></h2>
@@ -1092,7 +1093,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1128,6 +1129,7 @@ HTML,
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCases')]
     public function testSearchXssListGET(array $sqlQueries, string $slugInput, string $slugOutput, ?string $location, ?int $userID, ?array $contentHead, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();

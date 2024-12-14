@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace tests\www\Blueprint\View;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -46,42 +47,42 @@ class BlueprintGETFileBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCasesBlueprintGET_FileBlueprint(): array
+    public static function dataCasesBlueprintGET_FileBlueprint(): array
     {
         return [
             'get last version : file 1' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.10')",
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'file_id' => 'a',
+                'fileID'  => 'a',
                 'version' => '1',
                 'slug'    => 'slug_public',
             ],
             'get specific version : file 3' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 3, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.10')",
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 3, 'First commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'file_id' => 'a',
+                'fileID'  => 'a',
                 'version' => '3',
                 'slug'    => 'slug_public/3',
             ],
             'missing file' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 2, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.10')",
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'First commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'file_id' => 'a',
+                'fileID'  => 'a',
                 'version' => 'missing',
                 'slug'    => 'slug_public',
             ],
@@ -102,6 +103,7 @@ class BlueprintGETFileBlueprintTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCasesBlueprintGET_FileBlueprint')]
     public function testBlueprintGETFileBlueprint(array $sqlQueries, string $fileID, string $version, string $slug): void
     {
         static::cleanFiles();

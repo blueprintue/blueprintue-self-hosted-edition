@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\Profile\Edit;
 
 use app\helpers\Helper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -82,23 +83,23 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
         }
     }
 
-    public function dataCasesEditBasicInfos(): array
+    public static function dataCasesEditBasicInfos(): array
     {
         return [
             'edit OK' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `bio`, `link_website`) VALUES (189, 'bio_value\nline 2', 'link_website_value')"
                 ],
-                'user_id'     => 189,
+                'userID'      => 189,
                 'params'      => [
                     'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
                     'form-edit_basic_infos-textarea-bio'  => "my\nbio",
                     'form-edit_basic_infos-input-website' => 'my-website',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
@@ -108,23 +109,23 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['bio', 'website'],
+                'fieldsHasError' => [],
+                'fieldsHasValue' => ['bio', 'website'],
             ],
             'edit OK - xss' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `bio`, `link_website`) VALUES (189, 'bio_value\nline 2', 'link_website_value')"
                 ],
-                'user_id'     => 189,
+                'userID'      => 189,
                 'params'      => [
                     'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
                     'form-edit_basic_infos-textarea-bio'  => '<script>alert("bio");</script>',
                     'form-edit_basic_infos-input-website' => '<script>alert("website");</script>',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
@@ -134,21 +135,21 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['bio', 'website'],
+                'fieldsHasError' => [],
+                'fieldsHasValue' => ['bio', 'website'],
             ],
             'edit OK - missing users_infos' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
+                'sqlQueries'  => [],
+                'userID'      => 189,
                 'params'      => [
                     'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
                     'form-edit_basic_infos-textarea-bio'  => "my\nbio",
                     'form-edit_basic_infos-input-website' => 'my-website',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
@@ -158,21 +159,21 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['bio', 'website'],
+                'fieldsHasError' => [],
+                'fieldsHasValue' => ['bio', 'website'],
             ],
             'csrf incorrect' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
+                'sqlQueries'  => [],
+                'userID'      => 189,
                 'params'      => [
                     'form-edit_basic_infos-hidden-csrf'   => 'incorrect_csrf',
                     'form-edit_basic_infos-textarea-bio'  => "my\nbio",
                     'form-edit_basic_infos-input-website' => 'my-website',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
@@ -182,17 +183,17 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
+                'fieldsHasError' => [],
+                'fieldsHasValue' => [],
             ],
             'missing fields - no fields' => [
-                'sql_queries'           => [],
-                'user_id'               => 189,
+                'sqlQueries'            => [],
+                'userID'                => 189,
                 'params'                => [],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession'    => false,
+                'hasRedirection'        => false,
+                'isFormSuccess'         => false,
+                'flashMessages'         => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
@@ -202,20 +203,20 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
+                'fieldsHasError' => [],
+                'fieldsHasValue' => [],
             ],
             'missing fields - no csrf' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
+                'sqlQueries'  => [],
+                'userID'      => 189,
                 'params'      => [
                     'form-edit_basic_infos-textarea-bio'  => "my\nbio",
                     'form-edit_basic_infos-input-website' => 'my-website',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
@@ -225,20 +226,20 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
+                'fieldsHasError' => [],
+                'fieldsHasValue' => [],
             ],
             'missing fields - no bio' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
+                'sqlQueries'  => [],
+                'userID'      => 189,
                 'params'      => [
                     'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
                     'form-edit_basic_infos-input-website' => 'my-website',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
@@ -248,20 +249,20 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
+                'fieldsHasError' => [],
+                'fieldsHasValue' => [],
             ],
             'missing fields - no website' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
+                'sqlQueries'  => [],
+                'userID'      => 189,
                 'params'      => [
                     'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
                     'form-edit_basic_infos-textarea-bio'  => "my\nbio",
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
@@ -271,23 +272,23 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
+                'fieldsHasError' => [],
+                'fieldsHasValue' => [],
             ],
             'edit OK - empty fields - bio empty' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `bio`, `link_website`) VALUES (189, 'bio_value\nline 2', 'link_website_value')"
                 ],
-                'user_id'     => 189,
+                'userID'      => 189,
                 'params'      => [
                     'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
                     'form-edit_basic_infos-textarea-bio'  => ' ',
                     'form-edit_basic_infos-input-website' => 'my-website',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
@@ -297,23 +298,23 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['bio', 'website'],
+                'fieldsHasError' => [],
+                'fieldsHasValue' => ['bio', 'website'],
             ],
             'edit OK - empty fields - website empty' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `bio`, `link_website`) VALUES (189, 'bio_value\nline 2', 'link_website_value')"
                 ],
-                'user_id'     => 189,
+                'userID'      => 189,
                 'params'      => [
                     'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
                     'form-edit_basic_infos-textarea-bio'  => "my\nbio",
                     'form-edit_basic_infos-input-website' => ' ',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
@@ -323,21 +324,21 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['bio', 'website'],
+                'fieldsHasError' => [],
+                'fieldsHasValue' => ['bio', 'website'],
             ],
             'invalid encoding fields - bio' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
+                'sqlQueries'  => [],
+                'userID'      => 189,
                 'params'      => [
                     'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
                     'form-edit_basic_infos-textarea-bio'  => \chr(99999999),
                     'form-edit_basic_infos-input-website' => 'my-website',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
@@ -347,21 +348,21 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
+                'fieldsHasError' => [],
+                'fieldsHasValue' => [],
             ],
             'invalid encoding fields - website' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
+                'sqlQueries'  => [],
+                'userID'      => 189,
                 'params'      => [
                     'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
                     'form-edit_basic_infos-textarea-bio'  => "my\nbio",
                     'form-edit_basic_infos-input-website' => \chr(99999999),
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
@@ -371,8 +372,8 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
+                'fieldsHasError' => [],
+                'fieldsHasValue' => [],
             ],
         ];
     }
@@ -396,6 +397,7 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCasesEditBasicInfos')]
     public function testProfileEditPOSTEditBasicInfos(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue): void
     {
         static::setDatabase();

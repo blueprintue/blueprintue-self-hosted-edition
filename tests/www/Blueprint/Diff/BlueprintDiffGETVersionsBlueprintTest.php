@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace tests\www\Blueprint\Diff;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -43,28 +44,28 @@ class BlueprintDiffGETVersionsBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCasesBlueprintGET_VersionsBlueprint(): array
+    public static function dataCasesBlueprintGET_VersionsBlueprint(): array
     {
         $date = '2020-01-01 01:01:01';
         $date1DayLater = '2020-01-02 01:01:01';
 
         return [
             '1 version - 1/diff/1' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', '" . $date . "', '" . $date . "')",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'              => 'slug_public/1/diff/1',
-                'status_code'       => 200,
-                'location'          => null,
-                'has_list_versions' => false,
-                'html'              => null
+                'slug'            => 'slug_public/1/diff/1',
+                'statusCode'      => 200,
+                'location'        => null,
+                'hasListVersions' => false,
+                'html'            => null
             ],
             '2 versions - 1/diff/2' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -72,11 +73,11 @@ class BlueprintDiffGETVersionsBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', '" . $date . "', '" . $date . "')",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'              => 'slug_public/1/diff/2',
-                'status_code'       => 200,
-                'location'          => null,
-                'has_list_versions' => true,
-                'html'              => <<<HTML
+                'slug'            => 'slug_public/1/diff/2',
+                'statusCode'      => 200,
+                'location'        => null,
+                'hasListVersions' => true,
+                'html'            => <<<HTML
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -101,7 +102,7 @@ class BlueprintDiffGETVersionsBlueprintTest extends TestCase
 HTML
             ],
             '2 versions - 2/diff/2 (not real link)' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -109,11 +110,11 @@ HTML
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', '" . $date . "', '" . $date . "')",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'              => 'slug_public/2/diff/2',
-                'status_code'       => 200,
-                'location'          => null,
-                'has_list_versions' => true,
-                'html'              => <<<HTML
+                'slug'            => 'slug_public/2/diff/2',
+                'statusCode'      => 200,
+                'location'        => null,
+                'hasListVersions' => true,
+                'html'            => <<<HTML
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -138,7 +139,7 @@ HTML
 HTML
             ],
             '2 versions - 2/diff/1 (not real link)' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -146,11 +147,11 @@ HTML
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'              => 'slug_public/2/diff/1',
-                'status_code'       => 200,
-                'location'          => null,
-                'has_list_versions' => true,
-                'html'              => <<<HTML
+                'slug'            => 'slug_public/2/diff/1',
+                'statusCode'      => 200,
+                'location'        => null,
+                'hasListVersions' => true,
+                'html'            => <<<HTML
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -183,7 +184,7 @@ HTML
 HTML
             ],
             '3 versions - 2/diff/3' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -192,11 +193,11 @@ HTML
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 3, 'Third commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'              => 'slug_public/2/diff/3',
-                'status_code'       => 200,
-                'location'          => null,
-                'has_list_versions' => true,
-                'html'              => <<<HTML
+                'slug'            => 'slug_public/2/diff/3',
+                'statusCode'      => 200,
+                'location'        => null,
+                'hasListVersions' => true,
+                'html'            => <<<HTML
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -237,7 +238,7 @@ HTML
 HTML
             ],
             '3 versions - 1/diff/3 (not real link)' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -246,11 +247,11 @@ HTML
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 3, 'Third commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'              => 'slug_public/1/diff/3',
-                'status_code'       => 200,
-                'location'          => null,
-                'has_list_versions' => true,
-                'html'              => <<<HTML
+                'slug'            => 'slug_public/1/diff/3',
+                'statusCode'      => 200,
+                'location'        => null,
+                'hasListVersions' => true,
+                'html'            => <<<HTML
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -291,7 +292,7 @@ HTML
 HTML
             ],
             'version left is invalid' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -300,14 +301,14 @@ HTML
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 3, 'Third commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'              => 'slug_public/99/diff/3',
-                'status_code'       => 301,
-                'location'          => '/',
-                'has_list_versions' => true,
-                'html'              => ''
+                'slug'            => 'slug_public/99/diff/3',
+                'statusCode'      => 301,
+                'location'        => '/',
+                'hasListVersions' => true,
+                'html'            => ''
             ],
             'version right is invalid' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -316,11 +317,11 @@ HTML
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 3, 'Third commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'              => 'slug_public/1/diff/99',
-                'status_code'       => 301,
-                'location'          => '/',
-                'has_list_versions' => true,
-                'html'              => ''
+                'slug'            => 'slug_public/1/diff/99',
+                'statusCode'      => 301,
+                'location'        => '/',
+                'hasListVersions' => true,
+                'html'            => ''
             ]
         ];
     }
@@ -340,6 +341,7 @@ HTML
      * @throws EnvironmentException
      * @throws RouterException
      */
+    #[DataProvider('dataCasesBlueprintGET_VersionsBlueprint')]
     public function testBlueprintGETVersionsBlueprint(array $sqlQueries, string $slug, int $statusCode, ?string $location, bool $hasListVersions, ?string $html): void
     {
         // sql queries

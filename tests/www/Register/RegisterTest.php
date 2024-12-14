@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\Register;
 
 use app\helpers\Helper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -84,7 +85,7 @@ class RegisterTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCasesRegister(): array
+    public static function dataCasesRegister(): array
     {
         return [
             'xss - register OK - mail OK' => [
@@ -95,27 +96,27 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => '0<script>alert("Password");</script>',
                     'form-register-input-password_confirm' => '0<script>alert("Password");</script>'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 1,
-                'mail_html'             => $this->getEmailHTMLConfirmAccount('a-zA-Z0-9._ -'),
-                'mail_text'             => $this->getEmailTextConfirmAccount('a-zA-Z0-9._ -'),
-                'mail_sent'             => true,
-                'is_user_created'       => true,
-                'user_db'               => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 1,
+                'mailHTML'           => static::getEmailHTMLConfirmAccount('a-zA-Z0-9._ -'),
+                'mailText'           => static::getEmailTextConfirmAccount('a-zA-Z0-9._ -'),
+                'mailSent'           => true,
+                'isUserCreated'      => true,
+                'userDB'             => [
                     'username' => 'a-zA-Z0-9._ -',
                     'slug'     => 'a-za-z0-9-_',
                     'email'    => '0<script>alert("email");</script>@<script>alert("email");</script>'
                 ],
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'hasRedirection' => true,
+                'flashMessages'  => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'xss - register KO' => [
                 'params' => [
@@ -125,23 +126,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => '0<script>alert("password");</script>',
                     'form-register-input-password_confirm' => '0<script>alert("password_confirm");</script>'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username, email, password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['username', 'email', 'password_confirm'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['username', 'email', 'password_confirm'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'username'         => 'Username is invalid',
                     'email'            => 'Email is invalid',
                     'password_confirm' => 'Confirm Password must be the same as Password'
@@ -155,27 +156,27 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 1,
-                'mail_html'             => $this->getEmailHTMLConfirmAccount('- user-001 -'),
-                'mail_text'             => $this->getEmailTextConfirmAccount('- user-001 -'),
-                'mail_sent'             => true,
-                'is_user_created'       => true,
-                'user_db'               => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 1,
+                'mailHTML'           => static::getEmailHTMLConfirmAccount('- user-001 -'),
+                'mailText'           => static::getEmailTextConfirmAccount('- user-001 -'),
+                'mailSent'           => true,
+                'isUserCreated'      => true,
+                'userDB'             => [
                     'username' => '- user-001 -',
                     'slug'     => 'user-001',
                     'email'    => 'user@example.com'
                 ],
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'hasRedirection' => true,
+                'flashMessages'  => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'register OK - mail KO' => [
                 'params' => [
@@ -185,27 +186,27 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 1,
-                'mail_html'             => $this->getEmailHTMLConfirmAccount('- user-001 -'),
-                'mail_text'             => $this->getEmailTextConfirmAccount('- user-001 -'),
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 1,
+                'mailHTML'           => static::getEmailHTMLConfirmAccount('- user-001 -'),
+                'mailText'           => static::getEmailTextConfirmAccount('- user-001 -'),
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => [
                     'username' => '- user-001 -',
                     'slug'     => 'user-001',
                     'email'    => 'user@example.com'
                 ],
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'hasRedirection' => true,
+                'flashMessages'  => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, could not create account (#500)</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [],
             ],
             'csrf incorrect' => [
                 'params' => [
@@ -215,43 +216,43 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => false,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no fields' => [
-                'params'                => [],
-                'use_csrf_from_session' => false,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'params'             => [],
+                'useCsrfFromSession' => false,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no csrf' => [
                 'params' => [
@@ -260,23 +261,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => false,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no username' => [
                 'params' => [
@@ -285,23 +286,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no email' => [
                 'params' => [
@@ -310,23 +311,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no password' => [
                 'params' => [
@@ -335,23 +336,23 @@ class RegisterTest extends TestCase
                     'form-register-input-email'            => 'user@example.com',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no password_confirm' => [
                 'params' => [
@@ -360,23 +361,23 @@ class RegisterTest extends TestCase
                     'form-register-input-email'            => 'user@example.com',
                     'form-register-input-password'         => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'empty fields - username empty' => [
                 'params' => [
@@ -386,23 +387,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username</div>'
                     ]
                 ],
-                'fields_has_error'      => ['username'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['username'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'username' => 'Username is required'
                 ],
             ],
@@ -414,23 +415,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on email</div>'
                     ]
                 ],
-                'fields_has_error'      => ['email'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['email'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'email' => 'Email is required'
                 ],
             ],
@@ -442,23 +443,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => ' ',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'password' => 'Password must be at least 10 characters in length'
                 ],
             ],
@@ -470,23 +471,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => ' '
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password_confirm'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password_confirm'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'password_confirm' => 'Password must be at least 10 characters in length'
                 ],
             ],
@@ -498,23 +499,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username</div>'
                     ]
                 ],
-                'fields_has_error'      => ['username'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['username'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'username' => 'Username is invalid'
                 ],
             ],
@@ -526,23 +527,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username</div>'
                     ]
                 ],
-                'fields_has_error'      => ['username'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['username'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'username' => 'Username is unavailable'
                 ],
             ],
@@ -554,24 +555,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username</div>'
                     ]
                 ],
-                'fields_has_error'      => ['username'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['username'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'username' => 'Username is unavailable'
                 ],
             ],
@@ -583,23 +583,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on email</div>'
                     ]
                 ],
-                'fields_has_error'      => ['email'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['email'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'email' => 'Email is invalid'
                 ],
             ],
@@ -611,23 +611,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on email</div>'
                     ]
                 ],
-                'fields_has_error'      => ['email'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['email'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'email' => 'Email is unavailable'
                 ],
             ],
@@ -639,23 +639,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'my',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'password' => 'Password must be at least 10 characters in length'
                 ],
             ],
@@ -667,23 +667,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => '_*_123RTYY',
                     'form-register-input-password_confirm' => '_*_123RTYY'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
                 ],
             ],
@@ -695,23 +695,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'aaze123_*_',
                     'form-register-input-password_confirm' => 'aaze123_*_'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
                 ],
             ],
@@ -723,23 +723,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'aaze_*_RTY',
                     'form-register-input-password_confirm' => 'aaze_*_RTY'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
                 ],
             ],
@@ -751,23 +751,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'aaze123RTY',
                     'form-register-input-password_confirm' => 'aaze123RTY'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
                 ],
             ],
@@ -779,23 +779,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'my'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password_confirm'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password_confirm'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'password_confirm' => 'Password must be at least 10 characters in length'
                 ],
             ],
@@ -807,23 +807,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'my',
                     'form-register-input-password_confirm' => 'my'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password', 'password_confirm'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password', 'password_confirm'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'password'         => 'Password must be at least 10 characters in length',
                     'password_confirm' => 'Password must be at least 10 characters in length'
                 ],
@@ -836,23 +836,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password02$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['password_confirm'],
-                'fields_has_value'      => ['username', 'email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['password_confirm'],
+                'fieldsHasValue'   => ['username', 'email'],
+                'fieldsLabelError' => [
                     'password_confirm' => 'Confirm Password must be the same as Password'
                 ],
             ],
@@ -864,23 +864,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - email' => [
                 'params' => [
@@ -890,23 +890,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - password' => [
                 'params' => [
@@ -916,23 +916,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => \chr(99999999),
                     'form-register-input-password_confirm' => 'My_password01$'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - password_confirm' => [
                 'params' => [
@@ -942,23 +942,23 @@ class RegisterTest extends TestCase
                     'form-register-input-password'         => 'My_password01$',
                     'form-register-input-password_confirm' => \chr(99999999)
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_html'             => '',
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'is_user_created'       => false,
-                'user_db'               => null,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailHTML'           => '',
+                'mailText'           => '',
+                'mailSent'           => false,
+                'isUserCreated'      => false,
+                'userDB'             => null,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
         ];
     }
@@ -969,7 +969,7 @@ class RegisterTest extends TestCase
      * @param array      $params
      * @param bool       $useCsrfFromSession
      * @param int        $mailCalled
-     * @param string     $mailHtml
+     * @param string     $mailHTML
      * @param string     $mailText
      * @param bool       $mailSent
      * @param bool       $isUserCreated
@@ -986,13 +986,14 @@ class RegisterTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    public function testRegisterPOST(array $params, bool $useCsrfFromSession, int $mailCalled, string $mailHtml, string $mailText, bool $mailSent, bool $isUserCreated, ?array $userDB, bool $hasRedirection, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
+    #[DataProvider('dataCasesRegister')]
+    public function testRegisterPOST(array $params, bool $useCsrfFromSession, int $mailCalled, string $mailHTML, string $mailText, bool $mailSent, bool $isUserCreated, ?array $userDB, bool $hasRedirection, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         $sessionValues = [
             'set' => [
                 'phpunit_mail_called' => 0,
                 'phpunit_id_user'     => 2,
-                'phpunit_mail_html'   => $mailHtml,
+                'phpunit_mail_html'   => $mailHTML,
                 'phpunit_mail_text'   => $mailText,
                 'phpunit_return'      => $mailSent,
             ],

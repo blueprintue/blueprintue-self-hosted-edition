@@ -10,11 +10,12 @@ declare(strict_types=1);
 namespace tests\www\IntegrationTest\Service\Blueprint;
 
 use app\services\www\BlueprintService;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class BlueprintTypeTest extends TestCase
 {
-    public function dataCases(): array
+    public static function dataCases(): array
     {
         return [
             'BehaviorTreeGraphNode_ = behavior_tree' => [
@@ -58,6 +59,7 @@ class BlueprintTypeTest extends TestCase
      * @param string $content
      * @param string $type
      */
+    #[DataProvider('dataCases')]
     public function testFindBlueprintType(string $content, string $type): void
     {
         static::assertSame($type, BlueprintService::findBlueprintType($content));

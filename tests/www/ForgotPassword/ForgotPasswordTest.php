@@ -12,6 +12,7 @@ namespace tests\www\ForgotPassword;
 use app\helpers\Helper;
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -98,7 +99,7 @@ class ForgotPasswordTest extends TestCase
      *
      * @return string
      */
-    protected function getEmailHTML(): string
+    protected static function getEmailHTML(): string
     {
         \ob_start();
         $ds = \DIRECTORY_SEPARATOR;
@@ -129,7 +130,7 @@ class ForgotPasswordTest extends TestCase
         return \str_replace($search, $replace, $html);
     }
 
-    protected function getEmailText(): string
+    protected static function getEmailText(): string
     {
         $text = 'You have received this email because a password reset request was received for the account user_20.' . "\n";
         $text .= 'Copy the URL below to complete the process:' . "\n\n";
@@ -144,285 +145,285 @@ class ForgotPasswordTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCasesForgotPasswordPOST(): array
+    public static function dataCasesForgotPasswordPOST(): array
     {
         return [
             'forgot password OK + mail sent' => [
-                'sql_queries' => [],
-                'params'      => [
+                'sqlQueries' => [],
+                'params'     => [
                     'form-forgot_password-hidden-csrf' => 'csrf_is_replaced',
                     'form-forgot_password-input-email' => 'user_20@example.com',
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 1,
-                'mail_text'             => $this->getEmailText(),
-                'mail_html'             => $this->getEmailHTML(),
-                'mail_sent'             => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 1,
+                'mailText'           => static::getEmailText(),
+                'mailHTML'           => static::getEmailHTML(),
+                'mailSent'           => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'forgot password OK + mail sent after waiting +300' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "UPDATE users SET password_reset = 'aze', password_reset_at = utc_timestamp() - interval 6 minute WHERE id = 20"
                 ],
                 'params' => [
                     'form-forgot_password-hidden-csrf' => 'csrf_is_replaced',
                     'form-forgot_password-input-email' => 'user_20@example.com',
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 1,
-                'mail_text'             => $this->getEmailText(),
-                'mail_html'             => $this->getEmailHTML(),
-                'mail_sent'             => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 1,
+                'mailText'           => static::getEmailText(),
+                'mailHTML'           => static::getEmailHTML(),
+                'mailSent'           => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'forgot password OK + mail sent KO' => [
-                'sql_queries' => [],
-                'params'      => [
+                'sqlQueries' => [],
+                'params'     => [
                     'form-forgot_password-hidden-csrf' => 'csrf_is_replaced',
                     'form-forgot_password-input-email' => 'user_20@example.com',
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 1,
-                'mail_text'             => $this->getEmailText(),
-                'mail_html'             => $this->getEmailHTML(),
-                'mail_sent'             => false,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 1,
+                'mailText'           => static::getEmailText(),
+                'mailHTML'           => static::getEmailHTML(),
+                'mailSent'           => false,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">Error, could not send email for reset password</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['email'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['email'],
+                'fieldsLabelError' => [],
             ],
             'csrf incorrect' => [
-                'sql_queries' => [],
-                'params'      => [
+                'sqlQueries' => [],
+                'params'     => [
                     'form-forgot_password-hidden-csrf' => 'incorrect_csrf',
                     'form-forgot_password-input-email' => 'user_20@example.com',
                 ],
-                'use_csrf_from_session' => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no fields' => [
-                'sql_queries'           => [],
+                'sqlQueries'            => [],
                 'params'                => [],
-                'use_csrf_from_session' => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession'    => false,
+                'mailCalled'            => 0,
+                'mailText'              => '',
+                'mailHTML'              => '',
+                'mailSent'              => false,
+                'hasRedirection'        => false,
+                'isFormSuccess'         => false,
+                'flashMessages'         => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no csrf' => [
-                'sql_queries' => [],
-                'params'      => [
+                'sqlQueries' => [],
+                'params'     => [
                     'form-forgot_password-input-email' => 'user_20@example.com',
                 ],
-                'use_csrf_from_session' => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no email' => [
-                'sql_queries' => [],
-                'params'      => [
+                'sqlQueries' => [],
+                'params'     => [
                     'form-forgot_password-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'empty fields - email empty' => [
-                'sql_queries' => [],
-                'params'      => [
+                'sqlQueries' => [],
+                'params'     => [
                     'form-forgot_password-hidden-csrf' => 'csrf_is_replaced',
                     'form-forgot_password-input-email' => ' ',
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">Error(s) on email</div>'
                     ]
                 ],
-                'fields_has_error'      => ['email'],
-                'fields_has_value'      => ['email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['email'],
+                'fieldsHasValue'   => ['email'],
+                'fieldsLabelError' => [
                     'email' => 'Email is required',
                 ],
             ],
             'invalid fields - invalid email' => [
-                'sql_queries' => [],
-                'params'      => [
+                'sqlQueries' => [],
+                'params'     => [
                     'form-forgot_password-hidden-csrf' => 'csrf_is_replaced',
                     'form-forgot_password-input-email' => ' - user-005 - ',
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">Error(s) on email</div>'
                     ]
                 ],
-                'fields_has_error'      => ['email'],
-                'fields_has_value'      => ['email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['email'],
+                'fieldsHasValue'   => ['email'],
+                'fieldsLabelError' => [
                     'email' => 'Email is invalid',
                 ],
             ],
             'invalid fields - email not found' => [
-                'sql_queries' => [],
-                'params'      => [
+                'sqlQueries' => [],
+                'params'     => [
                     'form-forgot_password-hidden-csrf' => 'csrf_is_replaced',
                     'form-forgot_password-input-email' => '0<script>alert("email");</script>@<script>alert("email");</script>',
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">Error, could not reset password</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['email'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['email'],
+                'fieldsLabelError' => [],
             ],
             'invalid fields - anonymous user is not allowed to forgot password' => [
-                'sql_queries' => [],
-                'params'      => [
+                'sqlQueries' => [],
+                'params'     => [
                     'form-forgot_password-hidden-csrf' => 'csrf_is_replaced',
                     'form-forgot_password-input-email' => 'user_anonymous@example.com',
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">Error, could not reset password</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['email'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['email'],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - email' => [
-                'sql_queries' => [],
-                'params'      => [
+                'sqlQueries' => [],
+                'params'     => [
                     'form-forgot_password-hidden-csrf' => 'csrf_is_replaced',
                     'form-forgot_password-input-email' => \chr(99999999),
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ]
         ];
     }
@@ -435,7 +436,7 @@ class ForgotPasswordTest extends TestCase
      * @param bool   $useCsrfFromSession
      * @param int    $mailCalled
      * @param string $mailText
-     * @param string $mailHtml
+     * @param string $mailHTML
      * @param bool   $mailSent
      * @param bool   $hasRedirection
      * @param bool   $isFormSuccess
@@ -450,14 +451,15 @@ class ForgotPasswordTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    public function testForgotPasswordPOST(array $sqlQueries, array $params, bool $useCsrfFromSession, int $mailCalled, string $mailText, string $mailHtml, bool $mailSent, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
+    #[DataProvider('dataCasesForgotPasswordPOST')]
+    public function testForgotPasswordPOST(array $sqlQueries, array $params, bool $useCsrfFromSession, int $mailCalled, string $mailText, string $mailHTML, bool $mailSent, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         // set how mail must return in $_SESSION
         $session = [
             'remove' => [],
             'set'    => [
                 'phpunit_mail_called' => 0,
-                'phpunit_mail_html'   => $mailHtml,
+                'phpunit_mail_html'   => $mailHTML,
                 'phpunit_mail_text'   => $mailText,
                 'phpunit_return'      => $mailSent,
             ],

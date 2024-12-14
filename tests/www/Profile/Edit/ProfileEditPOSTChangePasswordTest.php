@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace tests\www\Profile\Edit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -79,21 +80,21 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
         }
     }
 
-    public function dataCasesChangePassword(): array
+    public static function dataCasesChangePassword(): array
     {
         return [
             'edit OK' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => 'My_secret_password_01*',
                     'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">Your new password has been saved</div>'
@@ -103,22 +104,22 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'edit OK - xss' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => 'My_secret_password_01*<script>alert("facebook");</script>',
                     'form-change_password-input-new_password_confirm' => 'My_secret_password_01*<script>alert("facebook");</script>',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">Your new password has been saved</div>'
@@ -128,22 +129,22 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'csrf incorrect' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'incorrect_csrf',
                     'form-change_password-input-new_password'         => 'My_secret_password_01*',
                     'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -153,20 +154,20 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no fields (password is null)' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'UPDATE users SET password = NULL WHERE id = 189',
                 ],
-                'user_id'               => 189,
-                'params'                => [],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'userID'               => 189,
+                'params'               => [],
+                'useCsrfFromSession'   => false,
+                'hasRedirection'       => false,
+                'isFormSuccess'        => false,
+                'flashMessages'        => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -176,21 +177,21 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no csrf' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-input-new_password'         => 'My_secret_password_01*',
                     'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -200,21 +201,21 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no new_password' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -224,21 +225,21 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no new_password_confirm' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'        => 'csrf_is_replaced',
                     'form-change_password-input-new_password' => 'My_secret_password_01*',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -248,22 +249,22 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'empty fields - new_password empty' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => ' ',
                     'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -273,24 +274,24 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['new_password'],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['new_password'],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [
                     'new_password' => 'Password must be at least 10 characters in length',
                 ],
             ],
             'empty fields - new_password_confirm empty' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => 'My_secret_password_01*',
                     'form-change_password-input-new_password_confirm' => ' ',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -300,24 +301,24 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on confirm new password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['new_password_confirm'],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['new_password_confirm'],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [
                     'new_password_confirm' => 'Password must be at least 10 characters in length',
                 ],
             ],
             'invalid fields - new_password incorrect length' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => 'aze',
                     'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -327,24 +328,24 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['new_password'],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['new_password'],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [
                     'new_password' => 'Password must be at least 10 characters in length',
                 ],
             ],
             'invalid fields - new_password incorrect format (miss lowercase)' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => '_*_123RTYY',
                     'form-change_password-input-new_password_confirm' => '_*_123RTYY',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -354,24 +355,24 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['new_password'],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['new_password'],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [
                     'new_password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters',
                 ],
             ],
             'invalid fields - new_password incorrect format (miss uppercase)' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => 'aaze123_*_',
                     'form-change_password-input-new_password_confirm' => 'aaze123_*_',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -381,24 +382,24 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['new_password'],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['new_password'],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [
                     'new_password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters',
                 ],
             ],
             'invalid fields - new_password incorrect format (miss digit)' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => 'aaze_*_RTY',
                     'form-change_password-input-new_password_confirm' => 'aaze_*_RTY',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -408,24 +409,24 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['new_password'],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['new_password'],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [
                     'new_password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters',
                 ],
             ],
             'invalid fields - new_password incorrect format (miss special characters)' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => 'aaze123RTY',
                     'form-change_password-input-new_password_confirm' => 'aaze123RTY',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -435,24 +436,24 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['new_password'],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['new_password'],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [
                     'new_password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters',
                 ],
             ],
             'invalid fields - new_password_confirm incorrect length' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => 'My_secret_password_01*',
                     'form-change_password-input-new_password_confirm' => 'aze',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -462,24 +463,24 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on confirm new password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['new_password_confirm'],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['new_password_confirm'],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [
                     'new_password_confirm' => 'Password must be at least 10 characters in length',
                 ],
             ],
             'invalid fields - new_password and new_password_confirm incorrect length' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => 'aze',
                     'form-change_password-input-new_password_confirm' => 'aze',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -489,25 +490,25 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password, confirm new password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['new_password', 'new_password_confirm'],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['new_password', 'new_password_confirm'],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [
                     'new_password'         => 'Password must be at least 10 characters in length',
                     'new_password_confirm' => 'Password must be at least 10 characters in length',
                 ],
             ],
             'invalid fields - new_password and new_password_confirm are different' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => 'my_secret_pasword_01*',
                     'form-change_password-input-new_password_confirm' => 'my_secret_pasword_02*',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -517,24 +518,24 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on confirm new password</div>'
                     ]
                 ],
-                'fields_has_error'      => ['new_password_confirm'],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['new_password_confirm'],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [
                     'new_password_confirm' => 'Confirm Password must be the same as Password',
                 ],
             ],
             'invalid encoding fields - new_password' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => \chr(99999999),
                     'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -544,22 +545,22 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - new_password_confirm' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
                     'form-change_password-input-new_password'         => 'My_secret_password_01*',
                     'form-change_password-input-new_password_confirm' => \chr(99999999),
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
@@ -569,9 +570,9 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
         ];
     }
@@ -595,6 +596,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
+    #[DataProvider('dataCasesChangePassword')]
     public function testProfileEditPOSTChangePassword(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();

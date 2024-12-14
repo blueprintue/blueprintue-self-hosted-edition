@@ -22,11 +22,11 @@ class SearchQueryTypeCases
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateAnimationBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateAnimationBlueprint(): array
     {
         return [
             '3 animation blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'animation'),
@@ -34,14 +34,14 @@ class SearchQueryTypeCases
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'animation')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -50,14 +50,14 @@ class SearchQueryTypeCases
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'animation'),
@@ -65,14 +65,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'animation')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -81,14 +81,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'animation'),
@@ -96,14 +96,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'animation')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -112,14 +112,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
@@ -127,14 +127,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'animation')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -143,14 +143,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
@@ -158,14 +158,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'animation')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -174,14 +174,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
@@ -189,14 +189,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'animation')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -205,14 +205,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
@@ -220,14 +220,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'animation')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -259,7 +259,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -269,7 +269,7 @@ HTML,
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
@@ -277,14 +277,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'animation')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -316,7 +316,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -326,7 +326,7 @@ HTML,
 HTML,
             ],
             '3 animation blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
@@ -334,14 +334,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'animation'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'animation')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=animation&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -401,7 +401,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -418,11 +418,11 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint(): array
     {
         return [
             '3 behavior-tree blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'behavior_tree'),
@@ -430,14 +430,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'behavior_tree')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -446,14 +446,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'behavior_tree'),
@@ -461,14 +461,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'behavior_tree')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -477,14 +477,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'behavior_tree'),
@@ -492,14 +492,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'behavior_tree')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -508,14 +508,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'behavior_tree'),
@@ -523,14 +523,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'behavior_tree')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -539,14 +539,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'behavior_tree'),
@@ -554,14 +554,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'behavior_tree')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -570,14 +570,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'behavior_tree'),
@@ -585,14 +585,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'behavior_tree')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -601,14 +601,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'behavior_tree'),
@@ -616,14 +616,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'behavior_tree')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -655,7 +655,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -665,7 +665,7 @@ HTML,
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'behavior_tree'),
@@ -673,14 +673,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'behavior_tree')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -712,7 +712,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -722,7 +722,7 @@ HTML,
 HTML,
             ],
             '3 behavior-tree blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'behavior_tree'),
@@ -730,14 +730,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'behavior_tree'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'behavior_tree')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=behavior-tree&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -797,7 +797,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -814,11 +814,11 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateBlueprint(): array
     {
         return [
             '3 blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'blueprint'),
@@ -826,14 +826,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -842,14 +842,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'blueprint'),
@@ -857,14 +857,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -873,14 +873,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'blueprint'),
@@ -888,14 +888,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -904,14 +904,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'blueprint'),
@@ -919,14 +919,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -935,14 +935,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'blueprint'),
@@ -950,14 +950,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -966,14 +966,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'blueprint'),
@@ -981,14 +981,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -997,14 +997,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint'),
@@ -1012,14 +1012,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1051,7 +1051,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1061,7 +1061,7 @@ HTML,
 HTML,
             ],
             '3 blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint'),
@@ -1069,14 +1069,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1108,7 +1108,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1118,7 +1118,7 @@ HTML,
 HTML,
             ],
             '3 blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint'),
@@ -1126,14 +1126,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'blueprint'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1193,7 +1193,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1210,11 +1210,11 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateMaterialBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateMaterialBlueprint(): array
     {
         return [
             '3 material blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'material'),
@@ -1222,14 +1222,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'material')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1238,14 +1238,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 material blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'material'),
@@ -1253,14 +1253,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'material')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1269,14 +1269,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 material blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'material'),
@@ -1284,14 +1284,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'material')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1300,14 +1300,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 material blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'material'),
@@ -1315,14 +1315,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'material')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1331,14 +1331,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 material blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'material'),
@@ -1346,14 +1346,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'material')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1362,14 +1362,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 material blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'material'),
@@ -1377,14 +1377,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'material')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1393,14 +1393,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 material blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'material'),
@@ -1408,14 +1408,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'material')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1447,7 +1447,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1457,7 +1457,7 @@ HTML,
 HTML,
             ],
             '3 material blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'material'),
@@ -1465,14 +1465,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'material')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1504,7 +1504,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1514,7 +1514,7 @@ HTML,
 HTML,
             ],
             '3 material blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'material'),
@@ -1522,14 +1522,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'material'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'material')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=material&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1589,7 +1589,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1606,11 +1606,11 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateMetasoundBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateMetasoundBlueprint(): array
     {
         return [
             '3 metasound blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'metasound'),
@@ -1618,14 +1618,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'metasound')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1634,14 +1634,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'metasound'),
@@ -1649,14 +1649,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'metasound')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1665,14 +1665,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'metasound'),
@@ -1680,14 +1680,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'metasound')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1696,14 +1696,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'metasound'),
@@ -1711,14 +1711,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'metasound')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1727,14 +1727,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'metasound'),
@@ -1742,14 +1742,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'metasound')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1758,14 +1758,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'metasound'),
@@ -1773,14 +1773,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'metasound')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1789,14 +1789,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'metasound'),
@@ -1804,14 +1804,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'metasound')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1843,7 +1843,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1853,7 +1853,7 @@ HTML,
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'metasound'),
@@ -1861,14 +1861,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'metasound')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1900,7 +1900,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1910,7 +1910,7 @@ HTML,
 HTML,
             ],
             '3 metasound blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'metasound'),
@@ -1918,14 +1918,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'metasound'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'metasound')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=metasound&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -1985,7 +1985,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2002,11 +2002,11 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivateNiagaraBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivateNiagaraBlueprint(): array
     {
         return [
             '3 niagara blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'niagara'),
@@ -2014,14 +2014,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'niagara')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2030,14 +2030,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'niagara'),
@@ -2045,14 +2045,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'niagara')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2061,14 +2061,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'niagara'),
@@ -2076,14 +2076,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'niagara')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2092,14 +2092,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'niagara'),
@@ -2107,14 +2107,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'niagara')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2123,14 +2123,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'niagara'),
@@ -2138,14 +2138,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'niagara')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2154,14 +2154,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'niagara'),
@@ -2169,14 +2169,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'niagara')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2185,14 +2185,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'niagara'),
@@ -2200,14 +2200,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'niagara')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2239,7 +2239,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2249,7 +2249,7 @@ HTML,
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'niagara'),
@@ -2257,14 +2257,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'niagara')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2296,7 +2296,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2306,7 +2306,7 @@ HTML,
 HTML,
             ],
             '3 niagara blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'niagara'),
@@ -2314,14 +2314,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'niagara'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'niagara')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=niagara&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2381,7 +2381,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2398,11 +2398,11 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases3PublicUnlistedPrivatePCGBlueprint(): array
+    public static function dataCases3PublicUnlistedPrivatePCGBlueprint(): array
     {
         return [
             '3 pcg blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'pcg'),
@@ -2410,14 +2410,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'pcg'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'pcg')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2426,14 +2426,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 pcg blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'pcg'),
@@ -2441,14 +2441,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'pcg'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'pcg')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2457,14 +2457,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 pcg blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), 'public', 'pcg'),
@@ -2472,14 +2472,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', 'pcg'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', 'pcg')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2488,14 +2488,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 pcg blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'pcg'),
@@ -2503,14 +2503,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'pcg'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'pcg')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2519,14 +2519,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 pcg blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'pcg'),
@@ -2534,14 +2534,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'pcg'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'pcg')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2550,14 +2550,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 pcg blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), 'pcg'),
@@ -2565,14 +2565,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), 'pcg'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), 'pcg')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2581,14 +2581,14 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
             ],
             '3 pcg blueprints public/unlisted/private - (visitor profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg'),
@@ -2596,14 +2596,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'pcg'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'pcg')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2635,7 +2635,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2645,7 +2645,7 @@ HTML,
 HTML,
             ],
             '3 pcg blueprints public/unlisted/private - (public profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg'),
@@ -2653,14 +2653,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'pcg'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'pcg')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2692,7 +2692,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2702,7 +2702,7 @@ HTML,
 HTML,
             ],
             '3 pcg blueprints public/unlisted/private - (author profile)' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`) VALUES
                                             (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
                                             (159, 'slug_501', 'file_501', 'sync function', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg'),
@@ -2710,14 +2710,14 @@ HTML,
                                             (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'pcg'),
                                             (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', 'pcg')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=pcg&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -2777,7 +2777,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2794,16 +2794,16 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases30PublicUnlistedPrivateBlueprintPage1(): array
+    public static function dataCases30PublicUnlistedPrivateBlueprintPage1(): array
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
-            $formattedDates['-' . $i . ' days'] = $this->getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
+            $formattedDates['-' . $i . ' days'] = static::getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
         }
 
         return [
             '30 blueprints public/unlisted/private - (visitor profile) - page 1' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', 'blueprint'),
                                (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
@@ -2851,14 +2851,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', 'blueprint'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -3156,7 +3156,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -3172,7 +3172,7 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - (public profile) - page 1' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', 'blueprint'),
                                (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
@@ -3220,14 +3220,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', 'blueprint'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -3525,7 +3525,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -3541,7 +3541,7 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - (author profile) - page 1' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', 'blueprint'),
                                (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
@@ -3589,14 +3589,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', 'blueprint'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=1',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 1 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -3894,7 +3894,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -3917,16 +3917,16 @@ HTML,
      *
      * @return array[]
      */
-    public function dataCases30PublicUnlistedPrivateBlueprintPage2(): array
+    public static function dataCases30PublicUnlistedPrivateBlueprintPage2(): array
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
-            $formattedDates['-' . $i . ' days'] = $this->getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
+            $formattedDates['-' . $i . ' days'] = static::getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
         }
 
         return [
             '30 blueprints public/unlisted/private - (visitor profile) - page 2' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', 'blueprint'),
                                (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
@@ -3974,14 +3974,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', 'blueprint'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=2',
-                'location'                => null,
-                'user_id'                 => null,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=2',
+                'location'    => null,
+                'userID'      => null,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 2 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -4139,7 +4139,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -4155,7 +4155,7 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - (public profile) - page 2' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', 'blueprint'),
                                (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
@@ -4203,14 +4203,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', 'blueprint'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=2',
-                'location'                => null,
-                'user_id'                 => 179,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=2',
+                'location'    => null,
+                'userID'      => 179,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 2 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -4382,7 +4382,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -4398,7 +4398,7 @@ HTML,
 HTML,
             ],
             '30 blueprints public/unlisted/private - (author profile) - page 2' => [
-                'sql_queries'             => [
+                'sqlQueries' => [
                     "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `type`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', 'blueprint'),
                                (159, 'slug_500', 'file_500', 'title_500', 1, utc_timestamp(), utc_timestamp(), 'public', 'animation'),
@@ -4446,14 +4446,14 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', 'blueprint'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 'blueprint')",
                 ],
-                'slug'                    => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=2',
-                'location'                => null,
-                'user_id'                 => 159,
-                'content_head'            => [
+                'slug'        => '/search/?form-search-input-query=tle&form-search-select-type=blueprint&page=2',
+                'location'    => null,
+                'userID'      => 159,
+                'contentHead' => [
                     'title'       => 'Search "tle" | Page 2 | This is a base title',
                     'description' => 'Search "tle" in blueprints pasted'
                 ],
-                'content_blueprints_html' => <<<HTML
+                'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">tle</span></h2>
@@ -4751,7 +4751,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'content_pagination_html' => <<<HTML
+                'contentPaginationHTML' => <<<HTML
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">

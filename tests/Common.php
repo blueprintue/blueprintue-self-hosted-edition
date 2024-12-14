@@ -371,7 +371,7 @@ HTML;
      *
      * @return string
      */
-    protected function getEmailHTMLConfirmAccount(string $username): string
+    protected static function getEmailHTMLConfirmAccount(string $username): string
     {
         \ob_start();
         $ds = \DIRECTORY_SEPARATOR;
@@ -407,7 +407,7 @@ HTML;
      *
      * @return string
      */
-    protected function getEmailTextConfirmAccount(string $username): string
+    protected static function getEmailTextConfirmAccount(string $username): string
     {
         $text = 'Welcome to this_site_name' . "\n\n";
         $text .= 'We are excited to have you on board!' . "\n";
@@ -437,7 +437,7 @@ HTML;
      *
      * @return string
      */
-    public function getSince(string $publishedAt): string
+    public static function getSince(string $publishedAt): string
     {
         $publishedAtObject = new DateTime($publishedAt);
         $nowObject = new DateTime();

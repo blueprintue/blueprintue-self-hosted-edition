@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\Contact;
 
 use app\helpers\Helper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Environment\EnvironmentException;
@@ -67,7 +68,7 @@ class ContactTest extends TestCase
         $this->doTestNavBarHasNoLinkActive($response);
     }
 
-    public function dataCases(): array
+    public static function dataCases(): array
     {
         return [
             'xss email - OK' => [
@@ -77,13 +78,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => '0<script>alert("email");</script>@<script>alert("email");</script>',
                     'form-contact-textarea-message' => '0<script>alert("message");</script>'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 1,
-                'mail_text'             => "Name: 0<script>alert(\"name\");</script>\nEmail: 0<script>alert(\"email\");</script>@<script>alert(\"email\");</script>\nMessage: 0<script>alert(\"message\");</script>",
-                'mail_sent'             => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 1,
+                'mailText'           => "Name: 0<script>alert(\"name\");</script>\nEmail: 0<script>alert(\"email\");</script>@<script>alert(\"email\");</script>\nMessage: 0<script>alert(\"message\");</script>",
+                'mailSent'           => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">Message sent successfully</div>'
@@ -93,9 +94,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'xss form - KO' => [
                 'params' => [
@@ -104,13 +105,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => '1<script>alert("email");</script><script>alert("email");</script>',
                     'form-contact-textarea-message' => '1<script>alert("message");</script>'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -120,9 +121,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['email'],
-                'fields_has_value'      => ['name', 'email', 'message'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['email'],
+                'fieldsHasValue'   => ['name', 'email', 'message'],
+                'fieldsLabelError' => [
                     'email' => 'Email is invalid'
                 ],
             ],
@@ -133,13 +134,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => '20@0',
                     'form-contact-textarea-message' => '20'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 1,
-                'mail_text'             => "Name: 20\nEmail: 20@0\nMessage: 20",
-                'mail_sent'             => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 1,
+                'mailText'           => "Name: 20\nEmail: 20@0\nMessage: 20",
+                'mailSent'           => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">Message sent successfully</div>'
@@ -149,9 +150,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'send mail KO' => [
                 'params' => [
@@ -160,13 +161,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => '30@0',
                     'form-contact-textarea-message' => '30'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 1,
-                'mail_text'             => "Name: 30\nEmail: 30@0\nMessage: 30",
-                'mail_sent'             => false,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 1,
+                'mailText'           => "Name: 30\nEmail: 30@0\nMessage: 30",
+                'mailSent'           => false,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -176,9 +177,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, could not sent message, try later</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'csrf incorrect' => [
                 'params' => [
@@ -187,13 +188,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => '40',
                     'form-contact-textarea-message' => '40'
                 ],
-                'use_csrf_from_session' => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -203,19 +204,19 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no fields' => [
-                'params'                => [],
-                'use_csrf_from_session' => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'params'             => [],
+                'useCsrfFromSession' => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -225,9 +226,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no csrf' => [
                 'params' => [
@@ -235,13 +236,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => '50',
                     'form-contact-textarea-message' => '50'
                 ],
-                'use_csrf_from_session' => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -251,9 +252,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no name' => [
                 'params' => [
@@ -261,13 +262,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => '60',
                     'form-contact-textarea-message' => '60'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -277,9 +278,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no email' => [
                 'params' => [
@@ -287,13 +288,13 @@ class ContactTest extends TestCase
                     'form-contact-input-name'       => '70',
                     'form-contact-textarea-message' => '70'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -303,9 +304,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no message' => [
                 'params' => [
@@ -313,13 +314,13 @@ class ContactTest extends TestCase
                     'form-contact-input-name'    => '80',
                     'form-contact-input-email'   => '80',
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -329,9 +330,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'empty fields - name empty' => [
                 'params' => [
@@ -340,13 +341,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => 'em@ail',
                     'form-contact-textarea-message' => 'message'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -356,9 +357,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['name'],
-                'fields_has_value'      => ['name', 'email', 'message'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['name'],
+                'fieldsHasValue'   => ['name', 'email', 'message'],
+                'fieldsLabelError' => [
                     'name' => 'Name is required'
                 ],
             ],
@@ -369,13 +370,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => ' ',
                     'form-contact-textarea-message' => '0'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -385,9 +386,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['email'],
-                'fields_has_value'      => ['name', 'email', 'message'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['email'],
+                'fieldsHasValue'   => ['name', 'email', 'message'],
+                'fieldsLabelError' => [
                     'email' => 'Email is required'
                 ],
             ],
@@ -398,13 +399,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => 'em@ail',
                     'form-contact-textarea-message' => ' '
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -414,9 +415,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['message'],
-                'fields_has_value'      => ['name', 'email', 'message'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['message'],
+                'fieldsHasValue'   => ['name', 'email', 'message'],
+                'fieldsLabelError' => [
                     'message' => 'Message is required'
                 ],
             ],
@@ -427,13 +428,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => 'a',
                     'form-contact-textarea-message' => 'message'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -443,9 +444,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['email'],
-                'fields_has_value'      => ['name', 'email', 'message'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['email'],
+                'fieldsHasValue'   => ['name', 'email', 'message'],
+                'fieldsLabelError' => [
                     'email' => 'Email is invalid'
                 ],
             ],
@@ -456,13 +457,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => '40',
                     'form-contact-textarea-message' => '40'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -472,9 +473,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - email' => [
                 'params' => [
@@ -483,13 +484,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => \chr(99999999),
                     'form-contact-textarea-message' => '40'
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -499,9 +500,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - message' => [
                 'params' => [
@@ -510,13 +511,13 @@ class ContactTest extends TestCase
                     'form-contact-input-email'      => '40',
                     'form-contact-textarea-message' => \chr(99999999)
                 ],
-                'use_csrf_from_session' => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_sent'             => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailSent'           => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
@@ -526,9 +527,9 @@ class ContactTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
         ];
     }
@@ -553,6 +554,7 @@ class ContactTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCases')]
     public function testContactPOST(array $params, bool $useCsrfFromSession, int $mailCalled, string $mailText, bool $mailSent, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         // set how mail must return in $_SESSION

@@ -11,6 +11,7 @@ namespace tests\www\Login;
 
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -126,416 +127,416 @@ class LoginTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCasesLoginPOST(): array
+    public static function dataCasesLoginPOST(): array
     {
         return [
             'login OK' => [
-                'user_id' => 5,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-username'         => 'user_5',
-                    'form-login-input-password'         => 'qsdfghjklm',
+                'userID' => 5,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-username' => 'user_5',
+                    'form-login-input-password' => 'qsdfghjklm',
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => true,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => true,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'login OK + add remember cookie' => [
-                'user_id' => 5,
-                'params'  => [
+                'userID' => 5,
+                'params' => [
                     'form-login-hidden-csrf'       => 'csrf_is_replaced',
                     'form-login-input-username'    => 'user_5',
                     'form-login-input-password'    => 'qsdfghjklm',
                     'form-login-checkbox-remember' => 'remember'
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => true,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => true,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => true,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => true,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'NO login -> credentials OK but not confirmed - send email' => [
-                'user_id' => 75,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-username'         => 'user_75',
-                    'form-login-input-password'         => '123123123',
+                'userID' => 75,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-username' => 'user_75',
+                    'form-login-input-password' => '123123123',
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => false,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => false,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">'
                     ]
                 ],
-                'redirect_for_confirm'  => true,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 1,
-                'mail_text'             => $this->getEmailTextConfirmAccount('user_75'),
-                'mail_html'             => $this->getEmailHTMLConfirmAccount('user_75'),
-                'mail_sent'             => true,
+                'redirectForConfirm' => true,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 1,
+                'mailText'           => static::getEmailTextConfirmAccount('user_75'),
+                'mailHTML'           => static::getEmailHTMLConfirmAccount('user_75'),
+                'mailSent'           => true,
             ],
             'NO login -> credentials OK but not confirmed - email already sent' => [
-                'user_id' => 85,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-username'         => 'user_85',
-                    'form-login-input-password'         => '789789789',
+                'userID' => 85,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-username' => 'user_85',
+                    'form-login-input-password' => '789789789',
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => false,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => false,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">'
                     ]
                 ],
-                'redirect_for_confirm'  => true,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => true,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'csrf incorrect' => [
-                'user_id' => null,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'incorrect_csrf',
-                    'form-login-input-username'         => 'user_5',
-                    'form-login-input-password'         => 'qsdfghjklm',
+                'userID' => null,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'incorrect_csrf',
+                    'form-login-input-username' => 'user_5',
+                    'form-login-input-password' => 'qsdfghjklm',
                 ],
-                'use_csrf_from_session' => false,
-                'is_user_logged'        => false,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'isUserLogged'       => false,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'NO login -> credentials OK but not confirmed - email already sent but resend after 5 minutes' => [
-                'user_id' => 95,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-username'         => 'user_95',
-                    'form-login-input-password'         => '456456456',
+                'userID' => 95,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-username' => 'user_95',
+                    'form-login-input-password' => '456456456',
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => false,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => false,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">'
                     ]
                 ],
-                'redirect_for_confirm'  => true,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 1,
-                'mail_text'             => $this->getEmailTextConfirmAccount('user_95'),
-                'mail_html'             => $this->getEmailHTMLConfirmAccount('user_95'),
-                'mail_sent'             => true,
+                'redirectForConfirm' => true,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 1,
+                'mailText'           => static::getEmailTextConfirmAccount('user_95'),
+                'mailHTML'           => static::getEmailHTMLConfirmAccount('user_95'),
+                'mailSent'           => true,
             ],
             'missing fields - no fields' => [
-                'user_id'               => null,
-                'params'                => [],
-                'use_csrf_from_session' => false,
-                'is_user_logged'        => false,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'userID'             => null,
+                'params'             => [],
+                'useCsrfFromSession' => false,
+                'isUserLogged'       => false,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'missing fields - no csrf' => [
-                'user_id' => null,
-                'params'  => [
-                    'form-login-input-username'         => 'user_5',
-                    'form-login-input-password'         => 'qsdfghjklm',
+                'userID' => null,
+                'params' => [
+                    'form-login-input-username' => 'user_5',
+                    'form-login-input-password' => 'qsdfghjklm',
                 ],
-                'use_csrf_from_session' => false,
-                'is_user_logged'        => false,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'isUserLogged'       => false,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'missing fields - no username' => [
-                'user_id' => null,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-password'         => 'qsdfghjklm',
+                'userID' => null,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-password' => 'qsdfghjklm',
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => false,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => false,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'missing fields - no password' => [
-                'user_id' => null,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-username'         => 'user_5',
+                'userID' => null,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-username' => 'user_5',
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => false,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => false,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'empty fields - username empty' => [
-                'user_id' => null,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-username'         => ' ',
-                    'form-login-input-password'         => 'qsdfghjklm',
+                'userID' => null,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-username' => ' ',
+                    'form-login-input-password' => 'qsdfghjklm',
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => false,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => false,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">Error, invalid credentials</div>'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'empty fields - password empty' => [
-                'user_id' => null,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-username'         => 'user_5',
-                    'form-login-input-password'         => ' ',
+                'userID' => null,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-username' => 'user_5',
+                    'form-login-input-password' => ' ',
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => false,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => false,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">Error, invalid credentials</div>'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'invalid credentials - invalid username' => [
-                'user_id' => null,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-username'         => ' - user-005 - ',
-                    'form-login-input-password'         => 'qsdfghjklm',
+                'userID' => null,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-username' => ' - user-005 - ',
+                    'form-login-input-password' => 'qsdfghjklm',
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => false,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => false,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">Error, invalid credentials</div>'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'invalid credentials - invalid password' => [
-                'user_id' => null,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-username'         => 'user_5',
-                    'form-login-input-password'         => 'bad_password',
+                'userID' => null,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-username' => 'user_5',
+                    'form-login-input-password' => 'bad_password',
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => false,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => false,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">Error, invalid credentials</div>'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'invalid credentials - anonymous user is not allowed to login (password is null in database)' => [
-                'user_id' => null,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-username'         => 'user_anonymous',
-                    'form-login-input-password'         => 'password_null',
+                'userID' => null,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-username' => 'user_anonymous',
+                    'form-login-input-password' => 'password_null',
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => false,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => false,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">Error, invalid credentials</div>'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'invalid credentials - anonymous user is not allowed to login (password is not null in database)' => [
-                'user_id' => null,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-username'         => 'user_anonymous',
-                    'form-login-input-password'         => 'password_not_null',
+                'userID' => null,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-username' => 'user_anonymous',
+                    'form-login-input-password' => 'password_not_null',
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => false,
-                'has_redirection'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => false,
+                'hasRedirection'     => true,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">Error, invalid credentials</div>'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'invalid encoding fields - username' => [
-                'user_id' => null,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-username'         => \chr(99999999),
-                    'form-login-input-password'         => 'qsdfghjklm',
+                'userID' => null,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-username' => \chr(99999999),
+                    'form-login-input-password' => 'qsdfghjklm',
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => false,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => false,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
             'invalid encoding fields - password' => [
-                'user_id' => null,
-                'params'  => [
-                    'form-login-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-login-input-username'         => 'user_5',
-                    'form-login-input-password'         => \chr(99999999),
+                'userID' => null,
+                'params' => [
+                    'form-login-hidden-csrf'    => 'csrf_is_replaced',
+                    'form-login-input-username' => 'user_5',
+                    'form-login-input-password' => \chr(99999999),
                 ],
-                'use_csrf_from_session' => true,
-                'is_user_logged'        => false,
-                'has_redirection'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'isUserLogged'       => false,
+                'hasRedirection'     => false,
+                'flashMessages'      => [
                     'error' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-login" data-popin="login" role="alert">'
                     ]
                 ],
-                'redirect_for_confirm'  => false,
-                'is_user_confirmed'     => false,
-                'mail_called'           => 0,
-                'mail_text'             => '',
-                'mail_html'             => '',
-                'mail_sent'             => false,
+                'redirectForConfirm' => false,
+                'isUserConfirmed'    => false,
+                'mailCalled'         => 0,
+                'mailText'           => '',
+                'mailHTML'           => '',
+                'mailSent'           => false,
             ],
         ];
     }
@@ -553,7 +554,7 @@ class LoginTest extends TestCase
      * @param bool     $isUserConfirmed
      * @param int      $mailCalled
      * @param string   $mailText
-     * @param string   $mailHtml
+     * @param string   $mailHTML
      * @param bool     $mailSent
      *
      * @throws ApplicationException
@@ -562,13 +563,14 @@ class LoginTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
-    public function testLoginPOST(?int $userID, array $params, bool $useCsrfFromSession, bool $isUserLogged, bool $hasRedirection, array $flashMessages, bool $redirectForConfirm, bool $isUserConfirmed, int $mailCalled, string $mailText, string $mailHtml, bool $mailSent): void
+    #[DataProvider('dataCasesLoginPOST')]
+    public function testLoginPOST(?int $userID, array $params, bool $useCsrfFromSession, bool $isUserLogged, bool $hasRedirection, array $flashMessages, bool $redirectForConfirm, bool $isUserConfirmed, int $mailCalled, string $mailText, string $mailHTML, bool $mailSent): void
     {
         $sessionValues = [
             'set' => [
                 'phpunit_mail_called' => 0,
                 'phpunit_id_user'     => $userID,
-                'phpunit_mail_html'   => $mailHtml,
+                'phpunit_mail_html'   => $mailHTML,
                 'phpunit_mail_text'   => $mailText,
                 'phpunit_mail_sent'   => $mailSent,
             ],

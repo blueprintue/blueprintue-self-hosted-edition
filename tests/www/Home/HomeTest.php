@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\Home;
 
 use app\helpers\Helper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -58,12 +59,12 @@ class HomeTest extends TestCase
         $this->doTestNavBarHasLinkHomeActive($response);
     }
 
-    public function dataCasesCreateBlueprint(): array
+    public static function dataCasesCreateBlueprint(): array
     {
         return [
             'xss - create blueprint OK' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '<script>alert("title")</script>',
                     'form-add_blueprint-select-exposure'    => 'public',
@@ -71,10 +72,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object <script>alert("blueprint")</script>'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -84,14 +85,14 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => ['exposure', 'expiration', 'ue_version'],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => ['exposure', 'expiration', 'ue_version'],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'xss form - KO' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '<script>alert("title")</script>',
                     'form-add_blueprint-select-exposure'    => '<script>alert("exposure")</script>',
@@ -99,10 +100,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '<script>alert("ue_version")</script>',
                     'form-add_blueprint-textarea-blueprint' => '<script>alert("blueprint")</script>'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -112,19 +113,19 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [
                     'exposure'   => 'Exposure is invalid',
                     'expiration' => 'Expiration is invalid',
                     'ue_version' => 'UE version is invalid',
                     'blueprint'  => 'Blueprint is invalid',
                 ],
-                'has_anonymous_user'    => true
+                'hasAnonymousUser' => true
             ],
             'anonymous - create blueprint OK - 1 hour' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => 'title 1 hour',
                     'form-add_blueprint-select-exposure'    => 'unlisted',
@@ -132,10 +133,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object 1'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -145,14 +146,14 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'anonymous - create blueprint OK - 1 day' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => 'title 1 day',
                     'form-add_blueprint-select-exposure'    => 'unlisted',
@@ -160,10 +161,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object 2'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -173,14 +174,14 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'anonymous - create blueprint OK - 1 week' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => 'title 1 week',
                     'form-add_blueprint-select-exposure'    => 'unlisted',
@@ -188,10 +189,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object 3'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -201,14 +202,14 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'user - create blueprint OK' => [
-                'user_id' => static::$userID,
-                'params'  => [
+                'userID' => static::$userID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => 'title never',
                     'form-add_blueprint-select-exposure'    => 'private',
@@ -216,10 +217,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object 2'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -229,14 +230,14 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'csrf incorrect' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'incorrect_csrf',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => '0',
@@ -244,10 +245,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '0',
                     'form-add_blueprint-textarea-blueprint' => '0'
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -257,18 +258,18 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'missing fields - no fields' => [
-                'user_id'               => static::$anonymousID,
-                'params'                => [],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'userID'             => static::$anonymousID,
+                'params'             => [],
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -278,24 +279,24 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'missing fields - no csrf' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => '0',
                     'form-add_blueprint-select-expiration'  => '0',
                     'form-add_blueprint-select-ue_version'  => '0',
                     'form-add_blueprint-textarea-blueprint' => '0'
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -305,24 +306,24 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'missing fields - no title' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'incorrect_csrf',
                     'form-add_blueprint-select-exposure'    => '0',
                     'form-add_blueprint-select-expiration'  => '0',
                     'form-add_blueprint-select-ue_version'  => '0',
                     'form-add_blueprint-textarea-blueprint' => '0'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -332,24 +333,24 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'missing fields - no exposure' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'incorrect_csrf',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-input-expiration'   => '0',
                     'form-add_blueprint-input-ue_version'   => '0',
                     'form-add_blueprint-textarea-blueprint' => '0'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -359,24 +360,24 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'missing fields - no ue_version' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'         => 'incorrect_csrf',
                     'form-add_blueprint-input-title'         => '0',
                     'form-add_blueprint-select-exposure'     => '0',
                     'form-add_blueprint-select-expiration'   => '0',
                     'form-add_blueprint-selectrea-blueprint' => '0'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -386,24 +387,24 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'missing fields - no blueprint' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'       => 'incorrect_csrf',
                     'form-add_blueprint-input-title'       => '0',
                     'form-add_blueprint-select-exposure'   => '0',
                     'form-add_blueprint-select-expiration' => '0',
                     'form-add_blueprint-select-ue_version' => '0',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -413,14 +414,14 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'empty fields - title empty' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => ' ',
                     'form-add_blueprint-select-exposure'    => 'unlisted',
@@ -428,10 +429,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -441,16 +442,16 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['title'],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['title'],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [
                     'title' => 'Title is required'
                 ],
-                'has_anonymous_user'    => true
+                'hasAnonymousUser' => true
             ],
             'empty fields - exposure empty' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => ' ',
@@ -458,10 +459,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -471,16 +472,16 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['exposure'],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['exposure'],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [
                     'exposure' => 'Exposure is required'
                 ],
-                'has_anonymous_user'    => true
+                'hasAnonymousUser' => true
             ],
             'empty fields - expiration empty' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => 'unlisted',
@@ -488,10 +489,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -501,16 +502,16 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['expiration'],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['expiration'],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [
                     'expiration' => 'Expiration is required'
                 ],
-                'has_anonymous_user'    => true
+                'hasAnonymousUser' => true
             ],
             'empty fields - ue_version empty' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => 'unlisted',
@@ -518,10 +519,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => ' ',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -531,16 +532,16 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['ue_version'],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['ue_version'],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [
                     'ue_version' => 'UE version is required'
                 ],
-                'has_anonymous_user'    => true
+                'hasAnonymousUser' => true
             ],
             'empty fields - blueprint empty' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => 'unlisted',
@@ -548,10 +549,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => ' '
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -561,16 +562,16 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['blueprint'],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['blueprint'],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [
                     'blueprint' => 'Blueprint is required'
                 ],
-                'has_anonymous_user'    => true
+                'hasAnonymousUser' => true
             ],
             'invalid fields - exposure invalid' => [
-                'user_id' => static::$userID,
-                'params'  => [
+                'userID' => static::$userID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => 'invalid',
@@ -578,10 +579,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -591,16 +592,16 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['exposure'],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['exposure'],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [
                     'exposure' => 'Exposure is invalid'
                 ],
-                'has_anonymous_user'    => true
+                'hasAnonymousUser' => true
             ],
             'invalid fields - exposure private for anonymous' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => 'private',
@@ -608,10 +609,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -621,16 +622,16 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['exposure'],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['exposure'],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [
                     'exposure' => 'Private is for member only'
                 ],
-                'has_anonymous_user'    => true
+                'hasAnonymousUser' => true
             ],
             'invalid fields - expiration invalid' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => 'unlisted',
@@ -638,10 +639,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -651,16 +652,16 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['expiration'],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['expiration'],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [
                     'expiration' => 'Expiration is invalid'
                 ],
-                'has_anonymous_user'    => true
+                'hasAnonymousUser' => true
             ],
             'invalid fields - ue_version invalid' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => 'unlisted',
@@ -668,10 +669,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => 'invalid',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -681,16 +682,16 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['ue_version'],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['ue_version'],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [
                     'ue_version' => 'UE version is invalid'
                 ],
-                'has_anonymous_user'    => true
+                'hasAnonymousUser' => true
             ],
             'invalid fields - blueprint invalid' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => 'unlisted',
@@ -698,10 +699,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'spam'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -711,16 +712,16 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
                     ]
                 ],
-                'fields_has_error'      => ['blueprint'],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['blueprint'],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [
                     'blueprint' => 'Blueprint is invalid'
                 ],
-                'has_anonymous_user'    => true
+                'hasAnonymousUser' => true
             ],
             'throw exception in blueprint creation' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => 'title 1 hour',
                     'form-add_blueprint-select-exposure'    => 'unlisted',
@@ -728,10 +729,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object throw exception'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -741,14 +742,14 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, could not create blueprint (#200)</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'throw exception in blueprint creation when no anonymous user set' => [
-                'user_id' => 0,
-                'params'  => [
+                'userID' => 0,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => 'title 1 hour',
                     'form-add_blueprint-select-exposure'    => 'unlisted',
@@ -756,10 +757,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '4.14',
                     'form-add_blueprint-textarea-blueprint' => 'Begin Object throw exception'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -769,14 +770,14 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, could not create blueprint, anonymous user not supported (#50)</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => false
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => false
             ],
             'invalid encoding fields - title' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => \chr(99999999),
                     'form-add_blueprint-select-exposure'    => '0',
@@ -784,10 +785,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '0',
                     'form-add_blueprint-textarea-blueprint' => '0'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -797,14 +798,14 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'invalid encoding fields - exposure' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => \chr(99999999),
@@ -812,10 +813,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '0',
                     'form-add_blueprint-textarea-blueprint' => '0'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -825,14 +826,14 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'invalid encoding fields - expiration' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => '0',
@@ -840,10 +841,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '0',
                     'form-add_blueprint-textarea-blueprint' => '0'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -853,14 +854,14 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'invalid encoding fields - ue_version' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => '0',
@@ -868,10 +869,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => \chr(99999999),
                     'form-add_blueprint-textarea-blueprint' => '0'
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -881,14 +882,14 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
             'invalid encoding fields - blueprint' => [
-                'user_id' => static::$anonymousID,
-                'params'  => [
+                'userID' => static::$anonymousID,
+                'params' => [
                     'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
                     'form-add_blueprint-input-title'        => '0',
                     'form-add_blueprint-select-exposure'    => '0',
@@ -896,10 +897,10 @@ class HomeTest extends TestCase
                     'form-add_blueprint-select-ue_version'  => '0',
                     'form-add_blueprint-textarea-blueprint' => \chr(99999999)
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
@@ -909,10 +910,10 @@ class HomeTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
-                'has_anonymous_user'    => true
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
+                'hasAnonymousUser' => true
             ],
         ];
     }
@@ -934,6 +935,7 @@ class HomeTest extends TestCase
      * @throws DatabaseException
      * @throws \Exception
      */
+    #[DataProvider('dataCasesCreateBlueprint')]
     public function testHomePOSTCreateBlueprint(int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError, bool $hasAnonymousUser): void
     {
         // set user in $_SESSION

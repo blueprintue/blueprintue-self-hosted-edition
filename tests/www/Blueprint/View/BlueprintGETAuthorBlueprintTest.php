@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace tests\www\Blueprint\View;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -45,38 +46,38 @@ class BlueprintGETAuthorBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCasesBlueprintGET_AuthorBlueprint(): array
+    public static function dataCasesBlueprintGET_AuthorBlueprint(): array
     {
         $date = '2020-01-01 01:01:01';
 
         return [
             'no avatar' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), '" . $date . "', 'public', 'blueprint', '4.12')",
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'         => 'slug_public',
-                'avatar'       => null,
-                'name'         => 'member',
-                'url'          => '/profile/member/',
-                'published_at' => \date('F j, Y, g:i a', \strtotime($date)),
+                'slug'        => 'slug_public',
+                'avatar'      => null,
+                'name'        => 'member',
+                'url'         => '/profile/member/',
+                'publishedAt' => \date('F j, Y, g:i a', \strtotime($date)),
             ],
             'has avatar' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), '" . $date . "', 'public', 'blueprint', '4.12')",
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (1, 'mem<script>alert(1)</script>ber', null, 'mem\"><script>alert(1)</script>ber', 'member@mail', utc_timestamp(), 'ava\"><script>alert(1)</script>tar.jpg')",
                 ],
-                'slug'         => 'slug_public',
-                'avatar'       => '/medias/avatars/ava"><script>alert(1)</script>tar.jpg',
-                'name'         => 'mem<script>alert(1)</script>ber',
-                'url'          => '/profile/mem"><script>alert(1)</script>ber/',
-                'published_at' => \date('F j, Y, g:i a', \strtotime($date)),
+                'slug'        => 'slug_public',
+                'avatar'      => '/medias/avatars/ava"><script>alert(1)</script>tar.jpg',
+                'name'        => 'mem<script>alert(1)</script>ber',
+                'url'         => '/profile/mem"><script>alert(1)</script>ber/',
+                'publishedAt' => \date('F j, Y, g:i a', \strtotime($date)),
             ],
         ];
     }
@@ -89,7 +90,7 @@ class BlueprintGETAuthorBlueprintTest extends TestCase
      * @param string|null $avatar
      * @param string      $name
      * @param string      $url
-     * @param string      $createdAt
+     * @param string      $publishedAt
      *
      * @throws DatabaseException
      * @throws ApplicationException
@@ -97,7 +98,8 @@ class BlueprintGETAuthorBlueprintTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    public function testBlueprintGETAuthorBlueprint(array $sqlQueries, string $slug, ?string $avatar, string $name, string $url, string $createdAt): void
+    #[DataProvider('dataCasesBlueprintGET_AuthorBlueprint')]
+    public function testBlueprintGETAuthorBlueprint(array $sqlQueries, string $slug, ?string $avatar, string $name, string $url, string $publishedAt): void
     {
         // sql queries
         static::setDatabase();
@@ -134,6 +136,6 @@ HTML);
         }
 
         // blueprint created at
-        $this->doTestHtmlMain($response, '<p class="blueprint__time">' . Security::escHTML($createdAt) . '</p>');
+        $this->doTestHtmlMain($response, '<p class="blueprint__time">' . Security::escHTML($publishedAt) . '</p>');
     }
 }

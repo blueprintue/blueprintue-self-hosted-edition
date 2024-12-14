@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace tests\www\Blueprint\View;
 
 use Parsedown;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -46,11 +47,11 @@ class BlueprintGETTagsAndDescriptionBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCasesBlueprintGET_TagsAndDescriptionBlueprint(): array
+    public static function dataCasesBlueprintGET_TagsAndDescriptionBlueprint(): array
     {
         return [
             'no tag / no description' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -62,7 +63,7 @@ class BlueprintGETTagsAndDescriptionBlueprintTest extends TestCase
                 'description' => null,
             ],
             'no tag (tag is invalid) / no description' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, tags) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12', '999')",
@@ -74,7 +75,7 @@ class BlueprintGETTagsAndDescriptionBlueprintTest extends TestCase
                 'description' => null,
             ],
             '1 tag / has description' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, tags, description) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12', '55', 'descr<script>alert(1)</script>iption')",
@@ -92,7 +93,7 @@ class BlueprintGETTagsAndDescriptionBlueprintTest extends TestCase
                 'description' => 'descr<script>alert(1)</script>iption',
             ],
             '3 tags / has description' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, tags, description) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12', '55,66,77', 'descr<script>alert(1)</script>iption')",
@@ -134,6 +135,7 @@ class BlueprintGETTagsAndDescriptionBlueprintTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCasesBlueprintGET_TagsAndDescriptionBlueprint')]
     public function testBlueprintGETTagsAndDescriptionBlueprint(array $sqlQueries, string $slug, ?array $tags, ?string $description): void
     {
         // sql queries
