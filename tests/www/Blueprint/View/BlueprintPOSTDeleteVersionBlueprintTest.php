@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace tests\www\Blueprint\View;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -43,11 +44,11 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCasesBlueprintPOST_DeleteVersionBlueprint(): array
+    public static function dataCasesBlueprintPOST_DeleteVersionBlueprint(): array
     {
         return [
             'visitor - no button delete version' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -55,16 +56,16 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => null,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => false,
-                'do_post_action'            => false,
-                'params'                    => null,
-                'use_csrf_from_session'     => false,
-                'has_redirection'           => false,
-                'is_form_success'           => false,
-                'flash_messages'            => [
+                'slug'                   => 'slug_public',
+                'userID'                 => null,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => false,
+                'doPostAction'           => false,
+                'params'                 => null,
+                'useCsrfFromSession'     => false,
+                'hasRedirection'         => false,
+                'isFormSuccess'          => false,
+                'flashMessages'          => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">'
@@ -76,7 +77,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'user - no button delete version' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -84,16 +85,16 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => 55,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => false,
-                'do_post_action'            => false,
-                'params'                    => null,
-                'use_csrf_from_session'     => false,
-                'has_redirection'           => false,
-                'is_form_success'           => false,
-                'flash_messages'            => [
+                'slug'                   => 'slug_public',
+                'userID'                 => 55,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => false,
+                'doPostAction'           => false,
+                'params'                 => null,
+                'useCsrfFromSession'     => false,
+                'hasRedirection'         => false,
+                'isFormSuccess'          => false,
+                'flashMessages'          => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">'
@@ -105,7 +106,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'author - has button delete version' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -113,16 +114,16 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => 1,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => true,
-                'do_post_action'            => false,
-                'params'                    => null,
-                'use_csrf_from_session'     => false,
-                'has_redirection'           => false,
-                'is_form_success'           => false,
-                'flash_messages'            => [
+                'slug'                   => 'slug_public',
+                'userID'                 => 1,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => true,
+                'doPostAction'           => false,
+                'params'                 => null,
+                'useCsrfFromSession'     => false,
+                'hasRedirection'         => false,
+                'isFormSuccess'          => false,
+                'flashMessages'          => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">'
@@ -134,7 +135,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'user who post as anonymous - no button delete version' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -142,16 +143,16 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => 55,
-                'anonymous_blueprints'      => [1, 2, 3],
-                'has_button_delete_version' => false,
-                'do_post_action'            => false,
-                'params'                    => null,
-                'use_csrf_from_session'     => false,
-                'has_redirection'           => false,
-                'is_form_success'           => false,
-                'flash_messages'            => [
+                'slug'                   => 'slug_public',
+                'userID'                 => 55,
+                'anonymousBlueprints'    => [1, 2, 3],
+                'hasButtonDeleteVersion' => false,
+                'doPostAction'           => false,
+                'params'                 => null,
+                'useCsrfFromSession'     => false,
+                'hasRedirection'         => false,
+                'isFormSuccess'          => false,
+                'flashMessages'          => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">'
@@ -163,7 +164,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'do valid delete version 1' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -171,19 +172,19 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => 1,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => true,
-                'do_post_action'            => true,
-                'params'                    => [
+                'slug'                   => 'slug_public',
+                'userID'                 => 1,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => true,
+                'doPostAction'           => true,
+                'params'                 => [
                     'form-delete_version_blueprint-hidden-csrf'    => 'csrf_is_replaced',
                     'form-delete_version_blueprint-hidden-version' => '1',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">Version 1 has been deleted</div>'
@@ -195,7 +196,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'do valid delete version 2' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 2, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -203,19 +204,19 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => 1,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => true,
-                'do_post_action'            => true,
-                'params'                    => [
+                'slug'                   => 'slug_public',
+                'userID'                 => 1,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => true,
+                'doPostAction'           => true,
+                'params'                 => [
                     'form-delete_version_blueprint-hidden-csrf'    => 'csrf_is_replaced',
                     'form-delete_version_blueprint-hidden-version' => '2',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">Version 2 has been deleted</div>'
@@ -227,7 +228,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'csrf incorrect' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -235,19 +236,19 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => 1,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => true,
-                'do_post_action'            => true,
-                'params'                    => [
+                'slug'                   => 'slug_public',
+                'userID'                 => 1,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => true,
+                'doPostAction'           => true,
+                'params'                 => [
                     'form-delete_version_blueprint-hidden-csrf'    => 'incorrect_csrf',
                     'form-delete_version_blueprint-hidden-version' => '1',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">'
@@ -259,7 +260,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'missing fields - no csrf' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -267,18 +268,18 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => 1,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => true,
-                'do_post_action'            => true,
-                'params'                    => [
+                'slug'                   => 'slug_public',
+                'userID'                 => 1,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => true,
+                'doPostAction'           => true,
+                'params'                 => [
                     'form-delete_version_blueprint-hidden-version' => '1',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">'
@@ -290,7 +291,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'missing fields - no version' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -298,18 +299,18 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => 1,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => true,
-                'do_post_action'            => true,
-                'params'                    => [
+                'slug'                   => 'slug_public',
+                'userID'                 => 1,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => true,
+                'doPostAction'           => true,
+                'params'                 => [
                     'form-delete_version_blueprint-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">'
@@ -321,7 +322,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'do invalid delete version - user has no right' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -329,19 +330,19 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => 55,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => false,
-                'do_post_action'            => true,
-                'params'                    => [
+                'slug'                   => 'slug_public',
+                'userID'                 => 55,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => false,
+                'doPostAction'           => true,
+                'params'                 => [
                     'form-delete_version_blueprint-hidden-csrf'    => 'csrf_is_replaced',
                     'form-delete_version_blueprint-hidden-version' => '1',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">'
@@ -353,7 +354,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'do invalid delete version - version incorrect (4)' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -361,19 +362,19 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => 1,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => true,
-                'do_post_action'            => true,
-                'params'                    => [
+                'slug'                   => 'slug_public',
+                'userID'                 => 1,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => true,
+                'doPostAction'           => true,
+                'params'                 => [
                     'form-delete_version_blueprint-hidden-csrf'    => 'csrf_is_replaced',
                     'form-delete_version_blueprint-hidden-version' => '4',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">'
@@ -385,7 +386,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'do invalid delete version - version incorrect (invalid)' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -393,19 +394,19 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => 1,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => true,
-                'do_post_action'            => true,
-                'params'                    => [
+                'slug'                   => 'slug_public',
+                'userID'                 => 1,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => true,
+                'doPostAction'           => true,
+                'params'                 => [
                     'form-delete_version_blueprint-hidden-csrf'    => 'csrf_is_replaced',
                     'form-delete_version_blueprint-hidden-version' => 'invalid',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">'
@@ -417,26 +418,26 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'do invalid delete version - has to have one version left' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => 1,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => false,
-                'do_post_action'            => true,
-                'params'                    => [
+                'slug'                   => 'slug_public',
+                'userID'                 => 1,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => false,
+                'doPostAction'           => true,
+                'params'                 => [
                     'form-delete_version_blueprint-hidden-csrf'    => 'csrf_is_replaced',
                     'form-delete_version_blueprint-hidden-version' => '1',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">'
@@ -448,7 +449,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'do invalid delete version - visitor has no right' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -456,19 +457,19 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => null,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => false,
-                'do_post_action'            => true,
-                'params'                    => [
+                'slug'                   => 'slug_public',
+                'userID'                 => null,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => false,
+                'doPostAction'           => true,
+                'params'                 => [
                     'form-delete_version_blueprint-hidden-csrf'    => 'csrf_is_replaced',
                     'form-delete_version_blueprint-hidden-version' => '1',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">'
@@ -480,7 +481,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                 ],
             ],
             'invalid encoding fields - version' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -488,19 +489,19 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
                     "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', utc_timestamp(), utc_timestamp())",
                     "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 ],
-                'slug'                      => 'slug_public',
-                'user_id'                   => null,
-                'anonymous_blueprints'      => null,
-                'has_button_delete_version' => false,
-                'do_post_action'            => true,
-                'params'                    => [
+                'slug'                   => 'slug_public',
+                'userID'                 => null,
+                'anonymousBlueprints'    => null,
+                'hasButtonDeleteVersion' => false,
+                'doPostAction'           => true,
+                'params'                 => [
                     'form-delete_version_blueprint-hidden-csrf'    => 'csrf_is_replaced',
                     'form-delete_version_blueprint-hidden-version' => \chr(99999999),
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_version_blueprint">'
@@ -534,6 +535,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
+    #[DataProvider('dataCasesBlueprintPOST_DeleteVersionBlueprint')]
     public function testBlueprintPOSTDeleteVersionBlueprint(array $sqlQueries, string $slug, ?int $userID, ?array $anonymousBlueprints, bool $hasButtonDeleteVersion, bool $doPostAction, ?array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages): void
     {
         static::cleanFiles();

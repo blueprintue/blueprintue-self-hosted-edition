@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace tests\www\Blueprint\View;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -45,11 +46,11 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCasesBlueprintGET_InformationsBlueprint(): array
+    public static function dataCasesBlueprintGET_InformationsBlueprint(): array
     {
         return [
             'no thumbnail / type blueprint / exposure public / no expiration / ue version 4.12' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -62,10 +63,10 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
                 'title'      => '<script>alert(1)</script>my title',
                 'exposure'   => 'public',
                 'expiration' => null,
-                'ue_version' => '4.12',
+                'ueVersion'  => '4.12',
             ],
             'no thumbnail / type metasound / exposure public / no expiration / ue version 5.0' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'metasound', '5.0')",
@@ -78,10 +79,10 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
                 'title'      => '<script>alert(1)</script>my title',
                 'exposure'   => 'public',
                 'expiration' => null,
-                'ue_version' => '5.0',
+                'ueVersion'  => '5.0',
             ],
             'no thumbnail / type niagara / exposure public / no expiration / ue version 5.0' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'niagara', '5.0')",
@@ -94,10 +95,10 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
                 'title'      => '<script>alert(1)</script>my title',
                 'exposure'   => 'public',
                 'expiration' => null,
-                'ue_version' => '5.0',
+                'ueVersion'  => '5.0',
             ],
             'no thumbnail / type pcg / exposure public / no expiration / ue version 5.0' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg', '5.0')",
@@ -110,10 +111,10 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
                 'title'      => '<script>alert(1)</script>my title',
                 'exposure'   => 'public',
                 'expiration' => null,
-                'ue_version' => '5.0',
+                'ueVersion'  => '5.0',
             ],
             'has thumbnail / type material / exposure unlisted / expiration in 1h / ue version 4.14' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, expiration, thumbnail) VALUES (1, 'slug_unlisted', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'material', '4.14', utc_timestamp() + interval 1 hour,  'thu\"><script>alert(1)</script>mbnail.jpg')",
@@ -126,10 +127,10 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
                 'title'      => '<script>alert(1)</script>my title',
                 'exposure'   => 'unlisted',
                 'expiration' => '59 min left',
-                'ue_version' => '4.14',
+                'ueVersion'  => '4.14',
             ],
             'no thumbnail / type animation / exposure private / expiration in 1d / ue version 4.16' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, expiration) VALUES (1, 'slug_private', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'private', 'animation', '4.16', utc_timestamp() + interval 1 day)",
@@ -142,10 +143,10 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
                 'title'      => '<script>alert(1)</script>my title',
                 'exposure'   => 'private',
                 'expiration' => '1 days left',
-                'ue_version' => '4.16',
+                'ueVersion'  => '4.16',
             ],
             'no thumbnail / type behavior_tree / exposure public / expiration in 1w / ue version 4.10' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, expiration) VALUES (1, 'slug_public_2', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'behavior_tree', '4.10', utc_timestamp() + interval 1 week)",
@@ -158,7 +159,7 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
                 'title'      => '<script>alert(1)</script>my title',
                 'exposure'   => 'public',
                 'expiration' => '7 days left',
-                'ue_version' => '4.10',
+                'ueVersion'  => '4.10',
             ],
         ];
     }
@@ -181,6 +182,7 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCasesBlueprintGET_InformationsBlueprint')]
     public function testBlueprintGETInformationsBlueprint(array $sqlQueries, string $slug, ?string $thumbnail, string $type, string $title, string $exposure, ?string $expiration, string $ueVersion): void
     {
         // sql queries

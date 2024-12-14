@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace tests\www\Blueprint\View;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -45,11 +46,11 @@ class BlueprintGETVideoBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCasesBlueprintGET_VideoBlueprint(): array
+    public static function dataCasesBlueprintGET_VideoBlueprint(): array
     {
         return [
             'no video' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
@@ -60,7 +61,7 @@ class BlueprintGETVideoBlueprintTest extends TestCase
                 'video' => null,
             ],
             'youtube' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, video, video_provider) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12', 'youtube', 'youtube')",
@@ -75,7 +76,7 @@ class BlueprintGETVideoBlueprintTest extends TestCase
                 ],
             ],
             'dailymotion' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, video, video_provider) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12', 'dailymotion', 'dailymotion')",
@@ -90,7 +91,7 @@ class BlueprintGETVideoBlueprintTest extends TestCase
                 ],
             ],
             'vimeo' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, video, video_provider) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12', 'vimeo', 'vimeo')",
@@ -105,7 +106,7 @@ class BlueprintGETVideoBlueprintTest extends TestCase
                 ],
             ],
             'niconico' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, video, video_provider) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12', 'niconico', 'niconico')",
@@ -120,7 +121,7 @@ class BlueprintGETVideoBlueprintTest extends TestCase
                 ],
             ],
             'bilibili' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, video, video_provider) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12', 'bilibili', 'bilibili')",
@@ -135,7 +136,7 @@ class BlueprintGETVideoBlueprintTest extends TestCase
                 ],
             ],
             'unsupported' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     'TRUNCATE TABLE blueprints',
                     'TRUNCATE TABLE blueprints_version',
                     "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, video, video_provider) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12', 'unsupported', 'unsupported')",
@@ -165,6 +166,7 @@ class BlueprintGETVideoBlueprintTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCasesBlueprintGET_VideoBlueprint')]
     public function testBlueprintGETVideoBlueprint(array $sqlQueries, string $slug, ?array $video): void
     {
         // sql queries

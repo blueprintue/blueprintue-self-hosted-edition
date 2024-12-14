@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace tests\www\Blueprint\View;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -109,23 +110,23 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCasesBlueprintPOST_DeleteComment(): array
+    public static function dataCasesBlueprintPOST_DeleteComment(): array
     {
         return [
             'delete comment OK - public blueprint' => [
-                'sql_queries'           => [],
-                'slug'                  => 'slug_public',
-                'user_id'               => 65,
-                'comment_id'            => 10,
-                'has_button_delete'     => true,
-                'params'                => [
+                'sqlQueries'      => [],
+                'slug'            => 'slug_public',
+                'userID'          => 65,
+                'commentID'       => 10,
+                'hasButtonDelete' => true,
+                'params'          => [
                     'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
                     'form-delete_comment-hidden-id'   => '10',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">Your comment has been deleted</div>'
@@ -137,19 +138,19 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
                 ],
             ],
             'delete comment OK - unlisted blueprint' => [
-                'sql_queries'           => [],
-                'slug'                  => 'slug_unlisted',
-                'user_id'               => 65,
-                'comment_id'            => 11,
-                'has_button_delete'     => true,
-                'params'                => [
+                'sqlQueries'      => [],
+                'slug'            => 'slug_unlisted',
+                'userID'          => 65,
+                'commentID'       => 11,
+                'hasButtonDelete' => true,
+                'params'          => [
                     'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
                     'form-delete_comment-hidden-id'   => '11',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">Your comment has been deleted</div>'
@@ -161,19 +162,19 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
                 ],
             ],
             'delete comment OK - private blueprint' => [
-                'sql_queries'          => [],
-                'slug'                 => 'slug_private',
-                'user_id'              => 65,
-                'comment_id'           => 12,
-                'has_button_delete'    => true,
-                'params'               => [
+                'sqlQueries'      => [],
+                'slug'            => 'slug_private',
+                'userID'          => 65,
+                'commentID'       => 12,
+                'hasButtonDelete' => true,
+                'params'          => [
                     'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
                     'form-delete_comment-hidden-id'   => '12',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">Your comment has been deleted</div>'
@@ -185,21 +186,21 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
                 ],
             ],
             'delete comment KO - comments close' => [
-                'sql_queries'           => [
+                'sqlQueries' => [
                     'UPDATE blueprints SET comments_closed = 1 WHERE id = 966'
                 ],
-                'slug'                  => 'slug_public',
-                'user_id'               => 65,
-                'comment_id'            => 10,
-                'has_button_delete'     => false,
-                'params'                => [
+                'slug'            => 'slug_public',
+                'userID'          => 65,
+                'commentID'       => 10,
+                'hasButtonDelete' => false,
+                'params'          => [
                     'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
                     'form-delete_comment-hidden-id'   => '10',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
@@ -211,21 +212,21 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
                 ],
             ],
             'delete comment KO - comments hidden' => [
-                'sql_queries'           => [
+                'sqlQueries' => [
                     'UPDATE blueprints SET comments_hidden = 1 WHERE id = 966'
                 ],
-                'slug'                  => 'slug_public',
-                'user_id'               => 65,
-                'comment_id'            => 10,
-                'has_button_delete'     => false,
-                'params'                => [
+                'slug'            => 'slug_public',
+                'userID'          => 65,
+                'commentID'       => 10,
+                'hasButtonDelete' => false,
+                'params'          => [
                     'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
                     'form-delete_comment-hidden-id'   => '10',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
@@ -237,19 +238,19 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
                 ],
             ],
             'delete comment KO - ownership incorrect' => [
-                'sql_queries'           => [],
-                'slug'                  => 'slug_public',
-                'user_id'               => 66,
-                'comment_id'            => 10,
-                'has_button_delete'     => false,
-                'params'                => [
+                'sqlQueries'      => [],
+                'slug'            => 'slug_public',
+                'userID'          => 66,
+                'commentID'       => 10,
+                'hasButtonDelete' => false,
+                'params'          => [
                     'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
                     'form-delete_comment-hidden-id'   => '10',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
@@ -261,19 +262,19 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
                 ],
             ],
             'csrf incorrect' => [
-                'sql_queries'          => [],
-                'slug'                 => 'slug_public',
-                'user_id'              => 65,
-                'comment_id'           => 10,
-                'has_button_delete'    => true,
-                'params'               => [
+                'sqlQueries'      => [],
+                'slug'            => 'slug_public',
+                'userID'          => 65,
+                'commentID'       => 10,
+                'hasButtonDelete' => true,
+                'params'          => [
                     'form-delete_comment-hidden-csrf' => 'incorrect_csrf',
                     'form-delete_comment-hidden-id'   => '10',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
@@ -285,16 +286,16 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
                 ],
             ],
             'missing fields - no fields' => [
-                'sql_queries'           => [],
-                'slug'                  => 'slug_public',
-                'user_id'               => 65,
-                'comment_id'            => 10,
-                'has_button_delete'     => true,
-                'params'                => [],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'sqlQueries'         => [],
+                'slug'               => 'slug_public',
+                'userID'             => 65,
+                'commentID'          => 10,
+                'hasButtonDelete'    => true,
+                'params'             => [],
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
@@ -306,18 +307,18 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
                 ],
             ],
             'missing fields - no csrf' => [
-                'sql_queries'           => [],
-                'slug'                  => 'slug_public',
-                'user_id'               => 65,
-                'comment_id'            => 10,
-                'has_button_delete'     => true,
-                'params'                => [
+                'sqlQueries'      => [],
+                'slug'            => 'slug_public',
+                'userID'          => 65,
+                'commentID'       => 10,
+                'hasButtonDelete' => true,
+                'params'          => [
                     'form-delete_comment-hidden-id' => '10',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
@@ -329,18 +330,18 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
                 ],
             ],
             'missing fields - no id' => [
-                'sql_queries'           => [],
-                'slug'                  => 'slug_public',
-                'user_id'               => 65,
-                'comment_id'            => 10,
-                'has_button_delete'     => true,
-                'params'                => [
+                'sqlQueries'      => [],
+                'slug'            => 'slug_public',
+                'userID'          => 65,
+                'commentID'       => 10,
+                'hasButtonDelete' => true,
+                'params'          => [
                     'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
@@ -352,19 +353,19 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
                 ],
             ],
             'empty fields - id empty' => [
-                'sql_queries'           => [],
-                'slug'                  => 'slug_public',
-                'user_id'               => 65,
-                'comment_id'            => 10,
-                'has_button_delete'     => true,
-                'params'                => [
+                'sqlQueries'      => [],
+                'slug'            => 'slug_public',
+                'userID'          => 65,
+                'commentID'       => 10,
+                'hasButtonDelete' => true,
+                'params'          => [
                     'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
                     'form-delete_comment-hidden-id'   => ' ',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
@@ -376,19 +377,19 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
                 ],
             ],
             'invalid fields - id invalid' => [
-                'sql_queries'           => [],
-                'slug'                  => 'slug_public',
-                'user_id'               => 65,
-                'comment_id'            => 10,
-                'has_button_delete'     => true,
-                'params'                => [
+                'sqlQueries'      => [],
+                'slug'            => 'slug_public',
+                'userID'          => 65,
+                'commentID'       => 10,
+                'hasButtonDelete' => true,
+                'params'          => [
                     'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
                     'form-delete_comment-hidden-id'   => 'iezhfio',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
@@ -400,19 +401,19 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
                 ],
             ],
             'invalid encoding fields - id' => [
-                'sql_queries'           => [],
-                'slug'                  => 'slug_public',
-                'user_id'               => 65,
-                'comment_id'            => 10,
-                'has_button_delete'     => true,
-                'params'                => [
+                'sqlQueries'      => [],
+                'slug'            => 'slug_public',
+                'userID'          => 65,
+                'commentID'       => 10,
+                'hasButtonDelete' => true,
+                'params'          => [
                     'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
                     'form-delete_comment-hidden-id'   => \chr(99999999),
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
@@ -446,6 +447,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
      * @throws RouterException
      * @throws \Rancoud\Security\SecurityException
      */
+    #[DataProvider('dataCasesBlueprintPOST_DeleteComment')]
     public function testBlueprintPOSTDeleteComment(array $sqlQueries, string $slug, ?int $userID, ?int $commentID, bool $hasButtonDelete, ?array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages): void
     {
         // sql queries
