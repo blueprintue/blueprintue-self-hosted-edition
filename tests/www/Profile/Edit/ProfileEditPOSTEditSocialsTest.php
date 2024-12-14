@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\Profile\Edit;
 
 use app\helpers\Helper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -82,15 +83,15 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
         }
     }
 
-    public function dataCasesEditSocials(): array
+    public static function dataCasesEditSocials(): array
     {
         return [
             'edit OK' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -99,10 +100,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
@@ -112,14 +113,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [],
             ],
             'edit OK - missing users_infos' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -128,10 +129,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
@@ -141,16 +142,16 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [],
             ],
             'edit KO - xss' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook<script>alert("facebook");</script>',
                     'form-edit_socials-input-twitter'  => 'twitter<script>alert("twitter");</script>',
@@ -159,10 +160,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch<script>alert("twitch");</script>',
                     'form-edit_socials-input-unreal'   => 'unreal<script>alert("unreal");</script>',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -172,9 +173,9 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Facebook, Twitter, GitHub, Youtube, Twitch, Unreal</div>'
                     ]
                 ],
-                'fields_has_error'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [
                     'facebook' => 'Expected username containing: digits, letters, symbols: - _ .',
                     'twitter'  => 'Expected username containing: digits, letters, symbols: - _ .',
                     'github'   => 'Expected username containing: digits, letters, symbols: - _ .',
@@ -184,9 +185,9 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                 ],
             ],
             'csrf incorrect' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'incorrect_csrf',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -195,10 +196,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -208,18 +209,18 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no fields' => [
-                'sql_queries'           => [],
-                'user_id'               => 189,
-                'params'                => [],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'sqlQueries'         => [],
+                'userID'             => 189,
+                'params'             => [],
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -229,14 +230,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no csrf' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
                     'form-edit_socials-input-github'   => 'github',
@@ -244,10 +245,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -257,14 +258,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no facebook' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-twitter'  => 'twitter',
                     'form-edit_socials-input-github'   => 'github',
@@ -272,10 +273,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -285,14 +286,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no twitter' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-github'   => 'github',
@@ -300,10 +301,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -313,14 +314,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no github' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -328,10 +329,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -341,14 +342,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no youtube' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -356,10 +357,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -369,14 +370,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no twitch' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -384,10 +385,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-youtube'  => 'youtube',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -397,14 +398,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no unreal' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -412,10 +413,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-youtube'  => 'youtube',
                     'form-edit_socials-input-twitch'   => 'twitch',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -425,16 +426,16 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'edit OK - empty fields - facebook empty' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => ' ',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -443,10 +444,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
@@ -456,18 +457,18 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [
                     'email' => 'Email is invalid'
                 ],
             ],
             'edit OK - empty fields - twitter empty' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => ' ',
@@ -476,10 +477,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
@@ -489,16 +490,16 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [],
             ],
             'edit OK - empty fields - github empty' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -507,10 +508,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
@@ -520,16 +521,16 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [],
             ],
             'edit OK - empty fields - youtube empty' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -538,10 +539,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
@@ -551,16 +552,16 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [],
             ],
             'edit OK - empty fields - twitch empty' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -569,10 +570,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => ' ',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
@@ -582,16 +583,16 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [],
             ],
             'edit OK - empty fields - unreal empty' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -600,10 +601,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => ' ',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
@@ -613,16 +614,16 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [],
             ],
             'edit KO - invalid facebook' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook<script>alert("facebook");</script>',
                     'form-edit_socials-input-twitter'  => '',
@@ -631,10 +632,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => '',
                     'form-edit_socials-input-unreal'   => '',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -644,18 +645,18 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Facebook</div>'
                     ]
                 ],
-                'fields_has_error'      => ['facebook'],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['facebook'],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [
                     'facebook' => 'Expected username containing: digits, letters, symbols: - _ .',
                 ],
             ],
             'edit KO - invalid twitter' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => '',
                     'form-edit_socials-input-twitter'  => 'twitter<script>alert("twitter");</script>',
@@ -664,10 +665,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => '',
                     'form-edit_socials-input-unreal'   => '',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -677,18 +678,18 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Twitter</div>'
                     ]
                 ],
-                'fields_has_error'      => ['twitter'],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['twitter'],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [
                     'twitter'  => 'Expected username containing: digits, letters, symbols: - _ .',
                 ],
             ],
             'edit KO - invalid github' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => '',
                     'form-edit_socials-input-twitter'  => '',
@@ -697,10 +698,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => '',
                     'form-edit_socials-input-unreal'   => '',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -710,18 +711,18 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on GitHub</div>'
                     ]
                 ],
-                'fields_has_error'      => ['github'],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['github'],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [
                     'github'   => 'Expected username containing: digits, letters, symbols: - _ .',
                 ],
             ],
             'edit KO - invalid youtube' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => '',
                     'form-edit_socials-input-twitter'  => '',
@@ -730,10 +731,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => '',
                     'form-edit_socials-input-unreal'   => '',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -743,18 +744,18 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Youtube</div>'
                     ]
                 ],
-                'fields_has_error'      => ['youtube'],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['youtube'],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [
                     'youtube'  => 'Expected username containing: digits, letters, symbols: - _ .',
                 ],
             ],
             'edit KO - invalid twitch' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => '',
                     'form-edit_socials-input-twitter'  => '',
@@ -763,10 +764,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch<script>alert("twitch");</script>',
                     'form-edit_socials-input-unreal'   => '',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -776,18 +777,18 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Twitch</div>'
                     ]
                 ],
-                'fields_has_error'      => ['twitch'],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['twitch'],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [
                     'twitch'   => 'Expected username containing: digits, letters, symbols: - _ .',
                 ],
             ],
             'edit KO - invalid unreal' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => '',
                     'form-edit_socials-input-twitter'  => '',
@@ -796,10 +797,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => '',
                     'form-edit_socials-input-unreal'   => 'unreal<script>alert("1-unreal");</script>',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -809,16 +810,16 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Unreal</div>'
                     ]
                 ],
-                'fields_has_error'      => ['unreal'],
-                'fields_has_value'      => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['unreal'],
+                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+                'fieldsLabelError' => [
                     'unreal'   => 'Expected username containing: digits, letters, symbols: - _ .'
                 ],
             ],
             'invalid encoding fields - facebook' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => \chr(99999999),
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -827,10 +828,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -840,14 +841,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - twitter' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => \chr(99999999),
@@ -856,10 +857,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -869,14 +870,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - github' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -885,10 +886,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -898,14 +899,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - youtube' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -914,10 +915,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -927,14 +928,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - twitch' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -943,10 +944,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => \chr(99999999),
                     'form-edit_socials-input-unreal'   => 'unreal',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -956,14 +957,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'invalid encoding fields - unreal' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
                     'form-edit_socials-input-facebook' => 'facebook',
                     'form-edit_socials-input-twitter'  => 'twitter',
@@ -972,10 +973,10 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                     'form-edit_socials-input-twitch'   => 'twitch',
                     'form-edit_socials-input-unreal'   => \chr(99999999),
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
@@ -985,9 +986,9 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
         ];
     }
@@ -1012,6 +1013,7 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCasesEditSocials')]
     public function testProfileEditPOSTEditSocials(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();

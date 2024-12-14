@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace tests\www\Profile\Edit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -79,19 +80,19 @@ class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
         }
     }
 
-    public function dataCasesGenerateApiKey(): array
+    public static function dataCasesGenerateApiKey(): array
     {
         return [
             'edit OK' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-generate_api_key-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">Your api key is now generated</div>'
@@ -103,15 +104,15 @@ class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
                 ],
             ],
             'csrf incorrect' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-generate_api_key-hidden-csrf' => 'incorrect_csrf',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">'
@@ -123,13 +124,13 @@ class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
                 ],
             ],
             'missing fields - no csrf' => [
-                'sql_queries'           => [],
-                'user_id'               => 189,
-                'params'                => [],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'sqlQueries'         => [],
+                'userID'             => 189,
+                'params'             => [],
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">'
@@ -159,6 +160,7 @@ class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
+    #[DataProvider('dataCasesGenerateApiKey')]
     public function testProfileEditPOSTGenerateApiKey(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages): void
     {
         static::setDatabase();

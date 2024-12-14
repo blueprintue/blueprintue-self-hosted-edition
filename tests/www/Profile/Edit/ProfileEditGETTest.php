@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace tests\www\Profile\Edit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -86,53 +87,53 @@ class ProfileEditGETTest extends TestCase
      *
      * @return array[]
      */
-    public function dataCasesAccess(): array
+    public static function dataCasesAccess(): array
     {
         return [
             'redirect - user not exist' => [
-                'slug'                    => '4564879864564',
-                'location'                => '/profile/4564879864564/',
-                'user_id'                 => null,
-                'content_head'            => null,
+                'slug'        => '4564879864564',
+                'location'    => '/profile/4564879864564/',
+                'userID'      => null,
+                'contentHead' => null,
             ],
             'redirect - visitor' => [
-                'slug'                    => 'user_189',
-                'location'                => '/profile/user_189/',
-                'user_id'                 => null,
-                'content_head'            => null,
+                'slug'        => 'user_189',
+                'location'    => '/profile/user_189/',
+                'userID'      => null,
+                'contentHead' => null,
             ],
             'redirect - user connected' => [
-                'slug'                    => 'user_189',
-                'location'                => '/profile/user_189/',
-                'user_id'                 => 199,
-                'content_head'            => null,
+                'slug'        => 'user_189',
+                'location'    => '/profile/user_189/',
+                'userID'      => 199,
+                'contentHead' => null,
             ],
             'redirect - anonymous user connected (not possible)' => [
-                'slug'                    => 'anonymous',
-                'location'                => '/profile/anonymous/',
-                'user_id'                 => 2,
-                'content_head'            => null,
+                'slug'        => 'anonymous',
+                'location'    => '/profile/anonymous/',
+                'userID'      => 2,
+                'contentHead' => null,
             ],
             'redirect - user connected but not exists in database (not possible)' => [
-                'slug'                    => 'inexistent_user',
-                'location'                => '/profile/inexistent_user/',
-                'user_id'                 => 50,
-                'content_head'            => null,
+                'slug'        => 'inexistent_user',
+                'location'    => '/profile/inexistent_user/',
+                'userID'      => 50,
+                'contentHead' => null,
             ],
             'OK - user is author' => [
-                'slug'                    => 'user_189',
-                'location'                => null,
-                'user_id'                 => 189,
-                'content_head'            => [
+                'slug'        => 'user_189',
+                'location'    => null,
+                'userID'      => 189,
+                'contentHead' => [
                     'title'       => 'Edit profile of user_189 | This is a base title',
                     'description' => 'Edit profile of user_189'
                 ],
             ],
             'OK - user is author (xss)' => [
-                'slug'                    => 'user_199',
-                'location'                => null,
-                'user_id'                 => 199,
-                'content_head'            => [
+                'slug'        => 'user_199',
+                'location'    => null,
+                'userID'      => 199,
+                'contentHead' => [
                     'title'       => 'Edit profile of user_199 | This is a base title',
                     'description' => 'Edit profile of user_199'
                 ],
@@ -153,6 +154,7 @@ class ProfileEditGETTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCasesAccess')]
     public function testProfileEditGET(string $slug, ?string $location, ?int $userID, ?array $contentHead): void
     {
         $sessionValues = [

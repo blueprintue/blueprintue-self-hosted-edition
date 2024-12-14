@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace tests\www\Profile\Edit;
 
 use app\helpers\Helper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Crypt\Crypt;
@@ -82,22 +83,22 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
         }
     }
 
-    public function dataCasesChangeEmail(): array
+    public static function dataCasesChangeEmail(): array
     {
         return [
             'edit OK' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "UPDATE users SET email = 'user_189@example.com' WHERE id = 189"
                 ],
-                'user_id'     => 189,
-                'params'      => [
+                'userID' => 189,
+                'params' => [
                     'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
                     'form-change_email-input-new_email' => 'user_189@user.com',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">Your new email has been saved</div>'
@@ -107,23 +108,23 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'edit OK - no email previously' => [
-                'sql_queries' => [
+                'sqlQueries' => [
                     "UPDATE users SET email = 'user_195@example.com' WHERE id = 195"
                 ],
-                'user_id'     => 195,
-                'params'      => [
+                'userID' => 195,
+                'params' => [
                     'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
                     'form-change_email-input-new_email' => 'user@user.com',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => true,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => true,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => true,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">Your new email has been saved</div>'
@@ -133,21 +134,21 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'csrf incorrect' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_email-hidden-csrf'     => 'incorrect_csrf',
                     'form-change_email-input-new_email' => 'user@user.com',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
@@ -157,18 +158,18 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no fields' => [
-                'sql_queries'           => [],
-                'user_id'               => 189,
-                'params'                => [],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'sqlQueries'         => [],
+                'userID'             => 189,
+                'params'             => [],
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
@@ -178,20 +179,20 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no csrf' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_email-input-new_email' => 'user@user.com',
                 ],
-                'use_csrf_from_session' => false,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => false,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
@@ -201,20 +202,20 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'missing fields - no email' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_email-hidden-csrf' => 'csrf_is_replaced',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
@@ -224,21 +225,21 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error, missing fields</div>'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
             'empty fields - email empty' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
                     'form-change_email-input-new_email' => ' ',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
@@ -248,23 +249,23 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error(s) on email</div>'
                     ]
                 ],
-                'fields_has_error'      => ['new_email'],
-                'fields_has_value'      => ['new_email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['new_email'],
+                'fieldsHasValue'   => ['new_email'],
+                'fieldsLabelError' => [
                     'new_email' => 'Email is required'
                 ],
             ],
             'invalid fields - email invalid' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
                     'form-change_email-input-new_email' => 'invalid_email',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
@@ -274,23 +275,23 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error(s) on email</div>'
                     ]
                 ],
-                'fields_has_error'      => ['new_email'],
-                'fields_has_value'      => ['new_email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['new_email'],
+                'fieldsHasValue'   => ['new_email'],
+                'fieldsLabelError' => [
                     'new_email' => 'Email is invalid',
                 ],
             ],
             'invalid fields - email unavailable' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
                     'form-change_email-input-new_email' => 'user_199@example.com',
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => true,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => true,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
@@ -300,23 +301,23 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error(s) on email</div>'
                     ]
                 ],
-                'fields_has_error'      => ['new_email'],
-                'fields_has_value'      => ['new_email'],
-                'fields_label_error'    => [
+                'fieldsHasError'   => ['new_email'],
+                'fieldsHasValue'   => ['new_email'],
+                'fieldsLabelError' => [
                     'new_email' => 'Email is unavailable',
                 ],
             ],
             'invalid encoding fields - new_email' => [
-                'sql_queries' => [],
-                'user_id'     => 189,
-                'params'      => [
+                'sqlQueries' => [],
+                'userID'     => 189,
+                'params'     => [
                     'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
                     'form-change_email-input-new_email' => \chr(99999999),
                 ],
-                'use_csrf_from_session' => true,
-                'has_redirection'       => false,
-                'is_form_success'       => false,
-                'flash_messages'        => [
+                'useCsrfFromSession' => true,
+                'hasRedirection'     => false,
+                'isFormSuccess'      => false,
+                'flashMessages'      => [
                     'success' => [
                         'has'     => false,
                         'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
@@ -326,9 +327,9 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
                         'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
                     ]
                 ],
-                'fields_has_error'      => [],
-                'fields_has_value'      => [],
-                'fields_label_error'    => [],
+                'fieldsHasError'   => [],
+                'fieldsHasValue'   => [],
+                'fieldsLabelError' => [],
             ],
         ];
     }
@@ -353,6 +354,7 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
+    #[DataProvider('dataCasesChangeEmail')]
     public function testProfileEditPOSTChangeEmail(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();
