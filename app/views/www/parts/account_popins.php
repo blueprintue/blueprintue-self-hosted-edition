@@ -33,7 +33,7 @@ use Rancoud\Session\Session;
                             <div class="form__element">
                                 <label class="form__label" for="form-login-input-username" id="form-login-label-username">Username</label>
                                 <div class="form__container">
-                                    <input aria-invalid="false" aria-labelledby="form-login-label-username" aria-required="true" autocomplete="username" class="form__input form__input--invisible" data-form-error-required="Username is required" data-form-has-container data-form-rules="required" id="form-login-input-username" name="form-login-input-username" type="text"/>
+                                    <input aria-invalid="false" aria-labelledby="form-login-label-username" aria-required="true" autocomplete="username" class="form__input form__input--invisible" data-form-error-regex="You need to use your username instead of your email" data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[^@]+$" id="form-login-input-username" name="form-login-input-username" type="text"/>
                                     <span class="form__feedback"></span>
                                 </div>
                             </div>
