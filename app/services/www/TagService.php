@@ -88,7 +88,8 @@ class TagService
         $tagsRaw = \explode("\n", $textareaTagsRaw);
 
         // extract non empty tags
-        $tagsToSeek = [];
+        $tagsToCreate = [];
+        $tagsSlugToSeek = [];
         $itemsCount = 0;
         foreach ($tagsRaw as $tagRaw) {
             $tagRaw = Helper::trim($tagRaw);
@@ -102,7 +103,8 @@ class TagService
 
             $tagRaw = \preg_replace('/\s+/', ' ', $tagRaw);
 
-            $tagsToSeek[] = \mb_strtolower($tagRaw);
+            $tagsToCreate[] = \mb_strtolower($tagRaw);
+            $tagsSlugToSeek[] = static::slugify($tagRaw);
             ++$itemsCount;
 
             if ($itemsCount > static::$maxTags) {
@@ -110,25 +112,25 @@ class TagService
             }
         }
 
-        if (empty($tagsToSeek)) {
+        if (empty($tagsToCreate)) {
             return null;
         }
 
         // seek tag already created
         $tagModel = new TagModel(Application::getDatabase());
-        $tagsFound = $tagModel->findTagsWithNames($tagsToSeek) ?? [];
-        $tagsToCreate = $tagsToSeek;
-        $tagsCleaned = [];
+        $tagsFound = $tagModel->findTagsWithSlugs($tagsSlugToSeek) ?? [];
+        $tagsAlreadyPresent = [];
 
         foreach ($tagsFound as $tagFound) {
-            if (\in_array($tagFound['name'], $tagsToSeek, true)) {
-                $tagsCleaned[] = $tagFound['id'];
-                unset($tagsToCreate[\array_search($tagFound['name'], $tagsToCreate, true)]);
+            $idx = \array_search($tagFound['slug'], $tagsSlugToSeek, true);
+            if ($idx !== false) {
+                $tagsAlreadyPresent[] = $tagFound['id'];
+                unset($tagsToCreate[$idx], $tagsSlugToSeek[$idx]);
             }
         }
 
         if (empty($tagsToCreate)) {
-            return \implode(',', $tagsCleaned);
+            return \implode(',', $tagsAlreadyPresent);
         }
 
         // create new tags
@@ -140,7 +142,7 @@ class TagService
             }
         }
 
-        return \implode(',', \array_merge($tagsCleaned, $newTagsIDs));
+        return \implode(',', \array_merge($tagsAlreadyPresent, $newTagsIDs));
     }
 
     /**
