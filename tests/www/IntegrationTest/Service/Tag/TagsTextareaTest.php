@@ -103,10 +103,39 @@ class TagsTextareaTest extends TestCase
         ];
     }
 
+    public static function dataCasesCaseSensitiveTags(): array
+    {
+        return [
+            '4 tags in textarea - 3 tag before - no creation' => [
+                'tagsSQLBefore' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'Camera', 'camera'), (2, 'Line Trace', 'line-trace'), (3, 'Test-Debug', 'test-debug'), (4, 'WASD', 'wasd')",
+                'textarea'      => <<<TEXTAREA
+                                     camera
+                                     line-trace
+                                     test debug
+                                     WASD
+                                     TEXTAREA,
+                'tagsIDs'   => '1,2,3,4',
+                'tagsAfter' => [['id' => '1', 'name' => 'Camera', 'slug' => 'camera'], ['id' => '2', 'name' => 'Line Trace', 'slug' => 'line-trace'], ['id' => '3', 'name' => 'Test-Debug', 'slug' => 'test-debug'], ['id' => '4', 'name' => 'WASD', 'slug' => 'wasd']],
+            ],
+            '4 tags in textarea - 0 tag before - 2 creation' => [
+                'tagsSQLBefore' => null,
+                'textarea'      => <<<TEXTAREA
+                                     4.19
+                                     4-19
+                                     Third Person Movement
+                                     third-person-movement
+                                     TEXTAREA,
+                'tagsIDs'   => '1,2',
+                'tagsAfter' => [['id' => '1', 'name' => '4.19', 'slug' => '4-19'], ['id' => '2', 'name' => 'third person movement', 'slug' => 'third-person-movement']],
+            ]
+        ];
+    }
+
     /**
      * @dataProvider dataCasesEmptyTextarea
      * @dataProvider dataCasesOneTagInTextarea
      * @dataProvider dataCasesTwoTagsInTextarea
+     * @dataProvider dataCasesCaseSensitiveTags
      *
      * @param string|null $tagsSQLBefore
      * @param string      $textarea
@@ -122,6 +151,7 @@ class TagsTextareaTest extends TestCase
     #[DataProvider('dataCasesEmptyTextarea')]
     #[DataProvider('dataCasesOneTagInTextarea')]
     #[DataProvider('dataCasesTwoTagsInTextarea')]
+    #[DataProvider('dataCasesCaseSensitiveTags')]
     public function testCreate(?string $tagsSQLBefore, string $textarea, ?string $tagsIDs, array $tagsAfter): void
     {
         static::setDatabase();

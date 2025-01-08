@@ -110,13 +110,13 @@ class TagModel extends Model
      *
      * @return array|null
      */
-    public function findTagsWithNames(array $tagsToSeek): ?array
+    public function findTagsWithSlugs(array $tagsToSeek): ?array
     {
         $sqlParts = [];
         $params = [];
         $i = 0;
         foreach ($tagsToSeek as $tagToSeek) {
-            $sqlParts[] = 'name = :tag_' . $i;
+            $sqlParts[] = 'slug = :tag_' . $i;
             $params['tag_' . $i] = $tagToSeek;
             ++$i;
         }
