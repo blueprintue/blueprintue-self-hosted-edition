@@ -37,13 +37,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Validate
-        uses: docker/bake-action@v5
+        uses: docker/bake-action@v6
         with:
           set: php-version.args.PHP_VERSION=${{ matrix.php-version }}
           targets: validate
 
       - name: Build Image Tests E2E
-        uses: docker/bake-action@v5
+        uses: docker/bake-action@v6
         with:
           set: php-version.args.PHP_VERSION=${{ matrix.php-version }}
           targets: test
