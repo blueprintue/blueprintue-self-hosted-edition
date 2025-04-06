@@ -966,20 +966,6 @@ class RegisterTest extends TestCase
     /**
      * @dataProvider dataCasesRegister
      *
-     * @param array      $params
-     * @param bool       $useCsrfFromSession
-     * @param int        $mailCalled
-     * @param string     $mailHTML
-     * @param string     $mailText
-     * @param bool       $mailSent
-     * @param bool       $isUserCreated
-     * @param array|null $userDB
-     * @param bool       $hasRedirection
-     * @param array      $flashMessages
-     * @param array      $fieldsHasError
-     * @param array      $fieldsHasValue
-     * @param array      $fieldsLabelError
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -1083,13 +1069,7 @@ class RegisterTest extends TestCase
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldUsername(string $value, bool $hasError, string $labelError): string
     {
@@ -1115,13 +1095,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldEmail(string $value, bool $hasError, string $labelError): string
     {
@@ -1146,12 +1120,6 @@ HTML;
         // phpcs:enable
     }
 
-    /**
-     * @param bool   $hasError
-     * @param string $labelError
-     *
-     * @return string
-     */
     protected function getHTMLFieldPassword(bool $hasError, string $labelError): string
     {
         // phpcs:disable
@@ -1174,12 +1142,6 @@ HTML;
         // phpcs:enable
     }
 
-    /**
-     * @param bool   $hasError
-     * @param string $labelError
-     *
-     * @return string
-     */
     protected function getHTMLFieldPasswordConfirm(bool $hasError, string $labelError): string
     {
         // phpcs:disable
@@ -1203,16 +1165,7 @@ HTML;
     }
 
     /**
-     * @param string   $to
-     * @param string   $subject
-     * @param string   $html
-     * @param string   $text
-     * @param string   $token
-     * @param Database $db
-     *
      * @throws DatabaseException
-     *
-     * @return bool
      */
     public static function mailForPHPUnit(string $to, string $subject, string $html, string $text, string $token, Database $db): bool // phpcs:ignore
     {

@@ -1114,15 +1114,6 @@ HTML,
     /**
      * @dataProvider dataCases
      *
-     * @param array       $sqlQueries
-     * @param string      $slugInput
-     * @param string      $slugOutput
-     * @param string|null $location
-     * @param int|null    $userID
-     * @param array|null  $contentHead
-     * @param string      $contentBlueprintsHTML
-     * @param string      $contentPaginationHTML
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -1182,11 +1173,7 @@ HTML,
     }
 
     /**
-     * @param array $queryParams
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldQuery(array $queryParams): string
     {
@@ -1202,11 +1189,6 @@ HTML;
         // phpcs:enable
     }
 
-    /**
-     * @param array $queryParams
-     *
-     * @return string
-     */
     protected function getHTMLFieldType(array $queryParams): string
     {
         $value = $queryParams['form-search-select-type'] ?? '';
@@ -1246,11 +1228,7 @@ HTML;
     }
 
     /**
-     * @param array $queryParams
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldVersion(array $queryParams): string
     {

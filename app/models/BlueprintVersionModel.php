@@ -32,8 +32,6 @@ class BlueprintVersionModel extends Model
     }
 
     /**
-     * @param int $blueprintID
-     *
      * @throws \Rancoud\Database\DatabaseException
      *
      * @return array|null
@@ -56,8 +54,6 @@ class BlueprintVersionModel extends Model
     }
 
     /**
-     * @param int $blueprintID
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      *
@@ -86,8 +82,6 @@ class BlueprintVersionModel extends Model
     }
 
     /**
-     * @param int $blueprintID
-     *
      * @throws \Rancoud\Database\DatabaseException
      */
     public function deleteWithBlueprintID(int $blueprintID): void
@@ -103,9 +97,6 @@ class BlueprintVersionModel extends Model
     }
 
     /**
-     * @param int $blueprintID
-     * @param int $version
-     *
      * @throws \Rancoud\Database\DatabaseException
      */
     public function deleteWithBlueprintIDAndVersion(int $blueprintID, int $version): void

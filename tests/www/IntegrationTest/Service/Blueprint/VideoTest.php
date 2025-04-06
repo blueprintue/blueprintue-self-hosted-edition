@@ -675,10 +675,6 @@ class VideoTest extends TestCase
      * @dataProvider dataCasesPeertube
      * @dataProvider dataCasesBilibili
      * @dataProvider dataCasesNiconico
-     *
-     * @param string|null $videoURL
-     * @param string|null $videoOut
-     * @param string|null $videoProvider
      */
     #[DataProvider('dataCasesNoVideo')]
     #[DataProvider('dataCasesYoutube')]

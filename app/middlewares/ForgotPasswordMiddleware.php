@@ -29,14 +29,9 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
     ];
 
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -54,11 +49,7 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Exception
-     *
-     * @return array|null
      */
     protected function treatFormForgotPassword(ServerRequestInterface $request): ?array
     {
@@ -99,9 +90,6 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param array|null             $params
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
@@ -160,17 +148,11 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param string $email
-     * @param string $token
-     * @param string $username
-     *
      * @throws \PHPMailer\PHPMailer\Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Security\SecurityException
-     *
-     * @return bool
      */
     protected function sendMail(string $email, string $token, string $username): bool
     {
@@ -198,15 +180,10 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param string $token
-     * @param string $username
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Security\SecurityException
      * @throws \Exception
-     *
-     * @return string
      */
     protected function getEmailHTML(string $token, string $username): string
     {

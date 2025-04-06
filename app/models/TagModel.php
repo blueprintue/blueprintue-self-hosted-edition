@@ -29,12 +29,8 @@ class TagModel extends Model
     }
 
     /**
-     * @param string $listIDs
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array
      */
     public function getTagsWithListIDs(string $listIDs): ?array
     {
@@ -78,8 +74,6 @@ class TagModel extends Model
     }
 
     /**
-     * @param string $slug
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      *
@@ -103,12 +97,8 @@ class TagModel extends Model
     }
 
     /**
-     * @param array $tagsToSeek
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public function findTagsWithSlugs(array $tagsToSeek): ?array
     {

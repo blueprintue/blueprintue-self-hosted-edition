@@ -167,15 +167,6 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintGET_InformationsBlueprint
      *
-     * @param array       $sqlQueries
-     * @param string      $slug
-     * @param string|null $thumbnail
-     * @param string      $type
-     * @param string      $title
-     * @param string      $exposure
-     * @param string|null $expiration
-     * @param string      $ueVersion
-     *
      * @throws DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException

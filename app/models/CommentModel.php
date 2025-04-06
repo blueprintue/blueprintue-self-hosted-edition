@@ -31,8 +31,6 @@ class CommentModel extends Model
     }
 
     /**
-     * @param int $blueprintID
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      *
@@ -61,8 +59,6 @@ class CommentModel extends Model
     }
 
     /**
-     * @param int $blueprintID
-     *
      * @throws \Rancoud\Database\DatabaseException
      *
      * @return mixed
@@ -79,10 +75,6 @@ class CommentModel extends Model
     }
 
     /**
-     * @param int         $fromID
-     * @param int|null    $toID
-     * @param string|null $nameFallback
-     *
      * @throws \Rancoud\Database\DatabaseException
      */
     public function changeAuthor(int $fromID, ?int $toID, ?string $nameFallback): void
@@ -99,8 +91,6 @@ class CommentModel extends Model
     }
 
     /**
-     * @param int $id
-     *
      * @throws \Rancoud\Database\DatabaseException
      */
     public function deleteFromAuthor(int $id): void
@@ -115,12 +105,7 @@ class CommentModel extends Model
     }
 
     /**
-     * @param int $commentID
-     * @param int $userID
-     *
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return bool
      */
     public function isCommentBelongToAuthor(int $commentID, int $userID): bool
     {

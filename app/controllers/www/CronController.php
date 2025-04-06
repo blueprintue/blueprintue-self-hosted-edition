@@ -19,12 +19,7 @@ use Rancoud\Session\Session;
 class CronController
 {
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -51,8 +46,6 @@ class CronController
     /**
      * @throws ApplicationException
      * @throws EnvironmentException
-     *
-     * @return void
      */
     protected function purgeSessions(): void
     {
@@ -64,8 +57,6 @@ class CronController
     /**
      * @throws ApplicationException
      * @throws DatabaseException
-     *
-     * @return void
      */
     protected function purgeUsersNotConfirmed(): void
     {
@@ -120,8 +111,6 @@ class CronController
     /**
      * @throws ApplicationException
      * @throws DatabaseException
-     *
-     * @return void
      */
     protected function purgeDeletedBlueprints(): void
     {
@@ -279,8 +268,6 @@ class CronController
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
-     *
-     * @return void
      */
     protected function setSoftDeleteAnonymousPrivateBlueprints(): void
     {

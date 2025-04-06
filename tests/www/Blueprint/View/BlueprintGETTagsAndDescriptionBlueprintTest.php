@@ -124,11 +124,6 @@ class BlueprintGETTagsAndDescriptionBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintGET_TagsAndDescriptionBlueprint
      *
-     * @param array       $sqlQueries
-     * @param string      $slug
-     * @param array|null  $tags
-     * @param string|null $description
-     *
      * @throws DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException

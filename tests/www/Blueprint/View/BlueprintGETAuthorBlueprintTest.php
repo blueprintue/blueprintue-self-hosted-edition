@@ -85,13 +85,6 @@ class BlueprintGETAuthorBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintGET_AuthorBlueprint
      *
-     * @param array       $sqlQueries
-     * @param string      $slug
-     * @param string|null $avatar
-     * @param string      $name
-     * @param string      $url
-     * @param string      $publishedAt
-     *
      * @throws DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException

@@ -329,13 +329,6 @@ HTML
     /**
      * @dataProvider dataCasesBlueprintGET_VersionsBlueprint
      *
-     * @param array       $sqlQueries
-     * @param string      $slug
-     * @param int         $statusCode
-     * @param string|null $location
-     * @param bool        $hasListVersions
-     * @param string|null $html
-     *
      * @throws DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException

@@ -107,12 +107,6 @@ class BlueprintGETEditBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintGET_EditBlueprint
      *
-     * @param array      $sqlQueries
-     * @param string     $slug
-     * @param int|null   $userID
-     * @param array|null $anonymousBlueprints
-     * @param bool       $hasButtonEdit
-     *
      * @throws DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException

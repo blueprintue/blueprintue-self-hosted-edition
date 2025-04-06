@@ -22,14 +22,9 @@ class UserService
     protected static string $regexPassword = "/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9\s:])([^\s]){8,}$/";
 
     /**
-     * @param string $username
-     * @param string $password
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return int|null
      */
     public static function findUserIDWithUsernameAndPassword(string $username, string $password): ?int
     {
@@ -39,13 +34,9 @@ class UserService
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public static function getInfosForSession(int $userID): ?array
     {
@@ -55,13 +46,9 @@ class UserService
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      * @throws \Exception
-     *
-     * @return string
      */
     public static function generateRememberToken(int $userID): string
     {
@@ -78,8 +65,6 @@ class UserService
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -90,12 +75,8 @@ class UserService
     }
 
     /**
-     * @param string $rememberToken
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return int|null
      */
     public static function getUserIDFromRememberMe(string $rememberToken): ?int
     {
@@ -104,31 +85,19 @@ class UserService
         return $userModel->getUserIDFromRememberMe($rememberToken);
     }
 
-    /**
-     * @return int
-     */
     public static function getMinLengthPassword(): int
     {
         return static::$minLenPasword;
     }
 
-    /**
-     * @param string $password
-     *
-     * @return bool
-     */
     public static function isPasswordMatchFormat(string $password): bool
     {
         return \preg_match(static::$regexPassword, $password) === 1;
     }
 
     /**
-     * @param string $username
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return bool
      */
     public static function isUsernameAvailable(string $username): bool
     {
@@ -138,12 +107,8 @@ class UserService
     }
 
     /**
-     * @param string $email
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return bool
      */
     public static function isEmailAvailable(string $email): bool
     {
@@ -153,14 +118,8 @@ class UserService
     }
 
     /**
-     * @param string $username
-     * @param string $email
-     * @param string $password
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return array
      */
     public static function createMemberUser(string $username, string $email, string $password): array
     {
@@ -229,13 +188,9 @@ class UserService
     }
 
     /**
-     * @param string $username
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return array|null
      */
     public static function getPublicProfileInfos(string $username): ?array
     {
@@ -257,13 +212,9 @@ class UserService
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return array|null
      */
     public static function getPrivateProfileInfos(int $userID): ?array
     {
@@ -294,12 +245,8 @@ class UserService
     }
 
     /**
-     * @param $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return bool
      */
     public static function deleteUser($userID): bool
     {
@@ -335,13 +282,8 @@ class UserService
     }
 
     /**
-     * @param int         $id
-     * @param string|null $filename
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return bool
      */
     public static function updateAvatar(int $id, ?string $filename): bool
     {
@@ -364,10 +306,6 @@ class UserService
     }
 
     /**
-     * @param int         $userID
-     * @param string|null $bio
-     * @param string|null $website
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      */
@@ -389,9 +327,6 @@ class UserService
     }
 
     /**
-     * @param int   $userID
-     * @param array $socials
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      */
@@ -426,9 +361,6 @@ class UserService
     }
 
     /**
-     * @param int    $userID
-     * @param string $email
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      */
@@ -438,9 +370,6 @@ class UserService
     }
 
     /**
-     * @param int    $userID
-     * @param string $username
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      */
@@ -450,9 +379,6 @@ class UserService
     }
 
     /**
-     * @param int    $userID
-     * @param string $password
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      */
@@ -462,12 +388,8 @@ class UserService
     }
 
     /**
-     * @param UserApiModel $userApiModel
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
-     *
-     * @return string
      */
     protected static function getNewApiKey(UserApiModel $userApiModel): string
     {
@@ -488,8 +410,6 @@ class UserService
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Database\DatabaseException
@@ -504,11 +424,6 @@ class UserService
         $userApiModel->create(['id_user' => $userID, 'api_key' => $apiKey]);
     }
 
-    /**
-     * @param string $string
-     *
-     * @return string
-     */
     public static function slugify(string $string): string
     {
         $string = Helper::trim($string);
@@ -519,8 +434,6 @@ class UserService
     }
 
     /**
-     * @param string $email
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
@@ -552,13 +465,8 @@ class UserService
     }
 
     /**
-     * @param string $email
-     * @param string $token
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return int|null
      */
     public static function findUserIDFromEmailAndToken(string $email, string $token): ?int
     {
@@ -566,9 +474,6 @@ class UserService
     }
 
     /**
-     * @param int    $userID
-     * @param string $password
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      */
@@ -578,8 +483,6 @@ class UserService
     }
 
     /**
-     * @param array $comments
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -590,8 +493,6 @@ class UserService
     }
 
     /**
-     * @param array $comments
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -602,13 +503,9 @@ class UserService
     }
 
     /**
-     * @param array $items
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array
      */
     public static function getInfosFromIdAuthorIndex(array $items): array
     {
@@ -616,9 +513,6 @@ class UserService
     }
 
     /**
-     * @param int $userID
-     * @param int $count
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -629,9 +523,6 @@ class UserService
     }
 
     /**
-     * @param int $userID
-     * @param int $count
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -642,9 +533,6 @@ class UserService
     }
 
     /**
-     * @param int $userID
-     * @param int $count
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -655,9 +543,6 @@ class UserService
     }
 
     /**
-     * @param int $userID
-     * @param int $count
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -668,8 +553,6 @@ class UserService
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      * @throws \Exception
@@ -712,17 +595,12 @@ class UserService
     }
 
     /**
-     * @param int    $userID
-     * @param string $from
-     *
      * @throws \PHPMailer\PHPMailer\Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Model\ModelException
      * @throws \Exception
-     *
-     * @return bool
      */
     public static function generateAndSendConfirmAccountEmail(int $userID, string $from): bool
     {
@@ -749,18 +627,11 @@ class UserService
     }
 
     /**
-     * @param string $email
-     * @param string $token
-     * @param string $from
-     * @param string $username
-     *
      * @throws \PHPMailer\PHPMailer\Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Security\SecurityException
-     *
-     * @return bool
      */
     protected static function sendConfirmAccountEmail(string $email, string $token, string $from, string $username): bool // phpcs:ignore
     {
@@ -798,15 +669,10 @@ class UserService
     }
 
     /**
-     * @param string $token
-     * @param string $username
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Security\SecurityException
      * @throws \Exception
-     *
-     * @return string
      */
     protected static function getConfirmAccountEmailHTML(string $token, string $username): string
     {
@@ -842,14 +708,10 @@ class UserService
     }
 
     /**
-     * @param string $confirmedToken
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      * @throws \Exception
-     *
-     * @return bool
      */
     public static function validateAccountWithConfirmedToken(string $confirmedToken): bool
     {
@@ -865,12 +727,8 @@ class UserService
     }
 
     /**
-     * @param string $apiKey
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return int|null
      */
     public static function findUserIDWithApiKey(string $apiKey): ?int
     {
@@ -878,13 +736,9 @@ class UserService
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      * @throws \Exception
-     *
-     * @return bool
      */
     public static function saveLastLogin(int $userID): bool
     {

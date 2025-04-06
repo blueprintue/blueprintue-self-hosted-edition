@@ -137,11 +137,6 @@ class TagsTextareaTest extends TestCase
      * @dataProvider dataCasesTwoTagsInTextarea
      * @dataProvider dataCasesCaseSensitiveTags
      *
-     * @param string|null $tagsSQLBefore
-     * @param string      $textarea
-     * @param string|null $tagsIDs
-     * @param array       $tagsAfter
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException

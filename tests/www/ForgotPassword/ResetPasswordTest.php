@@ -761,16 +761,6 @@ HTML);
     /**
      * @dataProvider dataCasesResetPasswordPOST
      *
-     * @param array       $params
-     * @param string|null $resetToken
-     * @param bool        $useCsrfFromSession
-     * @param bool        $hasRedirection
-     * @param bool        $isFormSuccess
-     * @param array       $flashMessages
-     * @param array       $fieldsHasError
-     * @param array       $fieldsHasValue
-     * @param array       $fieldsLabelError
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -855,13 +845,7 @@ HTML);
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldEmail(string $value, bool $hasError, string $labelError): string
     {
@@ -887,12 +871,6 @@ HTML;
         // phpcs:enable
     }
 
-    /**
-     * @param bool   $hasError
-     * @param string $labelError
-     *
-     * @return string
-     */
     protected function getHTMLFieldPassword(bool $hasError, string $labelError): string
     {
         // phpcs:disable
@@ -915,12 +893,6 @@ HTML;
         // phpcs:enable
     }
 
-    /**
-     * @param bool   $hasError
-     * @param string $labelError
-     *
-     * @return string
-     */
     protected function getHTMLFieldPasswordConfirm(bool $hasError, string $labelError): string
     {
         // phpcs:disable

@@ -172,12 +172,6 @@ class BlueprintEditGETTest extends TestCase
     /**
      * @dataProvider dataCasesAccess
      *
-     * @param array       $sqlQueries
-     * @param string      $slug
-     * @param string|null $location
-     * @param int|null    $userID
-     * @param array|null  $contentHead
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException

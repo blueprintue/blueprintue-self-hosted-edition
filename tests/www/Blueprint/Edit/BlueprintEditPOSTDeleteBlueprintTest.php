@@ -481,18 +481,6 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesDeleteBlueprint
      *
-     * @param array $sqlQueries
-     * @param int   $userID
-     * @param array $params
-     * @param bool  $useCsrfFromSession
-     * @param bool  $hasRedirection
-     * @param bool  $isFormSuccess
-     * @param array $flashMessages
-     * @param array $fieldsHasError
-     * @param array $fieldsHasValue
-     * @param array $fieldsLabelError
-     * @param bool  $hasAnonymousUser
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -622,14 +610,6 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
         }
     }
 
-    /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     * @param bool   $isDisabled
-     *
-     * @return string
-     */
     protected function getHTMLFieldOwnership(string $value, bool $hasError, string $labelError, bool $isDisabled): string
     {
         $give = ($value === 'give') ? ' selected="selected"' : '';

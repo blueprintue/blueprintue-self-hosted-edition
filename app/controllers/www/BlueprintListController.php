@@ -39,8 +39,6 @@ class BlueprintListController implements MiddlewareInterface
     ];
 
     /**
-     * @param array $data
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      */
@@ -57,16 +55,11 @@ class BlueprintListController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Pagination\PaginationException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -118,13 +111,9 @@ class BlueprintListController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return bool
      */
     protected function findPageType(ServerRequestInterface $request): bool
     {
@@ -168,9 +157,6 @@ class BlueprintListController implements MiddlewareInterface
         $this->params['meta_description'] = 'Blueprints with the most comments';
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     */
     protected function treatRouteTypeBlueprints(ServerRequestInterface $request): void
     {
         $this->pageType = 'type';
@@ -191,8 +177,6 @@ class BlueprintListController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
@@ -211,11 +195,6 @@ class BlueprintListController implements MiddlewareInterface
         $this->params['meta_description'] = 'List of blueprints tagged as ' . $tagTitle;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return bool
-     */
     protected function treatRouteSearch(ServerRequestInterface $request): bool
     {
         $this->pageType = 'search';
@@ -276,9 +255,6 @@ class BlueprintListController implements MiddlewareInterface
         return true;
     }
 
-    /**
-     * @return string
-     */
     protected function getTitle(): string
     {
         $title = 'Last pasted ';
@@ -296,9 +272,6 @@ class BlueprintListController implements MiddlewareInterface
         return $title;
     }
 
-    /**
-     * @return string
-     */
     protected function getTitleEmphasis(): string
     {
         $titleEmphasis = 'blueprints';

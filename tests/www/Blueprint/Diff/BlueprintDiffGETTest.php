@@ -518,14 +518,6 @@ class BlueprintDiffGETTest extends TestCase
      * @dataProvider dataCasesBlueprintGET
      * @dataProvider dataCasesBlueprintGETVersionAccess
      *
-     * @param array       $sqlQueries
-     * @param int|null    $userID
-     * @param string      $slug
-     * @param int         $statusCode
-     * @param string|null $location
-     * @param string|null $headerTitle
-     * @param string|null $headerDescription
-     *
      * @throws DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException

@@ -580,17 +580,6 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
     /**
      * @dataProvider dataCasesChangePassword
      *
-     * @param array $sqlQueries
-     * @param int   $userID
-     * @param array $params
-     * @param bool  $useCsrfFromSession
-     * @param bool  $hasRedirection
-     * @param bool  $isFormSuccess
-     * @param array $flashMessages
-     * @param array $fieldsHasError
-     * @param array $fieldsHasValue
-     * @param array $fieldsLabelError
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -680,12 +669,6 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
         }
     }
 
-    /**
-     * @param bool   $hasError
-     * @param string $labelError
-     *
-     * @return string
-     */
     protected function getHTMLFieldNewPassword(bool $hasError, string $labelError): string
     {
         // phpcs:disable
@@ -716,12 +699,6 @@ HTML;
         // phpcs:enable
     }
 
-    /**
-     * @param bool   $hasError
-     * @param string $labelError
-     *
-     * @return string
-     */
     protected function getHTMLFieldNewPasswordConfirm(bool $hasError, string $labelError): string
     {
         // phpcs:disable

@@ -921,17 +921,6 @@ class HomeTest extends TestCase
     /**
      * @dataProvider dataCasesCreateBlueprint
      *
-     * @param int   $userID
-     * @param array $params
-     * @param bool  $useCsrfFromSession
-     * @param bool  $hasRedirection
-     * @param bool  $isFormSuccess
-     * @param array $flashMessages
-     * @param array $fieldsHasError
-     * @param array $fieldsHasValue
-     * @param array $fieldsLabelError
-     * @param bool  $hasAnonymousUser
-     *
      * @throws DatabaseException
      * @throws \Exception
      */
@@ -1115,13 +1104,7 @@ class HomeTest extends TestCase
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldTitle(string $value, bool $hasError, string $labelError): string
     {
@@ -1146,13 +1129,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldExposure(string $value, bool $hasError, string $labelError): string
     {
@@ -1188,13 +1165,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldExpiration(string $value, bool $hasError, string $labelError): string
     {
@@ -1232,13 +1203,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldUEVersion(string $value, bool $hasError, string $labelError): string
     {
@@ -1270,13 +1235,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldBlueprint(string $value, bool $hasError, string $labelError): string
     {

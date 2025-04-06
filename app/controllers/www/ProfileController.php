@@ -23,8 +23,6 @@ class ProfileController implements MiddlewareInterface
     protected int $countBlueprintsPerPage = 15;
 
     /**
-     * @param array $data
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      */
@@ -45,16 +43,11 @@ class ProfileController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Pagination\PaginationException
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -78,13 +71,9 @@ class ProfileController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     protected function getUser(ServerRequestInterface $request): ?array
     {
@@ -94,9 +83,6 @@ class ProfileController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param array                  $userInfos
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
@@ -173,12 +159,6 @@ class ProfileController implements MiddlewareInterface
         $this->data += ['page' => $page];
     }
 
-    /**
-     * @param string      $type
-     * @param string|null $value
-     *
-     * @return string
-     */
     protected function completeLink(string $type, ?string $value): string
     {
         $link = '';

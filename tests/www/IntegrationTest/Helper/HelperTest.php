@@ -53,9 +53,6 @@ class HelperTest extends TestCase
     /**
      * @dataProvider dataCasesSince
      *
-     * @param string $in
-     * @param string $out
-     *
      * @throws \Exception
      */
     #[DataProvider('dataCasesSince')]
@@ -70,8 +67,6 @@ class HelperTest extends TestCase
      * Tests are partials because time is ticking, mock is complicated.
      *
      * @throws \Exception
-     *
-     * @return array
      */
     public static function dataCasesTimeleft(): array
     {
@@ -104,9 +99,6 @@ class HelperTest extends TestCase
 
     /**
      * @dataProvider dataCasesTimeleft
-     *
-     * @param string|null $in
-     * @param string|null $out
      *
      * @throws \Exception
      */
@@ -164,10 +156,6 @@ class HelperTest extends TestCase
 
     /**
      * @dataProvider dataCasesFitSentence
-     *
-     * @param string $in
-     * @param int    $max
-     * @param string $out
      */
     #[DataProvider('dataCasesFitSentence')]
     public function testFitSentence(string $in, int $max, string $out): void

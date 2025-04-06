@@ -126,15 +126,6 @@ class ConfirmAccountTest extends TestCase
     /**
      * @dataProvider dataCasesConfirmAccount
      *
-     * @param string      $slug
-     * @param string|null $location
-     * @param int|null    $userID
-     * @param array|null  $contentHead
-     * @param bool        $hasRedirection
-     * @param bool|null   $isConfirmedAccount
-     * @param string|null $text
-     * @param string|null $jsRedirect
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException

@@ -47,26 +47,15 @@ trait TemplateTrait
 
     protected bool $isToHideFromGoogle = false;
 
-    /**
-     * @return string
-     */
     protected function noRobotsIndex(): string
     {
         return $this->isToHideFromGoogle ? '<meta name="robots" content="noindex">' : '';
     }
 
-    /**
-     * @param array $data
-     */
     abstract protected function setTemplateProperties(array $data = []): void;
 
     /**
-     * @param string $file
-     * @param array  $data
-     *
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return string
      */
     protected function getFullTemplate(string $file, array $data = []): string
     {
@@ -80,8 +69,6 @@ trait TemplateTrait
     /**
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
     protected function sendPage(): \Psr\Http\Message\ResponseInterface
     {
@@ -97,11 +84,6 @@ trait TemplateTrait
         return (new Factory())->createResponse()->withBody(Stream::create($page));
     }
 
-    /**
-     * @param $url
-     *
-     * @return \Psr\Http\Message\ResponseInterface
-     */
     protected function redirect($url): \Psr\Http\Message\ResponseInterface
     {
         return (new Factory())->createResponse(301)->withHeader('Location', $url);

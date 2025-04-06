@@ -109,11 +109,6 @@ class LogoutTest extends TestCase
     /**
      * @dataProvider dataCasesLogoutPOST
      *
-     * @param array $params
-     * @param bool  $useCsrfFromSession
-     * @param bool  $hasRedirection
-     * @param bool  $isFormSuccess
-     *
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException

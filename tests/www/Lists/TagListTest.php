@@ -2802,14 +2802,6 @@ HTML,
      * @dataProvider dataCases30PublicUnlistedPrivateBlueprintTagGoodPage1
      * @dataProvider dataCases30PublicUnlistedPrivateBlueprintTagGoodPage2
      *
-     * @param array       $sqlQueries
-     * @param string      $slug
-     * @param string|null $location
-     * @param int|null    $userID
-     * @param array|null  $contentHead
-     * @param string      $contentBlueprintsHTML
-     * @param string      $contentPaginationHTML
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException

@@ -212,11 +212,6 @@ HTML,
     /**
      * @dataProvider dataCases
      *
-     * @param array      $sqlQueries
-     * @param int|null   $userID
-     * @param array|null $contentHead
-     * @param string     $contentHTML
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException

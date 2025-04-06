@@ -15,15 +15,10 @@ use Rancoud\Session\Session;
 class SessionMiddleware implements MiddlewareInterface
 {
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Session\SessionException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -68,9 +63,6 @@ class SessionMiddleware implements MiddlewareInterface
 
     // protected function
 
-    /**
-     * @param ServerRequestInterface $request
-     */
     protected function setReadWriteMode(ServerRequestInterface $request): void
     {
         Session::setReadWrite();

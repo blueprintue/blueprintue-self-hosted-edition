@@ -41,14 +41,10 @@ class StaticTest extends TestCase
     }
 
     /**
-     * @param string $url
-     *
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws DatabaseException
-     *
-     * @return \Rancoud\Http\Message\Response|null
      */
     protected function getResponseFromApplicationWithStatic(string $url): ?\Rancoud\Http\Message\Response
     {
@@ -105,10 +101,6 @@ class StaticTest extends TestCase
 
     /**
      * @dataProvider dataCases
-     *
-     * @param string $url
-     * @param array  $headers
-     * @param string $content
      *
      * @throws ApplicationException
      * @throws EnvironmentException

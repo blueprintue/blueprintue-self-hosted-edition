@@ -1013,17 +1013,6 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
     /**
      * @dataProvider dataCasesEditProperties
      *
-     * @param array $sqlQueries
-     * @param int   $userID
-     * @param array $params
-     * @param bool  $useCsrfFromSession
-     * @param bool  $hasRedirection
-     * @param bool  $isFormSuccess
-     * @param array $flashMessages
-     * @param array $fieldsHasError
-     * @param array $fieldsHasValue
-     * @param array $fieldsLabelError
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -1171,13 +1160,6 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
         }
     }
 
-    /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
-     * @return string
-     */
     protected function getHTMLFieldExposure(string $value, bool $hasError, string $labelError): string
     {
         $publicSelected = ($value === 'public') ? ' selected="selected"' : '';
@@ -1217,14 +1199,7 @@ HTML;
     }
 
     /**
-     * @param string      $value
-     * @param bool        $hasError
-     * @param string      $labelError
-     * @param string|null $expirationDate
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldExpiration(string $value, bool $hasError, string $labelError, ?string $expirationDate): string // phpcs:ignore
     {
@@ -1284,13 +1259,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldUEVersion(string $value, bool $hasError, string $labelError): string
     {
@@ -1324,13 +1293,6 @@ HTML;
         // phpcs:enable
     }
 
-    /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
-     * @return string
-     */
     protected function getHTMLFieldComment(string $value, bool $hasError, string $labelError): string
     {
         $openSelected = ($value === 'open') ? ' selected="selected"' : '';

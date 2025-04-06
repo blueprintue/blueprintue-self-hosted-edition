@@ -14,14 +14,9 @@ use Rancoud\Database\Configurator;
 class DatabaseMiddleware implements MiddlewareInterface
 {
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -41,8 +36,6 @@ class DatabaseMiddleware implements MiddlewareInterface
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return Configurator
      */
     protected function createConfigurator(): Configurator
     {

@@ -4812,15 +4812,6 @@ HTML,
      * @dataProvider dataCases20Public10PrivateBlueprintsPage1
      * @dataProvider dataCases20Public10PrivateBlueprintsPage2
      *
-     * @param array       $sqlQueries
-     * @param string      $slug
-     * @param string|null $location
-     * @param int|null    $userID
-     * @param array|null  $contentHead
-     * @param string      $contentProfileHTML
-     * @param string      $contentBlueprintsHTML
-     * @param string      $contentPaginationHTML
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException

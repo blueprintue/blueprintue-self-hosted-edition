@@ -343,17 +343,6 @@ class BlueprintGETCommentsTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintGET_CommentsBlueprint
      *
-     * @param array    $sqlQueries
-     * @param string   $slug
-     * @param int|null $userID
-     * @param bool     $hasTitle
-     * @param int      $countComments
-     * @param bool     $hasForm
-     * @param string   $pageURL
-     * @param bool     $isCommentsHidden
-     * @param bool     $isCommentsClosed
-     * @param array    $commentIDs
-     *
      * @throws DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException

@@ -146,10 +146,6 @@ class HomeLastBlueprintsTest extends TestCase
     /**
      * @dataProvider dataCasesLastBlueprints
      *
-     * @param array  $sqlQueries
-     * @param bool   $hasHeader
-     * @param string $content
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -204,18 +200,7 @@ HTML;
     }
 
     /**
-     * @param string      $blueprintSlug
-     * @param string      $type
-     * @param string      $version
-     * @param string      $title
-     * @param string      $author
-     * @param string      $profileSlug
-     * @param string      $date
-     * @param string|null $thumbnail
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected static function getHTMLItemBlueprint(string $blueprintSlug, string $type, string $version, string $title, string $author, string $profileSlug, string $date, ?string $thumbnail): string
     {

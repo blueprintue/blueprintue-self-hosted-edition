@@ -26,11 +26,7 @@ class UserApiModel extends Model
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return string|null
      */
     public function getApiKey(int $userID): ?string
     {
@@ -51,11 +47,7 @@ class UserApiModel extends Model
     }
 
     /**
-     * @param string $apiKey
-     *
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return bool
      */
     public function isApiKeyAvailable(string $apiKey): bool
     {
@@ -72,11 +64,7 @@ class UserApiModel extends Model
     }
 
     /**
-     * @param string $apiKey
-     *
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return int|null
      */
     public function getUserID(string $apiKey): ?int
     {

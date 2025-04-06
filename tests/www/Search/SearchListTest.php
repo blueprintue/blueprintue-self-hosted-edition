@@ -81,8 +81,6 @@ class SearchListTest extends TestCase
 
     /**
      * @throws \Exception
-     *
-     * @return array
      */
     public static function dataCases(): array
     {
@@ -100,11 +98,7 @@ class SearchListTest extends TestCase
     }
 
     /**
-     * @param array $cases
-     *
      * @throws \Exception
-     *
-     * @return array
      */
     protected static function addSearchError(array $cases): array
     {
@@ -122,11 +116,7 @@ class SearchListTest extends TestCase
     }
 
     /**
-     * @param array $cases
-     *
      * @throws \Exception
-     *
-     * @return array
      */
     protected static function addSearchQuery(array $cases): array
     {
@@ -146,11 +136,7 @@ class SearchListTest extends TestCase
     }
 
     /**
-     * @param array $cases
-     *
      * @throws \Exception
-     *
-     * @return array
      */
     protected static function addSearchQueryType(array $cases): array
     {
@@ -188,11 +174,7 @@ class SearchListTest extends TestCase
     }
 
     /**
-     * @param array $cases
-     *
      * @throws \Exception
-     *
-     * @return array
      */
     protected static function addSearchQueryTypeVersion(array $cases): array
     {
@@ -230,11 +212,7 @@ class SearchListTest extends TestCase
     }
 
     /**
-     * @param array $cases
-     *
      * @throws \Exception
-     *
-     * @return array
      */
     protected static function addSearchQueryVersion(array $cases): array
     {
@@ -254,11 +232,7 @@ class SearchListTest extends TestCase
     }
 
     /**
-     * @param array $cases
-     *
      * @throws \Exception
-     *
-     * @return array
      */
     protected static function addSearchType(array $cases): array
     {
@@ -296,11 +270,7 @@ class SearchListTest extends TestCase
     }
 
     /**
-     * @param array $cases
-     *
      * @throws \Exception
-     *
-     * @return array
      */
     protected static function addSearchTypeVersion(array $cases): array
     {
@@ -338,11 +308,7 @@ class SearchListTest extends TestCase
     }
 
     /**
-     * @param array $cases
-     *
      * @throws \Exception
-     *
-     * @return array
      */
     protected static function addSearchVersion(array $cases): array
     {
@@ -363,14 +329,6 @@ class SearchListTest extends TestCase
 
     /**
      * @dataProvider dataCases
-     *
-     * @param array       $sqlQueries
-     * @param string      $slug
-     * @param string|null $location
-     * @param int|null    $userID
-     * @param array|null  $contentHead
-     * @param string      $contentBlueprintsHTML
-     * @param string      $contentPaginationHTML
      *
      * @throws ApplicationException
      * @throws DatabaseException
@@ -432,11 +390,7 @@ class SearchListTest extends TestCase
     }
 
     /**
-     * @param array $queryParams
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldQuery(array $queryParams): string
     {
@@ -452,11 +406,6 @@ HTML;
         // phpcs:enable
     }
 
-    /**
-     * @param array $queryParams
-     *
-     * @return string
-     */
     protected function getHTMLFieldType(array $queryParams): string
     {
         $value = $queryParams['form-search-select-type'] ?? '';
@@ -496,11 +445,7 @@ HTML;
     }
 
     /**
-     * @param array $queryParams
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldVersion(array $queryParams): string
     {

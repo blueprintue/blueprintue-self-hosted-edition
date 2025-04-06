@@ -99,23 +99,10 @@ HTML;
     }
 
     /**
-     * @param string $method
-     * @param string $url
-     * @param array  $params
-     * @param array  $session
-     * @param array  $cookies
-     * @param array  $queryParams
-     * @param array  $uploadedFiles
-     * @param array  $additionalsFolders
-     * @param array  $headers
-     * @param string $envFile
-     *
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws \Exception
-     *
-     * @return Response|null
      */
     protected function getResponseFromApplication(string $method, string $url, array $params = [], array $session = [], array $cookies = [], array $queryParams = [], array $uploadedFiles = [], array $additionalsFolders = [], array $headers = [], string $envFile = 'tests.env'): ?Response
     {
@@ -364,12 +351,8 @@ HTML;
     }
 
     /**
-     * @param string $username
-     *
      * @throws \Rancoud\Security\SecurityException
      * @throws \Exception
-     *
-     * @return string
      */
     protected static function getEmailHTMLConfirmAccount(string $username): string
     {
@@ -402,11 +385,6 @@ HTML;
         return \str_replace($search, $replace, $html);
     }
 
-    /**
-     * @param string $username
-     *
-     * @return string
-     */
     protected static function getEmailTextConfirmAccount(string $username): string
     {
         $text = 'Welcome to this_site_name' . "\n\n";
@@ -431,11 +409,7 @@ HTML;
     }
 
     /**
-     * @param string $publishedAt
-     *
      * @throws \Exception
-     *
-     * @return string
      */
     public static function getSince(string $publishedAt): string
     {

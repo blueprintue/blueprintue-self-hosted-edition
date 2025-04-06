@@ -14,12 +14,7 @@ use Rancoud\Application\Application;
 class BlueprintService
 {
     /**
-     * @param $fileID
-     * @param $version
-     *
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return string|null
      */
     public static function getBlueprintContent($fileID, $version): ?string
     {
@@ -44,10 +39,6 @@ class BlueprintService
     }
 
     /**
-     * @param $fileID
-     * @param $version
-     * @param $content
-     *
      * @throws \Rancoud\Application\ApplicationException
      */
     public static function setBlueprintContent($fileID, $version, $content): void
@@ -69,10 +60,6 @@ class BlueprintService
         \file_put_contents($fullpath, $content);
     }
 
-    /**
-     * @param string $storageFolder
-     * @param string $subfolder
-     */
     protected static function createFolder(string $storageFolder, string $subfolder): void
     {
         $dir = $storageFolder . $subfolder;
@@ -91,8 +78,6 @@ class BlueprintService
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
-     *
-     * @return array
      */
     public static function getLastFive(): ?array
     {
@@ -110,11 +95,6 @@ class BlueprintService
         return $blueprints;
     }
 
-    /**
-     * @param string $content
-     *
-     * @return bool
-     */
     public static function isValidBlueprint(string $content): bool
     {
         $newBlueprintContent = \mb_strtolower($content);
@@ -123,13 +103,9 @@ class BlueprintService
     }
 
     /**
-     * @param array $params
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
-     *
-     * @return array
      */
     public static function createFromHome(array $params): array
     {
@@ -209,11 +185,6 @@ class BlueprintService
         return [['id' => $blueprintID, 'slug' => $blueprintParams['slug']], null];
     }
 
-    /**
-     * @param string $content
-     *
-     * @return string
-     */
     public static function findBlueprintType(string $content): string
     {
         if (
@@ -249,12 +220,8 @@ class BlueprintService
     }
 
     /**
-     * @param BlueprintModel $blueprints
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
-     *
-     * @return string
      */
     protected static function getNewFileID(BlueprintModel $blueprints): string
     {
@@ -297,16 +264,13 @@ class BlueprintService
     }
 
     /**
-     * @param string   $pageType        [profile,last,most-discussed,type,tag,search]
-     * @param int|null $connectedUserID
-     * @param array    $params          [page,count]
+     * @param string $pageType [profile,last,most-discussed,type,tag,search]
+     * @param array  $params   [page,count]
      *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      * @throws \Exception
-     *
-     * @return array
      */
     public static function search(string $pageType, ?int $connectedUserID, array $params = []): array
     {
@@ -340,13 +304,9 @@ class BlueprintService
     }
 
     /**
-     * @param string $slug
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public static function getFromSlug(string $slug): ?array
     {
@@ -354,13 +314,9 @@ class BlueprintService
     }
 
     /**
-     * @param int $blueprintID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public static function getAllVersions(int $blueprintID): ?array
     {
@@ -368,12 +324,7 @@ class BlueprintService
     }
 
     /**
-     * @param string $expiration
-     * @param string $now
-     *
      * @throws \Exception
-     *
-     * @return string|null
      */
     protected static function computeExpiration(string $expiration, string $now): ?string
     {
@@ -396,16 +347,9 @@ class BlueprintService
     }
 
     /**
-     * @param int      $authorUserID
-     * @param int|null $connectedUserID
-     * @param int      $page
-     * @param int      $countPerPage
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array
      */
     public static function getForProfile(int $authorUserID, ?int $connectedUserID, int $page, int $countPerPage): array
     {
@@ -419,9 +363,6 @@ class BlueprintService
     }
 
     /**
-     * @param int $fromID
-     * @param int $toID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -431,8 +372,6 @@ class BlueprintService
     }
 
     /**
-     * @param int $id
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -442,13 +381,8 @@ class BlueprintService
     }
 
     /**
-     * @param int $blueprintID
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return bool
      */
     public static function isAuthorBlueprint(int $blueprintID, int $userID): bool
     {
@@ -456,13 +390,8 @@ class BlueprintService
     }
 
     /**
-     * @param int         $id
-     * @param string|null $filename
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return bool
      */
     public static function updateThumbnail(int $id, ?string $filename): bool
     {
@@ -491,9 +420,6 @@ class BlueprintService
     }
 
     /**
-     * @param int $blueprintID
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      */
@@ -503,8 +429,6 @@ class BlueprintService
     }
 
     /**
-     * @param int $blueprintID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
@@ -534,14 +458,9 @@ class BlueprintService
     }
 
     /**
-     * @param int $blueprintID
-     * @param int $version
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return int|null
      */
     public static function deleteVersion(int $blueprintID, int $version): ?int
     {
@@ -585,9 +504,6 @@ class BlueprintService
     }
 
     /**
-     * @param int      $blueprintID
-     * @param int|null $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      */
@@ -597,8 +513,6 @@ class BlueprintService
     }
 
     /**
-     * @param int $blueprintID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      * @throws \Exception
@@ -609,15 +523,9 @@ class BlueprintService
     }
 
     /**
-     * @param int    $blueprintID
-     * @param string $blueprint
-     * @param string $reason
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
-     *
-     * @return string|null
      */
     public static function addVersion(int $blueprintID, string $blueprint, string $reason): ?string
     {
@@ -689,8 +597,7 @@ class BlueprintService
     }
 
     /**
-     * @param int   $blueprintID
-     * @param array $params      [exposure,expiration,ue_version,comments_hidden,comments_closed]
+     * @param array $params [exposure,expiration,ue_version,comments_hidden,comments_closed]
      *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
@@ -713,8 +620,7 @@ class BlueprintService
     }
 
     /**
-     * @param int   $blueprintID
-     * @param array $params      [title,description,video_url]
+     * @param array $params [title,description,video_url]
      *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
@@ -737,8 +643,6 @@ class BlueprintService
     }
 
     /**
-     * @param string $videoURL
-     *
      * @return array [video,video_provider]
      */
     public static function findVideoProvider(string $videoURL): array
@@ -817,9 +721,6 @@ class BlueprintService
     }
 
     /**
-     * @param int $blueprintID
-     * @param int $count
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -829,13 +730,9 @@ class BlueprintService
     }
 
     /**
-     * @param array $params
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
-     *
-     * @return array
      */
     public static function createFromAPI(array $params): array
     {
@@ -916,12 +813,8 @@ class BlueprintService
     }
 
     /**
-     * @param int|null $connectedUserID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return array
      */
     public static function getTagsFromPublicBlueprints(?int $connectedUserID): array
     {

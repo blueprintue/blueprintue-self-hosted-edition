@@ -156,10 +156,6 @@ class BlueprintGETVideoBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintGET_VideoBlueprint
      *
-     * @param array      $sqlQueries
-     * @param string     $slug
-     * @param array|null $video
-     *
      * @throws DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException

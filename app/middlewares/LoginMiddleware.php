@@ -29,14 +29,9 @@ class LoginMiddleware implements MiddlewareInterface
     protected string $rememberInputCheckbox = 'form-login-checkbox-remember';
 
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -59,11 +54,7 @@ class LoginMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Exception
-     *
-     * @return array|null
      */
     protected function treatFormLogin(ServerRequestInterface $request): ?array
     {
@@ -102,9 +93,6 @@ class LoginMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param array|null             $params
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
@@ -200,12 +188,8 @@ class LoginMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
-     *
-     * @return bool
      */
     public function login(int $userID): bool
     {
@@ -234,9 +218,6 @@ class LoginMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param int                    $userID
-     * @param ServerRequestInterface $request
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Model\ModelException
@@ -259,8 +240,6 @@ class LoginMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Database\DatabaseException
@@ -279,13 +258,9 @@ class LoginMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Exception
-     *
-     * @return ResponseInterface|null
      */
     protected function tryToRememberUser(ServerRequestInterface $request): ?ResponseInterface
     {

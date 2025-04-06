@@ -11,9 +11,6 @@ use Rancoud\Session\Session;
 trait FormTrait
 {
     /**
-     * @param string $key
-     * @param string $value
-     *
      * @throws \Exception
      */
     protected function setAndKeepInfos(string $key, string $value): void
@@ -23,14 +20,7 @@ trait FormTrait
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param string                 $method
-     * @param array                  $inputs
-     * @param string                 $errorKey
-     *
      * @throws \Exception
-     *
-     * @return bool
      */
     protected function hasSentForm(ServerRequestInterface $request, string $method, array $inputs, string $errorKey): bool // phpcs:ignore
     {

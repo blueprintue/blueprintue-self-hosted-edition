@@ -381,16 +381,6 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
     /**
      * @dataProvider dataCasesEditBasicInfos
      *
-     * @param array $sqlQueries
-     * @param int   $userID
-     * @param array $params
-     * @param bool  $useCsrfFromSession
-     * @param bool  $hasRedirection
-     * @param bool  $isFormSuccess
-     * @param array $flashMessages
-     * @param array $fieldsHasError
-     * @param array $fieldsHasValue
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -478,11 +468,7 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
     }
 
     /**
-     * @param string $value
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldBio(string $value): string
     {
@@ -499,11 +485,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldWebsite(string $value): string
     {

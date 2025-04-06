@@ -19,12 +19,7 @@ use Rancoud\Security\Security;
 class APIController implements MiddlewareInterface
 {
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -62,12 +57,8 @@ class APIController implements MiddlewareInterface
 
     // region API Key
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return array
      */
     protected function findUserWithApiKey(ServerRequestInterface $request): array
     {
@@ -92,11 +83,7 @@ class APIController implements MiddlewareInterface
     }
 
     /**
-     * @param string $error
-     *
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     protected function sendUnauthorizedError(string $error): ResponseInterface
     {
@@ -131,13 +118,9 @@ class APIController implements MiddlewareInterface
     }
 
     /**
-     * @param string|null $blueprint
-     *
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
-     *
-     * @return ResponseInterface
      */
     protected function doProcessRender(?string $blueprint): ResponseInterface
     {
@@ -160,11 +143,7 @@ class APIController implements MiddlewareInterface
     }
 
     /**
-     * @param array $data
-     *
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return string
      */
     protected function generateHTML(array $data): string
     {
@@ -230,14 +209,9 @@ class APIController implements MiddlewareInterface
     }
 
     /**
-     * @param int   $userID
-     * @param array $params
-     *
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
-     *
-     * @return ResponseInterface
      */
     protected function doProcessUpload(int $userID, array $params): ResponseInterface
     {
