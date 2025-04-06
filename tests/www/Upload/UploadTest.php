@@ -1033,15 +1033,6 @@ class UploadTest extends TestCase
      * @dataProvider dataCasesUserAvatar
      * @dataProvider dataCasesBlueprintThumbnail
      *
-     * @param string   $slug
-     * @param int      $statusCode
-     * @param string   $responseContent
-     * @param int|null $userID
-     * @param array    $params
-     * @param array    $file
-     * @param array    $additionalsFolders
-     * @param bool     $isUploaded
-     *
      * @throws DatabaseException
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException

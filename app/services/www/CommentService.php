@@ -11,13 +11,9 @@ use Rancoud\Application\Application;
 class CommentService
 {
     /**
-     * @param int $blueprintID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public static function getAllCommentsWithBlueprintID(int $blueprintID): ?array
     {
@@ -26,15 +22,9 @@ class CommentService
 
     // region Add comment
     /**
-     * @param int    $blueprintID
-     * @param int    $userID
-     * @param string $comment
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      * @throws \Exception
-     *
-     * @return int
      */
     public static function addComment(int $blueprintID, int $userID, string $comment): int
     {
@@ -47,9 +37,6 @@ class CommentService
     // endregion
 
     /**
-     * @param int    $commentID
-     * @param string $comment
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      */
@@ -61,8 +48,6 @@ class CommentService
     }
 
     /**
-     * @param int $commentID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      */
@@ -74,8 +59,6 @@ class CommentService
     }
 
     /**
-     * @param int $blueprintID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -86,9 +69,6 @@ class CommentService
     }
 
     /**
-     * @param int    $userID
-     * @param string $nameFallback
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -98,8 +78,6 @@ class CommentService
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -109,8 +87,6 @@ class CommentService
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
@@ -120,13 +96,8 @@ class CommentService
     }
 
     /**
-     * @param int $commentID
-     * @param int $userID
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return bool
      */
     public static function isCommentBelongToAuthor(int $commentID, int $userID): bool
     {

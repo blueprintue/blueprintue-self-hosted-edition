@@ -49,8 +49,6 @@ class BlueprintModel extends Model
     /**
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array
      */
     public function getLastFive(): ?array
     {
@@ -79,11 +77,7 @@ class BlueprintModel extends Model
     }
 
     /**
-     * @param string $fileID
-     *
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return bool|null
      */
     public function isNewFileIDAvailable(string $fileID): ?bool
     {
@@ -100,12 +94,8 @@ class BlueprintModel extends Model
     }
 
     /**
-     * @param string $slug
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public function getFromSlug(string $slug): ?array
     {
@@ -129,9 +119,6 @@ class BlueprintModel extends Model
     }
 
     /**
-     * @param int $fromID
-     * @param int $toID
-     *
      * @throws \Rancoud\Database\DatabaseException
      */
     public function changeAuthor(int $fromID, int $toID): void
@@ -147,8 +134,6 @@ class BlueprintModel extends Model
     }
 
     /**
-     * @param int $id
-     *
      * @throws \Rancoud\Database\DatabaseException
      */
     public function softDeleteFromAuthor(int $id): void
@@ -165,12 +150,7 @@ class BlueprintModel extends Model
     }
 
     /**
-     * @param int $blueprintID
-     * @param int $userID
-     *
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return bool
      */
     public function isAuthorBlueprint(int $blueprintID, int $userID): bool
     {
@@ -186,14 +166,8 @@ class BlueprintModel extends Model
     }
 
     /**
-     * @param int   $userID
-     * @param bool  $showOnlyPublic
-     * @param array $pagination
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public function searchWithAuthor(int $userID, bool $showOnlyPublic, array $pagination): ?array
     {
@@ -252,13 +226,8 @@ class BlueprintModel extends Model
     }
 
     /**
-     * @param int|null $connectedUserID
-     * @param array    $pagination
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public function searchLast(?int $connectedUserID, array $pagination): ?array
     {
@@ -327,13 +296,8 @@ class BlueprintModel extends Model
     }
 
     /**
-     * @param int|null $connectedUserID
-     * @param array    $pagination
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public function searchMostDiscussed(?int $connectedUserID, array $pagination): ?array
     {
@@ -410,14 +374,8 @@ class BlueprintModel extends Model
     }
 
     /**
-     * @param string   $type
-     * @param int|null $connectedUserID
-     * @param array    $pagination
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public function searchType(string $type, ?int $connectedUserID, array $pagination): ?array
     {
@@ -490,14 +448,8 @@ class BlueprintModel extends Model
     }
 
     /**
-     * @param int      $tagID
-     * @param int|null $connectedUserID
-     * @param array    $pagination
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public function searchTag(int $tagID, ?int $connectedUserID, array $pagination): ?array
     {
@@ -570,14 +522,10 @@ class BlueprintModel extends Model
     }
 
     /**
-     * @param array    $params          [query,type,ue_version]
-     * @param int|null $connectedUserID
-     * @param array    $pagination
+     * @param array $params [query,type,ue_version]
      *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public function search(array $params, ?int $connectedUserID, array $pagination): ?array
     {
@@ -707,9 +655,6 @@ class BlueprintModel extends Model
     }
 
     /**
-     * @param int $blueprintID
-     * @param int $count
-     *
      * @throws \Rancoud\Database\DatabaseException
      */
     public function updateCommentCount(int $blueprintID, int $count): void
@@ -725,11 +670,7 @@ class BlueprintModel extends Model
     }
 
     /**
-     * @param int|null $connectedUserID
-     *
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return array
      */
     public function getTagsFromPublicBlueprints(?int $connectedUserID): array
     {

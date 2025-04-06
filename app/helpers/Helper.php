@@ -11,12 +11,7 @@ use Rancoud\Application\Application;
 class Helper
 {
     /**
-     * @param string   $slug
-     * @param int|null $version
-     *
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return string
      */
     public static function getBlueprintLink(string $slug, ?int $version = null): string
     {
@@ -30,12 +25,7 @@ class Helper
     }
 
     /**
-     * @param string   $slug
-     * @param int|null $version
-     *
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return string
      */
     public static function getBlueprintRenderLink(string $slug, ?int $version = null): string
     {
@@ -49,13 +39,7 @@ class Helper
     }
 
     /**
-     * @param string $slug
-     * @param int    $previousVersion
-     * @param int    $currentVersion
-     *
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return string
      */
     public static function getBlueprintDiffLink(string $slug, int $previousVersion, int $currentVersion): string
     {
@@ -63,11 +47,7 @@ class Helper
     }
 
     /**
-     * @param array $user
-     *
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return array
      */
     public static function formatUser(array $user): array
     {
@@ -77,11 +57,6 @@ class Helper
         return $user;
     }
 
-    /**
-     * @param string|null $avatar
-     *
-     * @return string|null
-     */
     public static function getAvatarUrl(?string $avatar): ?string
     {
         if ($avatar === null) {
@@ -91,11 +66,6 @@ class Helper
         return '/medias/avatars/' . $avatar;
     }
 
-    /**
-     * @param string|null $thumbnail
-     *
-     * @return string|null
-     */
     public static function getThumbnailUrl(?string $thumbnail): ?string
     {
         if ($thumbnail === null) {
@@ -106,11 +76,7 @@ class Helper
     }
 
     /**
-     * @param string $publishedAt
-     *
      * @throws \Exception
-     *
-     * @return string
      */
     public static function getSince(string $publishedAt): string
     {
@@ -140,9 +106,6 @@ class Helper
         return 'few seconds ago';
     }
 
-    /**
-     * @return array
-     */
     public static function getAllUEVersion(): array
     {
         return [
@@ -184,9 +147,6 @@ class Helper
         ];
     }
 
-    /**
-     * @return string
-     */
     public static function getCurrentUEVersion(): string
     {
         return '5.5';
@@ -195,8 +155,6 @@ class Helper
     /**
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
-     *
-     * @return string
      */
     public static function getHostname(): string
     {
@@ -215,11 +173,7 @@ class Helper
     }
 
     /**
-     * @param string|null $expiration
-     *
      * @throws \Exception
-     *
-     * @return string|null
      */
     public static function getTimeleft(?string $expiration): ?string
     {
@@ -257,12 +211,7 @@ class Helper
     }
 
     /**
-     * @param string $datetime
-     * @param string $format
-     *
      * @throws \Exception
-     *
-     * @return string
      */
     public static function formatDate(string $datetime, string $format = 'F j, Y'): string
     {
@@ -270,11 +219,7 @@ class Helper
     }
 
     /**
-     * @param int $length
-     *
      * @throws \Exception
-     *
-     * @return string
      */
     public static function getRandomString(int $length): string
     {
@@ -289,11 +234,6 @@ class Helper
         return $string;
     }
 
-    /**
-     * @param string|null $videoProvider
-     *
-     * @return string
-     */
     public static function getVideoPrivacyURL(?string $videoProvider): string
     {
         if ($videoProvider === null) {
@@ -326,12 +266,7 @@ class Helper
     }
 
     /**
-     * @param string $fileID
-     * @param array  $versions
-     *
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return array
      */
     public static function organizeVersionHistoryForDisplay(string $fileID, array $versions): array
     {
@@ -365,12 +300,6 @@ class Helper
         return $out;
     }
 
-    /**
-     * @param string $string
-     * @param int    $maxLetters
-     *
-     * @return string
-     */
     public static function getFitSentence(string $string, int $maxLetters): string
     {
         if (\mb_strlen($string) < $maxLetters) {
@@ -392,8 +321,6 @@ class Helper
 
     /**
      * @throws \Exception
-     *
-     * @return string
      */
     public static function getNowUTCFormatted(): string
     {
@@ -401,13 +328,7 @@ class Helper
     }
 
     /**
-     * @param string $date
-     * @param string $format
-     * @param string $timezone
-     *
      * @throws \Exception
-     *
-     * @return string
      */
     public static function getDateFormattedWithUserTimezone(string $date, string $format = 'Y-m-d H:i:s', string $timezone = 'UTC'): string // phpcs:ignore
     {
@@ -416,11 +337,6 @@ class Helper
 
     /**
      * Because of PHP 8.4.
-     *
-     * @param        $string
-     * @param string $characters
-     *
-     * @return string
      */
     public static function trim($string, string $characters = " \n\r\t\v\0"): string
     {

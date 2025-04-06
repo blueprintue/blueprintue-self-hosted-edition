@@ -20,12 +20,8 @@ use Rancoud\Database\DatabaseException;
 class ExtendedBlueprintService extends BlueprintService
 {
     /**
-     * @param BlueprintModel $blueprints
-     *
      * @throws DatabaseException
      * @throws \Exception
-     *
-     * @return string
      */
     protected static function getNewFileID(BlueprintModel $blueprints): string
     {

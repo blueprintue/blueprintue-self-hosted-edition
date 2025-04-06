@@ -12,8 +12,6 @@ class MailerHelper
     protected ?PHPMailer $mailer = null;
 
     /**
-     * @param bool $useCustomEmailValidation
-     *
      * @throws \PHPMailer\PHPMailer\Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
@@ -56,10 +54,6 @@ class MailerHelper
         }
     }
 
-    /**
-     * @param string $subject
-     * @param string $message
-     */
     public function setTextEmail(string $subject, string $message): void
     {
         $this->mailer->isHTML(false);
@@ -68,11 +62,6 @@ class MailerHelper
         $this->mailer->Body = $message;
     }
 
-    /**
-     * @param string $subject
-     * @param string $html
-     * @param string $text
-     */
     public function setHTMLEmail(string $subject, string $html, string $text): void
     {
         $this->mailer->isHTML(true);
@@ -83,11 +72,7 @@ class MailerHelper
     }
 
     /**
-     * @param string $to
-     *
      * @throws \PHPMailer\PHPMailer\Exception
-     *
-     * @return bool
      */
     public function send(string $to): bool
     {

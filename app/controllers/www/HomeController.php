@@ -32,8 +32,6 @@ class HomeController implements MiddlewareInterface
     ];
 
     /**
-     * @param array $data
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      *
@@ -51,16 +49,11 @@ class HomeController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Model\ModelException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -86,11 +79,7 @@ class HomeController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Exception
-     *
-     * @return array|null
      */
     protected function treatFormCreateBlueprint(ServerRequestInterface $request): ?array
     {
@@ -159,13 +148,9 @@ class HomeController implements MiddlewareInterface
     }
 
     /**
-     * @param array|null $params
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     protected function doProcessCreateBlueprint(?array $params): ResponseInterface
     {
@@ -235,8 +220,6 @@ class HomeController implements MiddlewareInterface
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array
      */
     protected function getLastFiveBlueprints(): ?array
     {

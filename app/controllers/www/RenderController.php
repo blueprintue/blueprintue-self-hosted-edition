@@ -24,8 +24,6 @@ class RenderController implements MiddlewareInterface
     protected ?int $userID = null;
 
     /**
-     * @param array $data
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      */
@@ -42,16 +40,11 @@ class RenderController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Model\ModelException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -89,11 +82,7 @@ class RenderController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Exception
-     *
-     * @return array|null
      */
     protected function getBlueprint(ServerRequestInterface $request): ?array
     {
@@ -116,14 +105,9 @@ class RenderController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param array                  $blueprint
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     protected function getBlueprintVersions(ServerRequestInterface $request, array $blueprint): ?array
     {
@@ -164,11 +148,7 @@ class RenderController implements MiddlewareInterface
     }
 
     /**
-     * @param array $data
-     *
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return string
      */
     protected function generateHTML(array $data): string
     {

@@ -430,17 +430,6 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintPOST_DeleteComment
      *
-     * @param array      $sqlQueries
-     * @param string     $slug
-     * @param int|null   $userID
-     * @param int|null   $commentID
-     * @param bool       $hasButtonDelete
-     * @param array|null $params
-     * @param bool       $useCsrfFromSession
-     * @param bool       $hasRedirection
-     * @param bool       $isFormSuccess
-     * @param array      $flashMessages
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException

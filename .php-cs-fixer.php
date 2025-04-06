@@ -30,7 +30,7 @@ $rules = [
         ]
     ],
     'no_php4_constructor'                              => true,
-    'no_superfluous_phpdoc_tags'                       => false,
+    'no_superfluous_phpdoc_tags'                       => true,
     'no_unreachable_default_argument_value'            => true,
     'no_useless_else'                                  => true,
     'no_useless_return'                                => true,

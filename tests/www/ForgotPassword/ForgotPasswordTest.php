@@ -96,8 +96,6 @@ class ForgotPasswordTest extends TestCase
 
     /**
      * @throws \Exception
-     *
-     * @return string
      */
     protected static function getEmailHTML(): string
     {
@@ -431,20 +429,6 @@ class ForgotPasswordTest extends TestCase
     /**
      * @dataProvider dataCasesForgotPasswordPOST
      *
-     * @param array  $sqlQueries
-     * @param array  $params
-     * @param bool   $useCsrfFromSession
-     * @param int    $mailCalled
-     * @param string $mailText
-     * @param string $mailHTML
-     * @param bool   $mailSent
-     * @param bool   $hasRedirection
-     * @param bool   $isFormSuccess
-     * @param array  $flashMessages
-     * @param array  $fieldsHasError
-     * @param array  $fieldsHasValue
-     * @param array  $fieldsLabelError
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -548,13 +532,7 @@ class ForgotPasswordTest extends TestCase
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldEmail(string $value, bool $hasError, string $labelError): string
     {
@@ -581,15 +559,7 @@ HTML;
     }
 
     /**
-     * @param string   $to
-     * @param string   $subject
-     * @param string   $html
-     * @param string   $text
-     * @param Database $db
-     *
      * @throws DatabaseException
-     *
-     * @return bool
      */
     public static function mailForPHPUnit(string $to, string $subject, string $html, string $text, Database $db): bool
     {

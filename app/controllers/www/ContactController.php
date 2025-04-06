@@ -29,8 +29,6 @@ class ContactController implements MiddlewareInterface
     ];
 
     /**
-     * @param array $data
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      *
@@ -48,14 +46,9 @@ class ContactController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -95,11 +88,7 @@ class ContactController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Exception
-     *
-     * @return array|null
      */
     protected function treatFormContact(ServerRequestInterface $request): ?array
     {
@@ -149,9 +138,6 @@ class ContactController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param array|null             $params
-     *
      * @throws \Exception
      */
     protected function doProcessContact(ServerRequestInterface $request, ?array $params): void
@@ -164,8 +150,6 @@ class ContactController implements MiddlewareInterface
     }
 
     /**
-     * @param array $params
-     *
      * @throws \Exception
      */
     protected function sendMail(array $params): void

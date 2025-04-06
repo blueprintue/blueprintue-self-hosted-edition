@@ -86,10 +86,6 @@ class LoginWithRememberTest extends TestCase
     /**
      * @dataProvider dataCasesLoginWithRemember
      *
-     * @param string $rememberToken
-     * @param array  $bodyContains
-     * @param array  $bodyNotContains
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException

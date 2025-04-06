@@ -775,18 +775,6 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
     /**
      * @dataProvider dataCasesDeleteProfile
      *
-     * @param array $sqlQueries
-     * @param int   $userID
-     * @param array $params
-     * @param bool  $useCsrfFromSession
-     * @param bool  $hasRedirection
-     * @param bool  $isFormSuccess
-     * @param array $flashMessages
-     * @param array $fieldsHasError
-     * @param array $fieldsHasValue
-     * @param array $fieldsLabelError
-     * @param bool  $hasAnonymousUser
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -945,13 +933,6 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
         }
     }
 
-    /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
-     * @return string
-     */
     protected function getHTMLFieldBlueprintsOwnership(string $value, bool $hasError, string $labelError): string
     {
         $give = ($value === 'give' || $value === '') ? ' selected="selected"' : '';
@@ -987,13 +968,6 @@ HTML;
         // phpcs:enable
     }
 
-    /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
-     * @return string
-     */
     protected function getHTMLFieldCommentsOwnership(string $value, bool $hasError, string $labelError): string
     {
         $keep = ($value === 'keep' || $value === '') ? ' selected="selected"' : '';

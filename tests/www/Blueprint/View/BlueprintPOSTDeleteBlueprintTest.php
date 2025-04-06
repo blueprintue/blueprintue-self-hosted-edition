@@ -418,18 +418,6 @@ class BlueprintPOSTDeleteBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintPOST_DeleteBlueprint
      *
-     * @param array      $sqlQueries
-     * @param string     $slug
-     * @param int|null   $userID
-     * @param array|null $anonymousBlueprints
-     * @param bool       $hasButtonDelete
-     * @param bool       $doPostAction
-     * @param array|null $params
-     * @param bool       $useCsrfFromSession
-     * @param bool       $hasRedirection
-     * @param bool       $isFormSuccess
-     * @param array      $flashMessages
-     *
      * @throws DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException

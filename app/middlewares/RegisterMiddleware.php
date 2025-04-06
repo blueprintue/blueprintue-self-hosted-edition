@@ -28,13 +28,8 @@ class RegisterMiddleware implements MiddlewareInterface
     ];
 
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -52,13 +47,9 @@ class RegisterMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
-     *
-     * @return array|null
      */
     protected function treatFormRegister(ServerRequestInterface $request): ?array
     {
@@ -144,9 +135,6 @@ class RegisterMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param array|null             $params
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException

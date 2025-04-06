@@ -12,11 +12,6 @@ class TagService
 {
     protected static int $maxTags = 25;
 
-    /**
-     * @param string $string
-     *
-     * @return string
-     */
     public static function slugify(string $string): string
     {
         $string = Helper::trim($string);
@@ -27,13 +22,9 @@ class TagService
     }
 
     /**
-     * @param string|null $ids
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public static function getTagsWithListIDs(?string $ids): ?array
     {
@@ -54,13 +45,9 @@ class TagService
     }
 
     /**
-     * @param string $slug
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public static function findTagWithSlug(string $slug): ?array
     {
@@ -75,13 +62,9 @@ class TagService
     }
 
     /**
-     * @param string $textareaTagsRaw
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return string|null
      */
     public static function createAndFindTagsWithTextareaTags(string $textareaTagsRaw): ?string
     {
@@ -148,8 +131,6 @@ class TagService
     /**
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array
      */
     public static function getAllTags(): array
     {

@@ -147,14 +147,6 @@ class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
     /**
      * @dataProvider dataCasesGenerateApiKey
      *
-     * @param array $sqlQueries
-     * @param int   $userID
-     * @param array $params
-     * @param bool  $useCsrfFromSession
-     * @param bool  $hasRedirection
-     * @param bool  $isFormSuccess
-     * @param array $flashMessages
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException

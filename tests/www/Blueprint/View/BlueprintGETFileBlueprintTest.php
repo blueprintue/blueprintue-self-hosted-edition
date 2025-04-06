@@ -92,11 +92,6 @@ class BlueprintGETFileBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintGET_FileBlueprint
      *
-     * @param array  $sqlQueries
-     * @param string $fileID
-     * @param string $version
-     * @param string $slug
-     *
      * @throws DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException

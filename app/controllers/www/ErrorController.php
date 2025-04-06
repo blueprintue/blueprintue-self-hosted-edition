@@ -18,8 +18,6 @@ class ErrorController implements MiddlewareInterface
     use TemplateTrait;
 
     /**
-     * @param array $data
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      */
@@ -35,13 +33,8 @@ class ErrorController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

@@ -544,19 +544,6 @@ class LoginTest extends TestCase
     /**
      * @dataProvider dataCasesLoginPOST
      *
-     * @param int|null $userID
-     * @param array    $params
-     * @param bool     $useCsrfFromSession
-     * @param bool     $isUserLogged
-     * @param bool     $hasRedirection
-     * @param array    $flashMessages
-     * @param bool     $redirectForConfirm
-     * @param bool     $isUserConfirmed
-     * @param int      $mailCalled
-     * @param string   $mailText
-     * @param string   $mailHTML
-     * @param bool     $mailSent
-     *
      * @throws ApplicationException
      * @throws CryptException
      * @throws DatabaseException
@@ -649,16 +636,7 @@ class LoginTest extends TestCase
     }
 
     /**
-     * @param string   $to
-     * @param string   $subject
-     * @param string   $html
-     * @param string   $text
-     * @param string   $token
-     * @param Database $db
-     *
      * @throws DatabaseException
-     *
-     * @return bool
      */
     public static function mailForPHPUnit(string $to, string $subject, string $html, string $text, string $token, Database $db): bool
     {

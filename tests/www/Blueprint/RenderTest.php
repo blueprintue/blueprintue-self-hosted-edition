@@ -316,14 +316,6 @@ class RenderTest extends TestCase
     /**
      * @dataProvider dataCasesRenderGET_Access
      *
-     * @param array       $sqlQueries
-     * @param int|null    $userID
-     * @param string      $slug
-     * @param int         $statusCode
-     * @param string|null $location
-     * @param string|null $headerTitle
-     * @param string|null $headerDescription
-     *
      * @throws DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
@@ -432,11 +424,6 @@ HTML);
 
     /**
      * @dataProvider dataCasesRenderGET_FileBlueprint
-     *
-     * @param array  $sqlQueries
-     * @param string $fileID
-     * @param string $version
-     * @param string $slug
      *
      * @throws DatabaseException
      * @throws ApplicationException

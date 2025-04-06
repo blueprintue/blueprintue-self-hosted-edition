@@ -537,18 +537,6 @@ class ContactTest extends TestCase
     /**
      * @dataProvider dataCases
      *
-     * @param array  $params
-     * @param bool   $useCsrfFromSession
-     * @param int    $mailCalled
-     * @param string $mailText
-     * @param bool   $mailSent
-     * @param bool   $hasRedirection
-     * @param bool   $isFormSuccess
-     * @param array  $flashMessages
-     * @param array  $fieldsHasError
-     * @param array  $fieldsHasValue
-     * @param array  $fieldsLabelError
-     *
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
@@ -630,13 +618,7 @@ class ContactTest extends TestCase
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldName(string $value, bool $hasError, string $labelError): string
     {
@@ -662,13 +644,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldEmail(string $value, bool $hasError, string $labelError): string
     {
@@ -694,13 +670,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldMessage(string $value, bool $hasError, string $labelError): string
     {

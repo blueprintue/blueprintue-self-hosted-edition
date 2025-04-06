@@ -22,14 +22,9 @@ use Rancoud\Session\Session;
 class UploadController implements MiddlewareInterface
 {
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -48,13 +43,9 @@ class UploadController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws ApplicationException
      * @throws \Rancoud\Model\ModelException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     protected function uploadUserAvatar(ServerRequestInterface $request): ResponseInterface
     {
@@ -101,14 +92,10 @@ class UploadController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     protected function uploadBlueprintThumbnail(ServerRequestInterface $request): ResponseInterface
     {
@@ -159,13 +146,7 @@ class UploadController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param string                 $name
-     * @param string                 $folder
-     *
      * @throws \Exception
-     *
-     * @return array
      */
     protected function treatUpload(ServerRequestInterface $request, string $name, string $folder): array
     {
@@ -229,11 +210,7 @@ class UploadController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Exception
-     *
-     * @return array|null
      */
     protected function extractUploadParameters(ServerRequestInterface $request): ?array
     {
@@ -259,9 +236,6 @@ class UploadController implements MiddlewareInterface
         return $params;
     }
 
-    /**
-     * @param string $idxName
-     */
     protected function cleanFiles(string $idxName): void
     {
         if (isset($_FILES[$idxName]) && \is_string($_FILES[$idxName]['tmp_name'])) {
@@ -272,12 +246,6 @@ class UploadController implements MiddlewareInterface
         }
     }
 
-    /**
-     * @param UploadedFile $file
-     * @param array        $uploadParameters
-     *
-     * @return bool
-     */
     protected function isValidFile(UploadedFile $file, array $uploadParameters): bool
     {
         if ($file->getClientMediaType() !== 'image/png') {
@@ -307,9 +275,6 @@ class UploadController implements MiddlewareInterface
     }
 
     /**
-     * @param UploadedFile $file
-     * @param array        $uploadParameters
-     *
      * @return resource|null
      */
     protected function createImageInMemory(UploadedFile $file, array $uploadParameters)
@@ -363,12 +328,7 @@ class UploadController implements MiddlewareInterface
     }
 
     /**
-     * @param        $imgDest
-     * @param string $folder
-     *
      * @throws \Exception
-     *
-     * @return string|null
      */
     protected function writeImageInStorage($imgDest, string $folder): ?string
     {
@@ -387,11 +347,7 @@ class UploadController implements MiddlewareInterface
     }
 
     /**
-     * @param string $error
-     *
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     protected function sendError(string $error): ResponseInterface
     {
@@ -401,11 +357,7 @@ class UploadController implements MiddlewareInterface
     }
 
     /**
-     * @param string $fileUrl
-     *
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     protected function sendSuccess(string $fileUrl): ResponseInterface
     {

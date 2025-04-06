@@ -568,20 +568,6 @@ class BlueprintPOSTEditCommentTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintPOST_EditComment
      *
-     * @param array      $sqlQueries
-     * @param string     $slug
-     * @param int|null   $userID
-     * @param int|null   $commentID
-     * @param bool       $hasButtonEdit
-     * @param array|null $params
-     * @param bool       $useCsrfFromSession
-     * @param bool       $hasRedirection
-     * @param bool       $isFormSuccess
-     * @param array      $flashMessages
-     * @param array      $fieldsHasError
-     * @param array      $fieldsHasValue
-     * @param array      $fieldsLabelError
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -717,15 +703,7 @@ HTML;
     }
 
     /**
-     * @param int    $commentID
-     * @param string $csrf
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFormEditComment(int $commentID, string $csrf, string $value, bool $hasError, string $labelError): string
     {

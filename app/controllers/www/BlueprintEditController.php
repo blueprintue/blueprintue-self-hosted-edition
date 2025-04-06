@@ -71,8 +71,6 @@ class BlueprintEditController implements MiddlewareInterface
     ];
 
     /**
-     * @param array $data
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      */
@@ -89,14 +87,9 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -129,11 +122,7 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Exception
-     *
-     * @return array|null
      */
     protected function getBlueprint(ServerRequestInterface $request): ?array
     {
@@ -152,11 +141,7 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Exception
-     *
-     * @return ResponseInterface|null
      */
     protected function treatFormSent(ServerRequestInterface $request): ?ResponseInterface
     {
@@ -188,11 +173,7 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Exception
-     *
-     * @return string|null
      */
     protected function findFormSent(ServerRequestInterface $request): ?string
     {
@@ -241,12 +222,6 @@ class BlueprintEditController implements MiddlewareInterface
         return $formKeyFound;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @param array                  $inputs
-     *
-     * @return array
-     */
     protected function cleanRawParamsInRequest(ServerRequestInterface $request, array $inputs): array
     {
         $params = [];
@@ -266,8 +241,6 @@ class BlueprintEditController implements MiddlewareInterface
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     protected function doProcessDeleteThumbnail(): ResponseInterface
     {
@@ -290,12 +263,7 @@ class BlueprintEditController implements MiddlewareInterface
 
     // region Edit Informations
     /**
-     * @param ServerRequestInterface $request
-     * @param array                  $inputs
-     *
      * @throws \Exception
-     *
-     * @return array|null
      */
     protected function treatFormEditInformations(ServerRequestInterface $request, array $inputs): ?array
     {
@@ -350,12 +318,8 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
-     * @param array|null $params
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
-     *
-     * @return ResponseInterface|null
      */
     protected function doProcessEditInformations(?array $params): ?ResponseInterface
     {
@@ -413,12 +377,7 @@ class BlueprintEditController implements MiddlewareInterface
 
     // region Edit Properties
     /**
-     * @param ServerRequestInterface $request
-     * @param array                  $inputs
-     *
      * @throws \Exception
-     *
-     * @return array|null
      */
     protected function treatFormEditProperties(ServerRequestInterface $request, array $inputs): ?array
     {
@@ -473,12 +432,8 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
-     * @param array|null $params
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
-     *
-     * @return ResponseInterface|null
      */
     protected function doProcessEditProperties(?array $params): ?ResponseInterface
     {
@@ -534,12 +489,7 @@ class BlueprintEditController implements MiddlewareInterface
 
     // region Add Version
     /**
-     * @param ServerRequestInterface $request
-     * @param array                  $inputs
-     *
      * @throws \Exception
-     *
-     * @return array|null
      */
     protected function treatFormAddVersion(ServerRequestInterface $request, array $inputs): ?array
     {
@@ -578,13 +528,9 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
-     * @param array|null $params
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
-     *
-     * @return ResponseInterface|null
      */
     protected function doProcessAddVersion(?array $params): ?ResponseInterface
     {
@@ -608,12 +554,7 @@ class BlueprintEditController implements MiddlewareInterface
 
     // region Delete Blueprint
     /**
-     * @param ServerRequestInterface $request
-     * @param array                  $inputs
-     *
      * @throws \Exception
-     *
-     * @return array|null
      */
     protected function treatFormDeleteBlueprint(ServerRequestInterface $request, array $inputs): ?array
     {
@@ -647,13 +588,9 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
-     * @param array|null $params
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
-     *
-     * @return ResponseInterface|null
      */
     protected function doProcessDeleteBlueprint(?array $params): ?ResponseInterface
     {
@@ -700,8 +637,6 @@ class BlueprintEditController implements MiddlewareInterface
     // endregion
 
     /**
-     * @param array $blueprint
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Exception
@@ -766,8 +701,6 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
-     * @param array $blueprint
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException

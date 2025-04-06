@@ -20,8 +20,6 @@ class ConfirmAccountController implements MiddlewareInterface
     use TemplateTrait;
 
     /**
-     * @param array $data
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      */
@@ -38,13 +36,8 @@ class ConfirmAccountController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -74,13 +67,9 @@ class ConfirmAccountController implements MiddlewareInterface
     }
 
     /**
-     * @param string $confirmedToken
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return bool
      */
     protected function checkConfirmedToken(string $confirmedToken): bool
     {

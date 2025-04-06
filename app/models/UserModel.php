@@ -43,8 +43,6 @@ class UserModel extends Model
 
     /**
      * Model constructor.
-     *
-     * @param Database $database
      */
     public function __construct(Database $database)
     {
@@ -89,13 +87,8 @@ class UserModel extends Model
     }
 
     /**
-     * @param string $login
-     * @param string $password
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return int|null
      */
     public function findUserIDWithUsernameAndPassword(string $login, string $password): ?int
     {
@@ -123,12 +116,8 @@ class UserModel extends Model
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public function getInfosForSession(int $userID): ?array
     {
@@ -154,12 +143,8 @@ class UserModel extends Model
     }
 
     /**
-     * @param array $items
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array
      */
     public function getInfosFromIdAuthorIndex(array $items): array
     {
@@ -201,12 +186,7 @@ class UserModel extends Model
     }
 
     /**
-     * @param string $username
-     * @param string $slug
-     *
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return bool
      */
     public function isUsernameAvailable(string $username, string $slug): bool
     {
@@ -221,11 +201,7 @@ class UserModel extends Model
     }
 
     /**
-     * @param string $email
-     *
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return bool
      */
     public function isEmailAvailable(string $email): bool
     {
@@ -240,12 +216,8 @@ class UserModel extends Model
     }
 
     /**
-     * @param string $slug
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public function getUserBySlugForPublicProfile(string $slug): ?array
     {
@@ -265,12 +237,8 @@ class UserModel extends Model
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public function getUserByIDForPrivateProfile(int $userID): ?array
     {
@@ -300,8 +268,6 @@ class UserModel extends Model
     }
 
     /**
-     * @param int $userID
-     *
      * @throws \Rancoud\Database\DatabaseException
      */
     public function deleteRememberToken(int $userID): void
@@ -317,11 +283,7 @@ class UserModel extends Model
     }
 
     /**
-     * @param string $rememberToken
-     *
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return int|null
      */
     public function getUserIDFromRememberMe(string $rememberToken): ?int
     {
@@ -342,12 +304,8 @@ class UserModel extends Model
     }
 
     /**
-     * @param string $email
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     public function findUserWithEmailForResetPassword(string $email): ?array
     {
@@ -367,12 +325,7 @@ class UserModel extends Model
     }
 
     /**
-     * @param string $email
-     * @param string $token
-     *
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return int|null
      */
     public function findUserIDFromEmailAndToken(string $email, string $token): ?int
     {
@@ -394,11 +347,7 @@ class UserModel extends Model
     }
 
     /**
-     * @param string $confirmedToken
-     *
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return int|null
      */
     public function findUserIDWithConfirmedToken(string $confirmedToken): ?int
     {

@@ -996,17 +996,6 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
     /**
      * @dataProvider dataCasesEditSocials
      *
-     * @param array $sqlQueries
-     * @param int   $userID
-     * @param array $params
-     * @param bool  $useCsrfFromSession
-     * @param bool  $hasRedirection
-     * @param bool  $isFormSuccess
-     * @param array $flashMessages
-     * @param array $fieldsHasError
-     * @param array $fieldsHasValue
-     * @param array $fieldsLabelError
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -1120,13 +1109,7 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldFacebook(string $value, bool $hasError, string $labelError): string
     {
@@ -1169,13 +1152,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldTwitter(string $value, bool $hasError, string $labelError): string
     {
@@ -1218,13 +1195,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldGithub(string $value, bool $hasError, string $labelError): string
     {
@@ -1267,13 +1238,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldYoutube(string $value, bool $hasError, string $labelError): string
     {
@@ -1318,13 +1283,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldTwitch(string $value, bool $hasError, string $labelError): string
     {
@@ -1367,13 +1326,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldUnreal(string $value, bool $hasError, string $labelError): string
     {

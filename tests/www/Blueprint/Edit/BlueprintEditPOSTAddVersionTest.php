@@ -445,18 +445,6 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
     /**
      * @dataProvider dataCasesAddVersion
      *
-     * @param array $sqlQueries
-     * @param int   $userID
-     * @param int   $countVersions
-     * @param array $params
-     * @param bool  $useCsrfFromSession
-     * @param bool  $hasRedirection
-     * @param bool  $isFormSuccess
-     * @param array $flashMessages
-     * @param array $fieldsHasError
-     * @param array $fieldsHasValue
-     * @param array $fieldsLabelError
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -591,13 +579,7 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldBlueprint(string $value, bool $hasError, string $labelError): string
     {
@@ -630,13 +612,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldReason(string $value, bool $hasError, string $labelError): string
     {

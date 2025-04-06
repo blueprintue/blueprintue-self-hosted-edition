@@ -255,16 +255,6 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
     /**
      * @dataProvider dataCasesDeleteThumbnail
      *
-     * @param array       $sqlQueries
-     * @param int         $userID
-     * @param array       $params
-     * @param bool        $useCsrfFromSession
-     * @param bool        $hasRedirection
-     * @param bool        $isFormSuccess
-     * @param array       $flashMessages
-     * @param string|null $fileOrDirOnDisk
-     * @param bool        $isFile
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException

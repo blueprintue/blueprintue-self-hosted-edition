@@ -269,11 +269,6 @@ class APIUploadTest extends TestCase
     /**
      * @dataProvider dataCases
      *
-     * @param array  $headers
-     * @param array  $params
-     * @param int    $responseCode
-     * @param string $responseContent
-     *
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException

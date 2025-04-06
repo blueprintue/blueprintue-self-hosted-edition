@@ -22,8 +22,6 @@ class BlueprintDiffController implements MiddlewareInterface
     protected ?int $userID = null;
 
     /**
-     * @param array $data
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      */
@@ -41,15 +39,10 @@ class BlueprintDiffController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -96,11 +89,7 @@ class BlueprintDiffController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     *
      * @throws \Exception
-     *
-     * @return array|null
      */
     protected function getBlueprint(ServerRequestInterface $request): ?array
     {
@@ -123,14 +112,9 @@ class BlueprintDiffController implements MiddlewareInterface
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param array                  $blueprint
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return array|null
      */
     protected function getBlueprintVersions(ServerRequestInterface $request, array $blueprint): ?array
     {

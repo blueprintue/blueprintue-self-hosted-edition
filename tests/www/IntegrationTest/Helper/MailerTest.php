@@ -178,11 +178,6 @@ class MailerTest extends TestCase
     /**
      * @dataProvider dataCases
      *
-     * @param string $envFile
-     * @param bool   $useCustomEmailValidation
-     * @param array  $constructAssertions
-     * @param array  $content
-     *
      * @throws \PHPMailer\PHPMailer\Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException

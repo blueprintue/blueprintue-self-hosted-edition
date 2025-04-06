@@ -834,19 +834,6 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
     /**
      * @dataProvider dataCasesEditInformations
      *
-     * @param array  $sqlQueries
-     * @param int    $userID
-     * @param array  $params
-     * @param bool   $useCsrfFromSession
-     * @param bool   $hasRedirection
-     * @param bool   $isFormSuccess
-     * @param array  $flashMessages
-     * @param array  $fieldsHasError
-     * @param array  $fieldsHasValue
-     * @param array  $fieldsLabelError
-     * @param string $tagsTextarea
-     * @param array  $tags
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
@@ -1008,13 +995,7 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldTitle(string $value, bool $hasError, string $labelError): string
     {
@@ -1047,11 +1028,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldDescription(string $value): string
     {
@@ -1071,12 +1048,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param array  $tags
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldTag(string $value, array $tags): string
     {
@@ -1120,13 +1092,7 @@ HTML;
     }
 
     /**
-     * @param string $value
-     * @param bool   $hasError
-     * @param string $labelError
-     *
      * @throws SecurityException
-     *
-     * @return string
      */
     protected function getHTMLFieldVideo(string $value, bool $hasError, string $labelError): string
     {
