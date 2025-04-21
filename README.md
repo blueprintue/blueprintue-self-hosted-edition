@@ -4,7 +4,7 @@
 [![Docker Stars](https://img.shields.io/docker/stars/blueprintue/blueprintue-self-hosted-edition?logo=docker)](https://hub.docker.com/r/blueprintue/blueprintue-self-hosted-edition/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/blueprintue/blueprintue-self-hosted-edition?logo=docker)](https://hub.docker.com/r/blueprintue/blueprintue-self-hosted-edition/)
 [![Total downloads](https://img.shields.io/github/downloads/blueprintue/blueprintue-self-hosted-edition/total.svg?logo=github)](https://github.com/blueprintue/blueprintue-self-hosted-edition/releases/latest)
-![PHP Version Support](https://img.shields.io/badge/%3E%3D7.4.0-777BB4?label=php)
+![PHP Version Support](https://img.shields.io/badge/%3E%3D8.4.0-777BB4?label=php)
 ![MariaDB Version Support](https://img.shields.io/badge/%3E%3D10.6-003545?label=MariaDB)
 ![MySQL Version Support](https://img.shields.io/badge/%3E%3D8-005C84?label=MySQL)
 [![Composer dependencies](https://img.shields.io/badge/dependencies-9-brightgreen)](https://github.com/blueprintue/blueprintue-self-hosted-edition/blob/main/composer.json)
@@ -12,7 +12,7 @@
 [![Codecov](https://img.shields.io/codecov/c/github/blueprintue/blueprintue-self-hosted-edition?logo=codecov)](https://codecov.io/gh/blueprintue/blueprintue-self-hosted-edition)
 
 ## Minimum requirements
-* \>= PHP 7.4
+* \>= PHP 8.4
 * \>= MySQL 8 or >= MariaDB 10.6
 
 ## How to install?

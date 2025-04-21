@@ -29,9 +29,6 @@ jobs:
       packages: write
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
@@ -67,9 +64,10 @@ jobs:
       - name: Build Image
         uses: docker/bake-action@v6
         with:
+          source: .
           files: |
             ./docker-bake.hcl
-            ${{ steps.meta.outputs.bake-file }}
+            cwd://${{ steps.meta.outputs.bake-file }}
           targets: image-all
           push: ${{ github.event_name != 'pull_request' }}
 

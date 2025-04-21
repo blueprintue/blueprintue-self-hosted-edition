@@ -39,12 +39,14 @@ jobs:
       - name: Validate
         uses: docker/bake-action@v6
         with:
+          source: .
           set: php-version.args.PHP_VERSION=${{ matrix.php-version }}
           targets: validate
 
       - name: Build Image Tests E2E
         uses: docker/bake-action@v6
         with:
+          source: .
           set: php-version.args.PHP_VERSION=${{ matrix.php-version }}
           targets: test
 
