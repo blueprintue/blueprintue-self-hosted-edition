@@ -5,7 +5,7 @@ FROM php:$PHP_VERSION-cli-alpine AS base
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV PHP_CS_FIXER_IGNORE_ENV=True
 
-RUN apk add --no-cache \
+RUN apk --update --no-cache add \
   build-base \
   curl \
   freetype-dev \

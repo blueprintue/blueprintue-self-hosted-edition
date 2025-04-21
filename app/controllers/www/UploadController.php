@@ -279,10 +279,10 @@ class UploadController implements MiddlewareInterface
      */
     protected function createImageInMemory(UploadedFile $file, array $uploadParameters)
     {
-        $imgSrc = \imagecreatefrompng($file->getFilename());
+        $imgSrc = @\imagecreatefrompng($file->getFilename());
         if ($imgSrc === false) {
             // @codeCoverageIgnoreStart
-            // I don't know how to produce this error
+            // With Dockerfile gd returns false, but with Github Action it retuns a resource
             return null;
             // @codeCoverageIgnoreEnd
         }
