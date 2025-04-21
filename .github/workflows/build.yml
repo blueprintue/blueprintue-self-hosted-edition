@@ -64,7 +64,6 @@ jobs:
       - name: Build Image
         uses: docker/bake-action@v6
         with:
-          source: .
           files: |
             ./docker-bake.hcl
             cwd://${{ steps.meta.outputs.bake-file }}
