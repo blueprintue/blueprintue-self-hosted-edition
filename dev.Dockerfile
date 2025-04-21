@@ -24,7 +24,7 @@ RUN apk add --no-cache \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
   && composer --version
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN if [ "$PHP_VERSION" = "7.4.33" ] ; then pecl install xdebug-3.1.6 && docker-php-ext-enable xdebug ; else pecl install xdebug && docker-php-ext-enable xdebug ; fi
+RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN docker-php-ext-install gd pdo_mysql
 RUN echo 'memory_limit = -1' >> $PHP_INI_DIR/conf.d/php.ini
 WORKDIR /src

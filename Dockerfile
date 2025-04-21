@@ -1,4 +1,4 @@
-FROM crazymax/alpine-s6:3.19 AS base
+FROM crazymax/alpine-s6:3.21 AS base
 
 ENV S6_BEHAVIOR_IF_STAGE2_FAILS="2" \
   TZ="UTC" \
@@ -8,34 +8,35 @@ ENV S6_BEHAVIOR_IF_STAGE2_FAILS="2" \
 RUN apk --update --no-cache add \
     curl \
     nginx \
-    php \
-    php-cli \
-    php-ctype \
-    php-curl \
-    php-dom \
-    php-exif \
-    php-fileinfo \
-    php-fpm \
-    php-gd \
-    php-iconv \
-    php-intl \
-    php-json \
-    php-mbstring \
-    php-opcache \
-    php-openssl \
-    php-pdo \
-    php-pdo_mysql \
-    php-phar \
-    php-session \
-    php-sodium \
-    php-xml \
-    php-zlib \
+    php84 \
+    php84-cli \
+    php84-ctype \
+    php84-curl \
+    php84-dom \
+    php84-exif \
+    php84-fileinfo \
+    php84-fpm \
+    php84-gd \
+    php84-iconv \
+    php84-intl \
+    php84-json \
+    php84-mbstring \
+    php84-opcache \
+    php84-openssl \
+    php84-pdo \
+    php84-pdo_mysql \
+    php84-phar \
+    php84-session \
+    php84-sodium \
+    php84-xml \
+    php84-zlib \
     mariadb-client \
     shadow \
     tzdata \
   && addgroup -g ${PGID} blueprintue-self-hosted-edition \
   && adduser -D -h /opt/blueprintue-self-hosted-edition -u ${PUID} -G blueprintue-self-hosted-edition -s /bin/sh -D blueprintue-self-hosted-edition \
-  && rm -rf /tmp/*
+  && rm -rf /tmp/* \
+  && ln -s /usr/bin/php84 /usr/bin/php
 
 FROM base AS blueprintue-self-hosted-edition
 WORKDIR /opt/blueprintue-self-hosted-edition
@@ -44,7 +45,7 @@ RUN apk --update --no-cache add curl \
   && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
   && composer validate \
   && COMPOSER_CACHE_DIR="/tmp" composer install --optimize-autoloader --no-dev --no-interaction --no-ansi \
-  && chown -R blueprintue-self-hosted-edition. /opt/blueprintue-self-hosted-edition
+  && chown -R blueprintue-self-hosted-edition /opt/blueprintue-self-hosted-edition
 COPY app ./app
 COPY www ./www
 RUN touch .env
