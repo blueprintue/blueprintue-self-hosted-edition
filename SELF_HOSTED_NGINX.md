@@ -16,7 +16,7 @@ Actual system requirements are quite low. This example was largely developed on 
 
 If you're planning on hosting this on an external HTTPS website, you'll need to [setup Let's Encrypt](https://linuxcapable.com/how-to-secure-nginx-with-lets-encrypt-on-debian-linux/); please adjust for the new config file location.
 
-You'll also need PHP 8.2 and MariaDB.
+You'll also need PHP 8.4 and MariaDB.
 
 First of all, you need to be up to date with apt:
 ```shell
@@ -92,13 +92,13 @@ nano .env
 ### PHP
 Update values of `user`, `group`, `listen.owner`, and `listen.group` to equal `nginx`.
 ```shell
-sudo nano /etc/php/8.2/fpm/pool.d/www.conf
+sudo nano /etc/php/8.4/fpm/pool.d/www.conf
 ```
 
 When the configuration is done, make sure PHP fpm is running:
 ```shell
-sudo systemctl enable php8.2-fpm.service
-sudo systemctl restart php8.2-fpm.service
+sudo systemctl enable php8.4-fpm.service
+sudo systemctl restart php8.4-fpm.service
 ```
 
 ### Nginx
@@ -141,7 +141,7 @@ server {
 
     location ~ \.php$ {
         include        fastcgi_params;
-        fastcgi_pass   unix:/run/php/php8.2-fpm.sock;
+        fastcgi_pass   unix:/run/php/php8.4-fpm.sock;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param PATH_INFO $fastcgi_path_info;
     }

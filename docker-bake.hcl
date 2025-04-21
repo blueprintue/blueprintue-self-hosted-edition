@@ -1,5 +1,5 @@
 variable "PHP_VERSION" {
-  default = "8.2"
+  default = "8.4"
 }
 
 target "php-version" {

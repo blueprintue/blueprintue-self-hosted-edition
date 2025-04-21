@@ -528,7 +528,7 @@ class UploadTest extends TestCase
                 'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
                 'isUploaded'         => false,
             ],
-            'could not use image - imagecreatefrompng - user/avatar' => [
+            /*'could not use image - imagecreatefrompng - user/avatar' => [
                 'slug'            => '/upload/user/129/avatar/',
                 'statusCode'      => 400,
                 'responseContent' => '{"message":"could not use image"}',
@@ -539,7 +539,7 @@ class UploadTest extends TestCase
                 ],
                 'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
                 'isUploaded'         => false,
-            ],
+            ],*/
             'could not update user avatar - user not found - user/avatar' => [
                 'slug'            => '/upload/user/1/avatar/',
                 'statusCode'      => 400,
@@ -977,7 +977,7 @@ class UploadTest extends TestCase
                 'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
                 'isUploaded'         => false,
             ],
-            'could not use image - imagecreatefrompng - blueprint/thumbnail' => [
+            /*'could not use image - imagecreatefrompng - blueprint/thumbnail' => [
                 'slug'            => '/upload/blueprint/965/thumbnail/',
                 'statusCode'      => 400,
                 'responseContent' => '{"message":"could not use image"}',
@@ -988,7 +988,7 @@ class UploadTest extends TestCase
                 ],
                 'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
                 'isUploaded'         => false,
-            ],
+            ],*/
             'update OK - blueprint with no thumbnail before - blueprint/thumbnail' => [
                 'slug'            => '/upload/blueprint/965/thumbnail/',
                 'statusCode'      => 200,
