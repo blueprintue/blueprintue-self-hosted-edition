@@ -71,9 +71,7 @@ class MailerHelper
         $this->mailer->AltBody = $text;
     }
 
-    /**
-     * @throws \PHPMailer\PHPMailer\Exception
-     */
+    /** @throws \PHPMailer\PHPMailer\Exception */
     public function send(string $to): bool
     {
         if ($this->mailer->Subject === '' && $this->mailer->Body === '') {

@@ -12,9 +12,7 @@ use Rancoud\Model\Model;
 
 class UserModel extends Model
 {
-    /**
-     * @throws FieldException
-     */
+    /** @throws FieldException */
     protected function setFields(): void
     {
         $this->fields = [
@@ -41,9 +39,6 @@ class UserModel extends Model
         $this->table = 'users';
     }
 
-    /**
-     * Model constructor.
-     */
     public function __construct(Database $database)
     {
         $this->addInternalsCallbacks();
@@ -185,9 +180,7 @@ class UserModel extends Model
         return $newRowsIndexedByID;
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function isUsernameAvailable(string $username, string $slug): bool
     {
         $sql = <<<'SQL'
@@ -200,9 +193,7 @@ class UserModel extends Model
         return $this->database->count($sql, $params) === 0;
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function isEmailAvailable(string $email): bool
     {
         $sql = <<<'SQL'
@@ -267,9 +258,7 @@ class UserModel extends Model
         return $cleanRow;
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function deleteRememberToken(int $userID): void
     {
         $sql = <<<'SQL'
@@ -282,9 +271,7 @@ class UserModel extends Model
         $this->database->update($sql, $params);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function getUserIDFromRememberMe(string $rememberToken): ?int
     {
         $sql = <<<'SQL'
@@ -324,9 +311,7 @@ class UserModel extends Model
         return $this->formatValues($row);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function findUserIDFromEmailAndToken(string $email, string $token): ?int
     {
         $sql = <<<'SQL'
@@ -346,9 +331,7 @@ class UserModel extends Model
         return null;
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function findUserIDWithConfirmedToken(string $confirmedToken): ?int
     {
         $sql = <<<'SQL'

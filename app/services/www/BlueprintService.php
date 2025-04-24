@@ -13,9 +13,7 @@ use Rancoud\Application\Application;
 
 class BlueprintService
 {
-    /**
-     * @throws \Rancoud\Application\ApplicationException
-     */
+    /** @throws \Rancoud\Application\ApplicationException */
     public static function getBlueprintContent($fileID, $version): ?string
     {
         static $storageFolder = null;

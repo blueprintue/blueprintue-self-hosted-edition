@@ -18,9 +18,7 @@ use Rancoud\Session\Session;
 
 class CronController
 {
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         /** @noinspection NullPointerExceptionInspection */

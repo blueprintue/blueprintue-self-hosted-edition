@@ -10,9 +10,7 @@ use Rancoud\Model\Model;
 
 class BlueprintModel extends Model
 {
-    /**
-     * @throws FieldException
-     */
+    /** @throws FieldException */
     protected function setFields(): void
     {
         $this->fields = [
@@ -76,9 +74,7 @@ class BlueprintModel extends Model
         return $rows;
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function isNewFileIDAvailable(string $fileID): ?bool
     {
         $sql = <<<'SQL'
@@ -118,9 +114,7 @@ class BlueprintModel extends Model
         return $this->formatValues($row);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function changeAuthor(int $fromID, int $toID): void
     {
         $sql = <<<'SQL'
@@ -133,9 +127,7 @@ class BlueprintModel extends Model
         $this->database->update($sql, $params);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function softDeleteFromAuthor(int $id): void
     {
         $sql = <<<'SQL'
@@ -149,9 +141,7 @@ class BlueprintModel extends Model
         $this->database->update($sql, $params);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function isAuthorBlueprint(int $blueprintID, int $userID): bool
     {
         $sql = <<<'SQL'

@@ -10,9 +10,7 @@ use Rancoud\Model\Model;
 
 class CommentModel extends Model
 {
-    /**
-     * @throws FieldException
-     */
+    /** @throws FieldException */
     protected function setFields(): void
     {
         $this->fields = [
@@ -74,9 +72,7 @@ class CommentModel extends Model
         $this->database->delete($sql, $params);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function changeAuthor(int $fromID, ?int $toID, ?string $nameFallback): void
     {
         $sql = <<<'SQL'
@@ -90,9 +86,7 @@ class CommentModel extends Model
         $this->database->update($sql, $params);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function deleteFromAuthor(int $id): void
     {
         $sql = <<<'SQL'
@@ -104,9 +98,7 @@ class CommentModel extends Model
         $this->database->delete($sql, $params);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function isCommentBelongToAuthor(int $commentID, int $userID): bool
     {
         $sql = <<<'SQL'

@@ -18,9 +18,7 @@ use Rancoud\Security\Security;
 
 class APIController implements MiddlewareInterface
 {
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         [$userID, $error] = $this->findUserWithApiKey($request);
