@@ -79,6 +79,7 @@ class APIRenderTest extends TestCase
     </script>
 </body>
 </html>
+
 HTML,
             ],
             'api key incorrect' => [
