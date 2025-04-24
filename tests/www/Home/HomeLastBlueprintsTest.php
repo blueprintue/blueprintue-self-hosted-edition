@@ -169,7 +169,7 @@ class HomeLastBlueprintsTest extends TestCase
     protected function getHTMLHeaderListBlueprints(): string
     {
         /* @noinspection HtmlUnknownTarget */
-        return <<<HTML
+        return <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element block__element--home">
 <h2 class="block__title">Last public pasted <span class="block__title--emphasis">blueprints</span></h2>
@@ -200,7 +200,7 @@ HTML;
     {
         $blueprintURL = Security::escAttr('/blueprint/' . $blueprintSlug . '/');
         $profileURL = Security::escAttr('/profile/' . $profileSlug . '/');
-        $image = <<<HTML
+        $image = <<<'HTML'
 <svg aria-label="Blueprint thumbnail" class="list__thumbnail list__thumbnail--placeholder">
 <use href="/sprite/sprite.svg#blueprint-placeholder"></use>
 </svg>
@@ -209,7 +209,7 @@ HTML;
         if ($thumbnail !== null) {
             $thumbnailURL = Security::escAttr('/medias/blueprints/' . $thumbnail);
             $image = <<<HTML
-<img alt="Blueprint thumbnail" class="list__thumbnail list__thumbnail--placeholder" src="$thumbnailURL" />
+<img alt="Blueprint thumbnail" class="list__thumbnail list__thumbnail--placeholder" src="{$thumbnailURL}" />
 HTML;
         }
 
@@ -225,15 +225,15 @@ HTML;
         return <<<HTML
 <li class="list__row list__row--data">
 <div class="list__col list__col--first" data-name="Image">
-<a class="list__link-on-placeholder" href="$blueprintURL">
-$image
+<a class="list__link-on-placeholder" href="{$blueprintURL}">
+{$image}
 </a>
 </div>
-<div class="list__col" data-name="Type">$type</div>
-<div class="list__col" data-name="UE Version">$version</div>
-<div class="list__col" data-name="Title"><a class="list__link" href="$blueprintURL">$title</a></div>
-<div class="list__col" data-name="Author"><a class="list__link" href="$profileURL">$author</a></div>
-<div class="list__col" data-name="Date">$date</div>
+<div class="list__col" data-name="Type">{$type}</div>
+<div class="list__col" data-name="UE Version">{$version}</div>
+<div class="list__col" data-name="Title"><a class="list__link" href="{$blueprintURL}">{$title}</a></div>
+<div class="list__col" data-name="Author"><a class="list__link" href="{$profileURL}">{$author}</a></div>
+<div class="list__col" data-name="Date">{$date}</div>
 </li>
 HTML;
     }

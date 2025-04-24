@@ -1072,16 +1072,16 @@ class RegisterTest extends TestCase
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-labelledby="form-register-label-username form-register-label-username-error" aria-required="true" autocomplete="username" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-register-input-username" name="form-register-input-username" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-register-label-username form-register-label-username-error" aria-required="true" autocomplete="username" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-register-input-username" name="form-register-input-username" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-register-input-username" id="form-register-label-username-error">$labelError</label>
+<label class="form__label form__label--error" for="form-register-input-username" id="form-register-label-username-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container">
-<input aria-invalid="false" aria-labelledby="form-register-label-username" aria-required="true" autocomplete="username" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-register-input-username" name="form-register-input-username" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-register-label-username" aria-required="true" autocomplete="username" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-register-input-username" name="form-register-input-username" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 HTML;
@@ -1095,16 +1095,16 @@ HTML;
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-labelledby="form-register-label-email form-register-label-email-error" aria-required="true" autocomplete="email" class="form__input form__input--invisible form__input--error" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-register-input-email" name="form-register-input-email" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-register-label-email form-register-label-email-error" aria-required="true" autocomplete="email" class="form__input form__input--invisible form__input--error" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-register-input-email" name="form-register-input-email" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-register-input-email" id="form-register-label-email-error">$labelError</label>
+<label class="form__label form__label--error" for="form-register-input-email" id="form-register-label-email-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container">
-<input aria-invalid="false" aria-labelledby="form-register-label-email" aria-required="true" autocomplete="email" class="form__input form__input--invisible" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-register-input-email" name="form-register-input-email" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-register-label-email" aria-required="true" autocomplete="email" class="form__input form__input--invisible" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-register-input-email" name="form-register-input-email" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 HTML;
@@ -1118,7 +1118,7 @@ HTML;
 <input aria-describedby="form-register-span-password" aria-invalid="false" aria-labelledby="form-register-label-password form-register-label-password-error" aria-required="true" autocomplete="new-password" class="form__input form__input--invisible form__input--error" data-form-error-min="Password must be at least 10 characters in length" data-form-error-regex="Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters" data-form-has-container data-form-rules="min:10|regex:^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9\s:])([^\s]){8,}$" id="form-register-input-password" name="form-register-input-password" type="password"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-register-input-password" id="form-register-label-password-error">$labelError</label>
+<label class="form__label form__label--error" for="form-register-input-password" id="form-register-label-password-error">{$labelError}</label>
 HTML;
         }
 
@@ -1138,11 +1138,11 @@ HTML;
 <input aria-invalid="false" aria-labelledby="form-register-label-password_confirm form-register-label-password_confirm-error" aria-required="true" autocomplete="new-password" class="form__input form__input--invisible form__input--error" data-form-error-equal_field="Confirm Password must be the same as Password" data-form-error-required="Confirm Password is required" data-form-has-container data-form-rules="required|equal_field:form-register-input-password" id="form-register-input-password_confirm" name="form-register-input-password_confirm" type="password"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-register-input-password_confirm" id="form-register-label-password_confirm-error">$labelError</label>
+<label class="form__label form__label--error" for="form-register-input-password_confirm" id="form-register-label-password_confirm-error">{$labelError}</label>
 HTML;
         }
 
-        return <<<HTML
+        return <<<'HTML'
 <div class="form__container">
 <input aria-invalid="false" aria-labelledby="form-register-label-password_confirm" aria-required="true" autocomplete="new-password" class="form__input form__input--invisible" data-form-error-equal_field="Confirm Password must be the same as Password" data-form-error-required="Confirm Password is required" data-form-has-container data-form-rules="required|equal_field:form-register-input-password" id="form-register-input-password_confirm" name="form-register-input-password_confirm" type="password"/>
 <span class="form__feedback"></span>

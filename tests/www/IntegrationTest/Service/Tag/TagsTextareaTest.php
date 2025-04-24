@@ -64,37 +64,37 @@ class TagsTextareaTest extends TestCase
         return [
             '2 tags in textarea - no tag before' => [
                 'tagsSQLBefore' => null,
-                'textarea'      => <<<TEXTAREA
-                                     a
-                                     b
-                                     TEXTAREA,
+                'textarea'      => <<<'TEXTAREA'
+                a
+                b
+                TEXTAREA,
                 'tagsIDs'   => '1,2',
                 'tagsAfter' => [['id' => '1', 'name' => 'a', 'slug' => 'a'], ['id' => '2', 'name' => 'b', 'slug' => 'b']],
             ],
             '2 tags in textarea - 2 tag before - no creation' => [
                 'tagsSQLBefore' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'a', 'a'), (2, 'b', 'b')",
-                'textarea'      => <<<TEXTAREA
-                                     a
-                                     b
-                                     TEXTAREA,
+                'textarea'      => <<<'TEXTAREA'
+                a
+                b
+                TEXTAREA,
                 'tagsIDs'   => '1,2',
                 'tagsAfter' => [['id' => '1', 'name' => 'a', 'slug' => 'a'], ['id' => '2', 'name' => 'b', 'slug' => 'b']],
             ],
             '2 tags in textarea - 1 tag (a) before - 1 creation' => [
                 'tagsSQLBefore' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'a', 'a')",
-                'textarea'      => <<<TEXTAREA
-                                     a
-                                     b
-                                     TEXTAREA,
+                'textarea'      => <<<'TEXTAREA'
+                a
+                b
+                TEXTAREA,
                 'tagsIDs'   => '1,2',
                 'tagsAfter' => [['id' => '1', 'name' => 'a', 'slug' => 'a'], ['id' => '2', 'name' => 'b', 'slug' => 'b']],
             ],
             '2 tags in textarea - 1 tag (b) before - 1 creation' => [
                 'tagsSQLBefore' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'b', 'b')",
-                'textarea'      => <<<TEXTAREA
-                                     a
-                                     b
-                                     TEXTAREA,
+                'textarea'      => <<<'TEXTAREA'
+                a
+                b
+                TEXTAREA,
                 'tagsIDs'   => '1,2',
                 'tagsAfter' => [['id' => '1', 'name' => 'b', 'slug' => 'b'], ['id' => '2', 'name' => 'a', 'slug' => 'a']],
             ],
@@ -106,23 +106,23 @@ class TagsTextareaTest extends TestCase
         return [
             '4 tags in textarea - 4 tags before - no creation' => [
                 'tagsSQLBefore' => "INSERT INTO tags (`id`, `name`, `slug`) VALUES (1, 'Camera', 'camera'), (2, 'Line Trace', 'line-trace'), (3, 'Test-Debug', 'test-debug'), (4, 'WASD', 'wasd')",
-                'textarea'      => <<<TEXTAREA
-                                     camera
-                                     line-trace
-                                     test debug
-                                     WASD
-                                     TEXTAREA,
+                'textarea'      => <<<'TEXTAREA'
+                camera
+                line-trace
+                test debug
+                WASD
+                TEXTAREA,
                 'tagsIDs'   => '1,2,3,4',
                 'tagsAfter' => [['id' => '1', 'name' => 'Camera', 'slug' => 'camera'], ['id' => '2', 'name' => 'Line Trace', 'slug' => 'line-trace'], ['id' => '3', 'name' => 'Test-Debug', 'slug' => 'test-debug'], ['id' => '4', 'name' => 'WASD', 'slug' => 'wasd']],
             ],
             '4 tags in textarea (2 duplicate) - 0 tag before - 2 creation' => [
                 'tagsSQLBefore' => null,
-                'textarea'      => <<<TEXTAREA
-                                     4.19
-                                     4-19
-                                     Third Person Movement
-                                     third-person-movement
-                                     TEXTAREA,
+                'textarea'      => <<<'TEXTAREA'
+                4.19
+                4-19
+                Third Person Movement
+                third-person-movement
+                TEXTAREA,
                 'tagsIDs'   => '1,2',
                 'tagsAfter' => [['id' => '1', 'name' => '4.19', 'slug' => '4-19'], ['id' => '2', 'name' => 'third person movement', 'slug' => 'third-person-movement']],
             ]

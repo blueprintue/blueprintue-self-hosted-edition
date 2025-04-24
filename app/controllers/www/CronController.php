@@ -63,7 +63,7 @@ class CronController
     protected function purgeUsersNotConfirmed(): void
     {
         $forceRollback = false;
-        $sqlSelected = <<<SQL
+        $sqlSelected = <<<'SQL'
             SELECT id
             FROM users
             WHERE users.created_at IS NOT NULL
@@ -85,14 +85,14 @@ class CronController
 
             $sqlDeleteUsers = <<<SQL
                 DELETE FROM users
-                WHERE id IN ($inStr);
+                WHERE id IN ({$inStr});
             SQL;
 
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->delete($sqlDeleteUsers);
             $sqlDeleteUsersInfos = <<<SQL
                 DELETE FROM users_infos
-                WHERE id_user IN ($inStr);
+                WHERE id_user IN ({$inStr});
             SQL;
 
             /* @noinspection NullPointerExceptionInspection */
@@ -117,7 +117,7 @@ class CronController
     protected function purgeDeletedBlueprints(): void
     {
         $forceRollback = false;
-        $sqlSelected = <<<SQL
+        $sqlSelected = <<<'SQL'
             SELECT id, id_author
             FROM blueprints
             WHERE deleted_at IS NOT NULL
@@ -189,7 +189,7 @@ class CronController
             'countPrivateComment'   => 0
         ];
 
-        $sqlPublicBlueprints = <<<SQL
+        $sqlPublicBlueprints = <<<'SQL'
             SELECT COUNT(*)
             FROM blueprints
             WHERE id_author = :userID
@@ -199,7 +199,7 @@ class CronController
               AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())
         SQL;
 
-        $sqlPrivateBlueprints = <<<SQL
+        $sqlPrivateBlueprints = <<<'SQL'
             SELECT COUNT(*)
             FROM blueprints
             WHERE id_author = :userID
@@ -208,7 +208,7 @@ class CronController
               AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())
         SQL;
 
-        $sqlPublicComments = <<<SQL
+        $sqlPublicComments = <<<'SQL'
             SELECT COUNT(*)
             FROM comments AS c
             INNER JOIN blueprints AS b ON c.id_blueprint = b.id
@@ -219,7 +219,7 @@ class CronController
               AND (b.expiration IS NULL OR b.expiration > UTC_TIMESTAMP())
         SQL;
 
-        $sqlPrivateComments = <<<SQL
+        $sqlPrivateComments = <<<'SQL'
             SELECT COUNT(*)
             FROM comments AS c
             INNER JOIN blueprints AS b ON c.id_blueprint = b.id
@@ -229,7 +229,7 @@ class CronController
               AND (b.expiration IS NULL OR b.expiration > UTC_TIMESTAMP())
         SQL;
 
-        $sqlSetUserCounters = <<<SQL
+        $sqlSetUserCounters = <<<'SQL'
             UPDATE users_infos
             SET count_public_blueprint = :countPublicBlueprint,
                 count_private_blueprint = :countPrivateBlueprint,
@@ -279,7 +279,7 @@ class CronController
         }
 
         $forceRollback = false;
-        $sqlSetSoftDeletedAnonymousPrivateBlueprints = <<<SQL
+        $sqlSetSoftDeletedAnonymousPrivateBlueprints = <<<'SQL'
             UPDATE blueprints
             SET deleted_at = utc_timestamp()
             WHERE id_author = :userID

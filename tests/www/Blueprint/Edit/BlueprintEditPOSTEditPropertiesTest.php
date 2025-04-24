@@ -1170,12 +1170,12 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
 <label class="form__label" for="form-edit_properties-select-exposure" id="form-edit_properties-label-exposure">Exposure</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-edit_properties-label-exposure form-edit_properties-label-exposure-error" aria-required="true" class="form__input form__input--select form__input--error" id="form-edit_properties-select-exposure" name="form-edit_properties-select-exposure">
-<option value="public"$publicSelected>Public</option>
-<option value="unlisted"$unlistedSelected>Unlisted</option>
-<option value="private"$privateSelected>Private</option>
+<option value="public"{$publicSelected}>Public</option>
+<option value="unlisted"{$unlistedSelected}>Unlisted</option>
+<option value="private"{$privateSelected}>Private</option>
 </select>
 </div>
-<label class="form__label form__label--error" for="form-edit_properties-select-exposure" id="form-edit_properties-label-exposure-error">$labelError</label>
+<label class="form__label form__label--error" for="form-edit_properties-select-exposure" id="form-edit_properties-label-exposure-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -1185,9 +1185,9 @@ HTML;
 <label class="form__label" for="form-edit_properties-select-exposure" id="form-edit_properties-label-exposure">Exposure</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-edit_properties-label-exposure" aria-required="true" class="form__input form__input--select" id="form-edit_properties-select-exposure" name="form-edit_properties-select-exposure">
-<option value="public"$publicSelected>Public</option>
-<option value="unlisted"$unlistedSelected>Unlisted</option>
-<option value="private"$privateSelected>Private</option>
+<option value="public"{$publicSelected}>Public</option>
+<option value="unlisted"{$unlistedSelected}>Unlisted</option>
+<option value="private"{$privateSelected}>Private</option>
 </select>
 </div>
 </div>
@@ -1207,20 +1207,20 @@ HTML;
             $expirationHelp = '';
             $expirationText = '</div>';
             $options = <<<HTML
-<option value="keep"$keepSelected>No expiration</option>
-<option value="1h"$oneHSelected>Set expiration to 1 hour</option>
-<option value="1d"$oneDSelected>Set expiration to 1 day</option>
-<option value="1w"$oneWSelected>Set expiration to 1 week</option>
+<option value="keep"{$keepSelected}>No expiration</option>
+<option value="1h"{$oneHSelected}>Set expiration to 1 hour</option>
+<option value="1d"{$oneDSelected}>Set expiration to 1 day</option>
+<option value="1w"{$oneWSelected}>Set expiration to 1 week</option>
 HTML;
         } else {
             $expirationHelp = 'aria-describedby="form-edit_properties-span-help" ';
             $expirationText = '<span class="form__help" id="form-edit_properties-span-help">Blueprint expired at <span class="form__help--emphasis">' . Security::escHTML($expirationDate) . '</span></span>' . "\n" . '</div>';
             $options = <<<HTML
-<option value="keep"$keepSelected>Keep expiration time</option>
-<option value="1h"$oneHSelected>Add 1 hour</option>
-<option value="1d"$oneDSelected>Add 1 day</option>
-<option value="1w"$oneWSelected>Add 1 week</option>
-<option value="remove"$removeSelected>Remove expiration time</option>
+<option value="keep"{$keepSelected}>Keep expiration time</option>
+<option value="1h"{$oneHSelected}>Add 1 hour</option>
+<option value="1d"{$oneDSelected}>Add 1 day</option>
+<option value="1w"{$oneWSelected}>Add 1 week</option>
+<option value="remove"{$removeSelected}>Remove expiration time</option>
 HTML;
         }
 
@@ -1230,11 +1230,11 @@ HTML;
 <label class="form__label" for="form-edit_properties-select-expiration" id="form-edit_properties-label-expiration">Expiration</label>
 <div class="form__container form__container--select">
 <select {$expirationHelp}aria-invalid="false" aria-labelledby="form-edit_properties-label-expiration form-edit_properties-label-expiration-error" aria-required="true" class="form__input form__input--select form__input--error" id="form-edit_properties-select-expiration" name="form-edit_properties-select-expiration">
-$options
+{$options}
 </select>
 </div>
-<label class="form__label form__label--error" for="form-edit_properties-select-expiration" id="form-edit_properties-label-expiration-error">$labelError</label>
-$expirationText
+<label class="form__label form__label--error" for="form-edit_properties-select-expiration" id="form-edit_properties-label-expiration-error">{$labelError}</label>
+{$expirationText}
 HTML;
         }
 
@@ -1243,10 +1243,10 @@ HTML;
 <label class="form__label" for="form-edit_properties-select-expiration" id="form-edit_properties-label-expiration">Expiration</label>
 <div class="form__container form__container--select">
 <select {$expirationHelp}aria-invalid="false" aria-labelledby="form-edit_properties-label-expiration" aria-required="true" class="form__input form__input--select" id="form-edit_properties-select-expiration" name="form-edit_properties-select-expiration">
-$options
+{$options}
 </select>
 </div>
-$expirationText
+{$expirationText}
 HTML;
     }
 
@@ -1263,17 +1263,17 @@ HTML;
             return <<<HTML
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-edit_properties-label-ue_version form-edit_properties-label-ue_version-error" aria-required="true" class="form__input form__input--select form__input--error" id="form-edit_properties-select-ue_version" name="form-edit_properties-select-ue_version">
-$listOptionsStr
+{$listOptionsStr}
 </select>
 </div>
-<label class="form__label form__label--error" for="form-edit_properties-select-ue_version" id="form-edit_properties-label-ue_version-error">$labelError</label>
+<label class="form__label form__label--error" for="form-edit_properties-select-ue_version" id="form-edit_properties-label-ue_version-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-edit_properties-label-ue_version" aria-required="true" class="form__input form__input--select" id="form-edit_properties-select-ue_version" name="form-edit_properties-select-ue_version">
-$listOptionsStr
+{$listOptionsStr}
 </select>
 </div>
 HTML;
@@ -1291,12 +1291,12 @@ HTML;
 <label class="form__label" for="form-edit_properties-select-comment" id="form-edit_properties-label-comment">Comment sections</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-edit_properties-label-comment form-edit_properties-label-comment-error" aria-required="true" class="form__input form__input--select form__input--error" id="form-edit_properties-select-comment" name="form-edit_properties-select-comment">
-<option value="open"$openSelected>Open - All members can comment and see other comments</option>
-<option value="close"$closeSelected>Close - No one can comment but the comments are still visible</option>
-<option value="hide"$hideSelected>Hide - No one can comment and the comments are hidden</option>
+<option value="open"{$openSelected}>Open - All members can comment and see other comments</option>
+<option value="close"{$closeSelected}>Close - No one can comment but the comments are still visible</option>
+<option value="hide"{$hideSelected}>Hide - No one can comment and the comments are hidden</option>
 </select>
 </div>
-<label class="form__label form__label--error" for="form-edit_properties-select-comment" id="form-edit_properties-label-comment-error">$labelError</label>
+<label class="form__label form__label--error" for="form-edit_properties-select-comment" id="form-edit_properties-label-comment-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -1306,9 +1306,9 @@ HTML;
 <label class="form__label" for="form-edit_properties-select-comment" id="form-edit_properties-label-comment">Comment sections</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-edit_properties-label-comment" aria-required="true" class="form__input form__input--select" id="form-edit_properties-select-comment" name="form-edit_properties-select-comment">
-<option value="open"$openSelected>Open - All members can comment and see other comments</option>
-<option value="close"$closeSelected>Close - No one can comment but the comments are still visible</option>
-<option value="hide"$hideSelected>Hide - No one can comment and the comments are hidden</option>
+<option value="open"{$openSelected}>Open - All members can comment and see other comments</option>
+<option value="close"{$closeSelected}>Close - No one can comment but the comments are still visible</option>
+<option value="hide"{$hideSelected}>Hide - No one can comment and the comments are hidden</option>
 </select>
 </div>
 </div>

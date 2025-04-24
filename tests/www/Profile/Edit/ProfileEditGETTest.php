@@ -188,7 +188,7 @@ class ProfileEditGETTest extends TestCase
 
         // verif avatar
         if ($userID === 189) {
-            $this->doTestHtmlBody($response, <<<HTML
+            $this->doTestHtmlBody($response, <<<'HTML'
 <div class="profile__avatar-container" id="current-avatar">
 <img alt="avatar author" class="profile__avatar-container profile__avatar-container--hidden" id="upload-current-avatar"/>
 <div class="profile__avatar-container profile__avatar-container--background" id="upload-fallback-avatar">
@@ -199,7 +199,7 @@ class ProfileEditGETTest extends TestCase
 </div>
 HTML);
         } else {
-            $this->doTestHtmlBody($response, <<<HTML
+            $this->doTestHtmlBody($response, <<<'HTML'
 <div class="profile__avatar-container" id="current-avatar">
 <img alt="avatar author" class="profile__avatar-container" id="upload-current-avatar" src="&#x2F;medias&#x2F;avatars&#x2F;mem&#x5C;&quot;&gt;&lt;script&gt;alert&#x28;1&#x29;&lt;&#x2F;script&gt;fromage.jpg"/>
 </div>

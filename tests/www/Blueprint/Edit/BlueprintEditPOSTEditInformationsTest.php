@@ -164,42 +164,42 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
                     'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
                     'form-edit_informations-input-title'          => 'new title',
                     'form-edit_informations-textarea-description' => '',
-                    'form-edit_informations-textarea-tags'        => <<<TEXTAREA
-                                                                        tag-1
-                                                                        tag-2
-                                                                        invalid@tag
-                                                                        TAG 3
-                                                                        TAG 3
+                    'form-edit_informations-textarea-tags'        => <<<'TEXTAREA'
+                    tag-1
+                    tag-2
+                    invalid@tag
+                    TAG 3
+                    TAG 3
 
-                                                                        tag 4
-                                                                        123
-                                                                              yo     lo
-                                                                        tag 6
-                                                                        tag 7
-                                                                        tag 8
-                                                                        tag 9
-                                                                        tag 10
-                                                                        tag 11
-                                                                        tag 12
-                                                                        tag 13
-                                                                        tag 14
-                                                                        tag 15
-                                                                        tag 16
-                                                                        tag 17
-                                                                        tag 18
-                                                                        tag 19
-                                                                        tag 20
-                                                                        tag 21
-                                                                        tag 22
-                                                                        tag 23
-                                                                        tag 24
-                                                                        tag 25
-                                                                        tag 26
-                                                                        tag 27
-                                                                        tag 28
-                                                                        tag 29
-                                                                        tag 30
-                                                                        TEXTAREA,
+                    tag 4
+                    123
+                          yo     lo
+                    tag 6
+                    tag 7
+                    tag 8
+                    tag 9
+                    tag 10
+                    tag 11
+                    tag 12
+                    tag 13
+                    tag 14
+                    tag 15
+                    tag 16
+                    tag 17
+                    tag 18
+                    tag 19
+                    tag 20
+                    tag 21
+                    tag 22
+                    tag 23
+                    tag 24
+                    tag 25
+                    tag 26
+                    tag 27
+                    tag 28
+                    tag 29
+                    tag 30
+                    TEXTAREA,
                     'form-edit_informations-input-video'          => '',
                 ],
                 'useCsrfFromSession' => true,
@@ -218,33 +218,33 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
                 'fieldsHasError'   => [],
                 'fieldsHasValue'   => ['title', 'tags'],
                 'fieldsLabelError' => [],
-                'tagsTextarea'     => <<<TEXTAREA
-                                              tag-1
-                                              tag-2
-                                              tag 3
-                                              tag 4
-                                              123
-                                              yo lo
-                                              tag 6
-                                              tag 7
-                                              tag 8
-                                              tag 9
-                                              tag 10
-                                              tag 11
-                                              tag 12
-                                              tag 13
-                                              tag 14
-                                              tag 15
-                                              tag 16
-                                              tag 17
-                                              tag 18
-                                              tag 19
-                                              tag 20
-                                              tag 21
-                                              tag 22
-                                              tag 23
-                                              tag 24
-                                              TEXTAREA,
+                'tagsTextarea'     => <<<'TEXTAREA'
+                tag-1
+                tag-2
+                tag 3
+                tag 4
+                123
+                yo lo
+                tag 6
+                tag 7
+                tag 8
+                tag 9
+                tag 10
+                tag 11
+                tag 12
+                tag 13
+                tag 14
+                tag 15
+                tag 16
+                tag 17
+                tag 18
+                tag 19
+                tag 20
+                tag 21
+                tag 22
+                tag 23
+                tag 24
+                TEXTAREA,
                 'tags' => [
                     ['id' => '1', 'name' => 'tag-1', 'slug' => 'tag-1'], ['id' => '2', 'name' => 'tag-2', 'slug' => 'tag-2'],
                     ['id' => '3', 'name' => 'tag 3', 'slug' => 'tag-3'], ['id' => '4', 'name' => 'tag 4', 'slug' => 'tag-4'],
@@ -303,9 +303,9 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
                     'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
                     'form-edit_informations-input-title'          => 'new title',
                     'form-edit_informations-textarea-description' => '',
-                    'form-edit_informations-textarea-tags'        => <<<TEXTAREA
-                                                                        tag 1
-                                                                        TEXTAREA,
+                    'form-edit_informations-textarea-tags'        => <<<'TEXTAREA'
+                    tag 1
+                    TEXTAREA,
                     'form-edit_informations-input-video'          => '',
                 ],
                 'useCsrfFromSession' => true,
@@ -324,9 +324,9 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
                 'fieldsHasError'   => [],
                 'fieldsHasValue'   => ['title', 'tags'],
                 'fieldsLabelError' => [],
-                'tagsTextarea'     => <<<TEXTAREA
-                                              tag 1
-                                              TEXTAREA,
+                'tagsTextarea'     => <<<'TEXTAREA'
+                tag 1
+                TEXTAREA,
                 'tags' => [
                     ['id' => '1', 'name' => 'tag 1', 'slug' => 'tag-1']
                 ],
@@ -1002,10 +1002,10 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
 <div class="form__element">
 <label class="form__label" for="form-edit_informations-input-title" id="form-edit_informations-label-title">Title <span class="form__label--info">(required)</span></label>
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-labelledby="form-edit_informations-label-title form-edit_informations-label-title-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-required="Title is required" data-form-has-container data-form-rules="required" id="form-edit_informations-input-title" name="form-edit_informations-input-title" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-edit_informations-label-title form-edit_informations-label-title-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-required="Title is required" data-form-has-container data-form-rules="required" id="form-edit_informations-input-title" name="form-edit_informations-input-title" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-edit_informations-input-title" id="form-edit_informations-label-title-error">$labelError</label>
+<label class="form__label form__label--error" for="form-edit_informations-input-title" id="form-edit_informations-label-title-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -1014,7 +1014,7 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_informations-input-title" id="form-edit_informations-label-title">Title <span class="form__label--info">(required)</span></label>
 <div class="form__container">
-<input aria-invalid="false" aria-labelledby="form-edit_informations-label-title" aria-required="true" class="form__input form__input--invisible" data-form-error-required="Title is required" data-form-has-container data-form-rules="required" id="form-edit_informations-input-title" name="form-edit_informations-input-title" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-edit_informations-label-title" aria-required="true" class="form__input form__input--invisible" data-form-error-required="Title is required" data-form-has-container data-form-rules="required" id="form-edit_informations-input-title" name="form-edit_informations-input-title" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 </div>
@@ -1030,7 +1030,7 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_informations-textarea-description" id="form-edit_informations-label-description">Description</label>
 <div class="form__container form__container--textarea">
-<textarea aria-invalid="false" aria-labelledby="form-edit_informations-label-reason" class="form__input form__input--invisible form__input--textarea" id="form-edit_informations-textarea-description" name="form-edit_informations-textarea-description">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-edit_informations-label-reason" class="form__input form__input--invisible form__input--textarea" id="form-edit_informations-textarea-description" name="form-edit_informations-textarea-description">{$v}</textarea>
 <span class="form__feedback"></span>
 </div>
 </div>
@@ -1065,14 +1065,14 @@ data-tag-regex-keys="^[a-zA-Z0-9._ -]{1}$"
 data-tag-regex-tag="^[a-zA-Z0-9._ -]*$"
 data-tag-srspeak-add="%s added"
 data-tag-srspeak-delete="%s deleted">
-<ul class="tag__items" id="form-edit_informations-ul-tags">$itemsStr
+<ul class="tag__items" id="form-edit_informations-ul-tags">{$itemsStr}
 <li class="tag__add" id="form-edit_informations-ul-tags-li-add-tag">
 <div class="form__element">
 <input aria-labelledby="form-edit_informations-label-tag" class="form__input" id="form-edit_informations-input-tag" placeholder="Add a new tag" type="text">
 </div>
 </li>
 </ul>
-<textarea aria-hidden="true" aria-label="List of tags" hidden id="form-edit_informations-textarea-tags" name="form-edit_informations-textarea-tags">$v</textarea>
+<textarea aria-hidden="true" aria-label="List of tags" hidden id="form-edit_informations-textarea-tags" name="form-edit_informations-textarea-tags">{$v}</textarea>
 </div>
 HTML;
     }
@@ -1099,10 +1099,10 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_informations-input-video" id="form-edit_informations-label-video">Video</label>
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-describedby="form-edit_informations-span-video_help" aria-labelledby="form-edit_informations-label-video form-edit_informations-label-video-error" class="form__input form__input--invisible form__input--error" data-form-error-aria_invalid="Cannot detect video to embed" data-form-has-container data-form-rules="aria_invalid" id="form-edit_informations-input-video" name="form-edit_informations-input-video" type="text" value="$v"/>
+<input aria-invalid="false" aria-describedby="form-edit_informations-span-video_help" aria-labelledby="form-edit_informations-label-video form-edit_informations-label-video-error" class="form__input form__input--invisible form__input--error" data-form-error-aria_invalid="Cannot detect video to embed" data-form-has-container data-form-rules="aria_invalid" id="form-edit_informations-input-video" name="form-edit_informations-input-video" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-edit_informations-input-video" id="form-edit_informations-label-video-error">$labelError</label>
+<label class="form__label form__label--error" for="form-edit_informations-input-video" id="form-edit_informations-label-video-error">{$labelError}</label>
 <span class="form__help" id="form-edit_informations-span-video_help">Accepts only <span class="form__help--emphasis">YouTube</span>, <span class="form__help--emphasis">Vimeo</span>, <span class="form__help--emphasis">Dailymotion</span>, <span class="form__help--emphasis">PeerTube</span>, <span class="form__help--emphasis">Bilibili</span> or <span class="form__help--emphasis">Niconico</span> urls</span>
 </div>
 HTML;
@@ -1112,7 +1112,7 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_informations-input-video" id="form-edit_informations-label-video">Video</label>
 <div class="form__container">
-<input aria-invalid="false" aria-describedby="form-edit_informations-span-video_help" aria-labelledby="form-edit_informations-label-video" class="form__input form__input--invisible" data-form-error-aria_invalid="Cannot detect video to embed" data-form-has-container data-form-rules="aria_invalid" id="form-edit_informations-input-video" name="form-edit_informations-input-video" type="text" value="$v"/>
+<input aria-invalid="false" aria-describedby="form-edit_informations-span-video_help" aria-labelledby="form-edit_informations-label-video" class="form__input form__input--invisible" data-form-error-aria_invalid="Cannot detect video to embed" data-form-has-container data-form-rules="aria_invalid" id="form-edit_informations-input-video" name="form-edit_informations-input-video" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 <span class="form__help" id="form-edit_informations-span-video_help">Accepts only <span class="form__help--emphasis">YouTube</span>, <span class="form__help--emphasis">Vimeo</span>, <span class="form__help--emphasis">Dailymotion</span>, <span class="form__help--emphasis">PeerTube</span>, <span class="form__help--emphasis">Bilibili</span> or <span class="form__help--emphasis">Niconico</span> urls</span>

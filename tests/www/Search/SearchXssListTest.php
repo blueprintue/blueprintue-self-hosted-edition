@@ -71,7 +71,8 @@ class SearchXssListTest extends TestCase
         ];
         static::$db->insert($sql, $userParams);
 
-        static::$db->exec("INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `description`)
+        static::$db->exec(<<<'SQL'
+            INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `description`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', '<script>alert(1)</script>'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', '<script>alert(1)</script>'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', '<script>alert(1)</script>'),
@@ -114,7 +115,8 @@ class SearchXssListTest extends TestCase
                                (169, 'slug_40', 'file_40', 'title_40', 1, utc_timestamp() - interval 40 day, utc_timestamp() - interval 40 day, 'private', '<script>alert(1)</script>'),
                                (159, 'slug_41', 'file_41', 'title_41', 1, utc_timestamp() - interval 41 day, utc_timestamp() - interval 41 day, 'public', '<script>alert(1)</script>'),
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', '<script>alert(1)</script>'),
-                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', '<script>alert(1)</script>')");
+                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', '<script>alert(1)</script>')
+            SQL);
     }
 
     protected function tearDown(): void
@@ -445,7 +447,7 @@ class SearchXssListTest extends TestCase
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -768,7 +770,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1091,7 +1093,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1180,7 +1182,7 @@ HTML,
         return <<<HTML
 <div class="form__element home__form--title">
 <label class="form__label" for="form-search-input-query" id="form-search-label-query">Terms to search</label>
-<input aria-invalid="false" aria-labelledby="form-search-label-query" class="form__input" id="form-search-input-query" name="form-search-input-query" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-search-label-query" class="form__input" id="form-search-input-query" name="form-search-input-query" type="text" value="{$v}"/>
 </div>
 HTML;
     }
@@ -1207,14 +1209,14 @@ HTML;
 <label class="form__label" for="form-search-select-type" id="form-search-label-type">Type</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-search-label-type" aria-required="true" class="form__input form__input--select" id="form-search-select-type" name="form-search-select-type">
-<option value=""$all>All</option>
-<option value="animation"$animation>Animation</option>
-<option value="behavior-tree"$behaviorTree>Behavior Tree</option>
-<option value="blueprint"$blueprint>Blueprint</option>
-<option value="material"$material>Material</option>
-<option value="metasound"$metasound>Metasound</option>
-<option value="niagara"$niagara>Niagara</option>
-<option value="pcg"$pcg>PCG</option>
+<option value=""{$all}>All</option>
+<option value="animation"{$animation}>Animation</option>
+<option value="behavior-tree"{$behaviorTree}>Behavior Tree</option>
+<option value="blueprint"{$blueprint}>Blueprint</option>
+<option value="material"{$material}>Material</option>
+<option value="metasound"{$metasound}>Metasound</option>
+<option value="niagara"{$niagara}>Niagara</option>
+<option value="pcg"{$pcg}>PCG</option>
 </select>
 </div>
 </div>
@@ -1243,8 +1245,8 @@ HTML;
 <label class="form__label" for="form-search-select-ue_version" id="form-search-label-ue_version">UE version</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-search-label-ue_version" aria-required="true" class="form__input form__input--select" id="form-search-select-ue_version" name="form-search-select-ue_version">
-<option value=""$all>All</option>
-$str</select>
+<option value=""{$all}>All</option>
+{$str}</select>
 </div>
 </div>
 HTML;

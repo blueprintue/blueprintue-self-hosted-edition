@@ -32,7 +32,7 @@ class CronPurgeUsersNotConfirmedTest extends TestCase
      */
     public function testCronPurgeUsersNotConfirmedGET(): void
     {
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             INSERT INTO `users` (`id`, `username`, `password`, `slug`, `email`, `password_reset`, `password_reset_at`, `grade`, `avatar`, `remember_token`, `created_at`, `confirmed_token`, `confirmed_sent_at`, `confirmed_at`, `last_login_at`)
             VALUES (1, 'user_01', NULL, 'user_01', NULL, NULL, NULL, 'member', NULL, NULL, utc_timestamp() - interval 60 day, NULL, NULL, utc_timestamp(), NULL),
                    (2, 'user_02', NULL, 'user_02', NULL, NULL, NULL, 'member', NULL, NULL, utc_timestamp() - interval 60 day, NULL, NULL, NULL, NULL),
@@ -48,7 +48,7 @@ class CronPurgeUsersNotConfirmedTest extends TestCase
 
         static::$db->exec($sql);
 
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             INSERT INTO `users_infos` (`id_user`, `count_public_blueprint`, `count_public_comment`, `count_private_blueprint`, `count_private_comment`)
             VALUES (1, 0, 0, 0, 0),
                    (2, 0, 0, 0, 0),
@@ -92,7 +92,7 @@ class CronPurgeUsersNotConfirmedTest extends TestCase
      */
     public function testAbortCronPurgeUsersNotConfirmedGET(): void
     {
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             INSERT INTO `users` (`id`, `username`, `password`, `slug`, `email`, `password_reset`, `password_reset_at`, `grade`, `avatar`, `remember_token`, `created_at`, `confirmed_token`, `confirmed_sent_at`, `confirmed_at`, `last_login_at`)
             VALUES (1, 'user_01', NULL, 'user_01', NULL, NULL, NULL, 'member', NULL, NULL, utc_timestamp() - interval 60 day, NULL, NULL, utc_timestamp(), NULL),
                    (2, 'user_02', NULL, 'user_02', NULL, NULL, NULL, 'member', NULL, NULL, utc_timestamp() - interval 60 day, NULL, NULL, NULL, NULL),
@@ -108,7 +108,7 @@ class CronPurgeUsersNotConfirmedTest extends TestCase
 
         static::$db->exec($sql);
 
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             ALTER TABLE `users_infos` DROP `id_user`;
         SQL;
 

@@ -412,7 +412,7 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
             $this->doTestHtmlForm($response, '#form-change_email', <<<HTML
 <div class="form__element">
 <label class="form__label" for="form-change_email-input-current_email" id="form-change_email-label-current_email">Current Email</label>
-<input aria-labelledby="form-change_email-label-current_email" class="form__input form__input--disabled" disabled id="form-change_email-input-current_email" name="form-change_email-input-current_email" type="text" value="$currentEmail"/>
+<input aria-labelledby="form-change_email-label-current_email" class="form__input form__input--disabled" disabled id="form-change_email-input-current_email" name="form-change_email-input-current_email" type="text" value="{$currentEmail}"/>
 </div>
 HTML);
         }
@@ -441,10 +441,10 @@ HTML);
 <div class="form__element">
 <label class="form__label" for="form-change_email-input-new_email" id="form-change_email-label-new_email">New Email</label>
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-labelledby="form-change_email-label-new_email form-change_email-label-new_email-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-change_email-input-new_email" name="form-change_email-input-new_email" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-change_email-label-new_email form-change_email-label-new_email-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-change_email-input-new_email" name="form-change_email-input-new_email" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-change_email-input-new_email" id="form-change_email-label-new_email-error">$labelError</label>
+<label class="form__label form__label--error" for="form-change_email-input-new_email" id="form-change_email-label-new_email-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -453,7 +453,7 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-change_email-input-new_email" id="form-change_email-label-new_email">New Email</label>
 <div class="form__container">
-<input aria-invalid="false" aria-labelledby="form-change_email-label-new_email" aria-required="true" class="form__input form__input--invisible" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-change_email-input-new_email" name="form-change_email-input-new_email" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-change_email-label-new_email" aria-required="true" class="form__input form__input--invisible" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-change_email-input-new_email" name="form-change_email-input-new_email" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 </div>

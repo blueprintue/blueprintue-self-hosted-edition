@@ -216,7 +216,7 @@ class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
         $this->doTestHtmlBody($response, <<<HTML
 <div class="form__element">
 <label class="form__label" for="form-generate_api_key-input-current_api_key" id="form-generate_api_key-label-current_api_key">Current API Key</label>
-<input aria-labelledby="form-generate_api_key-label-current_api_key" class="form__input form__input--disabled" disabled id="form-generate_api_key-input-current_api_key" name="form-generate_api_key-input-current_api_key" type="text" value="$apiKey"/>
+<input aria-labelledby="form-generate_api_key-label-current_api_key" class="form__input form__input--disabled" disabled id="form-generate_api_key-input-current_api_key" name="form-generate_api_key-input-current_api_key" type="text" value="{$apiKey}"/>
 </div>
 HTML);
     }

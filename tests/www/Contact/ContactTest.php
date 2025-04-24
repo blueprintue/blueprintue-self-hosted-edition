@@ -623,16 +623,16 @@ class ContactTest extends TestCase
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-labelledby="form-contact-label-name form-contact-label-name-error" aria-required="true" autocomplete="name" class="form__input form__input--invisible form__input--error" data-form-error-required="Name is required" data-form-has-container data-form-rules="required" id="form-contact-input-name" name="form-contact-input-name" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-contact-label-name form-contact-label-name-error" aria-required="true" autocomplete="name" class="form__input form__input--invisible form__input--error" data-form-error-required="Name is required" data-form-has-container data-form-rules="required" id="form-contact-input-name" name="form-contact-input-name" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-contact-input-name" id="form-contact-label-name-error">$labelError</label>
+<label class="form__label form__label--error" for="form-contact-input-name" id="form-contact-label-name-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container">
-<input aria-invalid="false" aria-labelledby="form-contact-label-name" aria-required="true" autocomplete="name" class="form__input form__input--invisible" data-form-error-required="Name is required" data-form-has-container data-form-rules="required" id="form-contact-input-name" name="form-contact-input-name" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-contact-label-name" aria-required="true" autocomplete="name" class="form__input form__input--invisible" data-form-error-required="Name is required" data-form-has-container data-form-rules="required" id="form-contact-input-name" name="form-contact-input-name" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 HTML;
@@ -646,16 +646,16 @@ HTML;
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-labelledby="form-contact-label-email form-contact-label-email-error" aria-required="true" autocomplete="email" class="form__input form__input--invisible form__input--error" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-contact-input-email" name="form-contact-input-email" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-contact-label-email form-contact-label-email-error" aria-required="true" autocomplete="email" class="form__input form__input--invisible form__input--error" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-contact-input-email" name="form-contact-input-email" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-contact-input-email" id="form-contact-label-email-error">$labelError</label>
+<label class="form__label form__label--error" for="form-contact-input-email" id="form-contact-label-email-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container">
-<input aria-invalid="false" aria-labelledby="form-contact-label-email" aria-required="true" autocomplete="email" class="form__input form__input--invisible" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-contact-input-email" name="form-contact-input-email" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-contact-label-email" aria-required="true" autocomplete="email" class="form__input form__input--invisible" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-contact-input-email" name="form-contact-input-email" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 HTML;
@@ -668,16 +668,16 @@ HTML;
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--textarea form__container--error">
-<textarea aria-invalid="false" aria-labelledby="form-contact-label-message form-contact-label-message-error" aria-required="true" class="form__input form__input--textarea form__input--invisible form__input--message form__input--error" data-form-error-required="Message is required" data-form-has-container data-form-rules="required" id="form-contact-textarea-message" name="form-contact-textarea-message">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-contact-label-message form-contact-label-message-error" aria-required="true" class="form__input form__input--textarea form__input--invisible form__input--message form__input--error" data-form-error-required="Message is required" data-form-has-container data-form-rules="required" id="form-contact-textarea-message" name="form-contact-textarea-message">{$v}</textarea>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-contact-textarea-message" id="form-contact-label-message-error">$labelError</label>
+<label class="form__label form__label--error" for="form-contact-textarea-message" id="form-contact-label-message-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container form__container--textarea">
-<textarea aria-invalid="false" aria-labelledby="form-contact-label-message" aria-required="true" class="form__input form__input--textarea form__input--invisible form__input--message" data-form-error-required="Message is required" data-form-has-container data-form-rules="required" id="form-contact-textarea-message" name="form-contact-textarea-message">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-contact-label-message" aria-required="true" class="form__input form__input--textarea form__input--invisible form__input--message" data-form-error-required="Message is required" data-form-has-container data-form-rules="required" id="form-contact-textarea-message" name="form-contact-textarea-message">{$v}</textarea>
 <span class="form__feedback"></span>
 </div>
 HTML;

@@ -95,7 +95,7 @@ class TagListTest extends TestCase
                     'title'       => 'Tag not_found | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as not_found'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">not_found</span></h2>
@@ -104,7 +104,7 @@ class TagListTest extends TestCase
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -119,7 +119,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -128,7 +128,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -143,7 +143,7 @@ HTML,
                     'title'       => 'Tag pa<script>alert(1);</script> | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as pa<script>alert(1);</script>'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">pa&lt;script&gt;alert(1);&lt;&#47;script&gt;</span></h2>
@@ -152,7 +152,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -171,10 +171,12 @@ HTML,
         return [
             '3 blueprints public/unlisted/private - created but not published - (visitor profile) - tag not good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `tags`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '1')",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `tags`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '1')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -183,7 +185,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -192,7 +194,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -200,10 +202,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - created but not published - (public profile) - tag not good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `tags`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '1')",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `tags`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '1')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -212,7 +216,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -221,7 +225,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -229,10 +233,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - created but not published - (author profile) - tag not good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `tags`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '1')",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `tags`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '1')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -241,7 +247,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -250,7 +256,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -258,10 +264,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (visitor profile) - tag not good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`, `deleted_at`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1', utc_timestamp()),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1', utc_timestamp()),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1', utc_timestamp())",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`, `deleted_at`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1', utc_timestamp()),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1', utc_timestamp()),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1', utc_timestamp())
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -270,7 +278,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -279,7 +287,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -287,10 +295,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (public profile) - tag not good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`, `deleted_at`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1', utc_timestamp()),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1', utc_timestamp()),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1', utc_timestamp())",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`, `deleted_at`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1', utc_timestamp()),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1', utc_timestamp()),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1', utc_timestamp())
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -299,7 +309,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -308,7 +318,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -316,10 +326,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (author profile) - tag not good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`, `deleted_at`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1', utc_timestamp()),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1', utc_timestamp()),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1', utc_timestamp())",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`, `deleted_at`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1', utc_timestamp()),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1', utc_timestamp()),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1', utc_timestamp())
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -328,7 +340,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -337,7 +349,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -345,10 +357,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - (visitor profile) - tag not good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1')",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -357,7 +371,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -366,7 +380,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -374,10 +388,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - (public profile) - tag not good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1')",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -386,7 +402,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -395,7 +411,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -403,10 +419,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - (author profile) - tag not good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1')",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -415,7 +433,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -424,7 +442,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -443,10 +461,12 @@ HTML,
         return [
             '3 blueprints public/unlisted/private - created but not published - (visitor profile) - tag good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `tags`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '24'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '24'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '24')",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `tags`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '24'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '24'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '24')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -455,7 +475,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -464,7 +484,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -472,10 +492,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - created but not published - (public profile) - tag good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `tags`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '24'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '24'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '24')",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `tags`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '24'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '24'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '24')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -484,7 +506,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -493,7 +515,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -501,10 +523,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - created but not published - (author profile) - tag good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `tags`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '24'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '24'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '24')",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `tags`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '24'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '24'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '24')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -513,7 +537,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -522,7 +546,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -530,10 +554,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (visitor profile) - tag good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`, `deleted_at`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '24', utc_timestamp()),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '24', utc_timestamp()),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '24', utc_timestamp())",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`, `deleted_at`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '24', utc_timestamp()),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '24', utc_timestamp()),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '24', utc_timestamp())
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -542,7 +568,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -551,7 +577,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -559,10 +585,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (public profile) - tag good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`, `deleted_at`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '24', utc_timestamp()),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '24', utc_timestamp()),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '24', utc_timestamp())",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`, `deleted_at`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '24', utc_timestamp()),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '24', utc_timestamp()),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '24', utc_timestamp())
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -571,7 +599,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -580,7 +608,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -588,10 +616,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - deleted - (author profile) - tag good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`, `deleted_at`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '24', utc_timestamp()),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '24', utc_timestamp()),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '24', utc_timestamp())",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`, `deleted_at`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '24', utc_timestamp()),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '24', utc_timestamp()),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '24', utc_timestamp())
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -600,7 +630,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -609,7 +639,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -617,10 +647,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - (visitor profile) - tag good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '24'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '24'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '24')",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '24'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '24'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '24')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -629,7 +661,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -661,7 +693,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -672,10 +704,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - (public profile) - tag good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '24'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '24'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '24')",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '24'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '24'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '24')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -684,7 +718,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -716,7 +750,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -727,10 +761,12 @@ HTML,
             ],
             '3 blueprints public/unlisted/private - (author profile) - tag good' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '24'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '24'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '24')",
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '24'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '24'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '24')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -739,7 +775,7 @@ HTML,
                     'title'       => 'Tag yo | Page 1 | This is a base title',
                     'description' => 'List of blueprints tagged as yo'
                 ],
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Tag <span class="block__title--emphasis">yo</span></h2>
@@ -799,7 +835,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -826,7 +862,8 @@ HTML,
         return [
             '30 blueprints public/unlisted/private - (visitor profile) - page 1' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', '24'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', '24'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', '24'),
@@ -871,7 +908,8 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', '24'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', '24'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public', null),
-                               (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public', '1')",
+                               (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public', '1')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -1178,7 +1216,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1195,7 +1233,8 @@ HTML,
             ],
             '30 blueprints public/unlisted/private - (public profile) - page 1' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', '24'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', '24'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', '24'),
@@ -1240,7 +1279,8 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', '24'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', '24'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public', null),
-                               (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public', '1')",
+                               (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public', '1')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -1547,7 +1587,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1564,7 +1604,8 @@ HTML,
             ],
             '30 blueprints public/unlisted/private - (author profile) - page 1' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', '24'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', '24'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', '24'),
@@ -1609,7 +1650,8 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', '24'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', '24'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public', null),
-                               (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public', '1')",
+                               (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public', '1')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/1/',
                 'location'    => null,
@@ -1916,7 +1958,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1949,7 +1991,8 @@ HTML,
         return [
             '30 blueprints public/unlisted/private - (visitor profile) - page 2' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', '24'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', '24'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', '24'),
@@ -1994,7 +2037,8 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', '24'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', '24'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public', null),
-                               (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public', '1')",
+                               (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public', '1')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/2/',
                 'location'    => null,
@@ -2161,7 +2205,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -2178,7 +2222,8 @@ HTML,
             ],
             '30 blueprints public/unlisted/private - (public profile) - page 2' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', '24'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', '24'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', '24'),
@@ -2223,7 +2268,8 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', '24'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', '24'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public', null),
-                               (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public', '1')",
+                               (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public', '1')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/2/',
                 'location'    => null,
@@ -2404,7 +2450,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -2421,7 +2467,8 @@ HTML,
             ],
             '30 blueprints public/unlisted/private - (author profile) - page 2' => [
                 'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `tags`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', '24'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', '24'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', '24'),
@@ -2466,7 +2513,8 @@ HTML,
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', '24'),
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', '24'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public', null),
-                               (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public', '1')",
+                               (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public', '1')
+                    SQL,
                 ],
                 'slug'        => '/tag/lo/2/',
                 'location'    => null,
@@ -2773,7 +2821,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">

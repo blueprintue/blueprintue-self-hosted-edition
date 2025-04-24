@@ -96,7 +96,7 @@ class TagsListTest extends TestCase
                     'title'       => 'Blueprint\'s Tags | This is a base title',
                     'description' => 'List of tags associated to blueprints'
                 ],
-                'contentHTML' => <<<HTML
+                'contentHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -114,7 +114,7 @@ HTML,
                     'title'       => 'Blueprint\'s Tags | This is a base title',
                     'description' => 'List of tags associated to blueprints'
                 ],
-                'contentHTML' => <<<HTML
+                'contentHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -133,7 +133,7 @@ HTML,
                     'title'       => 'Blueprint\'s Tags | This is a base title',
                     'description' => 'List of tags associated to blueprints'
                 ],
-                'contentHTML' => <<<HTML
+                'contentHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -153,7 +153,7 @@ HTML,
                     'title'       => 'Blueprint\'s Tags | This is a base title',
                     'description' => 'List of tags associated to blueprints'
                 ],
-                'contentHTML' => <<<HTML
+                'contentHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -180,7 +180,7 @@ HTML,
                     'title'       => 'Blueprint\'s Tags | This is a base title',
                     'description' => 'List of tags associated to blueprints'
                 ],
-                'contentHTML' => <<<HTML
+                'contentHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>

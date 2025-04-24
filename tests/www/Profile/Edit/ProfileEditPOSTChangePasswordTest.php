@@ -677,7 +677,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
 <input aria-describedby="form-change_password-span-new_password" aria-invalid="false" aria-labelledby="form-change_password-label-new_password form-change_password-label-new_password-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-min="Password must be at least 10 characters in length" data-form-error-regex="Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters" data-form-has-container data-form-rules="min:10|regex:^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9\s:])([^\s]){8,}$" id="form-change_password-input-new_password" name="form-change_password-input-new_password" type="password"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-change_password-input-new_password" id="form-change_password-label-new_password-error">$labelError</label>
+<label class="form__label form__label--error" for="form-change_password-input-new_password" id="form-change_password-label-new_password-error">{$labelError}</label>
 <span class="form__help" id="form-change_password-span-new_password">Minimum of 10 characters with 1 digit and 1 uppercase and 1 lowercase and 1 special characters</span>
 </div>
 HTML;
@@ -705,12 +705,12 @@ HTML;
 <input aria-describedby="form-change_password-span-new_password_confirm" aria-invalid="false" aria-labelledby="form-change_password-label-new_password_confirm form-change_password-label-new_password_confirm-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-equal_field="Confirm Password must be the same as Password" data-form-error-required="Confirm Password is required" data-form-has-container data-form-rules="required|equal_field:form-change_password-input-new_password" id="form-change_password-input-new_password_confirm" name="form-change_password-input-new_password_confirm" type="password"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-change_password-input-new_password_confirm" id="form-change_password-label-new_password_confirm-error">$labelError</label>
+<label class="form__label form__label--error" for="form-change_password-input-new_password_confirm" id="form-change_password-label-new_password_confirm-error">{$labelError}</label>
 </div>
 HTML;
         }
 
-        return <<<HTML
+        return <<<'HTML'
 <div class="form__element">
 <label class="form__label" for="form-change_password-input-new_password_confirm" id="form-change_password-label-new_password_confirm">Confirm New Password</label>
 <div class="form__container">

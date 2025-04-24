@@ -473,7 +473,7 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
         return <<<HTML
 <div class="form__element">
 <label class="form__label" for="form-edit_basic_infos-textarea-bio" id="form-edit_basic_infos-label-bio">Bio</label>
-<textarea aria-invalid="false" aria-labelledby="form-edit_basic_infos-label-bio" class="form__input form__input--textarea" id="form-edit_basic_infos-textarea-bio" name="form-edit_basic_infos-textarea-bio">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-edit_basic_infos-label-bio" class="form__input form__input--textarea" id="form-edit_basic_infos-textarea-bio" name="form-edit_basic_infos-textarea-bio">{$v}</textarea>
 </div>
 HTML;
     }
@@ -486,7 +486,7 @@ HTML;
         return <<<HTML
 <div class="form__element">
 <label class="form__label" for="form-edit_basic_infos-input-website" id="form-edit_basic_infos-label-website">Website</label>
-<input aria-invalid="false" aria-labelledby="form-edit_basic_infos-label-website" class="form__input" id="form-edit_basic_infos-input-website" name="form-edit_basic_infos-input-website" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-edit_basic_infos-label-website" class="form__input" id="form-edit_basic_infos-input-website" name="form-edit_basic_infos-input-website" type="text" value="{$v}"/>
 </div>
 HTML;
     }

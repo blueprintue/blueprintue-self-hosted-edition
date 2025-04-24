@@ -375,7 +375,7 @@ class SearchListTest extends TestCase
         return <<<HTML
 <div class="form__element home__form--title">
 <label class="form__label" for="form-search-input-query" id="form-search-label-query">Terms to search</label>
-<input aria-invalid="false" aria-labelledby="form-search-label-query" class="form__input" id="form-search-input-query" name="form-search-input-query" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-search-label-query" class="form__input" id="form-search-input-query" name="form-search-input-query" type="text" value="{$v}"/>
 </div>
 HTML;
     }
@@ -402,14 +402,14 @@ HTML;
 <label class="form__label" for="form-search-select-type" id="form-search-label-type">Type</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-search-label-type" aria-required="true" class="form__input form__input--select" id="form-search-select-type" name="form-search-select-type">
-<option value=""$all>All</option>
-<option value="animation"$animation>Animation</option>
-<option value="behavior-tree"$behaviorTree>Behavior Tree</option>
-<option value="blueprint"$blueprint>Blueprint</option>
-<option value="material"$material>Material</option>
-<option value="metasound"$metasound>Metasound</option>
-<option value="niagara"$niagara>Niagara</option>
-<option value="pcg"$pcg>PCG</option>
+<option value=""{$all}>All</option>
+<option value="animation"{$animation}>Animation</option>
+<option value="behavior-tree"{$behaviorTree}>Behavior Tree</option>
+<option value="blueprint"{$blueprint}>Blueprint</option>
+<option value="material"{$material}>Material</option>
+<option value="metasound"{$metasound}>Metasound</option>
+<option value="niagara"{$niagara}>Niagara</option>
+<option value="pcg"{$pcg}>PCG</option>
 </select>
 </div>
 </div>
@@ -436,8 +436,8 @@ HTML;
 <label class="form__label" for="form-search-select-ue_version" id="form-search-label-ue_version">UE version</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-search-label-ue_version" aria-required="true" class="form__input form__input--select" id="form-search-select-ue_version" name="form-search-select-ue_version">
-<option value=""$all>All</option>
-$str</select>
+<option value=""{$all}>All</option>
+{$str}</select>
 </div>
 </div>
 HTML;

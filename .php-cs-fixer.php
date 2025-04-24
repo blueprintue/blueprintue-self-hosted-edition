@@ -51,6 +51,20 @@ $rules = [
     ],
 ];
 
+$stringNotationRules = [
+    'explicit_string_variable'          => true,
+    'heredoc_closing_marker'            => ['closing_marker' => 'EOD', 'explicit_heredoc_style' => false, 'reserved_closing_markers' => ['CSS', 'DIFF', 'HTML', 'JS', 'JSON', 'MD', 'PHP', 'PYTHON', 'RST', 'TS', 'SQL', 'XML', 'YAML', 'TEXTAREA']],
+    'heredoc_to_nowdoc'                 => true,
+    'multiline_string_to_heredoc'       => true,
+    'no_binary_string'                  => true,
+    'no_trailing_whitespace_in_string'  => true,
+    'simple_to_complex_string_variable' => true,
+    'single_quote'                      => ['strings_containing_single_quote_chars' => false],
+    'string_implicit_backslashes'       => false,
+    'string_length_to_empty'            => true,
+    'string_line_ending'                => true
+];
+
 $whitespaceRules = [
     'array_indentation'                 => true,
     'blank_line_before_statement'       => ['statements' => ['break', 'continue', 'declare', 'phpdoc', 'return', 'throw', 'try', 'yield', 'yield_from']],
@@ -72,12 +86,13 @@ $whitespaceRules = [
 ];
 
 $rules = \array_merge($rules,
+    $stringNotationRules,
     $whitespaceRules);
 
 $finder = Finder::create()
     ->in([
         __DIR__ . '/app',
-        __DIR__ . '/tests',
+        __DIR__ . '/tests'
     ])
     ->name('*.php')
     ->exclude(['views/www/pages', 'views/www/parts'])

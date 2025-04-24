@@ -113,7 +113,7 @@ class ProfileTest extends TestCase
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -149,7 +149,7 @@ class ProfileTest extends TestCase
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -158,7 +158,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -173,7 +173,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -209,7 +209,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -218,7 +218,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -233,7 +233,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -270,7 +270,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -279,7 +279,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -305,7 +305,7 @@ HTML,
                     'title'       => 'Profile of user_179 <script>alert(1)</script> | Page 1 | This is a base title',
                     'description' => 'Profile of user_179 <script>alert(1)</script>'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -337,7 +337,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -346,7 +346,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -363,7 +363,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -399,7 +399,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -408,7 +408,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -425,7 +425,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -461,7 +461,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -470,7 +470,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -487,7 +487,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -525,7 +525,7 @@ second line</p>
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -534,7 +534,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -551,7 +551,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -588,7 +588,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -597,7 +597,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -614,7 +614,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -651,7 +651,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -660,7 +660,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -677,7 +677,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -714,7 +714,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -723,7 +723,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -740,7 +740,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -784,7 +784,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -793,7 +793,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -810,7 +810,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -854,7 +854,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -863,7 +863,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -880,7 +880,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -924,7 +924,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -933,7 +933,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -950,7 +950,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -994,7 +994,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1003,7 +1003,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -1020,7 +1020,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1064,7 +1064,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1073,7 +1073,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -1090,7 +1090,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1134,7 +1134,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1143,7 +1143,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -1160,7 +1160,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1204,7 +1204,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1213,7 +1213,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -1230,7 +1230,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1274,7 +1274,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1283,7 +1283,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -1300,7 +1300,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1344,7 +1344,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1353,7 +1353,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -1370,7 +1370,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1414,7 +1414,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1423,7 +1423,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -1440,7 +1440,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1484,7 +1484,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1493,7 +1493,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -1510,7 +1510,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1554,7 +1554,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1563,7 +1563,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -1592,7 +1592,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1628,7 +1628,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1637,7 +1637,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -1655,7 +1655,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1691,7 +1691,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1700,7 +1700,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -1718,7 +1718,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1755,7 +1755,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1787,7 +1787,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1809,7 +1809,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1845,7 +1845,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1854,7 +1854,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -1872,7 +1872,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1908,7 +1908,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1917,7 +1917,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -1935,7 +1935,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1972,7 +1972,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2004,7 +2004,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2037,7 +2037,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2073,7 +2073,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2082,7 +2082,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -2100,7 +2100,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2136,7 +2136,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2145,7 +2145,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -2163,7 +2163,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2200,7 +2200,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2232,7 +2232,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2254,7 +2254,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2290,7 +2290,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2299,7 +2299,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -2317,7 +2317,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2353,7 +2353,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2362,7 +2362,7 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
@@ -2380,7 +2380,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2417,7 +2417,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2449,7 +2449,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2473,7 +2473,8 @@ HTML,
             'user + 5 blueprints public + 3 blueprints private - (visitor profile)' => [
                 'sqlQueries' => [
                     'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 5, 8)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -2494,7 +2495,8 @@ HTML,
                                (159, 'slug_18', 'file_18', 'title_18', 1, utc_timestamp() - interval 17 day, utc_timestamp() - interval 17 day, 'public'),
                                (179, 'slug_19', 'file_19', 'title_19', 1, utc_timestamp() - interval 20 day, utc_timestamp() - interval 20 day, 'public'),
                                (169, 'slug_20', 'file_20', 'title_20', 1, utc_timestamp() - interval 7 day, utc_timestamp() - interval 7 day, 'public')
-                    ",
+
+                    SQL,
                 ],
                 'slug'        => 'user_159/',
                 'location'    => null,
@@ -2503,7 +2505,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2539,7 +2541,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2627,7 +2629,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2640,7 +2642,8 @@ HTML,
             'user + 5 blueprints public + 3 blueprints private - (public profile)' => [
                 'sqlQueries' => [
                     'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 5, 8)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -2661,7 +2664,8 @@ HTML,
                                (159, 'slug_18', 'file_18', 'title_18', 1, utc_timestamp() - interval 17 day, utc_timestamp() - interval 17 day, 'public'),
                                (179, 'slug_19', 'file_19', 'title_19', 1, utc_timestamp() - interval 20 day, utc_timestamp() - interval 20 day, 'public'),
                                (169, 'slug_20', 'file_20', 'title_20', 1, utc_timestamp() - interval 7 day, utc_timestamp() - interval 7 day, 'public')
-                    ",
+
+                    SQL,
                 ],
                 'slug'        => 'user_159/',
                 'location'    => null,
@@ -2670,7 +2674,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2706,7 +2710,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2794,7 +2798,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2807,7 +2811,8 @@ HTML,
             'user + 5 blueprints public + 3 blueprints private - (author profile)' => [
                 'sqlQueries' => [
                     'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 5, 8)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -2828,7 +2833,8 @@ HTML,
                                (159, 'slug_18', 'file_18', 'title_18', 1, utc_timestamp() - interval 17 day, utc_timestamp() - interval 17 day, 'public'),
                                (179, 'slug_19', 'file_19', 'title_19', 1, utc_timestamp() - interval 20 day, utc_timestamp() - interval 20 day, 'public'),
                                (169, 'slug_20', 'file_20', 'title_20', 1, utc_timestamp() - interval 7 day, utc_timestamp() - interval 7 day, 'public')
-                    ",
+
+                    SQL,
                 ],
                 'slug'        => 'user_159/',
                 'location'    => null,
@@ -2837,7 +2843,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2874,7 +2880,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+                'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -3004,7 +3010,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -3033,7 +3039,8 @@ HTML,
             'user + 20 blueprints public + 10 blueprints private - page 1 - (visitor profile)' => [
                 'sqlQueries' => [
                     'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -3079,7 +3086,8 @@ HTML,
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public'),
                                (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public')
-                    ",
+
+                    SQL,
                 ],
                 'slug'        => 'user_159/',
                 'location'    => null,
@@ -3088,7 +3096,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -3352,7 +3360,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -3371,7 +3379,8 @@ HTML,
             'user + 20 blueprints public + 10 blueprints private - page 1 - (public profile)' => [
                 'sqlQueries' => [
                     'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -3417,7 +3426,8 @@ HTML,
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public'),
                                (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public')
-                    ",
+
+                    SQL,
                 ],
                 'slug'        => 'user_159/',
                 'location'    => null,
@@ -3426,7 +3436,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -3690,7 +3700,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -3709,7 +3719,8 @@ HTML,
             'user + 20 blueprints public + 10 blueprints private - page 1 - (author profile)' => [
                 'sqlQueries' => [
                     'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -3755,7 +3766,8 @@ HTML,
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public'),
                                (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public')
-                    ",
+
+                    SQL,
                 ],
                 'slug'        => 'user_159/',
                 'location'    => null,
@@ -3764,7 +3776,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 1 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -4029,7 +4041,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -4064,7 +4076,8 @@ HTML,
             'user + 20 blueprints public + 10 blueprints private - page 2 - (visitor profile)' => [
                 'sqlQueries' => [
                     'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -4110,7 +4123,8 @@ HTML,
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public'),
                                (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public')
-                    ",
+
+                    SQL,
                 ],
                 'slug'        => 'user_159/?page=2',
                 'location'    => null,
@@ -4119,7 +4133,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 2 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -4243,7 +4257,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -4262,7 +4276,8 @@ HTML,
             'user + 20 blueprints public + 10 blueprints private - page 2 - (public profile)' => [
                 'sqlQueries' => [
                     'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -4308,7 +4323,8 @@ HTML,
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public'),
                                (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public')
-                    ",
+
+                    SQL,
                 ],
                 'slug'        => 'user_159/?page=2',
                 'location'    => null,
@@ -4317,7 +4333,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 2 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -4441,7 +4457,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -4460,7 +4476,8 @@ HTML,
             'user + 20 blueprints public + 10 blueprints private - page 2 - (author profile)' => [
                 'sqlQueries' => [
                     'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+                    <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -4506,7 +4523,8 @@ HTML,
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public'),
                                (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public')
-                    ",
+
+                    SQL,
                 ],
                 'slug'        => 'user_159/?page=2',
                 'location'    => null,
@@ -4515,7 +4533,7 @@ HTML,
                     'title'       => 'Profile of user_159 | Page 2 | This is a base title',
                     'description' => 'Profile of user_159'
                 ],
-                'contentProfileHTML' => <<<HTML
+                'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -4780,7 +4798,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+                'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">

@@ -69,7 +69,7 @@ class BlueprintGETVersionsBlueprintTest extends TestCase
                 ],
                 'slug'            => 'slug_public',
                 'hasListVersions' => true,
-                'html'            => <<<HTML
+                'html'            => <<<'HTML'
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -107,7 +107,7 @@ HTML
                 ],
                 'slug'            => 'slug_public',
                 'hasListVersions' => true,
-                'html'            => <<<HTML
+                'html'            => <<<'HTML'
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -154,7 +154,7 @@ HTML
                 ],
                 'slug'            => 'slug_public',
                 'hasListVersions' => true,
-                'html'            => <<<HTML
+                'html'            => <<<'HTML'
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -210,7 +210,7 @@ HTML
                 ],
                 'slug'            => 'slug_public/2',
                 'hasListVersions' => true,
-                'html'            => <<<HTML
+                'html'            => <<<'HTML'
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>

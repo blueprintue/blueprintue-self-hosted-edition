@@ -221,7 +221,7 @@ class BlueprintEditGETTest extends TestCase
         // verif thumbnail
         if ($thumbnail === null) {
             /* @noinspection RequiredAttributes */
-            $this->doTestHtmlBody($response, <<<HTML
+            $this->doTestHtmlBody($response, <<<'HTML'
 <div class="profile__avatar-container" id="current-thumbnail">
 <img alt="blueprint thumbnail" class="profile__avatar-container profile__avatar-container--hidden" id="upload-current-thumbnail"/>
 <div class="profile__avatar-container profile__avatar-container--background" id="upload-fallback-thumbnail">
@@ -235,7 +235,7 @@ HTML);
             $v = Security::escAttr($thumbnail);
             $this->doTestHtmlBody($response, <<<HTML
 <div class="profile__avatar-container" id="current-thumbnail">
-<img alt="blueprint thumbnail" class="profile__avatar-container" id="upload-current-thumbnail" src="&#x2F;medias&#x2F;blueprints&#x2F;$v"/>
+<img alt="blueprint thumbnail" class="profile__avatar-container" id="upload-current-thumbnail" src="&#x2F;medias&#x2F;blueprints&#x2F;{$v}"/>
 </div>
 HTML);
         }

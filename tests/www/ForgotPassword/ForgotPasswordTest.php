@@ -533,16 +533,16 @@ class ForgotPasswordTest extends TestCase
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-labelledby="form-forgot_password-label-email form-forgot_password-label-email-error" aria-required="true" autocomplete="email" class="form__input form__input--invisible form__input--error" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-forgot_password-input-email" name="form-forgot_password-input-email" placeholder="your@email.com" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-forgot_password-label-email form-forgot_password-label-email-error" aria-required="true" autocomplete="email" class="form__input form__input--invisible form__input--error" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-forgot_password-input-email" name="form-forgot_password-input-email" placeholder="your@email.com" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-forgot_password-input-email" id="form-forgot_password-label-email-error">$labelError</label>
+<label class="form__label form__label--error" for="form-forgot_password-input-email" id="form-forgot_password-label-email-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container">
-<input aria-invalid="false" aria-labelledby="form-forgot_password-label-email" aria-required="true" autocomplete="email" class="form__input form__input--invisible" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-forgot_password-input-email" name="form-forgot_password-input-email" placeholder="your@email.com" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-forgot_password-label-email" aria-required="true" autocomplete="email" class="form__input form__input--invisible" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-forgot_password-input-email" name="form-forgot_password-input-email" placeholder="your@email.com" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 HTML;

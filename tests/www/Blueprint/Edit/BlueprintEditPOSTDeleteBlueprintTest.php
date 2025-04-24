@@ -623,11 +623,11 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
 <label class="form__label" for="form-delete_blueprint-select-ownership" id="form-delete_blueprint-label-ownership">Blueprints ownership</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-delete_blueprint-label-ownership form-delete_blueprint-label-ownership-error" aria-required="true" class="form__input form__input--select form__input--error" id="form-delete_blueprint-select-ownership" name="form-delete_blueprint-select-ownership">
-<option value="give"$give>Give my blueprint to anonymous user</option>
-<option value="delete"$delete>Delete my blueprint</option>
+<option value="give"{$give}>Give my blueprint to anonymous user</option>
+<option value="delete"{$delete}>Delete my blueprint</option>
 </select>
 </div>
-<label class="form__label form__label--error" for="form-delete_blueprint-select-ownership" id="form-delete_blueprint-label-ownership-error">$labelError</label>
+<label class="form__label form__label--error" for="form-delete_blueprint-select-ownership" id="form-delete_blueprint-label-ownership-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -637,8 +637,8 @@ HTML;
 <label class="form__label" for="form-delete_blueprint-select-ownership" id="form-delete_blueprint-label-ownership">Blueprints ownership</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-delete_blueprint-label-ownership" aria-required="true" class="form__input form__input--select" id="form-delete_blueprint-select-ownership" name="form-delete_blueprint-select-ownership">
-<option value="give"$give>Give my blueprint to anonymous user</option>
-<option value="delete"$delete>Delete my blueprint</option>
+<option value="give"{$give}>Give my blueprint to anonymous user</option>
+<option value="delete"{$delete}>Delete my blueprint</option>
 </select>
 </div>
 </div>

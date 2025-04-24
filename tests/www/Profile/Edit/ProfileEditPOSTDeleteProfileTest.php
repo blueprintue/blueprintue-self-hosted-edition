@@ -821,7 +821,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
         $response = $this->getResponseFromApplication('POST', '/profile/user_' . $userID . '/edit/', $params, [], [], [], [], [], [], $envFile);
 
         if (isset($params['raise_exception'])) {
-            $sql = <<<SQL
+            $sql = <<<'SQL'
                 create table if not exists users_api
                 (
                     id_user int unsigned not null
@@ -942,11 +942,11 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
 <label class="form__label" for="form-delete_profile-select-blueprints_ownership" id="form-delete_profile-label-blueprints_ownership">Blueprints ownership</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-delete_profile-label-blueprints_ownership form-delete_profile-label-blueprints_ownership-error" aria-required="true" class="form__input form__input--select form__input--error" id="form-delete_profile-select-blueprints_ownership" name="form-delete_profile-select-blueprints_ownership">
-<option value="give"$give>Give my blueprints to anonymous user</option>
-<option value="delete"$delete>Delete my blueprints</option>
+<option value="give"{$give}>Give my blueprints to anonymous user</option>
+<option value="delete"{$delete}>Delete my blueprints</option>
 </select>
 </div>
-<label class="form__label form__label--error" for="form-delete_profile-select-blueprints_ownership" id="form-delete_profile-label-blueprints_ownership-error">$labelError</label>
+<label class="form__label form__label--error" for="form-delete_profile-select-blueprints_ownership" id="form-delete_profile-label-blueprints_ownership-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -956,8 +956,8 @@ HTML;
 <label class="form__label" for="form-delete_profile-select-blueprints_ownership" id="form-delete_profile-label-blueprints_ownership">Blueprints ownership</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-delete_profile-label-blueprints_ownership" aria-required="true" class="form__input form__input--select" id="form-delete_profile-select-blueprints_ownership" name="form-delete_profile-select-blueprints_ownership">
-<option value="give"$give>Give my blueprints to anonymous user</option>
-<option value="delete"$delete>Delete my blueprints</option>
+<option value="give"{$give}>Give my blueprints to anonymous user</option>
+<option value="delete"{$delete}>Delete my blueprints</option>
 </select>
 </div>
 </div>
@@ -976,12 +976,12 @@ HTML;
 <label class="form__label" for="form-delete_profile-select-comments_ownership" id="form-delete_profile-label-comments_ownership">Comments ownership</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-delete_profile-label-comments_ownership form-delete_profile-label-comments_ownership-error" aria-required="true" class="form__input form__input--select form__input--error" id="form-delete_profile-select-comments_ownership" name="form-delete_profile-select-comments_ownership">
-<option value="keep"$keep>Keep my name and comments</option>
-<option value="anonymize"$anonymize>Use guest name and keep comments</option>
-<option value="delete"$delete>Delete comments</option>
+<option value="keep"{$keep}>Keep my name and comments</option>
+<option value="anonymize"{$anonymize}>Use guest name and keep comments</option>
+<option value="delete"{$delete}>Delete comments</option>
 </select>
 </div>
-<label class="form__label form__label--error" for="form-delete_profile-select-comments_ownership" id="form-delete_profile-label-comments_ownership-error">$labelError</label>
+<label class="form__label form__label--error" for="form-delete_profile-select-comments_ownership" id="form-delete_profile-label-comments_ownership-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -991,9 +991,9 @@ HTML;
 <label class="form__label" for="form-delete_profile-select-comments_ownership" id="form-delete_profile-label-comments_ownership">Comments ownership</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-delete_profile-label-comments_ownership" aria-required="true" class="form__input form__input--select" id="form-delete_profile-select-comments_ownership" name="form-delete_profile-select-comments_ownership">
-<option value="keep"$keep>Keep my name and comments</option>
-<option value="anonymize"$anonymize>Use guest name and keep comments</option>
-<option value="delete"$delete>Delete comments</option>
+<option value="keep"{$keep}>Keep my name and comments</option>
+<option value="anonymize"{$anonymize}>Use guest name and keep comments</option>
+<option value="delete"{$delete}>Delete comments</option>
 </select>
 </div>
 </div>

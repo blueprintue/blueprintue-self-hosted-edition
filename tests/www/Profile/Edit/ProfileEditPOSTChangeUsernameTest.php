@@ -424,7 +424,7 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
         $this->doTestHtmlForm($response, '#form-change_username', <<<HTML
 <div class="form__element">
 <label class="form__label" for="form-change_username-input-current_username" id="form-change_username-label-current_username">Current Username</label>
-<input aria-labelledby="form-change_username-label-current_username" class="form__input form__input--disabled" disabled id="form-change_username-input-current_username" name="form-change_username-input-current_username" type="text" value="$currentUsername"/>
+<input aria-labelledby="form-change_username-label-current_username" class="form__input form__input--disabled" disabled id="form-change_username-input-current_username" name="form-change_username-input-current_username" type="text" value="{$currentUsername}"/>
 </div>
 HTML);
 
@@ -452,10 +452,10 @@ HTML);
 <div class="form__element">
 <label class="form__label" for="form-change_username-input-new_username" id="form-change_username-label-new_username">New Username</label>
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-labelledby="form-change_username-label-new_username form-change_username-label-new_username-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-change_username-input-new_username" name="form-change_username-input-new_username" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-change_username-label-new_username form-change_username-label-new_username-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-change_username-input-new_username" name="form-change_username-input-new_username" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-change_username-input-new_username" id="form-change_username-label-new_username-error">$labelError</label>
+<label class="form__label form__label--error" for="form-change_username-input-new_username" id="form-change_username-label-new_username-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -464,7 +464,7 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-change_username-input-new_username" id="form-change_username-label-new_username">New Username</label>
 <div class="form__container">
-<input aria-invalid="false" aria-labelledby="form-change_username-label-new_username" aria-required="true" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-change_username-input-new_username" name="form-change_username-input-new_username" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-change_username-label-new_username" aria-required="true" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-change_username-input-new_username" name="form-change_username-input-new_username" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 </div>

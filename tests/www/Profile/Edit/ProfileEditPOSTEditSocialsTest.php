@@ -1118,14 +1118,14 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
 <div class="form__element">
 <label class="form__label" for="form-edit_socials-input-facebook" id="form-edit_socials-label-facebook">Facebook</label>
 <div class="form__container form__container--error">
-<input aria-describedby="form-edit_socials-span-facebook_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-facebook form-edit_socials-label-facebook-error" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-facebook" name="form-edit_socials-input-facebook" type="text" value="$vAttr"/>
+<input aria-describedby="form-edit_socials-span-facebook_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-facebook form-edit_socials-label-facebook-error" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-facebook" name="form-edit_socials-input-facebook" type="text" value="{$vAttr}"/>
 <span class="form__feedback form__feedback--error"></span>
 <svg aria-hidden="true" class="edit-profile__social-icon profile__network-svg--facebook">
 <use href="/sprite/sprite.svg#icon-facebook"></use>
 </svg>
 </div>
-<label class="form__label form__label--error" for="form-edit_socials-input-facebook" id="form-edit_socials-label-facebook-error">$labelError</label>
-<span class="form__help" id="form-edit_socials-span-facebook_help">https://www.facebook.com/<span class="form__help--emphasis">$vHTML</span></span>
+<label class="form__label form__label--error" for="form-edit_socials-input-facebook" id="form-edit_socials-label-facebook-error">{$labelError}</label>
+<span class="form__help" id="form-edit_socials-span-facebook_help">https://www.facebook.com/<span class="form__help--emphasis">{$vHTML}</span></span>
 </div>
 HTML;
         }
@@ -1134,13 +1134,13 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_socials-input-facebook" id="form-edit_socials-label-facebook">Facebook</label>
 <div class="form__container">
-<input aria-describedby="form-edit_socials-span-facebook_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-facebook" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-facebook" name="form-edit_socials-input-facebook" type="text" value="$vAttr"/>
+<input aria-describedby="form-edit_socials-span-facebook_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-facebook" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-facebook" name="form-edit_socials-input-facebook" type="text" value="{$vAttr}"/>
 <span class="form__feedback"></span>
 <svg aria-hidden="true" class="edit-profile__social-icon profile__network-svg--facebook">
 <use href="/sprite/sprite.svg#icon-facebook"></use>
 </svg>
 </div>
-<span class="form__help" id="form-edit_socials-span-facebook_help">https://www.facebook.com/<span class="form__help--emphasis">$vHTML</span></span>
+<span class="form__help" id="form-edit_socials-span-facebook_help">https://www.facebook.com/<span class="form__help--emphasis">{$vHTML}</span></span>
 </div>
 HTML;
     }
@@ -1157,14 +1157,14 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_socials-input-twitter" id="form-edit_socials-label-twitter">Twitter</label>
 <div class="form__container form__container--error">
-<input aria-describedby="form-edit_socials-span-twitter_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-twitter form-edit_socials-label-twitter-error" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-twitter" name="form-edit_socials-input-twitter" type="text" value="$vAttr"/>
+<input aria-describedby="form-edit_socials-span-twitter_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-twitter form-edit_socials-label-twitter-error" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-twitter" name="form-edit_socials-input-twitter" type="text" value="{$vAttr}"/>
 <span class="form__feedback form__feedback--error"></span>
 <svg aria-hidden="true" class="edit-profile__social-icon profile__network-svg--twitter">
 <use href="/sprite/sprite.svg#icon-twitter"></use>
 </svg>
 </div>
-<label class="form__label form__label--error" for="form-edit_socials-input-twitter" id="form-edit_socials-label-twitter-error">$labelError</label>
-<span class="form__help" id="form-edit_socials-span-twitter_help">https://twitter.com/<span class="form__help--emphasis">$vHTML</span></span>
+<label class="form__label form__label--error" for="form-edit_socials-input-twitter" id="form-edit_socials-label-twitter-error">{$labelError}</label>
+<span class="form__help" id="form-edit_socials-span-twitter_help">https://twitter.com/<span class="form__help--emphasis">{$vHTML}</span></span>
 </div>
 HTML;
         }
@@ -1173,13 +1173,13 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_socials-input-twitter" id="form-edit_socials-label-twitter">Twitter</label>
 <div class="form__container">
-<input aria-describedby="form-edit_socials-span-twitter_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-twitter" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-twitter" name="form-edit_socials-input-twitter" type="text" value="$vAttr"/>
+<input aria-describedby="form-edit_socials-span-twitter_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-twitter" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-twitter" name="form-edit_socials-input-twitter" type="text" value="{$vAttr}"/>
 <span class="form__feedback"></span>
 <svg aria-hidden="true" class="edit-profile__social-icon profile__network-svg--twitter">
 <use href="/sprite/sprite.svg#icon-twitter"></use>
 </svg>
 </div>
-<span class="form__help" id="form-edit_socials-span-twitter_help">https://twitter.com/<span class="form__help--emphasis">$vHTML</span></span>
+<span class="form__help" id="form-edit_socials-span-twitter_help">https://twitter.com/<span class="form__help--emphasis">{$vHTML}</span></span>
 </div>
 HTML;
     }
@@ -1196,14 +1196,14 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_socials-input-github" id="form-edit_socials-label-github">GitHub</label>
 <div class="form__container form__container--error">
-<input aria-describedby="form-edit_socials-span-github_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-github form-edit_socials-label-github-error" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-github" name="form-edit_socials-input-github" type="text" value="$vAttr"/>
+<input aria-describedby="form-edit_socials-span-github_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-github form-edit_socials-label-github-error" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-github" name="form-edit_socials-input-github" type="text" value="{$vAttr}"/>
 <span class="form__feedback form__feedback--error"></span>
 <svg aria-hidden="true" class="edit-profile__social-icon">
 <use href="/sprite/sprite.svg#icon-github"></use>
 </svg>
 </div>
-<label class="form__label form__label--error" for="form-edit_socials-input-github" id="form-edit_socials-label-github-error">$labelError</label>
-<span class="form__help" id="form-edit_socials-span-github_help">https://github.com/<span class="form__help--emphasis">$vHTML</span></span>
+<label class="form__label form__label--error" for="form-edit_socials-input-github" id="form-edit_socials-label-github-error">{$labelError}</label>
+<span class="form__help" id="form-edit_socials-span-github_help">https://github.com/<span class="form__help--emphasis">{$vHTML}</span></span>
 </div>
 HTML;
         }
@@ -1212,13 +1212,13 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_socials-input-github" id="form-edit_socials-label-github">GitHub</label>
 <div class="form__container">
-<input aria-describedby="form-edit_socials-span-github_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-github" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-github" name="form-edit_socials-input-github" type="text" value="$vAttr"/>
+<input aria-describedby="form-edit_socials-span-github_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-github" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-github" name="form-edit_socials-input-github" type="text" value="{$vAttr}"/>
 <span class="form__feedback"></span>
 <svg aria-hidden="true" class="edit-profile__social-icon">
 <use href="/sprite/sprite.svg#icon-github"></use>
 </svg>
 </div>
-<span class="form__help" id="form-edit_socials-span-github_help">https://github.com/<span class="form__help--emphasis">$vHTML</span></span>
+<span class="form__help" id="form-edit_socials-span-github_help">https://github.com/<span class="form__help--emphasis">{$vHTML}</span></span>
 </div>
 HTML;
     }
@@ -1235,14 +1235,14 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_socials-input-youtube" id="form-edit_socials-label-youtube">Youtube</label>
 <div class="form__container form__container--error">
-<input aria-describedby="form-edit_socials-span-youtube_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-youtube form-edit_socials-label-youtube-error" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="channel_id" id="form-edit_socials-input-youtube" name="form-edit_socials-input-youtube" type="text" value="$vAttr"/>
+<input aria-describedby="form-edit_socials-span-youtube_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-youtube form-edit_socials-label-youtube-error" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="channel_id" id="form-edit_socials-input-youtube" name="form-edit_socials-input-youtube" type="text" value="{$vAttr}"/>
 <span class="form__feedback form__feedback--error"></span>
 <svg aria-hidden="true" class="edit-profile__social-icon">
 <use href="/sprite/sprite.svg#icon-youtube"></use>
 </svg>
 </div>
-<label class="form__label form__label--error" for="form-edit_socials-input-youtube" id="form-edit_socials-label-youtube-error">$labelError</label>
-<span class="form__help" id="form-edit_socials-span-youtube_help">https://www.youtube.com/channel/<span class="form__help--emphasis">$vHTML</span><br />
+<label class="form__label form__label--error" for="form-edit_socials-input-youtube" id="form-edit_socials-label-youtube-error">{$labelError}</label>
+<span class="form__help" id="form-edit_socials-span-youtube_help">https://www.youtube.com/channel/<span class="form__help--emphasis">{$vHTML}</span><br />
 Find your channel id: <a href="https://www.youtube.com/account_advanced" rel="noopener noreferrer nofollow" target="_blank">https://www.youtube.com/account_advanced</a></span>
 </div>
 HTML;
@@ -1252,13 +1252,13 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_socials-input-youtube" id="form-edit_socials-label-youtube">Youtube</label>
 <div class="form__container">
-<input aria-describedby="form-edit_socials-span-youtube_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-youtube" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="channel_id" id="form-edit_socials-input-youtube" name="form-edit_socials-input-youtube" type="text" value="$vAttr"/>
+<input aria-describedby="form-edit_socials-span-youtube_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-youtube" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="channel_id" id="form-edit_socials-input-youtube" name="form-edit_socials-input-youtube" type="text" value="{$vAttr}"/>
 <span class="form__feedback"></span>
 <svg aria-hidden="true" class="edit-profile__social-icon">
 <use href="/sprite/sprite.svg#icon-youtube"></use>
 </svg>
 </div>
-<span class="form__help" id="form-edit_socials-span-youtube_help">https://www.youtube.com/channel/<span class="form__help--emphasis">$vHTML</span><br />
+<span class="form__help" id="form-edit_socials-span-youtube_help">https://www.youtube.com/channel/<span class="form__help--emphasis">{$vHTML}</span><br />
 Find your channel id: <a href="https://www.youtube.com/account_advanced" rel="noopener noreferrer nofollow" target="_blank">https://www.youtube.com/account_advanced</a></span>
 </div>
 HTML;
@@ -1276,14 +1276,14 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_socials-input-twitch" id="form-edit_socials-label-twitch">Twitch</label>
 <div class="form__container form__container--error">
-<input aria-describedby="form-edit_socials-span-twitch_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-twitch form-edit_socials-label-twitch-error" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-twitch" name="form-edit_socials-input-twitch" type="text" value="$vAttr"/>
+<input aria-describedby="form-edit_socials-span-twitch_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-twitch form-edit_socials-label-twitch-error" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-twitch" name="form-edit_socials-input-twitch" type="text" value="{$vAttr}"/>
 <span class="form__feedback form__feedback--error"></span>
 <svg aria-hidden="true" class="edit-profile__social-icon profile__network-svg--twitch">
 <use href="/sprite/sprite.svg#icon-twitch"></use>
 </svg>
 </div>
-<label class="form__label form__label--error" for="form-edit_socials-input-twitch" id="form-edit_socials-label-twitch-error">$labelError</label>
-<span class="form__help" id="form-edit_socials-span-twitch_help">https://www.twitch.tv/<span class="form__help--emphasis">$vHTML</span></span>
+<label class="form__label form__label--error" for="form-edit_socials-input-twitch" id="form-edit_socials-label-twitch-error">{$labelError}</label>
+<span class="form__help" id="form-edit_socials-span-twitch_help">https://www.twitch.tv/<span class="form__help--emphasis">{$vHTML}</span></span>
 </div>
 HTML;
         }
@@ -1292,13 +1292,13 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_socials-input-twitch" id="form-edit_socials-label-twitch">Twitch</label>
 <div class="form__container">
-<input aria-describedby="form-edit_socials-span-twitch_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-twitch" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-twitch" name="form-edit_socials-input-twitch" type="text" value="$vAttr"/>
+<input aria-describedby="form-edit_socials-span-twitch_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-twitch" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-twitch" name="form-edit_socials-input-twitch" type="text" value="{$vAttr}"/>
 <span class="form__feedback"></span>
 <svg aria-hidden="true" class="edit-profile__social-icon profile__network-svg--twitch">
 <use href="/sprite/sprite.svg#icon-twitch"></use>
 </svg>
 </div>
-<span class="form__help" id="form-edit_socials-span-twitch_help">https://www.twitch.tv/<span class="form__help--emphasis">$vHTML</span></span>
+<span class="form__help" id="form-edit_socials-span-twitch_help">https://www.twitch.tv/<span class="form__help--emphasis">{$vHTML}</span></span>
 </div>
 HTML;
     }
@@ -1315,14 +1315,14 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_socials-input-unreal" id="form-edit_socials-label-unreal">Unreal Engine Forum</label>
 <div class="form__container form__container--error">
-<input aria-describedby="form-edit_socials-span-unreal_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-unreal form-edit_socials-label-unreal-error" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-unreal" name="form-edit_socials-input-unreal" type="text" value="$vAttr"/>
+<input aria-describedby="form-edit_socials-span-unreal_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-unreal form-edit_socials-label-unreal-error" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-unreal" name="form-edit_socials-input-unreal" type="text" value="{$vAttr}"/>
 <span class="form__feedback form__feedback--error"></span>
 <svg aria-hidden="true" class="edit-profile__social-icon">
 <use href="/sprite/sprite.svg#icon-unreal"></use>
 </svg>
 </div>
-<label class="form__label form__label--error" for="form-edit_socials-input-unreal" id="form-edit_socials-label-unreal-error">$labelError</label>
-<span class="form__help" id="form-edit_socials-span-unreal_help">https://forums.unrealengine.com/u/<span class="form__help--emphasis">$vHTML</span></span>
+<label class="form__label form__label--error" for="form-edit_socials-input-unreal" id="form-edit_socials-label-unreal-error">{$labelError}</label>
+<span class="form__help" id="form-edit_socials-span-unreal_help">https://forums.unrealengine.com/u/<span class="form__help--emphasis">{$vHTML}</span></span>
 </div>
 HTML;
         }
@@ -1331,13 +1331,13 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-edit_socials-input-unreal" id="form-edit_socials-label-unreal">Unreal Engine Forum</label>
 <div class="form__container">
-<input aria-describedby="form-edit_socials-span-unreal_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-unreal" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-unreal" name="form-edit_socials-input-unreal" type="text" value="$vAttr"/>
+<input aria-describedby="form-edit_socials-span-unreal_help" aria-invalid="false" aria-labelledby="form-edit_socials-label-unreal" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-has-container data-form-rules="regex:^[a-zA-Z0-9._-]*$" data-profile-social data-profile-social-fallback="username" id="form-edit_socials-input-unreal" name="form-edit_socials-input-unreal" type="text" value="{$vAttr}"/>
 <span class="form__feedback"></span>
 <svg aria-hidden="true" class="edit-profile__social-icon">
 <use href="/sprite/sprite.svg#icon-unreal"></use>
 </svg>
 </div>
-<span class="form__help" id="form-edit_socials-span-unreal_help">https://forums.unrealengine.com/u/<span class="form__help--emphasis">$vHTML</span></span>
+<span class="form__help" id="form-edit_socials-span-unreal_help">https://forums.unrealengine.com/u/<span class="form__help--emphasis">{$vHTML}</span></span>
 </div>
 HTML;
     }

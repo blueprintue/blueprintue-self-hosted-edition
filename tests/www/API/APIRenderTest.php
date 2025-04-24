@@ -40,7 +40,7 @@ class APIRenderTest extends TestCase
                     'blueprint' => 'begin object 1',
                 ],
                 'responseCode'    => 200,
-                'responseContent' => <<<HTML
+                'responseContent' => <<<'HTML'
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -354,7 +354,7 @@ class RenderTest extends TestCase
             'description' => Security::escAttr($headerDescription),
         ]);
 
-        $this->doTestHtmlBody($response, <<<HTML
+        $this->doTestHtmlBody($response, <<<'HTML'
 <body>
 <div class="playground"></div>
 <textarea class="hidden" id="pastebin_data"></textarea>
@@ -452,7 +452,7 @@ HTML);
         $this->doTestHtmlBody($response, <<<HTML
 <body>
 <div class="playground"></div>
-<textarea class="hidden" id="pastebin_data">$v</textarea>
+<textarea class="hidden" id="pastebin_data">{$v}</textarea>
 <script src="https&#x3A;&#x2F;&#x2F;blueprintue.test/bue-render/render.js"></script>
 <script>
 new window.blueprintUE.render.Main(

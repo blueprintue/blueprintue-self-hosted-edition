@@ -73,7 +73,7 @@ class BlueprintDiffGETVersionsBlueprintTest extends TestCase
                 'statusCode'      => 200,
                 'location'        => null,
                 'hasListVersions' => true,
-                'html'            => <<<HTML
+                'html'            => <<<'HTML'
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -110,7 +110,7 @@ HTML
                 'statusCode'      => 200,
                 'location'        => null,
                 'hasListVersions' => true,
-                'html'            => <<<HTML
+                'html'            => <<<'HTML'
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -147,7 +147,7 @@ HTML
                 'statusCode'      => 200,
                 'location'        => null,
                 'hasListVersions' => true,
-                'html'            => <<<HTML
+                'html'            => <<<'HTML'
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -193,7 +193,7 @@ HTML
                 'statusCode'      => 200,
                 'location'        => null,
                 'hasListVersions' => true,
-                'html'            => <<<HTML
+                'html'            => <<<'HTML'
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -247,7 +247,7 @@ HTML
                 'statusCode'      => 200,
                 'location'        => null,
                 'hasListVersions' => true,
-                'html'            => <<<HTML
+                'html'            => <<<'HTML'
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>

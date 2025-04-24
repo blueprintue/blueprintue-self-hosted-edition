@@ -106,7 +106,7 @@ class BlueprintGETAuthorBlueprintTest extends TestCase
         // author avatar
         if ($avatar !== null) {
             $this->doTestHtmlMain($response, '<img alt="avatar author" class="blueprint__avatar-container" src="' . Security::escAttr($avatar) . '"/>');
-            $this->doTestHtmlMainNot($response, <<<HTML
+            $this->doTestHtmlMainNot($response, <<<'HTML'
 <div class="blueprint__avatar-container blueprint__avatar-container--background">
 <svg class="blueprint__avatar-svg">
 <use href="/sprite/sprite.svg#avatar"></use>
@@ -115,7 +115,7 @@ class BlueprintGETAuthorBlueprintTest extends TestCase
 HTML);
         } else {
             $this->doTestHtmlMainNot($response, '<img alt="avatar author" class="blueprint__avatar-container" src="');
-            $this->doTestHtmlMain($response, <<<HTML
+            $this->doTestHtmlMain($response, <<<'HTML'
 <div class="blueprint__avatar-container blueprint__avatar-container--background">
 <svg class="blueprint__avatar-svg">
 <use href="/sprite/sprite.svg#avatar"></use>

@@ -81,7 +81,7 @@ class ResetPasswordTest extends TestCase
         $this->doTestHtmlBody($response, '<h2 class="block__title">Reset password</h2>');
         $this->doTestNavBarIsLogoOnly($response);
 
-        $this->doTestHtmlMain($response, <<<HTML
+        $this->doTestHtmlMain($response, <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Reset password</h2>
@@ -94,7 +94,7 @@ HTML);
         $this->doTestHasResponseWithStatusCode($response, 301);
 
         $response = $this->getResponseFromApplication('GET', '/reset-password/', [], [], [], ['reset_token' => 'lambda']);
-        $this->doTestHtmlMain($response, <<<HTML
+        $this->doTestHtmlMain($response, <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Reset password</h2>
@@ -848,16 +848,16 @@ HTML);
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-labelledby="form-reset_password-label-email form-reset_password-label-email-error" aria-required="true" autocomplete="email" class="form__input form__input--invisible form__input--error" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-reset_password-input-email" name="form-reset_password-input-email" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-reset_password-label-email form-reset_password-label-email-error" aria-required="true" autocomplete="email" class="form__input form__input--invisible form__input--error" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-reset_password-input-email" name="form-reset_password-input-email" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-reset_password-input-email" id="form-reset_password-label-email-error">$labelError</label>
+<label class="form__label form__label--error" for="form-reset_password-input-email" id="form-reset_password-label-email-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container">
-<input aria-invalid="false" aria-labelledby="form-reset_password-label-email" aria-required="true" autocomplete="email" class="form__input form__input--invisible" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-reset_password-input-email" name="form-reset_password-input-email" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-reset_password-label-email" aria-required="true" autocomplete="email" class="form__input form__input--invisible" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-reset_password-input-email" name="form-reset_password-input-email" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 HTML;
@@ -871,7 +871,7 @@ HTML;
 <input aria-describedby="form-reset_password-span-password" aria-invalid="false" aria-labelledby="form-reset_password-label-password form-reset_password-label-password-error" aria-required="true" autocomplete="new-password" class="form__input form__input--invisible form__input--error" data-form-error-min="Password must be at least 10 characters in length" data-form-error-regex="Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters" data-form-has-container data-form-rules="min:10|regex:^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9\s:])([^\s]){8,}$" id="form-reset_password-input-password" name="form-reset_password-input-password" type="password"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-reset_password-input-password" id="form-reset_password-label-password-error">$labelError</label>
+<label class="form__label form__label--error" for="form-reset_password-input-password" id="form-reset_password-label-password-error">{$labelError}</label>
 HTML;
         }
 
@@ -891,11 +891,11 @@ HTML;
 <input aria-invalid="false" aria-labelledby="form-reset_password-label-password_confirm form-reset_password-label-password_confirm-error" aria-required="true" autocomplete="new-password" class="form__input form__input--invisible form__input--error" data-form-error-equal_field="Confirm New Password must be the same as New Password" data-form-error-required="Confirm New Password is required" data-form-has-container data-form-rules="required|equal_field:form-reset_password-input-password" id="form-reset_password-input-password_confirm" name="form-reset_password-input-password_confirm" type="password"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-reset_password-input-password_confirm" id="form-reset_password-label-password_confirm-error">$labelError</label>
+<label class="form__label form__label--error" for="form-reset_password-input-password_confirm" id="form-reset_password-label-password_confirm-error">{$labelError}</label>
 HTML;
         }
 
-        return <<<HTML
+        return <<<'HTML'
 <div class="form__container">
 <input aria-invalid="false" aria-labelledby="form-reset_password-label-password_confirm" aria-required="true" autocomplete="new-password" class="form__input form__input--invisible" data-form-error-equal_field="Confirm New Password must be the same as New Password" data-form-error-required="Confirm New Password is required" data-form-has-container data-form-rules="required|equal_field:form-reset_password-input-password" id="form-reset_password-input-password_confirm" name="form-reset_password-input-password_confirm" type="password"/>
 <span class="form__feedback"></span>

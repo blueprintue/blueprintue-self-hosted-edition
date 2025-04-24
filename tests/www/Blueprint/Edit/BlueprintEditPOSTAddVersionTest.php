@@ -588,10 +588,10 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
 <div class="form__element">
 <label class="form__label" for="form-add_version-textarea-blueprint" id="form-add_version-label-blueprint">New version <span class="form__label--info">(required)</span></label>
 <div class="form__container form__container--blueprint form__container--textarea form__container--error">
-<textarea aria-invalid="false" aria-labelledby="form-add_version-label-blueprint form-add_version-label-blueprint-error" aria-required="true" class="form__input form__input--blueprint form__input--invisible form__input--textarea form__input--error" data-form-error-required="Blueprint is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-blueprint" name="form-add_version-textarea-blueprint">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_version-label-blueprint form-add_version-label-blueprint-error" aria-required="true" class="form__input form__input--blueprint form__input--invisible form__input--textarea form__input--error" data-form-error-required="Blueprint is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-blueprint" name="form-add_version-textarea-blueprint">{$v}</textarea>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-add_version-textarea-blueprint" id="form-add_version-label-blueprint-error">$labelError</label>
+<label class="form__label form__label--error" for="form-add_version-textarea-blueprint" id="form-add_version-label-blueprint-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -600,7 +600,7 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-add_version-textarea-blueprint" id="form-add_version-label-blueprint">New version <span class="form__label--info">(required)</span></label>
 <div class="form__container form__container--blueprint form__container--textarea">
-<textarea aria-invalid="false" aria-labelledby="form-add_version-label-blueprint" aria-required="true" class="form__input form__input--blueprint form__input--invisible form__input--textarea" data-form-error-required="Blueprint is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-blueprint" name="form-add_version-textarea-blueprint">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_version-label-blueprint" aria-required="true" class="form__input form__input--blueprint form__input--invisible form__input--textarea" data-form-error-required="Blueprint is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-blueprint" name="form-add_version-textarea-blueprint">{$v}</textarea>
 <span class="form__feedback"></span>
 </div>
 </div>
@@ -617,10 +617,10 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-add_version-textarea-reason" id="form-add_version-label-reason">Reason <span class="form__label--info">(required)</span></label>
 <div class="form__container form__container--textarea form__container--error">
-<textarea aria-invalid="false" aria-labelledby="form-add_version-label-reason form-add_version-label-reason-error" aria-required="true" class="form__input form__input--invisible form__input--textarea form__input--error" data-form-error-required="Reason is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-reason" name="form-add_version-textarea-reason">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_version-label-reason form-add_version-label-reason-error" aria-required="true" class="form__input form__input--invisible form__input--textarea form__input--error" data-form-error-required="Reason is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-reason" name="form-add_version-textarea-reason">{$v}</textarea>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-add_version-textarea-reason" id="form-add_version-label-reason-error">$labelError</label>
+<label class="form__label form__label--error" for="form-add_version-textarea-reason" id="form-add_version-label-reason-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -629,7 +629,7 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-add_version-textarea-reason" id="form-add_version-label-reason">Reason <span class="form__label--info">(required)</span></label>
 <div class="form__container form__container--textarea">
-<textarea aria-invalid="false" aria-labelledby="form-add_version-label-reason" aria-required="true" class="form__input form__input--invisible form__input--textarea" data-form-error-required="Reason is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-reason" name="form-add_version-textarea-reason">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_version-label-reason" aria-required="true" class="form__input form__input--invisible form__input--textarea" data-form-error-required="Reason is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-reason" name="form-add_version-textarea-reason">{$v}</textarea>
 <span class="form__feedback"></span>
 </div>
 </div>

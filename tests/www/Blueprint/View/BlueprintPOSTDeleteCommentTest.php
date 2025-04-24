@@ -28,7 +28,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::setDatabaseEmptyStructure();
 
         // user
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO users (`id`, `username`, `slug`, `grade`, `created_at`)
             VALUES (65, 'user_65', 'user_65', 'member', utc_timestamp()),
                    (66, 'user_66', 'user_66', 'member', utc_timestamp())
@@ -36,7 +36,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::$db->exec($sql);
 
         // user infos
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO users_infos (id_user, count_public_comment, count_private_comment)
             VALUES (65, 1, 3),
                    (66, 0, 0)
@@ -44,7 +44,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::$db->exec($sql);
 
         // blueprints
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure)
             VALUES (966, 65, 'slug_public',   'a1', 'my title 1', 1, utc_timestamp(), utc_timestamp(), 'public'),
                    (967, 65, 'slug_unlisted', 'a2', 'my title 2', 1, utc_timestamp(), utc_timestamp(), 'unlisted'),
@@ -53,7 +53,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::$db->exec($sql);
 
         // blueprints version
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at)
             VALUES (966, 1, 'First commit', utc_timestamp(), utc_timestamp()),
                    (967, 1, 'First commit', utc_timestamp(), utc_timestamp()),
@@ -66,7 +66,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
     protected function setUp(): void
     {
         // comment
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO comments (id, id_author, id_blueprint, content, created_at)
             VALUES (10, 65, 966, 'com 1 public', utc_timestamp()),
                    (11, 65, 967, 'com 1 unlisted', utc_timestamp()),
@@ -75,7 +75,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::$db->exec($sql);
 
         // user infos
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO users_infos (id_user, count_public_comment, count_private_comment)
             VALUES (65, 1, 3),
                    (66, 0, 0)
@@ -83,7 +83,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::$db->exec($sql);
 
         // blueprints
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, comments_count, comments_closed, comments_hidden)
             VALUES (966, 65, 'slug_public',   'a1', 'my title 1', 1, utc_timestamp(), utc_timestamp(), 'public', 1, 0, 0),
                    (967, 65, 'slug_unlisted', 'a2', 'my title 2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 1, 0, 0),
@@ -463,11 +463,11 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         $html = <<<HTML
 <div class="comment__actions">
 <form class="form__inline" data-form-confirm data-form-confirm-no="No" data-form-confirm-question="Are you sure you want to delete this comment?" data-form-confirm-yes="Yes" method="post">
-<input name="form-delete_comment-hidden-id" type="hidden" value="$commentID"/>
-<input name="form-delete_comment-hidden-csrf" type="hidden" value="$csrf"/>
+<input name="form-delete_comment-hidden-id" type="hidden" value="{$commentID}"/>
+<input name="form-delete_comment-hidden-csrf" type="hidden" value="{$csrf}"/>
 <button class="form__button form__button--warning form__button--block_link" type="submit">Delete</button>
 </form>
-<a class="block__link block__link--no-margin" id="edit_comment-btn-edit-comment-$commentID" href="#">Edit</a>
+<a class="block__link block__link--no-margin" id="edit_comment-btn-edit-comment-{$commentID}" href="#">Edit</a>
 </div>
 HTML;
 

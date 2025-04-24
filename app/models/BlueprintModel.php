@@ -549,11 +549,11 @@ class BlueprintModel extends Model
                   AND published_at IS NOT NULL
                   AND (exposure = 'public' OR id_author = :userID)
                   AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())
-                  $querySQL
-                  $typeSQL
-                  $ueVersionSQL
+                  {$querySQL}
+                  {$typeSQL}
+                  {$ueVersionSQL}
                 ORDER BY published_at DESC
-                $limit;
+                {$limit};
             SQL;
             $sqlCountRows = <<<SQL
                 SELECT COUNT(*)
@@ -563,9 +563,9 @@ class BlueprintModel extends Model
                   AND published_at IS NOT NULL
                   AND (exposure = 'public' OR id_author = :userID)
                   AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())
-                  $querySQL
-                  $typeSQL
-                  $ueVersionSQL;
+                  {$querySQL}
+                  {$typeSQL}
+                  {$ueVersionSQL};
             SQL;
 
             $paramsRows = ['userID' => $connectedUserID, 'count' => $count, 'offset' => $offset];
@@ -594,9 +594,9 @@ class BlueprintModel extends Model
                   AND published_at IS NOT NULL
                   AND exposure = 'public'
                   AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())
-                  $querySQL
-                  $typeSQL
-                  $ueVersionSQL
+                  {$querySQL}
+                  {$typeSQL}
+                  {$ueVersionSQL}
                 ORDER BY published_at DESC
                 LIMIT :offset, :count;
             SQL;
@@ -608,9 +608,9 @@ class BlueprintModel extends Model
                   AND published_at IS NOT NULL
                   AND exposure = 'public'
                   AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())
-                  $querySQL
-                  $typeSQL
-                  $ueVersionSQL;
+                  {$querySQL}
+                  {$typeSQL}
+                  {$ueVersionSQL};
             SQL;
 
             $paramsRows = ['count' => $count, 'offset' => $offset];

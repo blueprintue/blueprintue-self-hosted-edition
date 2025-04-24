@@ -32,7 +32,7 @@ class CronPurgeSessionTest extends TestCase
      */
     public function testCronPurgeSessionGET(): void
     {
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             INSERT INTO sessions (id, last_access, content)
             VALUES ('now + 30h', utc_timestamp() + interval 30 hour, '1'),
                    ('now + 1h', utc_timestamp() + interval 1 hour, '2'),

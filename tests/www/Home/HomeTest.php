@@ -1107,16 +1107,16 @@ class HomeTest extends TestCase
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-labelledby="form-add_blueprint-label-title form-add_blueprint-label-title-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-required="Title is required" data-form-has-container data-form-rules="required" id="form-add_blueprint-input-title" name="form-add_blueprint-input-title" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-add_blueprint-label-title form-add_blueprint-label-title-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-required="Title is required" data-form-has-container data-form-rules="required" id="form-add_blueprint-input-title" name="form-add_blueprint-input-title" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-add_blueprint-input-title" id="form-add_blueprint-label-title-error">$labelError</label>
+<label class="form__label form__label--error" for="form-add_blueprint-input-title" id="form-add_blueprint-label-title-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container">
-<input aria-invalid="false" aria-labelledby="form-add_blueprint-label-title" aria-required="true" class="form__input form__input--invisible" data-form-error-required="Title is required" data-form-has-container data-form-rules="required" id="form-add_blueprint-input-title" name="form-add_blueprint-input-title" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-add_blueprint-label-title" aria-required="true" class="form__input form__input--invisible" data-form-error-required="Title is required" data-form-has-container data-form-rules="required" id="form-add_blueprint-input-title" name="form-add_blueprint-input-title" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 HTML;
@@ -1136,21 +1136,21 @@ HTML;
             return <<<HTML
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-add_blueprint-label-exposure form-add_blueprint-label-exposure-error" aria-required="true" class="form__input form__input--select form__input--error" id="form-add_blueprint-select-exposure" name="form-add_blueprint-select-exposure">
-<option value="public"$selectedPublic>Public</option>
-<option value="unlisted"$selectedUnlisted>Unlisted</option>
-$privateOption
+<option value="public"{$selectedPublic}>Public</option>
+<option value="unlisted"{$selectedUnlisted}>Unlisted</option>
+{$privateOption}
 </select>
 </div>
-<label class="form__label form__label--error" for="form-add_blueprint-select-exposure" id="form-add_blueprint-label-exposure-error">$labelError</label>
+<label class="form__label form__label--error" for="form-add_blueprint-select-exposure" id="form-add_blueprint-label-exposure-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-add_blueprint-label-exposure" aria-required="true" class="form__input form__input--select" id="form-add_blueprint-select-exposure" name="form-add_blueprint-select-exposure">
-<option value="public"$selectedPublic>Public</option>
-<option value="unlisted"$selectedUnlisted>Unlisted</option>
-$privateOption
+<option value="public"{$selectedPublic}>Public</option>
+<option value="unlisted"{$selectedUnlisted}>Unlisted</option>
+{$privateOption}
 </select>
 </div>
 HTML;
@@ -1170,23 +1170,23 @@ HTML;
             return <<<HTML
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-add_blueprint-label-expiration form-add_blueprint-label-expiration-error" aria-required="true" class="form__input form__input--select form__input--error" id="form-add_blueprint-select-expiration" name="form-add_blueprint-select-expiration">
-<option value="never"$selectedNever>Never</option>
-<option value="1h"$selected1Hour>1 hour</option>
-<option value="1d"$selected1Day>1 day</option>
-<option value="1w"$selected1Week>1 week</option>
+<option value="never"{$selectedNever}>Never</option>
+<option value="1h"{$selected1Hour}>1 hour</option>
+<option value="1d"{$selected1Day}>1 day</option>
+<option value="1w"{$selected1Week}>1 week</option>
 </select>
 </div>
-<label class="form__label form__label--error" for="form-add_blueprint-select-expiration" id="form-add_blueprint-label-expiration-error">$labelError</label>
+<label class="form__label form__label--error" for="form-add_blueprint-select-expiration" id="form-add_blueprint-label-expiration-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-add_blueprint-label-expiration" aria-required="true" class="form__input form__input--select" id="form-add_blueprint-select-expiration" name="form-add_blueprint-select-expiration">
-<option value="never"$selectedNever>Never</option>
-<option value="1h"$selected1Hour>1 hour</option>
-<option value="1d"$selected1Day>1 day</option>
-<option value="1w"$selected1Week>1 week</option>
+<option value="never"{$selectedNever}>Never</option>
+<option value="1h"{$selected1Hour}>1 hour</option>
+<option value="1d"{$selected1Day}>1 day</option>
+<option value="1w"{$selected1Week}>1 week</option>
 </select>
 </div>
 HTML;
@@ -1206,17 +1206,17 @@ HTML;
             return <<<HTML
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-add_blueprint-label-ue_version form-add_blueprint-label-ue_version-error" aria-required="true" class="form__input form__input--select form__input--error" id="form-add_blueprint-select-ue_version" name="form-add_blueprint-select-ue_version">
-$listOptionsStr
+{$listOptionsStr}
 </select>
 </div>
-<label class="form__label form__label--error" for="form-add_blueprint-select-ue_version" id="form-add_blueprint-label-ue_version-error">$labelError</label>
+<label class="form__label form__label--error" for="form-add_blueprint-select-ue_version" id="form-add_blueprint-label-ue_version-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-add_blueprint-label-ue_version" aria-required="true" class="form__input form__input--select" id="form-add_blueprint-select-ue_version" name="form-add_blueprint-select-ue_version">
-$listOptionsStr
+{$listOptionsStr}
 </select>
 </div>
 HTML;
@@ -1230,16 +1230,16 @@ HTML;
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--blueprint form__container--textarea form__container--error">
-<textarea aria-invalid="false" aria-labelledby="form-add_blueprint-label-blueprint form-add_blueprint-label-blueprint-error" aria-required="true" class="form__input form__input--textarea form__input--invisible form__input--blueprint form__input--error" data-form-error-required="Blueprint is required" data-form-has-container data-form-rules="required" id="form-add_blueprint-textarea-blueprint" name="form-add_blueprint-textarea-blueprint">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_blueprint-label-blueprint form-add_blueprint-label-blueprint-error" aria-required="true" class="form__input form__input--textarea form__input--invisible form__input--blueprint form__input--error" data-form-error-required="Blueprint is required" data-form-has-container data-form-rules="required" id="form-add_blueprint-textarea-blueprint" name="form-add_blueprint-textarea-blueprint">{$v}</textarea>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-add_blueprint-textarea-blueprint" id="form-add_blueprint-label-blueprint-error">$labelError</label>
+<label class="form__label form__label--error" for="form-add_blueprint-textarea-blueprint" id="form-add_blueprint-label-blueprint-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container form__container--blueprint form__container--textarea">
-<textarea aria-invalid="false" aria-labelledby="form-add_blueprint-label-blueprint" aria-required="true" class="form__input form__input--textarea form__input--invisible form__input--blueprint" data-form-error-required="Blueprint is required" data-form-has-container data-form-rules="required" id="form-add_blueprint-textarea-blueprint" name="form-add_blueprint-textarea-blueprint">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_blueprint-label-blueprint" aria-required="true" class="form__input form__input--textarea form__input--invisible form__input--blueprint" data-form-error-required="Blueprint is required" data-form-has-container data-form-rules="required" id="form-add_blueprint-textarea-blueprint" name="form-add_blueprint-textarea-blueprint">{$v}</textarea>
 <span class="form__feedback"></span>
 </div>
 HTML;

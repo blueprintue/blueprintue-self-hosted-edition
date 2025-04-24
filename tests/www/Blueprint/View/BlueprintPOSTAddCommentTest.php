@@ -30,7 +30,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         static::setDatabaseEmptyStructure();
 
         // user
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO users (`id`, `username`, `slug`, `grade`, `created_at`)
             VALUES (65, 'user_65', 'user_65', 'member', utc_timestamp()),
                    (66, 'user_66', 'user_66', 'member', utc_timestamp())
@@ -38,7 +38,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         static::$db->exec($sql);
 
         // user infos
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO users_infos (id_user, count_public_comment, count_private_comment)
             VALUES (65, 1, 3),
                    (66, 0, 0)
@@ -46,7 +46,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         static::$db->exec($sql);
 
         // blueprints
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure)
             VALUES (966, 65, 'slug_public',   'a1', 'my title 1', 1, utc_timestamp(), utc_timestamp(), 'public'),
                    (967, 65, 'slug_unlisted', 'a2', 'my title 2', 1, utc_timestamp(), utc_timestamp(), 'unlisted'),
@@ -55,7 +55,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         static::$db->exec($sql);
 
         // blueprints version
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at)
             VALUES (966, 1, 'First commit', utc_timestamp(), utc_timestamp()),
                    (967, 1, 'First commit', utc_timestamp(), utc_timestamp()),
@@ -69,7 +69,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
     {
         static::$db->truncateTables('comments');
         // comment
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO comments (id, id_author, id_blueprint, content, created_at)
             VALUES (10, 65, 966, 'com 1 public', utc_timestamp()),
                    (11, 65, 967, 'com 1 unlisted', utc_timestamp()),
@@ -78,7 +78,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         static::$db->exec($sql);
 
         // user infos
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO users_infos (id_user, count_public_comment, count_private_comment)
             VALUES (65, 1, 3),
                    (66, 0, 0)
@@ -86,7 +86,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         static::$db->exec($sql);
 
         // blueprints
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, comments_count, comments_closed, comments_hidden)
             VALUES (966, 65, 'slug_public',   'a1', 'my title 1', 1, utc_timestamp(), utc_timestamp(), 'public', 1, 0, 0),
                    (967, 65, 'slug_unlisted', 'a2', 'my title 2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 1, 0, 0),
@@ -519,16 +519,16 @@ class BlueprintPOSTAddCommentTest extends TestCase
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--textarea form__container--error">
-<textarea aria-invalid="false" aria-labelledby="form-add_comment-label-comment form-add_comment-label-comment-error" aria-required="true" class="form__input form__input--textarea form__input--invisible form__input--error" data-form-error-required="Comment is required" data-form-has-container data-form-rules="required" id="form-add_comment-textarea-comment" name="form-add_comment-textarea-comment" placeholder="Markdown supported">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_comment-label-comment form-add_comment-label-comment-error" aria-required="true" class="form__input form__input--textarea form__input--invisible form__input--error" data-form-error-required="Comment is required" data-form-has-container data-form-rules="required" id="form-add_comment-textarea-comment" name="form-add_comment-textarea-comment" placeholder="Markdown supported">{$v}</textarea>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-add_comment-textarea-comment" id="form-add_comment-label-comment-error">$labelError</label>
+<label class="form__label form__label--error" for="form-add_comment-textarea-comment" id="form-add_comment-label-comment-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container form__container--textarea">
-<textarea aria-invalid="false" aria-labelledby="form-add_comment-label-comment" aria-required="true" class="form__input form__input--textarea form__input--invisible" data-form-error-required="Comment is required" data-form-has-container data-form-rules="required" id="form-add_comment-textarea-comment" name="form-add_comment-textarea-comment" placeholder="Markdown supported">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_comment-label-comment" aria-required="true" class="form__input form__input--textarea form__input--invisible" data-form-error-required="Comment is required" data-form-has-container data-form-rules="required" id="form-add_comment-textarea-comment" name="form-add_comment-textarea-comment" placeholder="Markdown supported">{$v}</textarea>
 <span class="form__feedback"></span>
 </div>
 HTML;

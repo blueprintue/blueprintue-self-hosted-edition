@@ -58,7 +58,7 @@ class BlueprintGETCommentsTest extends TestCase
         static::$db->exec("INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())");
 
         // users
-        $sqlUsers = <<<SQL
+        $sqlUsers = <<<'SQL'
             INSERT INTO users (id, username, password, slug, email, created_at, avatar)
             VALUES (1, 'use<script>alert(1)</script>r_1', null, 'user_<script>alert(1)</script>1', 'user_1@mail', utc_timestamp(), NULL),
                    (3, 'use<script>alert(1)</script>r_3', null, 'user_<script>alert(1)</script>3', 'user_3@mail', utc_timestamp(), NULL),
@@ -438,10 +438,10 @@ class BlueprintGETCommentsTest extends TestCase
         if ($user['avatar'] !== null) {
             $avatar = Security::escAttr($user['avatar']);
             $avatarHTML = <<<HTML
-<img alt="avatar author" class="blueprint__avatar-container" src="$avatar" />
+<img alt="avatar author" class="blueprint__avatar-container" src="{$avatar}" />
 HTML;
         } else {
-            $avatarHTML = <<<HTML
+            $avatarHTML = <<<'HTML'
 <div class="blueprint__avatar-container blueprint__avatar-container--background">
 <svg class="blueprint__avatar-svg">
 <use href="/sprite/sprite.svg#avatar"></use>
@@ -456,15 +456,15 @@ HTML;
         if ($comment['id_author'] !== null) {
             $authorHTML = <<<HTML
 <div class="comment__author">
-<h2 class="blueprint__author"><a class="blueprint__profile" href="$userSlug">$username</a></h2>
-<p class="blueprint__time">$dateComment</p>
+<h2 class="blueprint__author"><a class="blueprint__profile" href="{$userSlug}">{$username}</a></h2>
+<p class="blueprint__time">{$dateComment}</p>
 </div>
 HTML;
         } else {
             $authorHTML = <<<HTML
 <div class="comment__author">
-<h2 class="blueprint__author">$username</h2>
-<p class="blueprint__time">$dateComment</p>
+<h2 class="blueprint__author">{$username}</h2>
+<p class="blueprint__time">{$dateComment}</p>
 </div>
 HTML;
         }
@@ -473,12 +473,12 @@ HTML;
         if ($userID !== $commentAuthorID || $isCommentsClosed) {
             return <<<HTML
 <ul class="comment__list">
-<li class="comment__item" id="comment-$commentID">
+<li class="comment__item" id="comment-{$commentID}">
 <div class="blueprint__author-infos">
-$avatarHTML
-$authorHTML
+{$avatarHTML}
+{$authorHTML}
 </div>
-<div class="comment__content"><p>$content</p></div>
+<div class="comment__content"><p>{$content}</p></div>
 </li>
 </ul>
 HTML;
@@ -490,33 +490,33 @@ HTML;
 
         return <<<HTML
 <ul class="comment__list">
-<li class="comment__item" data-edit_comment data-edit_comment-btn_cancel_id="edit_comment-btn-cancel_comment-$commentID" data-edit_comment-btn_id="edit_comment-btn-edit-comment-$commentID" data-edit_comment-content_id="edit_comment-content-$commentID" data-edit_comment-edit_content_id="edit_comment-edit_content-$commentID" id="comment-$commentID">
+<li class="comment__item" data-edit_comment data-edit_comment-btn_cancel_id="edit_comment-btn-cancel_comment-{$commentID}" data-edit_comment-btn_id="edit_comment-btn-edit-comment-{$commentID}" data-edit_comment-content_id="edit_comment-content-{$commentID}" data-edit_comment-edit_content_id="edit_comment-edit_content-{$commentID}" id="comment-{$commentID}">
 <div class="blueprint__author-infos">
-$avatarHTML
-$authorHTML
+{$avatarHTML}
+{$authorHTML}
 <div class="comment__actions">
 <form class="form__inline" data-form-confirm data-form-confirm-no="No" data-form-confirm-question="Are you sure you want to delete this comment?" data-form-confirm-yes="Yes" method="post">
-<input name="form-delete_comment-hidden-id" type="hidden" value="$commentID"/>
-<input name="form-delete_comment-hidden-csrf" type="hidden" value="$csrf"/>
+<input name="form-delete_comment-hidden-id" type="hidden" value="{$commentID}"/>
+<input name="form-delete_comment-hidden-csrf" type="hidden" value="{$csrf}"/>
 <button class="form__button form__button--warning form__button--block_link" type="submit">Delete</button>
 </form>
-<a class="block__link block__link--no-margin" id="edit_comment-btn-edit-comment-$commentID" href="#">Edit</a>
+<a class="block__link block__link--no-margin" id="edit_comment-btn-edit-comment-{$commentID}" href="#">Edit</a>
 </div>
 </div>
-<div class="comment__content" id="edit_comment-content-$commentID"><p>$content</p></div>
-<div class="comment__content comment__hide" id="edit_comment-edit_content-$commentID">
-<form data-form-speak-error="Form is invalid:" id="form-edit_comment-$commentID" method="post">
+<div class="comment__content" id="edit_comment-content-{$commentID}"><p>{$content}</p></div>
+<div class="comment__content comment__hide" id="edit_comment-edit_content-{$commentID}">
+<form data-form-speak-error="Form is invalid:" id="form-edit_comment-{$commentID}" method="post">
 <div class="form__element">
-<label class="form__label" for="form-edit_comment-textarea-comment-$commentID" id="form-edit_comment-label-comment-$commentID">Edit comment</label>
+<label class="form__label" for="form-edit_comment-textarea-comment-{$commentID}" id="form-edit_comment-label-comment-{$commentID}">Edit comment</label>
 <div class="form__container form__container--textarea">
-<textarea aria-invalid="false" aria-labelledby="form-edit_comment-label-comment" aria-required="true" class="form__input form__input--textarea form__input--invisible" data-form-error-required="Comment is required" data-form-has-container data-form-rules="required" id="form-edit_comment-textarea-comment-$commentID" name="form-edit_comment-textarea-comment">comment_content_1</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-edit_comment-label-comment" aria-required="true" class="form__input form__input--textarea form__input--invisible" data-form-error-required="Comment is required" data-form-has-container data-form-rules="required" id="form-edit_comment-textarea-comment-{$commentID}" name="form-edit_comment-textarea-comment">comment_content_1</textarea>
 <span class="form__feedback"></span>
 </div>
 </div>
-<input name="form-edit_comment-hidden-id" type="hidden" value="$commentID"/>
-<input name="form-edit_comment-hidden-csrf" type="hidden" value="$csrf"/>
-<input class="form__button form__button--small" id="form-edit_comment-submit-$commentID" name="form-edit_comment-submit" type="submit" value="Update comment"/>
-<input class="form__button form__button--small form__button--secondary" id="edit_comment-btn-cancel_comment-$commentID" type="submit" value="Cancel"/>
+<input name="form-edit_comment-hidden-id" type="hidden" value="{$commentID}"/>
+<input name="form-edit_comment-hidden-csrf" type="hidden" value="{$csrf}"/>
+<input class="form__button form__button--small" id="form-edit_comment-submit-{$commentID}" name="form-edit_comment-submit" type="submit" value="Update comment"/>
+<input class="form__button form__button--small form__button--secondary" id="edit_comment-btn-cancel_comment-{$commentID}" type="submit" value="Cancel"/>
 </form>
 </div>
 </li>

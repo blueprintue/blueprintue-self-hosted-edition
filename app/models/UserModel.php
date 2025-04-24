@@ -167,7 +167,7 @@ class UserModel extends Model
         $sql = <<<SQL
             SELECT id, username, slug, avatar
             FROM users
-            WHERE id IN ($inStr);
+            WHERE id IN ({$inStr});
         SQL;
 
         $rows = $this->database->selectAll($sql);

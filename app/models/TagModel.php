@@ -56,7 +56,7 @@ class TagModel extends Model
         $sql = <<<SQL
             SELECT *
             FROM tags
-            WHERE id IN ($inStr);
+            WHERE id IN ({$inStr});
         SQL;
 
         $rows = $this->database->selectAll($sql);
@@ -125,7 +125,7 @@ class TagModel extends Model
         $sql = <<<SQL
             SELECT *
             FROM tags
-            WHERE $sqlPart
+            WHERE {$sqlPart}
         SQL;
         // @codeCoverageIgnoreEnd
 
