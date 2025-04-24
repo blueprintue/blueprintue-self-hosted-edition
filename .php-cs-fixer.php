@@ -51,6 +51,29 @@ $rules = [
     ],
 ];
 
+$whitespaceRules = [
+    'array_indentation'                 => true,
+    'blank_line_before_statement'       => ['statements' => ['break', 'continue', 'declare', 'phpdoc', 'return', 'throw', 'try', 'yield', 'yield_from']],
+    'blank_line_between_import_groups'  => true,
+    'compact_nullable_type_declaration' => true,
+    'heredoc_indentation'               => false, // specific for this repository
+    'indentation_type'                  => true,
+    'line_ending'                       => true,
+    'method_chaining_indentation'       => true,
+    'no_extra_blank_lines'              => ['tokens' => ['attribute', 'break', 'case', 'continue', 'curly_brace_block', 'default', 'extra', 'parenthesis_brace_block', 'return', 'square_brace_block', 'switch', 'throw', 'use']],
+    'no_spaces_around_offset'           => ['positions' => ['inside', 'outside']],
+    'no_trailing_whitespace'            => true,
+    'no_whitespace_in_blank_line'       => true,
+    'single_blank_line_at_eof'          => true,
+    'spaces_inside_parentheses'         => ['space' => 'none'],
+    'statement_indentation'             => ['stick_comment_to_next_continuous_control_statement' => false],
+    'type_declaration_spaces'           => ['elements' => ['constant', 'function', 'property']],
+    'types_spaces'                      => ['space' => 'none', 'space_multiple_catch' => 'none']
+];
+
+$rules = \array_merge($rules,
+    $whitespaceRules);
+
 $finder = Finder::create()
     ->in([
         __DIR__ . '/app',

@@ -172,7 +172,7 @@ class BlueprintService
                  * For covering we have to mock the database
                  */
                 Application::getDatabase()->rollbackTransaction();
-            // @codeCoverageIgnoreEnd
+                // @codeCoverageIgnoreEnd
             } else {
                 /* @noinspection NullPointerExceptionInspection */
                 Application::getDatabase()->completeTransaction();
@@ -583,7 +583,7 @@ class BlueprintService
                 /* @noinspection NullPointerExceptionInspection */
                 // @codeCoverageIgnoreStart
                 Application::getDatabase()->rollbackTransaction();
-            // @codeCoverageIgnoreEnd
+                // @codeCoverageIgnoreEnd
             } else {
                 /* @noinspection NullPointerExceptionInspection */
                 Application::getDatabase()->completeTransaction();
@@ -796,7 +796,7 @@ class BlueprintService
                  * For covering we have to mock the database
                  */
                 Application::getDatabase()->rollbackTransaction();
-            // @codeCoverageIgnoreEnd
+                // @codeCoverageIgnoreEnd
             } else {
                 /* @noinspection NullPointerExceptionInspection */
                 Application::getDatabase()->completeTransaction();

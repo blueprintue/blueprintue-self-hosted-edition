@@ -178,7 +178,7 @@ class UserService
                  * For covering we have to mock the database
                  */
                 Application::getDatabase()->rollbackTransaction();
-            // @codeCoverageIgnoreEnd
+                // @codeCoverageIgnoreEnd
             } else {
                 /* @noinspection NullPointerExceptionInspection */
                 Application::getDatabase()->completeTransaction();
