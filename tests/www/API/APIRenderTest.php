@@ -21,9 +21,7 @@ class APIRenderTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public static function setUpBeforeClass(): void
     {
         static::setDatabaseEmptyStructure();

@@ -992,9 +992,7 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldTitle(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);
@@ -1023,9 +1021,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldDescription(string $value): string
     {
         $v = Security::escHTML($value);
@@ -1041,9 +1037,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldTag(string $value, array $tags): string
     {
         $v = Security::escHTML($value);
@@ -1083,9 +1077,7 @@ data-tag-srspeak-delete="%s deleted">
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldVideo(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);

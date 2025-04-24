@@ -36,9 +36,7 @@ class BlueprintService
         return \file_get_contents($fullpath);
     }
 
-    /**
-     * @throws \Rancoud\Application\ApplicationException
-     */
+    /** @throws \Rancoud\Application\ApplicationException */
     public static function setBlueprintContent($fileID, $version, $content): void
     {
         static $storageFolder = null;
@@ -321,9 +319,7 @@ class BlueprintService
         return (new BlueprintVersionModel(Application::getDatabase()))->getAllVersions($blueprintID);
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected static function computeExpiration(string $expiration, string $now): ?string
     {
         $expirationDate = null;
@@ -640,9 +636,7 @@ class BlueprintService
         );
     }
 
-    /**
-     * @return array [video,video_provider]
-     */
+    /** @return array [video,video_provider] */
     public static function findVideoProvider(string $videoURL): array
     {
         if ($videoURL === '') {

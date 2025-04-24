@@ -80,9 +80,7 @@ class APIController implements MiddlewareInterface
         return [$userID, null];
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function sendUnauthorizedError(string $error): ResponseInterface
     {
         $contentType = 'application/json';
@@ -140,9 +138,7 @@ class APIController implements MiddlewareInterface
         return (new Factory())->createResponse()->withBody(Stream::create($html))->withHeader('Content-type', 'text/html');
     }
 
-    /**
-     * @throws \Rancoud\Application\ApplicationException
-     */
+    /** @throws \Rancoud\Application\ApplicationException */
     protected function generateHTML(array $data): string
     {
         \ob_start();

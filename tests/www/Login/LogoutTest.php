@@ -48,9 +48,7 @@ class LogoutTest extends TestCase
         static::$db->insert($sql, $userParams);
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     protected function setUp(): void
     {
         $sql = <<<'SQL'

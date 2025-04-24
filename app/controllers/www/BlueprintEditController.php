@@ -121,9 +121,7 @@ class BlueprintEditController implements MiddlewareInterface
         return $this->sendPage();
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function getBlueprint(ServerRequestInterface $request): ?array
     {
         $slug = $request->getAttribute('blueprint_slug');
@@ -140,9 +138,7 @@ class BlueprintEditController implements MiddlewareInterface
         return $blueprint;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormSent(ServerRequestInterface $request): ?ResponseInterface
     {
         $formKey = $this->findFormSent($request);
@@ -172,9 +168,7 @@ class BlueprintEditController implements MiddlewareInterface
         return null;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function findFormSent(ServerRequestInterface $request): ?string
     {
         if ($request->getMethod() !== 'POST') {
@@ -262,9 +256,7 @@ class BlueprintEditController implements MiddlewareInterface
     // endregion
 
     // region Edit Informations
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormEditInformations(ServerRequestInterface $request, array $inputs): ?array
     {
         $params = $this->cleanRawParamsInRequest($request, $inputs);
@@ -376,9 +368,7 @@ class BlueprintEditController implements MiddlewareInterface
     // endregion
 
     // region Edit Properties
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormEditProperties(ServerRequestInterface $request, array $inputs): ?array
     {
         $params = $this->cleanRawParamsInRequest($request, $inputs);
@@ -488,9 +478,7 @@ class BlueprintEditController implements MiddlewareInterface
     // endregion
 
     // region Add Version
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormAddVersion(ServerRequestInterface $request, array $inputs): ?array
     {
         $params = $this->cleanRawParamsInRequest($request, $inputs);
@@ -553,9 +541,7 @@ class BlueprintEditController implements MiddlewareInterface
     // endregion
 
     // region Delete Blueprint
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormDeleteBlueprint(ServerRequestInterface $request, array $inputs): ?array
     {
         $params = $this->cleanRawParamsInRequest($request, $inputs);

@@ -81,9 +81,7 @@ class RenderController implements MiddlewareInterface
         return (new Factory())->createResponse()->withBody(Stream::create($html));
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function getBlueprint(ServerRequestInterface $request): ?array
     {
         $slug = $request->getAttribute('blueprint_slug');
@@ -147,9 +145,7 @@ class RenderController implements MiddlewareInterface
         return $blueprint;
     }
 
-    /**
-     * @throws \Rancoud\Application\ApplicationException
-     */
+    /** @throws \Rancoud\Application\ApplicationException */
     protected function generateHTML(array $data): string
     {
         \ob_start();

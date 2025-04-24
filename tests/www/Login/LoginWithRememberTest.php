@@ -50,9 +50,7 @@ class LoginWithRememberTest extends TestCase
         static::$db->insert($sql, $userParams);
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     protected function setUp(): void
     {
         static::$db->update('UPDATE users SET last_login_at = NULL');

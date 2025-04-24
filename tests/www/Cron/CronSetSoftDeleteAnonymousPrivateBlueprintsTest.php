@@ -17,9 +17,7 @@ class CronSetSoftDeleteAnonymousPrivateBlueprintsTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     protected function setUp(): void
     {
         static::setDatabaseEmptyStructure();

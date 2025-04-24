@@ -48,9 +48,7 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
         return $handler->handle($request);
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormForgotPassword(ServerRequestInterface $request): ?array
     {
         $params = [];

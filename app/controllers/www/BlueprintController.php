@@ -268,9 +268,7 @@ class BlueprintController implements MiddlewareInterface
         return $this->sendPage();
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function getBlueprint(ServerRequestInterface $request): ?array
     {
         $slug = $request->getAttribute('blueprint_slug');
@@ -488,9 +486,7 @@ class BlueprintController implements MiddlewareInterface
 
     // region form delete version blueprint
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormDeleteVersion(ServerRequestInterface $request): ?array
     {
         $params = [];
@@ -579,9 +575,7 @@ class BlueprintController implements MiddlewareInterface
 
     // region form add comment
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormAddComment(ServerRequestInterface $request): ?array
     {
         $params = [];
@@ -676,9 +670,7 @@ class BlueprintController implements MiddlewareInterface
 
     // region form edit_comment
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormEditComment(ServerRequestInterface $request): ?array
     {
         $params = [];
@@ -775,9 +767,7 @@ class BlueprintController implements MiddlewareInterface
 
     // region form delete_comment
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormDeleteComment(ServerRequestInterface $request): ?array
     {
         $params = [];

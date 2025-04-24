@@ -24,9 +24,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function setUpBeforeClass(): void
     {
         static::setDatabaseEmptyStructure();
@@ -66,9 +64,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         static::$db->exec($sql);
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     protected function setUp(): void
     {
         static::$db->truncateTables('comments');
@@ -516,9 +512,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFormAddComment(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escHTML($value);

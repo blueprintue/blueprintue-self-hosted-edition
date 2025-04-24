@@ -465,9 +465,7 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldBio(string $value): string
     {
         $v = Security::escHTML($value);
@@ -480,9 +478,7 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldWebsite(string $value): string
     {
         $v = Security::escAttr($value);

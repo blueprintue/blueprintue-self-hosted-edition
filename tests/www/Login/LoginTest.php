@@ -105,9 +105,7 @@ class LoginTest extends TestCase
         static::$db->insert($sql, $userParams);
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     protected function setUp(): void
     {
         static::$db->update('UPDATE users SET last_login_at = NULL');
@@ -633,9 +631,7 @@ class LoginTest extends TestCase
         static::assertSame($mailCalled, $_SESSION['phpunit_mail_called']);
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function mailForPHPUnit(string $to, string $subject, string $html, string $text, string $token, Database $db): bool
     {
         ++$_SESSION['phpunit_mail_called'];

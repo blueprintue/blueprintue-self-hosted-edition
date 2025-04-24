@@ -51,9 +51,7 @@ class BlueprintTypeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataCases
-     */
+    /** @dataProvider dataCases */
     #[DataProvider('dataCases')]
     public function testFindBlueprintType(string $content, string $type): void
     {

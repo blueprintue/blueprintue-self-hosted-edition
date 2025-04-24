@@ -23,9 +23,7 @@ class HomeTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function setUpBeforeClass(): void
     {
         static::setDatabaseEmptyStructure();
@@ -1101,9 +1099,7 @@ class HomeTest extends TestCase
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldTitle(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);
@@ -1126,9 +1122,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldExposure(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);
@@ -1162,9 +1156,7 @@ $privateOption
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldExpiration(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escHTML($value);
@@ -1200,9 +1192,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldUEVersion(string $value, bool $hasError, string $labelError): string
     {
         $listOptions = [];
@@ -1232,9 +1222,7 @@ $listOptionsStr
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldBlueprint(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escHTML($value);

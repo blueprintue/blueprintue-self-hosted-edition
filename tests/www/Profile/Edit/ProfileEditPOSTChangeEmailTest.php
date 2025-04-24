@@ -431,9 +431,7 @@ HTML);
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldNewEmail(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);

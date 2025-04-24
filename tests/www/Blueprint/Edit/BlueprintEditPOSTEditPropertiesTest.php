@@ -1194,9 +1194,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldExpiration(string $value, bool $hasError, string $labelError, ?string $expirationDate): string
     {
         $keepSelected = ($value === 'keep') ? ' selected="selected"' : '';
@@ -1252,9 +1250,7 @@ $expirationText
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldUEVersion(string $value, bool $hasError, string $labelError): string
     {
         $listOptions = [];

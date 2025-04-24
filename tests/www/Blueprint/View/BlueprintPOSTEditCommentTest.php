@@ -24,9 +24,7 @@ class BlueprintPOSTEditCommentTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function setUpBeforeClass(): void
     {
         static::setDatabaseEmptyStructure();
@@ -66,9 +64,7 @@ class BlueprintPOSTEditCommentTest extends TestCase
         static::$db->exec($sql);
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     protected function setUp(): void
     {
         // comment
@@ -700,9 +696,7 @@ HTML;
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFormEditComment(int $commentID, string $csrf, string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escHTML($value);

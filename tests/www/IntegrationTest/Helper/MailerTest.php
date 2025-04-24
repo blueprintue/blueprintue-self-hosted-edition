@@ -18,9 +18,7 @@ class MailerTest extends TestCase
 {
     use Common;
 
-    /**
-     * @return string[][]
-     */
+    /** @return string[][] */
     public static function dataCases(): array
     {
         return [

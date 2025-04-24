@@ -101,9 +101,7 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
         static::cleanMedias();
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public static function dataCasesDeleteAvatar(): array
     {
         $randomAvatarsName = [];

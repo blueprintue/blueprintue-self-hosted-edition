@@ -416,9 +416,7 @@ class BlueprintGETCommentsTest extends TestCase
         }
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function getLiHTML(?int $userID, bool $isCommentsClosed, array $commentIDs): string
     {
         [$commentID, $commentAuthorID] = $commentIDs;

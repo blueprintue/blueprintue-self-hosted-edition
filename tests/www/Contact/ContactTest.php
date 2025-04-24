@@ -615,9 +615,7 @@ class ContactTest extends TestCase
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldName(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);
@@ -640,9 +638,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldEmail(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);
@@ -665,9 +661,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldMessage(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escHTML($value);

@@ -54,9 +54,7 @@ trait TemplateTrait
 
     abstract protected function setTemplateProperties(array $data = []): void;
 
-    /**
-     * @throws \Rancoud\Application\ApplicationException
-     */
+    /** @throws \Rancoud\Application\ApplicationException */
     protected function getFullTemplate(string $file, array $data = []): string
     {
         \ob_start();
@@ -94,9 +92,7 @@ trait TemplateTrait
         $this->data += ['navbar_current_page' => $this->currentPageForNavBar];
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function addFormLoginData(): void
     {
         if (Session::has('userID') === true) {
@@ -111,9 +107,7 @@ trait TemplateTrait
         $this->data += ['form-login-hidden-csrf' => (string) Session::get('csrf')];
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function addFormRegisterData(): void
     {
         if (Session::has('userID') === true) {
@@ -129,9 +123,7 @@ trait TemplateTrait
         $this->data += ['form-register-hidden-csrf' => (string) Session::get('csrf')];
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function addFormLogoutData(): void
     {
         if (Session::has('userID') === false) {
@@ -141,9 +133,7 @@ trait TemplateTrait
         $this->data += ['form-logout-hidden-csrf' => (string) Session::get('csrf')];
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function addFormForgotPasswordData(): void
     {
         if (Session::has('userID') === true) {
@@ -159,9 +149,7 @@ trait TemplateTrait
         $this->data += ['form-forgot_password-hidden-csrf' => (string) Session::get('csrf')];
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function addInvalidEmailData(): void
     {
         $to = (string) Application::getConfig()->get('MAIL_FROM_ADDRESS');

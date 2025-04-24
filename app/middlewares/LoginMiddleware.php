@@ -53,9 +53,7 @@ class LoginMiddleware implements MiddlewareInterface
         return $handler->handle($request);
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormLogin(ServerRequestInterface $request): ?array
     {
         $params = [];

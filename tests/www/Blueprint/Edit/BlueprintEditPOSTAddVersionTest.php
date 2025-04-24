@@ -576,9 +576,7 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldBlueprint(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escHTML($value);
@@ -607,9 +605,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldReason(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escHTML($value);

@@ -26,9 +26,7 @@ class RegisterTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function setUpBeforeClass(): void
     {
         static::setDatabaseEmptyStructure();
@@ -1066,9 +1064,7 @@ class RegisterTest extends TestCase
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldUsername(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);
@@ -1091,9 +1087,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldEmail(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);
@@ -1156,9 +1150,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function mailForPHPUnit(string $to, string $subject, string $html, string $text, string $token, Database $db): bool
     {
         ++$_SESSION['phpunit_mail_called'];

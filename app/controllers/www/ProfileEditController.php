@@ -152,9 +152,7 @@ class ProfileEditController implements MiddlewareInterface
         return $this->userID === $userID;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormSent(ServerRequestInterface $request): ?ResponseInterface
     {
         $formKey = $this->findFormSent($request);
@@ -194,9 +192,7 @@ class ProfileEditController implements MiddlewareInterface
         return null;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function findFormSent(ServerRequestInterface $request): ?string
     {
         if ($request->getMethod() !== 'POST') {
@@ -309,9 +305,7 @@ class ProfileEditController implements MiddlewareInterface
     // endregion
 
     // region Edit Socials
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormEditSocials(ServerRequestInterface $request, array $inputs): ?array
     {
         $params = $this->cleanRawParamsInRequest($request, $inputs);
@@ -439,9 +433,7 @@ class ProfileEditController implements MiddlewareInterface
         return $values;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function doProcessChangeEmail(?array $params): ?ResponseInterface
     {
         if ($params === null) {
@@ -520,9 +512,7 @@ class ProfileEditController implements MiddlewareInterface
     // endregion
 
     // region Change Password
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormChangePassword(ServerRequestInterface $request, array $inputs): ?array
     {
         $params = $this->cleanRawParamsInRequest($request, $inputs);
@@ -606,9 +596,7 @@ class ProfileEditController implements MiddlewareInterface
     // endregion
 
     // region Delete Profile
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormDeleteProfile(ServerRequestInterface $request, array $inputs): ?array
     {
         $params = $this->cleanRawParamsInRequest($request, $inputs);

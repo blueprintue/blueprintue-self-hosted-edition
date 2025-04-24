@@ -22,9 +22,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function setUpBeforeClass(): void
     {
         static::setDatabaseEmptyStructure();
@@ -64,9 +62,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::$db->exec($sql);
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     protected function setUp(): void
     {
         // comment

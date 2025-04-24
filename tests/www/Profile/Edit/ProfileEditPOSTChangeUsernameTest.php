@@ -442,9 +442,7 @@ HTML);
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldNewUsername(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);

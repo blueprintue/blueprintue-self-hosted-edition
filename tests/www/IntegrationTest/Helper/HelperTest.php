@@ -152,9 +152,7 @@ class HelperTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataCasesFitSentence
-     */
+    /** @dataProvider dataCasesFitSentence */
     #[DataProvider('dataCasesFitSentence')]
     public function testFitSentence(string $in, int $max, string $out): void
     {

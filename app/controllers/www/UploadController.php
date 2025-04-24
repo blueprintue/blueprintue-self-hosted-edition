@@ -145,9 +145,7 @@ class UploadController implements MiddlewareInterface
         return $this->sendSuccess('/medias/blueprints/' . $filename);
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatUpload(ServerRequestInterface $request, string $name, string $folder): array
     {
         $uploadParameters = $this->extractUploadParameters($request);
@@ -209,9 +207,7 @@ class UploadController implements MiddlewareInterface
         return [$filename, null];
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function extractUploadParameters(ServerRequestInterface $request): ?array
     {
         $params = [];
@@ -274,9 +270,7 @@ class UploadController implements MiddlewareInterface
         return !($imageSize[0] !== $uploadParameters['canvas_width'] || $imageSize[1] !== $uploadParameters['canvas_height']);
     }
 
-    /**
-     * @return resource|null
-     */
+    /** @return resource|null */
     protected function createImageInMemory(UploadedFile $file, array $uploadParameters)
     {
         $imgSrc = @\imagecreatefrompng($file->getFilename());
@@ -327,9 +321,7 @@ class UploadController implements MiddlewareInterface
         return $imgDest;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function writeImageInStorage($imgDest, string $folder): ?string
     {
         do {
@@ -346,9 +338,7 @@ class UploadController implements MiddlewareInterface
         return $file;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function sendError(string $error): ResponseInterface
     {
         $body = \json_encode(['message' => $error], \JSON_THROW_ON_ERROR);
@@ -356,9 +346,7 @@ class UploadController implements MiddlewareInterface
         return (new Factory())->createResponse(400)->withBody(Stream::create($body))->withHeader('Content-type', 'application/json');
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function sendSuccess(string $fileUrl): ResponseInterface
     {
         $body = \json_encode(['file_url' => $fileUrl], \JSON_THROW_ON_ERROR);

@@ -83,9 +83,7 @@ class ResetPasswordController implements MiddlewareInterface
         return $this->sendPage();
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormResetPassword(ServerRequestInterface $request): ?array
     {
         $params = [];

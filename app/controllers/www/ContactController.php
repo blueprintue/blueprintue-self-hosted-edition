@@ -87,9 +87,7 @@ class ContactController implements MiddlewareInterface
         return $this->sendPage();
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormContact(ServerRequestInterface $request): ?array
     {
         $params = [];
@@ -137,9 +135,7 @@ class ContactController implements MiddlewareInterface
         return $values;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function doProcessContact(ServerRequestInterface $request, ?array $params): void
     {
         if ($params === null) {
@@ -149,9 +145,7 @@ class ContactController implements MiddlewareInterface
         $this->sendMail($params);
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function sendMail(array $params): void
     {
         $to = (string) Application::getConfig()->get('MAIL_CONTACT_TO');

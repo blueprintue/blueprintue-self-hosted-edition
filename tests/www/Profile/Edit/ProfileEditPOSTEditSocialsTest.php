@@ -1106,9 +1106,7 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldFacebook(string $value, bool $hasError, string $labelError): string
     {
         $vAttr = Security::escAttr($value);
@@ -1147,9 +1145,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldTwitter(string $value, bool $hasError, string $labelError): string
     {
         $vAttr = Security::escAttr($value);
@@ -1188,9 +1184,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldGithub(string $value, bool $hasError, string $labelError): string
     {
         $vAttr = Security::escAttr($value);
@@ -1229,9 +1223,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldYoutube(string $value, bool $hasError, string $labelError): string
     {
         $vAttr = Security::escAttr($value);
@@ -1272,9 +1264,7 @@ Find your channel id: <a href="https://www.youtube.com/account_advanced" rel="no
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldTwitch(string $value, bool $hasError, string $labelError): string
     {
         $vAttr = Security::escAttr($value);
@@ -1313,9 +1303,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldUnreal(string $value, bool $hasError, string $labelError): string
     {
         $vAttr = Security::escAttr($value);

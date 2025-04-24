@@ -78,9 +78,7 @@ class HomeController implements MiddlewareInterface
         return $this->sendPage();
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormCreateBlueprint(ServerRequestInterface $request): ?array
     {
         $params = [];

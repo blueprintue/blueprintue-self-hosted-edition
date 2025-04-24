@@ -644,9 +644,7 @@ class BlueprintModel extends Model
         return ['rows' => $rows, 'count' => $this->database->count($sqlCountRows, $paramsCountRows)];
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function updateCommentCount(int $blueprintID, int $count): void
     {
         $sql = <<<'SQL'
@@ -659,9 +657,7 @@ class BlueprintModel extends Model
         $this->database->update($sql, $params);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function getTagsFromPublicBlueprints(?int $connectedUserID): array
     {
         if ($connectedUserID !== null) {
