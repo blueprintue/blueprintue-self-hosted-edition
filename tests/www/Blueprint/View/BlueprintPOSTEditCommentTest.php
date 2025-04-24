@@ -679,6 +679,7 @@ HTML;
             if ($userID === 66) {
                 // user has not the ownership
                 $this->doTestHtmlMainNot($response, '<form data-form-speak-error="Form is invalid:" id="form-edit_comment-' . $commentID . '" method="post">');
+
                 continue;
             }
 

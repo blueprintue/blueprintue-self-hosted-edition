@@ -159,6 +159,7 @@ class BlueprintController implements MiddlewareInterface
                 if ($comment['id_author'] === null) {
                     $comments[$key]['author']['avatar_url'] = null;
                     $comments[$key]['can_edit'] = false;
+
                     continue;
                 }
 
@@ -359,6 +360,7 @@ class BlueprintController implements MiddlewareInterface
         foreach ($anonymousBlueprints as $anonymousBlueprintID) {
             if ($anonymousBlueprintID === $blueprint['id']) {
                 $foundBlueprint = true;
+
                 continue;
             }
 
@@ -436,6 +438,7 @@ class BlueprintController implements MiddlewareInterface
         foreach ($anonymousBlueprints as $anonymousBlueprintID) {
             if ($anonymousBlueprintID === $blueprint['id']) {
                 $foundBlueprint = true;
+
                 continue;
             }
 
@@ -620,6 +623,7 @@ class BlueprintController implements MiddlewareInterface
         }
 
         $commentID = null;
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();

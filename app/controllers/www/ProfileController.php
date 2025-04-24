@@ -170,21 +170,27 @@ class ProfileController implements MiddlewareInterface
         switch ($type) {
             case 'facebook':
                 $link = \sprintf('https://www.facebook.com/%s', $value);
+
                 break;
             case 'twitter':
                 $link = \sprintf('https://twitter.com/%s', $value);
+
                 break;
             case 'github':
                 $link = \sprintf('https://github.com/%s', $value);
+
                 break;
             case 'twitch':
                 $link = \sprintf('https://www.twitch.tv/%s', $value);
+
                 break;
             case 'unreal':
                 $link = \sprintf('https://forums.unrealengine.com/u/%s', $value);
+
                 break;
             case 'youtube':
                 $link = \sprintf('https://www.youtube.com/channel/%s', $value);
+
                 break;
             case 'website':
                 if (\mb_strpos($value, 'http://') === 0 || \mb_strpos($value, 'https://') === 0) {
@@ -192,6 +198,7 @@ class ProfileController implements MiddlewareInterface
                 }
 
                 $link = \sprintf('https://%s', $value);
+
                 break;
         }
 

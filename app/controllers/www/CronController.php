@@ -26,15 +26,19 @@ class CronController
         switch ($currentRoute) {
             case 'cron_purge_sessions':
                 $this->purgeSessions();
+
                 break;
             case 'cron_purge_users_not_confirmed':
                 $this->purgeUsersNotConfirmed();
+
                 break;
             case 'cron_purge_deleted_blueprints':
                 $this->purgeDeletedBlueprints();
+
                 break;
             case 'cron_set_soft_delete_anonymous_private_blueprints':
                 $this->setSoftDeleteAnonymousPrivateBlueprints();
+
                 break;
         }
 

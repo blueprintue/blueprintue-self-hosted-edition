@@ -160,6 +160,7 @@ class HomeController implements MiddlewareInterface
         $blueprintSlug = '';
         $forceRollback = false;
         $errorMessage = 'Error';
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();

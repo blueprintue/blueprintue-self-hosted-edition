@@ -109,6 +109,7 @@ class LoginMiddleware implements MiddlewareInterface
 
         $forceRollback = false;
         $errorCode = '#100';
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();

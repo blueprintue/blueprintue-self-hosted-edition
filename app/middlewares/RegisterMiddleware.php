@@ -152,6 +152,7 @@ class RegisterMiddleware implements MiddlewareInterface
 
         $forceRollback = false;
         $errorCode = '#001';
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
@@ -170,6 +171,7 @@ class RegisterMiddleware implements MiddlewareInterface
             $emailSent = UserService::generateAndSendConfirmAccountEmail($userID, 'register');
             if ($emailSent === false) {
                 $errorCode = '#500';
+
                 throw new \Exception('Error, could not create account (' . $errorCode . ')');
             }
         } catch (\Exception $exception) {

@@ -205,6 +205,7 @@ class ProfileEditController implements MiddlewareInterface
         foreach ($this->formCsrfKeys as $csrfFieldName => $formCsrfKey) {
             if (isset($rawParams[$csrfFieldName])) {
                 $formKeyFound = $formCsrfKey;
+
                 break;
             }
         }

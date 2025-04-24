@@ -174,6 +174,7 @@ class UploadController implements MiddlewareInterface
         }
 
         $imgDest = null;
+
         try {
             $imgDest = $this->createImageInMemory($avatarRawFile, $uploadParameters);
             if ($imgDest === null) {

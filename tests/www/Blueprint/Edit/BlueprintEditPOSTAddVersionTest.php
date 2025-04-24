@@ -508,6 +508,7 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                     // blueprint versions
                     static::assertSame(1, (int) $blueprintVersionsAfter[0]['version']);
                     static::assertSame(2, (int) $blueprintVersionsAfter[1]['version']);
+
                     break;
                 case 3:
                     static::assertSame(3, (int) $blueprintAfter['current_version']);
@@ -516,6 +517,7 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                     static::assertSame(1, (int) $blueprintVersionsAfter[0]['version']);
                     static::assertSame(2, (int) $blueprintVersionsAfter[1]['version']);
                     static::assertSame(3, (int) $blueprintVersionsAfter[2]['version']);
+
                     break;
                 default:
                     static::fail($countVersions . ' not managed');

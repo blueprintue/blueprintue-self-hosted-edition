@@ -130,6 +130,7 @@ class UserService
 
         $forceRollback = false;
         $userID = 0;
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();

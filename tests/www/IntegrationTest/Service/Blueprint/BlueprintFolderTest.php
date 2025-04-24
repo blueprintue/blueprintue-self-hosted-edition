@@ -93,6 +93,7 @@ class BlueprintFolderTest extends TestCase
         static::assertNotSame('', ExtendedBlueprintService::testNewFileIDOnDatabase());
 
         $exceptionLaunched = false;
+
         try {
             ExtendedBlueprintService::testNewFileIDOnDatabase();
         } catch (\Exception $e) {
@@ -115,6 +116,7 @@ class BlueprintFolderTest extends TestCase
         static::assertNotSame('', ExtendedBlueprintService::testNewFileIDOnFileSystem());
 
         $exceptionLaunched = false;
+
         try {
             ExtendedBlueprintService::testNewFileIDOnFileSystem();
         } catch (\Exception $e) {
@@ -137,6 +139,7 @@ class BlueprintFolderTest extends TestCase
         static::assertNotSame('', ExtendedBlueprintService::testNewFileIDBoth());
 
         $exceptionLaunched = false;
+
         try {
             ExtendedBlueprintService::testNewFileIDBoth();
         } catch (\Exception $e) {

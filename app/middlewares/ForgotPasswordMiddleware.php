@@ -105,6 +105,7 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
 
         $errorMessage = 'Error';
         $forceRollback = false;
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
@@ -112,6 +113,7 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
             [$token, $userFound, $username] = UserService::beginResetPasswordProcess($params['email']);
             if ($userFound === false) {
                 $errorMessage = 'Error, could not reset password';
+
                 throw new \Exception($errorMessage);
             }
 
@@ -122,6 +124,7 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
             $mailSent = $this->sendMail($params['email'], $token, $username);
             if ($mailSent === false) {
                 $errorMessage = 'Error, could not send email for reset password';
+
                 throw new \Exception($errorMessage);
             }
         } catch (\Exception $exception) {

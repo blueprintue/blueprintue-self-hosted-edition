@@ -125,6 +125,7 @@ class BlueprintService
 
         $forceRollback = false;
         $blueprintID = 0;
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
@@ -528,6 +529,7 @@ class BlueprintService
         $now = Helper::getNowUTCFormatted();
 
         $forceRollback = false;
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
@@ -537,6 +539,7 @@ class BlueprintService
             if ($blueprintInfos === null) {
                 // @codeCoverageIgnoreStart
                 $forceRollback = true;
+
                 throw new \Exception('Blueprint is nil');
                 // @codeCoverageIgnoreEnd
             }
@@ -746,6 +749,7 @@ class BlueprintService
 
         $forceRollback = false;
         $blueprintID = 0;
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();

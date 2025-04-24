@@ -212,6 +212,7 @@ class APIController implements MiddlewareInterface
         $blueprintSlug = '';
         $forceRollback = false;
         $errorMessage = 'error_insert_blueprint';
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
