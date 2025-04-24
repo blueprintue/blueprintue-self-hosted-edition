@@ -156,7 +156,7 @@ class RegisterMiddleware implements MiddlewareInterface
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
 
-            [$userID, $errorCode] = UserService::createMemberUser($params['username'], $params['email'], $params['password']); // phpcs:ignore
+            [$userID, $errorCode] = UserService::createMemberUser($params['username'], $params['email'], $params['password']);
             if ($userID === null) {
                 // @codeCoverageIgnoreStart
                 /*

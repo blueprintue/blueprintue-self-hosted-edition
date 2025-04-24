@@ -33,7 +33,7 @@ class RenderController implements MiddlewareInterface
 
         $this->url = Helper::getHostname() . $data['url'];
 
-        $this->title = $data['title'] . ' posted by ' . $data['author'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', ''); // phpcs:ignore
+        $this->title = $data['title'] . ' posted by ' . $data['author'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', '');
 
         $description = Helper::getFitSentence($data['description'] ?? '', 255);
         $this->description = ($description !== '') ? $description : 'No description provided';
@@ -133,7 +133,7 @@ class RenderController implements MiddlewareInterface
                     $hasFoundVersion = true;
                     $blueprint['current_version'] = $version;
 
-                    $blueprint['render_url'] = Helper::getBlueprintRenderLink($blueprint['slug'], $blueprint['current_version']); // phpcs:ignore
+                    $blueprint['render_url'] = Helper::getBlueprintRenderLink($blueprint['slug'], $blueprint['current_version']);
 
                     break;
                 }

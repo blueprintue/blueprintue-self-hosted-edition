@@ -16,10 +16,10 @@ class Helper
     public static function getBlueprintLink(string $slug, ?int $version = null): string
     {
         if ($version !== null) {
-            return Application::getRouter()->generateUrl('blueprint', ['blueprint_slug' => $slug, 'version' => $version]); // phpcs:ignore
+            return Application::getRouter()->generateUrl('blueprint', ['blueprint_slug' => $slug, 'version' => $version]);
         }
 
-        $link = Application::getRouter()->generateUrl('blueprint', ['blueprint_slug' => $slug, 'version' => '__REMOVE__ME__']); // phpcs:ignore
+        $link = Application::getRouter()->generateUrl('blueprint', ['blueprint_slug' => $slug, 'version' => '__REMOVE__ME__']);
 
         return \str_replace('__REMOVE__ME__/', '', $link);
     }
@@ -33,7 +33,7 @@ class Helper
             return Application::getRouter()->generateUrl('render', ['blueprint_slug' => $slug, 'version' => $version]);
         }
 
-        $link = Application::getRouter()->generateUrl('render', ['blueprint_slug' => $slug, 'version' => '__REMOVE__ME__']); // phpcs:ignore
+        $link = Application::getRouter()->generateUrl('render', ['blueprint_slug' => $slug, 'version' => '__REMOVE__ME__']);
 
         return \str_replace('__REMOVE__ME__/', '', $link);
     }
@@ -43,7 +43,7 @@ class Helper
      */
     public static function getBlueprintDiffLink(string $slug, int $previousVersion, int $currentVersion): string
     {
-        return Application::getRouter()->generateUrl('blueprint-diff', ['blueprint_slug' => $slug, 'previous_version' => $previousVersion, 'current_version' => $currentVersion]); // phpcs:ignore
+        return Application::getRouter()->generateUrl('blueprint-diff', ['blueprint_slug' => $slug, 'previous_version' => $previousVersion, 'current_version' => $currentVersion]);
     }
 
     /**
@@ -291,7 +291,7 @@ class Helper
             $versions[$idxVersion]['url'] = static::getBlueprintLink($fileID, $versions[$idxVersion]['version']);
             $versions[$idxVersion]['diff_url'] = '';
             if (($idxVersion + 1) < $out['count']) {
-                $versions[$idxVersion]['diff_url'] = static::getBlueprintDiffLink($fileID, $versions[$idxVersion + 1]['version'], $versions[$idxVersion]['version']); // phpcs:ignore
+                $versions[$idxVersion]['diff_url'] = static::getBlueprintDiffLink($fileID, $versions[$idxVersion + 1]['version'], $versions[$idxVersion]['version']);
             }
 
             $out['versions'][$day][] = $versions[$idxVersion];
@@ -330,7 +330,7 @@ class Helper
     /**
      * @throws \Exception
      */
-    public static function getDateFormattedWithUserTimezone(string $date, string $format = 'Y-m-d H:i:s', string $timezone = 'UTC'): string // phpcs:ignore
+    public static function getDateFormattedWithUserTimezone(string $date, string $format = 'Y-m-d H:i:s', string $timezone = 'UTC'): string
     {
         return (new DateTime($date, new DateTimeZone($timezone)))->format($format);
     }

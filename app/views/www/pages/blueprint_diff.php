@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection PhpUnhandledExceptionInspection */
-/* phpcs:disable Generic.Files.LineLength */
 
 declare(strict_types=1);
 
@@ -41,21 +40,21 @@ use Rancoud\Security\Security;
                     <span class="blueprint__version-date"><?php echo Helper::getDateFormattedWithUserTimezone($date, 'F j, Y'); ?></span>
                 </div>
                 <ol class="blueprint__versions" reversed>
-                        <?php foreach ($versions as $version) { // phpcs:ignore
-                            $cssClass = ['blueprint__version']; // phpcs:ignore
-                            if ($version['last'] === true) { // phpcs:ignore
-                                $cssClass[] = 'blueprint__version--last'; // phpcs:ignore
-                            } // phpcs:ignore
-                            if ($version['version'] === $data['blueprint']['previous_version'] && $version['version'] === $data['blueprint']['current_version']) { // phpcs:ignore
-                                $cssClass[] = 'blueprint__version--current'; // phpcs:ignore
-                            } else { // phpcs:ignore
-                                if ($version['version'] === $data['blueprint']['previous_version']) { // phpcs:ignore
-                                    $cssClass[] = 'blueprint__version--diff-previous'; // phpcs:ignore
-                                } // phpcs:ignore
-                                if ($version['version'] === $data['blueprint']['current_version']) { // phpcs:ignore
-                                    $cssClass[] = 'blueprint__version--diff-current'; // phpcs:ignore
-                                } // phpcs:ignore
-                            }// phpcs:ignore?>
+                        <?php foreach ($versions as $version) {
+                            $cssClass = ['blueprint__version'];
+                            if ($version['last'] === true) {
+                                $cssClass[] = 'blueprint__version--last';
+                            }
+                            if ($version['version'] === $data['blueprint']['previous_version'] && $version['version'] === $data['blueprint']['current_version']) {
+                                $cssClass[] = 'blueprint__version--current';
+                            } else {
+                                if ($version['version'] === $data['blueprint']['previous_version']) {
+                                    $cssClass[] = 'blueprint__version--diff-previous';
+                                }
+                                if ($version['version'] === $data['blueprint']['current_version']) {
+                                    $cssClass[] = 'blueprint__version--diff-current';
+                                }
+                            } ?>
                     <li class="<?php echo \implode(' ', $cssClass); ?>">
                         <div class="blueprint__version-left">
                             <p><?php echo \nl2br(Security::escHTML($version['reason'])); ?></p>
@@ -66,8 +65,7 @@ use Rancoud\Security\Security;
                         </div>
                             <?php } ?>
                     </li>
-                            <?php
-        } // phpcs:ignore?>
+                            <?php } ?>
                 </ol>
                     <?php } ?>
                 <?php } ?>

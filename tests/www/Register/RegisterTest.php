@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -1074,7 +1072,7 @@ class RegisterTest extends TestCase
     protected function getHTMLFieldUsername(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);
-        // phpcs:disable
+
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
@@ -1091,7 +1089,6 @@ HTML;
 <span class="form__feedback"></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
@@ -1100,7 +1097,7 @@ HTML;
     protected function getHTMLFieldEmail(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);
-        // phpcs:disable
+
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
@@ -1117,12 +1114,10 @@ HTML;
 <span class="form__feedback"></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     protected function getHTMLFieldPassword(bool $hasError, string $labelError): string
     {
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
@@ -1139,12 +1134,10 @@ HTML;
 <span class="form__feedback"></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     protected function getHTMLFieldPasswordConfirm(bool $hasError, string $labelError): string
     {
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
@@ -1161,13 +1154,12 @@ HTML;
 <span class="form__feedback"></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
      * @throws DatabaseException
      */
-    public static function mailForPHPUnit(string $to, string $subject, string $html, string $text, string $token, Database $db): bool // phpcs:ignore
+    public static function mailForPHPUnit(string $to, string $subject, string $html, string $text, string $token, Database $db): bool
     {
         ++$_SESSION['phpunit_mail_called'];
 
@@ -1175,7 +1167,7 @@ HTML;
             $_SESSION['phpunit_mail_html'] = \str_replace('{{TOKEN}}', $token, $_SESSION['phpunit_mail_html']);
             $_SESSION['phpunit_mail_text'] = \str_replace('{{TOKEN}}', $token, $_SESSION['phpunit_mail_text']);
 
-            $email = $db->selectVar('SELECT email FROM users WHERE id = :userID', ['userID' => $_SESSION['phpunit_id_user']]); // phpcs:ignore
+            $email = $db->selectVar('SELECT email FROM users WHERE id = :userID', ['userID' => $_SESSION['phpunit_id_user']]);
             static::assertSame($email, $to);
         }
 

@@ -81,7 +81,7 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
             Session::setFlash('error-form-forgot_password', 'Error(s) on ' . \implode(', ', $errorsForMessage));
             Session::setFlash('form-forgot_password-errors', $errors);
             Session::setFlash('form-forgot_password-values', $values);
-            Session::keepFlash(['error-form-forgot_password', 'form-forgot_password-errors', 'form-forgot_password-values']); // phpcs:ignore
+            Session::keepFlash(['error-form-forgot_password', 'form-forgot_password-errors', 'form-forgot_password-values']);
 
             return null;
         }
@@ -156,16 +156,16 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
      */
     protected function sendMail(string $email, string $token, string $username): bool
     {
-        $subject = 'Reset password for ' . Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition'); // phpcs:ignore
+        $subject = 'Reset password for ' . Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition');
         $html = $this->getEmailHTML($token, $username);
-        $text = 'You have received this email because a password reset request was received for the account ' . $username . '.' . "\n"; // phpcs:ignore
+        $text = 'You have received this email because a password reset request was received for the account ' . $username . '.' . "\n";
         $text .= 'Copy the URL below to complete the process:' . "\n\n";
-        $text .= Helper::getHostname() . Application::getRouter()->generateUrl('reset-password') . '?reset_token=' . $token . "\n\n"; // phpcs:ignore
+        $text .= Helper::getHostname() . Application::getRouter()->generateUrl('reset-password') . '?reset_token=' . $token . "\n\n";
         $text .= 'If you did not request a password reset, no further action is required on your part.';
 
         // only use for phpunit
         if (\function_exists('\tests\isPHPUnit')) {
-            return \tests\www\ForgotPassword\ForgotPasswordTest::mailForPHPUnit($email, $subject, $html, $text, Application::getDatabase()); // phpcs:ignore
+            return \tests\www\ForgotPassword\ForgotPasswordTest::mailForPHPUnit($email, $subject, $html, $text, Application::getDatabase());
         }
 
         // @codeCoverageIgnoreStart
@@ -187,7 +187,7 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
      */
     protected function getEmailHTML(string $token, string $username): string
     {
-        $url = Helper::getHostname() . Application::getRouter()->generateUrl('reset-password') . '?reset_token=' . $token; // phpcs:ignore
+        $url = Helper::getHostname() . Application::getRouter()->generateUrl('reset-password') . '?reset_token=' . $token;
         \ob_start();
         require Application::getFolder('VIEWS') . 'emails/forgot_password.html';
 
@@ -210,7 +210,7 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
             Security::escHTML($username),
             Security::escHTML(Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition')),
             Security::escAttr(Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition')),
-            Security::escAttr(Helper::getHostname() . '/' . Security::escAttr(Application::getConfig()->get('MAIL_HEADER_LOGO_PATH', 'blueprintue-self-hosted-edition_logo-full.png'))), // phpcs:ignore
+            Security::escAttr(Helper::getHostname() . '/' . Security::escAttr(Application::getConfig()->get('MAIL_HEADER_LOGO_PATH', 'blueprintue-self-hosted-edition_logo-full.png'))),
         ];
 
         return \str_replace($search, $replace, $html);

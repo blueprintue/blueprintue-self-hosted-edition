@@ -49,7 +49,7 @@ class BlueprintListController implements MiddlewareInterface
 
         $this->url = Helper::getHostname() . \str_replace('{{PAGE}}', (string) $data['page'], $data['url']);
 
-        $this->title = $data['title'] . ' | Page ' . $data['page'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', ''); // phpcs:ignore
+        $this->title = $data['title'] . ' | Page ' . $data['page'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', '');
 
         $this->description = $data['description'];
     }
@@ -168,7 +168,7 @@ class BlueprintListController implements MiddlewareInterface
         } else {
             $this->params['meta_title'] = \ucwords(\str_replace('-', ' ', $this->params['type_slug'])) . ' blueprints';
         }
-        $this->params['meta_description'] = 'List of blueprints categorized as ' . \str_replace('-', ' ', $this->params['type_slug']); // phpcs:ignore
+        $this->params['meta_description'] = 'List of blueprints categorized as ' . \str_replace('-', ' ', $this->params['type_slug']);
 
         $this->params['type'] = $this->params['type_slug'];
         if ($this->params['type'] === 'behavior-tree') {
@@ -221,7 +221,7 @@ class BlueprintListController implements MiddlewareInterface
         }
 
         $this->params['type_slug'] = '';
-        if (isset($queryParams['form-search-select-type']) && \in_array($queryParams['form-search-select-type'], ['animation', 'behavior-tree', 'blueprint', 'material', 'metasound', 'niagara', 'pcg'], true)) { // phpcs:ignore
+        if (isset($queryParams['form-search-select-type']) && \in_array($queryParams['form-search-select-type'], ['animation', 'behavior-tree', 'blueprint', 'material', 'metasound', 'niagara', 'pcg'], true)) {
             $this->params['type_slug'] = Helper::trim($queryParams['form-search-select-type']);
             $urlParts[] = 'form-search-select-type=' . $this->params['type_slug'];
 
@@ -232,7 +232,7 @@ class BlueprintListController implements MiddlewareInterface
         }
 
         $this->params['ue_version'] = '';
-        if (isset($queryParams['form-search-select-ue_version']) && \in_array($queryParams['form-search-select-ue_version'], Helper::getAllUEVersion(), true)) { // phpcs:ignore
+        if (isset($queryParams['form-search-select-ue_version']) && \in_array($queryParams['form-search-select-ue_version'], Helper::getAllUEVersion(), true)) {
             $this->params['ue_version'] = Helper::trim($queryParams['form-search-select-ue_version']);
             $urlParts[] = 'form-search-select-ue_version=' . $this->params['ue_version'];
         }

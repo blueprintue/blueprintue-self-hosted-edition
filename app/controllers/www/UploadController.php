@@ -240,7 +240,7 @@ class UploadController implements MiddlewareInterface
     {
         if (isset($_FILES[$idxName]) && \is_string($_FILES[$idxName]['tmp_name'])) {
             $filepath = $_FILES[$idxName]['tmp_name'];
-            if (\file_exists($filepath) && \is_file($filepath)) { // phpcs:ignore
+            if (\file_exists($filepath) && \is_file($filepath)) {
                 \unlink($filepath);
             }
         }
@@ -271,7 +271,7 @@ class UploadController implements MiddlewareInterface
 
         $imageSize = \getimagesize($file->getFilename());
 
-        return !($imageSize[0] !== $uploadParameters['canvas_width'] || $imageSize[1] !== $uploadParameters['canvas_height']); // phpcs:ignore
+        return !($imageSize[0] !== $uploadParameters['canvas_width'] || $imageSize[1] !== $uploadParameters['canvas_height']);
     }
 
     /**
@@ -304,7 +304,7 @@ class UploadController implements MiddlewareInterface
             // @codeCoverageIgnoreEnd
         }
 
-        if (\imagecopy($imgDest, $imgSrc, 0, 0, $uploadParameters['mask_x'], $uploadParameters['mask_y'], $uploadParameters['mask_width'], $uploadParameters['mask_height']) === false) { // phpcs:ignore
+        if (\imagecopy($imgDest, $imgSrc, 0, 0, $uploadParameters['mask_x'], $uploadParameters['mask_y'], $uploadParameters['mask_width'], $uploadParameters['mask_height']) === false) {
             // @codeCoverageIgnoreStart
             // I don't know how to produce this error
             \imagedestroy($imgSrc);
@@ -353,7 +353,7 @@ class UploadController implements MiddlewareInterface
     {
         $body = \json_encode(['message' => $error], \JSON_THROW_ON_ERROR);
 
-        return (new Factory())->createResponse(400)->withBody(Stream::create($body))->withHeader('Content-type', 'application/json'); // phpcs:ignore
+        return (new Factory())->createResponse(400)->withBody(Stream::create($body))->withHeader('Content-type', 'application/json');
     }
 
     /**
@@ -363,6 +363,6 @@ class UploadController implements MiddlewareInterface
     {
         $body = \json_encode(['file_url' => $fileUrl], \JSON_THROW_ON_ERROR);
 
-        return (new Factory())->createResponse()->withBody(Stream::create($body))->withHeader('Content-type', 'application/json'); // phpcs:ignore
+        return (new Factory())->createResponse()->withBody(Stream::create($body))->withHeader('Content-type', 'application/json');
     }
 }

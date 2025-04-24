@@ -41,7 +41,7 @@ class APIController implements MiddlewareInterface
             if ($error !== null) {
                 $dataError = \json_encode(['error' => $error], \JSON_THROW_ON_ERROR);
 
-                return (new Factory())->createResponse()->withBody(Stream::create($dataError))->withHeader('Content-type', 'application/json')->withStatus(400); // phpcs:ignore
+                return (new Factory())->createResponse()->withBody(Stream::create($dataError))->withHeader('Content-type', 'application/json')->withStatus(400);
             }
 
             return $this->doProcessUpload($userID, $params);
@@ -90,7 +90,7 @@ class APIController implements MiddlewareInterface
         $contentType = 'application/json';
         $data = \json_encode(['error' => $error], \JSON_THROW_ON_ERROR);
 
-        return (new Factory())->createResponse()->withBody(Stream::create($data))->withHeader('Content-type', $contentType)->withStatus(401); // phpcs:ignore
+        return (new Factory())->createResponse()->withBody(Stream::create($data))->withHeader('Content-type', $contentType)->withStatus(401);
     }
     // endregion
 
@@ -127,7 +127,7 @@ class APIController implements MiddlewareInterface
         if ($blueprint === null) {
             $dataError = \json_encode(['error' => 'blueprint_empty'], \JSON_THROW_ON_ERROR);
 
-            return (new Factory())->createResponse()->withBody(Stream::create($dataError))->withHeader('Content-type', 'application/json')->withStatus(400); // phpcs:ignore
+            return (new Factory())->createResponse()->withBody(Stream::create($dataError))->withHeader('Content-type', 'application/json')->withStatus(400);
         }
 
         $data = [
@@ -139,7 +139,7 @@ class APIController implements MiddlewareInterface
 
         $html = $this->generateHTML($data);
 
-        return (new Factory())->createResponse()->withBody(Stream::create($html))->withHeader('Content-type', 'text/html'); // phpcs:ignore
+        return (new Factory())->createResponse()->withBody(Stream::create($html))->withHeader('Content-type', 'text/html');
     }
 
     /**
@@ -243,7 +243,7 @@ class APIController implements MiddlewareInterface
 
             $dataError = \json_encode(['error' => $errorMessage], \JSON_THROW_ON_ERROR);
 
-            return (new Factory())->createResponse()->withBody(Stream::create($dataError))->withHeader('Content-type', 'application/json')->withStatus(400); // phpcs:ignore
+            return (new Factory())->createResponse()->withBody(Stream::create($dataError))->withHeader('Content-type', 'application/json')->withStatus(400);
         } finally {
             if ($forceRollback) {
                 /* @noinspection NullPointerExceptionInspection */
@@ -256,7 +256,7 @@ class APIController implements MiddlewareInterface
 
         $data = \json_encode(['key' => $blueprintSlug], \JSON_THROW_ON_ERROR);
 
-        return (new Factory())->createResponse()->withBody(Stream::create($data))->withHeader('Content-type', 'application/json'); // phpcs:ignore
+        return (new Factory())->createResponse()->withBody(Stream::create($data))->withHeader('Content-type', 'application/json');
     }
     // endregion
 }

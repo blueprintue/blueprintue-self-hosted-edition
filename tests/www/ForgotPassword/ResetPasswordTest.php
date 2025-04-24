@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -851,7 +849,6 @@ HTML);
     {
         $v = Security::escAttr($value);
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
@@ -868,12 +865,10 @@ HTML;
 <span class="form__feedback"></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     protected function getHTMLFieldPassword(bool $hasError, string $labelError): string
     {
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
@@ -890,12 +885,10 @@ HTML;
 <span class="form__feedback"></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     protected function getHTMLFieldPasswordConfirm(bool $hasError, string $labelError): string
     {
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
@@ -912,6 +905,5 @@ HTML;
 <span class="form__feedback"></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 }

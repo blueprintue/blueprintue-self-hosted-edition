@@ -375,7 +375,7 @@ class UserService
      */
     public static function updateUsername(int $userID, string $username): void
     {
-        (new UserModel(Application::getDatabase()))->update(['username' => $username, 'slug' => static::slugify($username)], $userID); // phpcs:ignore
+        (new UserModel(Application::getDatabase()))->update(['username' => $username, 'slug' => static::slugify($username)], $userID);
     }
 
     /**
@@ -479,7 +479,7 @@ class UserService
      */
     public static function resetPassword(int $userID, string $password): void
     {
-        (new UserModel(Application::getDatabase()))->update(['password' => $password, 'password_reset' => null, 'password_reset_at' => null], $userID); // phpcs:ignore
+        (new UserModel(Application::getDatabase()))->update(['password' => $password, 'password_reset' => null, 'password_reset_at' => null], $userID);
     }
 
     /**
@@ -620,7 +620,7 @@ class UserService
 
         $isSent = static::sendConfirmAccountEmail($user['email'], $token, $from, $user['username']);
         if ($isSent) {
-            $userModel->update(['confirmed_token' => $token, 'confirmed_sent_at' => Helper::getNowUTCFormatted()], $userID); // phpcs:ignore
+            $userModel->update(['confirmed_token' => $token, 'confirmed_sent_at' => Helper::getNowUTCFormatted()], $userID);
         }
 
         return $isSent;
@@ -633,23 +633,23 @@ class UserService
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Security\SecurityException
      */
-    protected static function sendConfirmAccountEmail(string $email, string $token, string $from, string $username): bool // phpcs:ignore
+    protected static function sendConfirmAccountEmail(string $email, string $token, string $from, string $username): bool
     {
-        $subject = 'Confirm your account for ' . Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition'); // phpcs:ignore
+        $subject = 'Confirm your account for ' . Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition');
         $html = static::getConfirmAccountEmailHTML($token, $username);
         $text = 'Welcome to ' . Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition') . "\n\n";
         $text .= 'We are excited to have you on board!' . "\n";
         $text .= 'To get started ' . $username . ', please copy the URL below to confirm your account:' . "\n\n";
-        $text .= Helper::getHostname() . Application::getRouter()->generateUrl('confirm-account') . '?confirmed_token=' . $token . "\n"; // phpcs:ignore
+        $text .= Helper::getHostname() . Application::getRouter()->generateUrl('confirm-account') . '?confirmed_token=' . $token . "\n";
 
         // only use for phpunit
         if (\function_exists('\tests\isPHPUnit')) {
             if ($from === 'login') {
-                return \tests\www\Login\LoginTest::mailForPHPUnit($email, $subject, $html, $text, $token, Application::getDatabase()); // phpcs:ignore
+                return \tests\www\Login\LoginTest::mailForPHPUnit($email, $subject, $html, $text, $token, Application::getDatabase());
             }
 
             if ($from === 'register') {
-                return \tests\www\Register\RegisterTest::mailForPHPUnit($email, $subject, $html, $text, $token, Application::getDatabase()); // phpcs:ignore
+                return \tests\www\Register\RegisterTest::mailForPHPUnit($email, $subject, $html, $text, $token, Application::getDatabase());
             }
 
             // @codeCoverageIgnoreStart
@@ -676,7 +676,7 @@ class UserService
      */
     protected static function getConfirmAccountEmailHTML(string $token, string $username): string
     {
-        $url = Helper::getHostname() . Application::getRouter()->generateUrl('confirm-account') . '?confirmed_token=' . $token; // phpcs:ignore
+        $url = Helper::getHostname() . Application::getRouter()->generateUrl('confirm-account') . '?confirmed_token=' . $token;
         \ob_start();
         require Application::getFolder('VIEWS') . 'emails/confirm_account.html';
 
@@ -701,7 +701,7 @@ class UserService
             Security::escHTML(Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition')),
             Security::escAttr(Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition')),
             Security::escHTML($username),
-            Security::escAttr(Helper::getHostname() . '/' . Security::escAttr(Application::getConfig()->get('MAIL_HEADER_LOGO_PATH', 'blueprintue-self-hosted-edition_logo-full.png'))), // phpcs:ignore
+            Security::escAttr(Helper::getHostname() . '/' . Security::escAttr(Application::getConfig()->get('MAIL_HEADER_LOGO_PATH', 'blueprintue-self-hosted-edition_logo-full.png'))),
         ];
 
         return \str_replace($search, $replace, $html);

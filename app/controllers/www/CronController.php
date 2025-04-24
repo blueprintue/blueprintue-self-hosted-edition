@@ -289,7 +289,7 @@ class CronController
             Application::getDatabase()->startTransaction();
 
             /* @noinspection NullPointerExceptionInspection */
-            Application::getDatabase()->update($sqlSetSoftDeletedAnonymousPrivateBlueprints, ['userID' => $anonymousID]); // phpcs:ignore
+            Application::getDatabase()->update($sqlSetSoftDeletedAnonymousPrivateBlueprints, ['userID' => $anonymousID]);
         } catch (\Exception $e) {
             $forceRollback = true;
         } finally {

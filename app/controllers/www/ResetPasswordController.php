@@ -60,7 +60,7 @@ class ResetPasswordController implements MiddlewareInterface
             $cleanedParams = $this->treatFormResetPassword($request);
             $this->doProcessResetPassword($cleanedParams);
 
-            return $this->redirect(Application::getRouter()->generateUrl('reset-password') . '?reset_token=' . $request->getQueryParams()['reset_token']); // phpcs:ignore
+            return $this->redirect(Application::getRouter()->generateUrl('reset-password') . '?reset_token=' . $request->getQueryParams()['reset_token']);
         }
 
         $this->setTemplateProperties();
@@ -144,7 +144,7 @@ class ResetPasswordController implements MiddlewareInterface
             Session::setFlash('error-form-reset_password', 'Error(s) on ' . \implode(', ', $errorsForMessage));
             Session::setFlash('form-reset_password-errors', $errors);
             Session::setFlash('form-reset_password-values', $values);
-            Session::keepFlash(['error-form-reset_password', 'form-reset_password-errors', 'form-reset_password-values']); // phpcs:ignore
+            Session::keepFlash(['error-form-reset_password', 'form-reset_password-errors', 'form-reset_password-values']);
 
             unset($values['password'], $values['password_confirm']);
 

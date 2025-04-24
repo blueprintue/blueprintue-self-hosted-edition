@@ -91,9 +91,9 @@ class ProfileEditController implements MiddlewareInterface
         $this->pageFile = 'profile_edit';
         $this->currentPageForNavBar = 'profile_edit';
 
-        $this->url = Helper::getHostname() . Application::getRouter()->generateUrl('profile-edit', ['profile_slug' => $data['slug']]) ?? ''; // phpcs:ignore
+        $this->url = Helper::getHostname() . Application::getRouter()->generateUrl('profile-edit', ['profile_slug' => $data['slug']]) ?? '';
 
-        $this->title = 'Edit profile of ' . $data['username'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', ''); // phpcs:ignore
+        $this->title = 'Edit profile of ' . $data['username'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', '');
 
         $this->description = 'Edit profile of ' . $data['username'];
     }
@@ -107,10 +107,10 @@ class ProfileEditController implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if ($this->isAuthor($request) === false) {
-            return $this->redirect(Application::getRouter()->generateUrl('profile', ['profile_slug' => $request->getAttribute('profile_slug')])); // phpcs:ignore
+            return $this->redirect(Application::getRouter()->generateUrl('profile', ['profile_slug' => $request->getAttribute('profile_slug')]));
         }
 
-        $this->profileEditURL = Application::getRouter()->generateUrl('profile-edit', ['profile_slug' => $request->getAttribute('profile_slug')]) ?? '/'; // phpcs:ignore
+        $this->profileEditURL = Application::getRouter()->generateUrl('profile-edit', ['profile_slug' => $request->getAttribute('profile_slug')]) ?? '/';
 
         $response = $this->treatFormSent($request);
         if ($response !== null) {
@@ -218,7 +218,7 @@ class ProfileEditController implements MiddlewareInterface
         }
 
         $csrf = Session::get('csrf');
-        if (empty($csrf) || !isset($rawParams[$this->inputs[$formKeyFound]['CSRF']]) || $csrf !== $rawParams[$this->inputs[$formKeyFound]['CSRF']]) { // phpcs:ignore
+        if (empty($csrf) || !isset($rawParams[$this->inputs[$formKeyFound]['CSRF']]) || $csrf !== $rawParams[$this->inputs[$formKeyFound]['CSRF']]) {
             return null;
         }
 
@@ -487,7 +487,7 @@ class ProfileEditController implements MiddlewareInterface
             Session::setFlash('error-form-change_username', 'Error(s) on ' . \implode(', ', $errorsForMessage));
             Session::setFlash('form-change_username-errors', $errors);
             Session::setFlash('form-change_username-values', $values);
-            Session::keepFlash(['error-form-change_username', 'form-change_username-errors', 'form-change_username-values']); // phpcs:ignore
+            Session::keepFlash(['error-form-change_username', 'form-change_username-errors', 'form-change_username-values']);
 
             return null;
         }
@@ -515,7 +515,7 @@ class ProfileEditController implements MiddlewareInterface
 
         $newSlug = UserService::slugify($params['new_username']);
 
-        return $this->redirect(Application::getRouter()->generateUrl('profile-edit', ['profile_slug' => $newSlug])); // phpcs:ignore
+        return $this->redirect(Application::getRouter()->generateUrl('profile-edit', ['profile_slug' => $newSlug]));
     }
     // endregion
 
@@ -553,7 +553,7 @@ class ProfileEditController implements MiddlewareInterface
             $errors['new_password_confirm'] = 'Confirm Password must be the same as Password';
         } elseif (!UserService::isPasswordMatchFormat($values['new_password'])) {
             $errorsForMessage[] = 'new password';
-            $errors['new_password'] = 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'; // phpcs:ignore
+            $errors['new_password'] = 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters';
         }
 
         if (\count($errors) > 0) {
@@ -634,7 +634,7 @@ class ProfileEditController implements MiddlewareInterface
             Session::setFlash('error-form-delete_profile', 'Error(s) on ' . \implode(', ', $errorsForMessage));
             Session::setFlash('form-delete_profile-errors', $errors);
             Session::setFlash('form-delete_profile-values', $values);
-            Session::keepFlash(['error-form-delete_profile', 'form-delete_profile-errors', 'form-delete_profile-values']); // phpcs:ignore
+            Session::keepFlash(['error-form-delete_profile', 'form-delete_profile-errors', 'form-delete_profile-values']);
 
             return null;
         }

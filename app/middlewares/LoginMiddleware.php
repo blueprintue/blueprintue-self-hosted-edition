@@ -229,7 +229,7 @@ class LoginMiddleware implements MiddlewareInterface
             (string) Application::getConfig()->get('SESSION_REMEMBER_NAME', 'remember_token'),
             $rememberToken,
             [
-                'expires'  => \time() + (int) Application::getConfig()->get('SESSION_REMEMBER_LIFETIME', 3600 * 24 * 30), // phpcs:ignore
+                'expires'  => \time() + (int) Application::getConfig()->get('SESSION_REMEMBER_LIFETIME', 3600 * 24 * 30),
                 'path'     => (string) Application::getConfig()->get('SESSION_REMEMBER_PATH', '/'),
                 'domain'   => $request->getUri()->getHost(),
                 'secure'   => (bool) Application::getConfig()->get('SESSION_REMEMBER_HTTPS', true),

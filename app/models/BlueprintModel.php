@@ -21,7 +21,7 @@ class BlueprintModel extends Model
             'slug'            => new Field('varchar', ['max:100', 'not_null']),
             'file_id'         => new Field('varchar', ['max:100', 'not_null']),
             'title'           => new Field('varchar', ['max:255', 'not_null']),
-            'type'            => new Field('enum:animation,behavior_tree,blueprint,material,metasound,niagara,pcg', ['not_null'], 'blueprint'), // phpcs:ignore
+            'type'            => new Field('enum:animation,behavior_tree,blueprint,material,metasound,niagara,pcg', ['not_null'], 'blueprint'),
             'ue_version'      => new Field('varchar', ['max:5', 'not_null'], '4.25'),
             'current_version' => new Field('int', ['unsigned', 'not_null']),
             'thumbnail'       => new Field('varchar', ['max:255']),

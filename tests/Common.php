@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
 
 declare(strict_types=1);
 
@@ -181,7 +180,7 @@ HTML;
         $body = $this->getContentBetweenTags($body, '<head>', '</head>');
 
         static::assertStringContainsString('<title>' . $headers['title'] . '</title>', $body);
-        static::assertStringContainsString('<meta content="' . $headers['description'] . '" name="description">', $body); // phpcs:ignore
+        static::assertStringContainsString('<meta content="' . $headers['description'] . '" name="description">', $body);
     }
 
     protected function doTestHtmlBody(Response $response, string $content): void

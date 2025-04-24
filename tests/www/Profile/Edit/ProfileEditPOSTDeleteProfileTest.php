@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -938,7 +936,6 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
         $give = ($value === 'give' || $value === '') ? ' selected="selected"' : '';
         $delete = ($value === 'delete') ? ' selected="selected"' : '';
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -965,7 +962,6 @@ HTML;
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     protected function getHTMLFieldCommentsOwnership(string $value, bool $hasError, string $labelError): string
@@ -974,7 +970,6 @@ HTML;
         $anonymize = ($value === 'anonymize') ? ' selected="selected"' : '';
         $delete = ($value === 'delete') ? ' selected="selected"' : '';
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -1003,6 +998,5 @@ HTML;
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 }

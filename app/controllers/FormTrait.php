@@ -22,7 +22,7 @@ trait FormTrait
     /**
      * @throws \Exception
      */
-    protected function hasSentForm(ServerRequestInterface $request, string $method, array $inputs, string $errorKey): bool // phpcs:ignore
+    protected function hasSentForm(ServerRequestInterface $request, string $method, array $inputs, string $errorKey): bool
     {
         if ($request->getMethod() !== $method) {
             return false;

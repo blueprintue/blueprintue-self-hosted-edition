@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -1117,7 +1115,6 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
         $vHTML = Security::escHTML($value);
         $vHTML = ($vHTML !== '' && $hasError === false) ? $vHTML : 'username';
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -1148,7 +1145,6 @@ HTML;
 <span class="form__help" id="form-edit_socials-span-facebook_help">https://www.facebook.com/<span class="form__help--emphasis">$vHTML</span></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
@@ -1160,7 +1156,6 @@ HTML;
         $vHTML = Security::escHTML($value);
         $vHTML = ($vHTML !== '' && $hasError === false) ? $vHTML : 'username';
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -1191,7 +1186,6 @@ HTML;
 <span class="form__help" id="form-edit_socials-span-twitter_help">https://twitter.com/<span class="form__help--emphasis">$vHTML</span></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
@@ -1203,7 +1197,6 @@ HTML;
         $vHTML = Security::escHTML($value);
         $vHTML = ($vHTML !== '' && $hasError === false) ? $vHTML : 'username';
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -1234,7 +1227,6 @@ HTML;
 <span class="form__help" id="form-edit_socials-span-github_help">https://github.com/<span class="form__help--emphasis">$vHTML</span></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
@@ -1246,7 +1238,6 @@ HTML;
         $vHTML = Security::escHTML($value);
         $vHTML = ($vHTML !== '' && $hasError === false) ? $vHTML : 'channel_id';
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -1279,7 +1270,6 @@ HTML;
 Find your channel id: <a href="https://www.youtube.com/account_advanced" rel="noopener noreferrer nofollow" target="_blank">https://www.youtube.com/account_advanced</a></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
@@ -1291,7 +1281,6 @@ HTML;
         $vHTML = Security::escHTML($value);
         $vHTML = ($vHTML !== '' && $hasError === false) ? $vHTML : 'username';
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -1322,7 +1311,6 @@ HTML;
 <span class="form__help" id="form-edit_socials-span-twitch_help">https://www.twitch.tv/<span class="form__help--emphasis">$vHTML</span></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
@@ -1334,7 +1322,6 @@ HTML;
         $vHTML = Security::escHTML($value);
         $vHTML = ($vHTML !== '' && $hasError === false) ? $vHTML : 'username';
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -1365,6 +1352,5 @@ HTML;
 <span class="form__help" id="form-edit_socials-span-unreal_help">https://forums.unrealengine.com/u/<span class="form__help--emphasis">$vHTML</span></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 }

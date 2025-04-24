@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -1166,7 +1164,6 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
         $unlistedSelected = ($value === 'unlisted') ? ' selected="selected"' : '';
         $privateSelected = ($value === 'private') ? ' selected="selected"' : '';
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -1195,13 +1192,12 @@ HTML;
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
      * @throws SecurityException
      */
-    protected function getHTMLFieldExpiration(string $value, bool $hasError, string $labelError, ?string $expirationDate): string // phpcs:ignore
+    protected function getHTMLFieldExpiration(string $value, bool $hasError, string $labelError, ?string $expirationDate): string
     {
         $keepSelected = ($value === 'keep') ? ' selected="selected"' : '';
         $removeSelected = ($value === 'remove') ? ' selected="selected"' : '';
@@ -1209,7 +1205,6 @@ HTML;
         $oneDSelected = ($value === '1d') ? ' selected="selected"' : '';
         $oneWSelected = ($value === '1w') ? ' selected="selected"' : '';
 
-        // phpcs:disable
         if ($expirationDate === null) {
             $expirationHelp = '';
             $expirationText = '</div>';
@@ -1255,7 +1250,6 @@ $options
 </div>
 $expirationText
 HTML;
-        // phpcs:enable
     }
 
     /**
@@ -1265,13 +1259,10 @@ HTML;
     {
         $listOptions = [];
         foreach (Helper::getAllUEVersion() as $ueVersion) {
-            // phpcs:disable
             $listOptions[] = '<option value="' . Security::escAttr($ueVersion) . '"' . (($value === $ueVersion) ? ' selected="selected"' : '') . '>' . Security::escHTML($ueVersion) . '</option>';
-            // phpcs:enable
         }
         $listOptionsStr = \implode("\n", $listOptions);
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--select">
@@ -1290,7 +1281,6 @@ $listOptionsStr
 </select>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     protected function getHTMLFieldComment(string $value, bool $hasError, string $labelError): string
@@ -1299,7 +1289,6 @@ HTML;
         $closeSelected = ($value === 'close') ? ' selected="selected"' : '';
         $hideSelected = ($value === 'hide') ? ' selected="selected"' : '';
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -1328,6 +1317,5 @@ HTML;
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 }

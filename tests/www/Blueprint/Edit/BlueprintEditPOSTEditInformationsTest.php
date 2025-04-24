@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -1001,7 +999,6 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
     {
         $v = Security::escAttr($value);
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -1024,7 +1021,6 @@ HTML;
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
@@ -1034,7 +1030,6 @@ HTML;
     {
         $v = Security::escHTML($value);
 
-        // phpcs:disable
         return <<<HTML
 <div class="form__element">
 <label class="form__label" for="form-edit_informations-textarea-description" id="form-edit_informations-label-description">Description</label>
@@ -1044,7 +1039,6 @@ HTML;
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
@@ -1056,14 +1050,13 @@ HTML;
 
         $items = [];
         foreach ($tags as $tag) {
-            $items[] = '<li class="tag__item"><span class="sr-only">' . Security::escHTML($tag['name']) . '</span><button aria-label="Remove ' . Security::escAttr($tag['name']) . ' from the list" class="block__link block__link--delete block__link--tag">' . Security::escHTML($tag['name']) . '</button></li>'; // phpcs:ignore
+            $items[] = '<li class="tag__item"><span class="sr-only">' . Security::escHTML($tag['name']) . '</span><button aria-label="Remove ' . Security::escAttr($tag['name']) . ' from the list" class="block__link block__link--delete block__link--tag">' . Security::escHTML($tag['name']) . '</button></li>';
         }
         $itemsStr = \implode("\n", $items);
         if (!empty($itemsStr)) {
             $itemsStr = "\n" . $itemsStr;
         }
 
-        // phpcs:disable
         return <<<HTML
 <div class="form__element"
 data-tag
@@ -1088,7 +1081,6 @@ data-tag-srspeak-delete="%s deleted">
 <textarea aria-hidden="true" aria-label="List of tags" hidden id="form-edit_informations-textarea-tags" name="form-edit_informations-textarea-tags">$v</textarea>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
@@ -1102,15 +1094,14 @@ HTML;
             $v = '&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;5qap5aO4i9A';
         }
 
-        if ($v === 'https&#x3A;&#x2F;&#x2F;vloggers.social&#x2F;videos&#x2F;watch&#x2F;5636c3ff-7009-47da-af53-5f0857a26954') { // phpcs:ignore
+        if ($v === 'https&#x3A;&#x2F;&#x2F;vloggers.social&#x2F;videos&#x2F;watch&#x2F;5636c3ff-7009-47da-af53-5f0857a26954') {
             $v = '&#x2F;&#x2F;vloggers.social&#x2F;videos&#x2F;embed&#x2F;5636c3ff-7009-47da-af53-5f0857a26954';
         }
 
-        if ($v === 'youtu.be&#x2F;5qap5aO4i9A&amp;&#x3D;&lt;script&gt;alert&#x28;1&#x29;&lt;&#x2F;script&gt;&quot;&#x2F;&gt;&lt;script&gt;alert&#x28;1&#x29;&lt;&#x2F;script&gt;') { // phpcs:ignore
+        if ($v === 'youtu.be&#x2F;5qap5aO4i9A&amp;&#x3D;&lt;script&gt;alert&#x28;1&#x29;&lt;&#x2F;script&gt;&quot;&#x2F;&gt;&lt;script&gt;alert&#x28;1&#x29;&lt;&#x2F;script&gt;') {
             $v = '&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;5qap5aO4i9A';
         }
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -1135,6 +1126,5 @@ HTML;
 <span class="form__help" id="form-edit_informations-span-video_help">Accepts only <span class="form__help--emphasis">YouTube</span>, <span class="form__help--emphasis">Vimeo</span>, <span class="form__help--emphasis">Dailymotion</span>, <span class="form__help--emphasis">PeerTube</span>, <span class="form__help--emphasis">Bilibili</span> or <span class="form__help--emphasis">Niconico</span> urls</span>
 </div>
 HTML;
-        // phpcs:enable
     }
 }

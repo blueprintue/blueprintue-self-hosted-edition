@@ -31,13 +31,13 @@ class ProfileController implements MiddlewareInterface
         $this->pageFile = 'profile';
         $this->currentPageForNavBar = 'profile';
 
-        $url = Helper::getHostname() . Application::getRouter()->generateUrl('profile', ['profile_slug' => $data['slug']]) ?? ''; // phpcs:ignore
+        $url = Helper::getHostname() . Application::getRouter()->generateUrl('profile', ['profile_slug' => $data['slug']]) ?? '';
         if ($data['page'] > 1) {
             $url .= '?page=' . $data['page'];
         }
         $this->url = $url;
 
-        $this->title = 'Profile of ' . $data['username'] . ' | Page ' . $data['page'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', ''); // phpcs:ignore
+        $this->title = 'Profile of ' . $data['username'] . ' | Page ' . $data['page'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', '');
 
         $this->description = 'Profile of ' . $data['username'];
     }
@@ -58,7 +58,7 @@ class ProfileController implements MiddlewareInterface
 
         $this->completeViewProfile($request, $userInfos);
         if ($this->data['blueprints'] === null && $this->data['page'] > 1) {
-            return $this->redirect(Application::getRouter()->generateUrl('profile', ['profile_slug' => $request->getAttribute('profile_slug')])); // phpcs:ignore
+            return $this->redirect(Application::getRouter()->generateUrl('profile', ['profile_slug' => $request->getAttribute('profile_slug')]));
         }
 
         $this->setTemplateProperties([
@@ -135,7 +135,7 @@ class ProfileController implements MiddlewareInterface
                 $page = $queryParams['page'];
             }
         }
-        $blueprints = BlueprintService::getForProfile($userInfos['id_user'], Session::get('userID'), $page, $this->countBlueprintsPerPage); // phpcs:ignore
+        $blueprints = BlueprintService::getForProfile($userInfos['id_user'], Session::get('userID'), $page, $this->countBlueprintsPerPage);
         if ($blueprints['count'] > 0) {
             $users = UserService::getInfosFromIdAuthorIndex($blueprints['rows']);
             foreach ($blueprints['rows'] as $key => $row) {

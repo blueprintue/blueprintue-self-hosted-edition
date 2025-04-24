@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -623,7 +621,7 @@ class ContactTest extends TestCase
     protected function getHTMLFieldName(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);
-        // phpcs:disable
+
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
@@ -640,7 +638,6 @@ HTML;
 <span class="form__feedback"></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
@@ -649,7 +646,7 @@ HTML;
     protected function getHTMLFieldEmail(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);
-        // phpcs:disable
+
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
@@ -666,7 +663,6 @@ HTML;
 <span class="form__feedback"></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
@@ -675,7 +671,6 @@ HTML;
     protected function getHTMLFieldMessage(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escHTML($value);
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--textarea form__container--error">
@@ -692,7 +687,6 @@ HTML;
 <span class="form__feedback"></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     public static function mailForPHPUnit($to, $subject, $message): bool

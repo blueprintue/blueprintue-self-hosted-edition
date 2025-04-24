@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -1179,14 +1177,12 @@ HTML,
     {
         $v = Security::escAttr($queryParams['query'] ?? $queryParams['form-search-input-query'] ?? '');
 
-        // phpcs:disable
         return <<<HTML
 <div class="form__element home__form--title">
 <label class="form__label" for="form-search-input-query" id="form-search-label-query">Terms to search</label>
 <input aria-invalid="false" aria-labelledby="form-search-label-query" class="form__input" id="form-search-input-query" name="form-search-input-query" type="text" value="$v"/>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     protected function getHTMLFieldType(array $queryParams): string
@@ -1202,11 +1198,10 @@ HTML;
         $niagara = ($value === 'niagara') ? ' selected="selected"' : '';
         $pcg = ($value === 'pcg') ? ' selected="selected"' : '';
 
-        if ($animation === '' && $behaviorTree === '' && $blueprint === '' && $material === '' && $metasound === '' && $niagara === '' && $pcg === '') { // phpcs:ignore
+        if ($animation === '' && $behaviorTree === '' && $blueprint === '' && $material === '' && $metasound === '' && $niagara === '' && $pcg === '') {
             $all = ' selected="selected"';
         }
 
-        // phpcs:disable
         return <<<HTML
 <div class="form__element home__form--selectors">
 <label class="form__label" for="form-search-select-type" id="form-search-label-type">Type</label>
@@ -1224,7 +1219,6 @@ HTML;
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     /**
@@ -1241,10 +1235,9 @@ HTML;
 
         $str = '';
         foreach (Helper::getAllUEVersion() as $ueVersion) {
-            $str .= '<option value="' . Security::escAttr($ueVersion) . '"' . (($value === $ueVersion) ? ' selected="selected"' : '') . '>' . Security::escHTML($ueVersion) . '</option>' . "\n"; // phpcs:ignore
+            $str .= '<option value="' . Security::escAttr($ueVersion) . '"' . (($value === $ueVersion) ? ' selected="selected"' : '') . '>' . Security::escHTML($ueVersion) . '</option>' . "\n";
         }
 
-        // phpcs:disable
         return <<<HTML
 <div class="form__element home__form--selectors">
 <label class="form__label" for="form-search-select-ue_version" id="form-search-label-ue_version">UE version</label>
@@ -1255,6 +1248,5 @@ $str</select>
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 }
