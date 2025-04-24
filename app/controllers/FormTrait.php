@@ -10,19 +10,15 @@ use Rancoud\Session\Session;
 
 trait FormTrait
 {
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function setAndKeepInfos(string $key, string $value): void
     {
         Session::setFlash($key, $value);
         Session::keepFlash([$key]);
     }
 
-    /**
-     * @throws \Exception
-     */
-    protected function hasSentForm(ServerRequestInterface $request, string $method, array $inputs, string $errorKey): bool // phpcs:ignore
+    /** @throws \Exception */
+    protected function hasSentForm(ServerRequestInterface $request, string $method, array $inputs, string $errorKey): bool
     {
         if ($request->getMethod() !== $method) {
             return false;

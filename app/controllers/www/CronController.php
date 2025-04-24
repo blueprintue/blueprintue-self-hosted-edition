@@ -18,9 +18,7 @@ use Rancoud\Session\Session;
 
 class CronController
 {
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         /** @noinspection NullPointerExceptionInspection */
@@ -28,15 +26,19 @@ class CronController
         switch ($currentRoute) {
             case 'cron_purge_sessions':
                 $this->purgeSessions();
+
                 break;
             case 'cron_purge_users_not_confirmed':
                 $this->purgeUsersNotConfirmed();
+
                 break;
             case 'cron_purge_deleted_blueprints':
                 $this->purgeDeletedBlueprints();
+
                 break;
             case 'cron_set_soft_delete_anonymous_private_blueprints':
                 $this->setSoftDeleteAnonymousPrivateBlueprints();
+
                 break;
         }
 
@@ -289,7 +291,7 @@ class CronController
             Application::getDatabase()->startTransaction();
 
             /* @noinspection NullPointerExceptionInspection */
-            Application::getDatabase()->update($sqlSetSoftDeletedAnonymousPrivateBlueprints, ['userID' => $anonymousID]); // phpcs:ignore
+            Application::getDatabase()->update($sqlSetSoftDeletedAnonymousPrivateBlueprints, ['userID' => $anonymousID]);
         } catch (\Exception $e) {
             $forceRollback = true;
         } finally {

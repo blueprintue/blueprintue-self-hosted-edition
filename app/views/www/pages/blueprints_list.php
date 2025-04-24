@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection PhpUnhandledExceptionInspection */
-/* phpcs:disable Generic.Files.LineLength */
 
 declare(strict_types=1);
 
@@ -81,13 +80,13 @@ use Rancoud\Security\Security;
             <div class="block__element">
                 <h2 class="block__title block__title--center">Other Types of Blueprints</h2>
                 <div class="block__links block__links--center">
-                    <?php if ($data['type'] !== 'animation') { // phpcs:ignore?><a class="block__link" href="/type/animation/">Animation</a><?php } // phpcs:ignore?>
-                    <?php if ($data['type'] !== 'behavior-tree') { // phpcs:ignore?><a class="block__link" href="/type/behavior-tree/">Behavior Tree</a><?php } // phpcs:ignore?>
-                    <?php if ($data['type'] !== 'blueprint') { // phpcs:ignore?><a class="block__link" href="/type/blueprint/">Blueprint</a><?php } // phpcs:ignore?>
-                    <?php if ($data['type'] !== 'material') { // phpcs:ignore?><a class="block__link" href="/type/material/">Material</a><?php } // phpcs:ignore?>
-                    <?php if ($data['type'] !== 'metasound') { // phpcs:ignore?><a class="block__link" href="/type/metasound/">Metasound</a><?php } // phpcs:ignore?>
-                    <?php if ($data['type'] !== 'niagara') { // phpcs:ignore?><a class="block__link" href="/type/niagara/">Niagara</a><?php } // phpcs:ignore?>
-                    <?php if ($data['type'] !== 'pcg') { // phpcs:ignore?><a class="block__link" href="/type/pcg/">PCG</a><?php } // phpcs:ignore?>
+                    <?php if ($data['type'] !== 'animation') { ?><a class="block__link" href="/type/animation/">Animation</a><?php } ?>
+                    <?php if ($data['type'] !== 'behavior-tree') { ?><a class="block__link" href="/type/behavior-tree/">Behavior Tree</a><?php } ?>
+                    <?php if ($data['type'] !== 'blueprint') { ?><a class="block__link" href="/type/blueprint/">Blueprint</a><?php } ?>
+                    <?php if ($data['type'] !== 'material') { ?><a class="block__link" href="/type/material/">Material</a><?php } ?>
+                    <?php if ($data['type'] !== 'metasound') { ?><a class="block__link" href="/type/metasound/">Metasound</a><?php } ?>
+                    <?php if ($data['type'] !== 'niagara') { ?><a class="block__link" href="/type/niagara/">Niagara</a><?php } ?>
+                    <?php if ($data['type'] !== 'pcg') { ?><a class="block__link" href="/type/pcg/">PCG</a><?php } ?>
                 </div>
             </div>
             <?php } ?>

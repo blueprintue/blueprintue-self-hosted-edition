@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -95,6 +93,7 @@ class BlueprintFolderTest extends TestCase
         static::assertNotSame('', ExtendedBlueprintService::testNewFileIDOnDatabase());
 
         $exceptionLaunched = false;
+
         try {
             ExtendedBlueprintService::testNewFileIDOnDatabase();
         } catch (\Exception $e) {
@@ -117,6 +116,7 @@ class BlueprintFolderTest extends TestCase
         static::assertNotSame('', ExtendedBlueprintService::testNewFileIDOnFileSystem());
 
         $exceptionLaunched = false;
+
         try {
             ExtendedBlueprintService::testNewFileIDOnFileSystem();
         } catch (\Exception $e) {
@@ -139,6 +139,7 @@ class BlueprintFolderTest extends TestCase
         static::assertNotSame('', ExtendedBlueprintService::testNewFileIDBoth());
 
         $exceptionLaunched = false;
+
         try {
             ExtendedBlueprintService::testNewFileIDBoth();
         } catch (\Exception $e) {

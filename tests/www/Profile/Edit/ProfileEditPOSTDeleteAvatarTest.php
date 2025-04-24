@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -103,9 +101,7 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
         static::cleanMedias();
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public static function dataCasesDeleteAvatar(): array
     {
         $randomAvatarsName = [];

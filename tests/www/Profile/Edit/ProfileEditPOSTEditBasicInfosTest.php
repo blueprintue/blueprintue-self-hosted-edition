@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -467,37 +465,29 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldBio(string $value): string
     {
         $v = Security::escHTML($value);
 
-        // phpcs:disable
         return <<<HTML
 <div class="form__element">
 <label class="form__label" for="form-edit_basic_infos-textarea-bio" id="form-edit_basic_infos-label-bio">Bio</label>
 <textarea aria-invalid="false" aria-labelledby="form-edit_basic_infos-label-bio" class="form__input form__input--textarea" id="form-edit_basic_infos-textarea-bio" name="form-edit_basic_infos-textarea-bio">$v</textarea>
 </div>
 HTML;
-        // phpcs:enable
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldWebsite(string $value): string
     {
         $v = Security::escAttr($value);
 
-        // phpcs:disable
         return <<<HTML
 <div class="form__element">
 <label class="form__label" for="form-edit_basic_infos-input-website" id="form-edit_basic_infos-label-website">Website</label>
 <input aria-invalid="false" aria-labelledby="form-edit_basic_infos-label-website" class="form__input" id="form-edit_basic_infos-input-website" name="form-edit_basic_infos-input-website" type="text" value="$v"/>
 </div>
 HTML;
-        // phpcs:enable
     }
 }

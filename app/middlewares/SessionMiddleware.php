@@ -82,9 +82,7 @@ class SessionMiddleware implements MiddlewareInterface
         Session::setOption('cookie_samesite', (string) Application::getConfig()->get('SESSION_SAMESITE', 'Strict'));
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function generateCsrf(): void
     {
         if (!Session::has('csrf')) {
@@ -92,9 +90,7 @@ class SessionMiddleware implements MiddlewareInterface
         }
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function setUserIDInDatabase(): void
     {
         $userID = (int) Session::get('userID');

@@ -10,45 +10,37 @@ use Rancoud\Application\Application;
 
 class Helper
 {
-    /**
-     * @throws \Rancoud\Application\ApplicationException
-     */
+    /** @throws \Rancoud\Application\ApplicationException */
     public static function getBlueprintLink(string $slug, ?int $version = null): string
     {
         if ($version !== null) {
-            return Application::getRouter()->generateUrl('blueprint', ['blueprint_slug' => $slug, 'version' => $version]); // phpcs:ignore
+            return Application::getRouter()->generateUrl('blueprint', ['blueprint_slug' => $slug, 'version' => $version]);
         }
 
-        $link = Application::getRouter()->generateUrl('blueprint', ['blueprint_slug' => $slug, 'version' => '__REMOVE__ME__']); // phpcs:ignore
+        $link = Application::getRouter()->generateUrl('blueprint', ['blueprint_slug' => $slug, 'version' => '__REMOVE__ME__']);
 
         return \str_replace('__REMOVE__ME__/', '', $link);
     }
 
-    /**
-     * @throws \Rancoud\Application\ApplicationException
-     */
+    /** @throws \Rancoud\Application\ApplicationException */
     public static function getBlueprintRenderLink(string $slug, ?int $version = null): string
     {
         if ($version !== null) {
             return Application::getRouter()->generateUrl('render', ['blueprint_slug' => $slug, 'version' => $version]);
         }
 
-        $link = Application::getRouter()->generateUrl('render', ['blueprint_slug' => $slug, 'version' => '__REMOVE__ME__']); // phpcs:ignore
+        $link = Application::getRouter()->generateUrl('render', ['blueprint_slug' => $slug, 'version' => '__REMOVE__ME__']);
 
         return \str_replace('__REMOVE__ME__/', '', $link);
     }
 
-    /**
-     * @throws \Rancoud\Application\ApplicationException
-     */
+    /** @throws \Rancoud\Application\ApplicationException */
     public static function getBlueprintDiffLink(string $slug, int $previousVersion, int $currentVersion): string
     {
-        return Application::getRouter()->generateUrl('blueprint-diff', ['blueprint_slug' => $slug, 'previous_version' => $previousVersion, 'current_version' => $currentVersion]); // phpcs:ignore
+        return Application::getRouter()->generateUrl('blueprint-diff', ['blueprint_slug' => $slug, 'previous_version' => $previousVersion, 'current_version' => $currentVersion]);
     }
 
-    /**
-     * @throws \Rancoud\Application\ApplicationException
-     */
+    /** @throws \Rancoud\Application\ApplicationException */
     public static function formatUser(array $user): array
     {
         $user['avatar_url'] = static::getAvatarUrl($user['avatar']);
@@ -75,9 +67,7 @@ class Helper
         return '/medias/blueprints/' . $thumbnail;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public static function getSince(string $publishedAt): string
     {
         try {
@@ -172,9 +162,7 @@ class Helper
         return $scheme . $host;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public static function getTimeleft(?string $expiration): ?string
     {
         if ($expiration === null) {
@@ -210,17 +198,13 @@ class Helper
         return $days . ' days left';
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public static function formatDate(string $datetime, string $format = 'F j, Y'): string
     {
         return (new DateTime($datetime, new DateTimeZone('UTC')))->format($format);
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public static function getRandomString(int $length): string
     {
         $string = '';
@@ -265,9 +249,7 @@ class Helper
         return '#';
     }
 
-    /**
-     * @throws \Rancoud\Application\ApplicationException
-     */
+    /** @throws \Rancoud\Application\ApplicationException */
     public static function organizeVersionHistoryForDisplay(string $fileID, array $versions): array
     {
         $out = ['count' => \count($versions), 'versions' => []];
@@ -291,7 +273,7 @@ class Helper
             $versions[$idxVersion]['url'] = static::getBlueprintLink($fileID, $versions[$idxVersion]['version']);
             $versions[$idxVersion]['diff_url'] = '';
             if (($idxVersion + 1) < $out['count']) {
-                $versions[$idxVersion]['diff_url'] = static::getBlueprintDiffLink($fileID, $versions[$idxVersion + 1]['version'], $versions[$idxVersion]['version']); // phpcs:ignore
+                $versions[$idxVersion]['diff_url'] = static::getBlueprintDiffLink($fileID, $versions[$idxVersion + 1]['version'], $versions[$idxVersion]['version']);
             }
 
             $out['versions'][$day][] = $versions[$idxVersion];
@@ -319,18 +301,14 @@ class Helper
         return \mb_substr($sentence, 0, $posLastSpace);
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public static function getNowUTCFormatted(): string
     {
         return (new DateTime('now', new DateTimeZone('UTC')))->format('Y-m-d H:i:s');
     }
 
-    /**
-     * @throws \Exception
-     */
-    public static function getDateFormattedWithUserTimezone(string $date, string $format = 'Y-m-d H:i:s', string $timezone = 'UTC'): string // phpcs:ignore
+    /** @throws \Exception */
+    public static function getDateFormattedWithUserTimezone(string $date, string $format = 'Y-m-d H:i:s', string $timezone = 'UTC'): string
     {
         return (new DateTime($date, new DateTimeZone($timezone)))->format($format);
     }

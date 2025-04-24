@@ -32,7 +32,7 @@ class CommentService
 
         $commentModel = new CommentModel(Application::getDatabase());
 
-        return $commentModel->create(['id_blueprint' => $blueprintID, 'id_author' => $userID, 'content' => $comment, 'created_at' => $now]); // phpcs:ignore
+        return $commentModel->create(['id_blueprint' => $blueprintID, 'id_author' => $userID, 'content' => $comment, 'created_at' => $now]);
     }
     // endregion
 

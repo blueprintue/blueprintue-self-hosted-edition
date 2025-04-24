@@ -53,9 +53,7 @@ class LoginMiddleware implements MiddlewareInterface
         return $handler->handle($request);
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormLogin(ServerRequestInterface $request): ?array
     {
         $params = [];
@@ -111,6 +109,7 @@ class LoginMiddleware implements MiddlewareInterface
 
         $forceRollback = false;
         $errorCode = '#100';
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
@@ -229,7 +228,7 @@ class LoginMiddleware implements MiddlewareInterface
             (string) Application::getConfig()->get('SESSION_REMEMBER_NAME', 'remember_token'),
             $rememberToken,
             [
-                'expires'  => \time() + (int) Application::getConfig()->get('SESSION_REMEMBER_LIFETIME', 3600 * 24 * 30), // phpcs:ignore
+                'expires'  => \time() + (int) Application::getConfig()->get('SESSION_REMEMBER_LIFETIME', 3600 * 24 * 30),
                 'path'     => (string) Application::getConfig()->get('SESSION_REMEMBER_PATH', '/'),
                 'domain'   => $request->getUri()->getHost(),
                 'secure'   => (bool) Application::getConfig()->get('SESSION_REMEMBER_HTTPS', true),

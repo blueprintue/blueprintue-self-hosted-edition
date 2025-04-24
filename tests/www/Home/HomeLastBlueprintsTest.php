@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -24,9 +22,7 @@ class HomeLastBlueprintsTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function setUpBeforeClass(): void
     {
         static::setDatabaseEmptyStructure();
@@ -199,9 +195,7 @@ class HomeLastBlueprintsTest extends TestCase
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected static function getHTMLItemBlueprint(string $blueprintSlug, string $type, string $version, string $title, string $author, string $profileSlug, string $date, ?string $thumbnail): string
     {
         $blueprintURL = Security::escAttr('/blueprint/' . $blueprintSlug . '/');

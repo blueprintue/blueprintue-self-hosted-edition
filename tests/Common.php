@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
 
 declare(strict_types=1);
 
@@ -44,9 +43,7 @@ HTML;
 
     protected static ?Database $db = null;
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     protected static function setDatabase(): void
     {
         if (static::$db !== null) {
@@ -64,9 +61,7 @@ HTML;
         static::$db = new Database(new Configurator($params));
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     protected static function setDatabaseEmptyStructure(): void
     {
         $ds = \DIRECTORY_SEPARATOR;
@@ -75,9 +70,7 @@ HTML;
         static::$db->useSqlFile(__DIR__ . $ds . 'sql' . $ds . 'start.sql');
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     protected static function addUsers(): void
     {
         static::setDatabase();
@@ -181,7 +174,7 @@ HTML;
         $body = $this->getContentBetweenTags($body, '<head>', '</head>');
 
         static::assertStringContainsString('<title>' . $headers['title'] . '</title>', $body);
-        static::assertStringContainsString('<meta content="' . $headers['description'] . '" name="description">', $body); // phpcs:ignore
+        static::assertStringContainsString('<meta content="' . $headers['description'] . '" name="description">', $body);
     }
 
     protected function doTestHtmlBody(Response $response, string $content): void
@@ -408,9 +401,7 @@ HTML;
         }
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public static function getSince(string $publishedAt): string
     {
         $publishedAtObject = new DateTime($publishedAt);

@@ -32,7 +32,7 @@ class BlueprintDiffController implements MiddlewareInterface
 
         $this->url = Helper::getHostname() . $data['url'];
 
-        $this->title = 'Diff between version ' . $data['previous_version'] . ' and ' . $data['current_version'] . ' for ' . $data['title'] . ' posted by ' . $data['author'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', ''); // phpcs:ignore
+        $this->title = 'Diff between version ' . $data['previous_version'] . ' and ' . $data['current_version'] . ' for ' . $data['title'] . ' posted by ' . $data['author'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', '');
 
         $description = Helper::getFitSentence($data['description'] ?? '', 255);
         $this->description = ($description !== '') ? $description : 'No description provided';
@@ -66,7 +66,7 @@ class BlueprintDiffController implements MiddlewareInterface
 
         // template properties
         $this->setTemplateProperties([
-            'url'              => Helper::getBlueprintDiffLink($blueprint['slug'], $blueprint['previous_version'], $blueprint['current_version']), // phpcs:ignore
+            'url'              => Helper::getBlueprintDiffLink($blueprint['slug'], $blueprint['previous_version'], $blueprint['current_version']),
             'title'            => $blueprint['title'],
             'author'           => $users[$blueprint['id_author']]['username'],
             'description'      => $blueprint['description'],
@@ -76,9 +76,9 @@ class BlueprintDiffController implements MiddlewareInterface
 
         // data for page
         $blueprintData = [
-            'versions'          => Helper::organizeVersionHistoryForDisplay($blueprint['slug'], $blueprint['versions']), // phpcs:ignore
-            'previous_content'  => BlueprintService::getBlueprintContent($blueprint['file_id'], $blueprint['previous_version']), // phpcs:ignore
-            'current_content'   => BlueprintService::getBlueprintContent($blueprint['file_id'], $blueprint['current_version']), // phpcs:ignore
+            'versions'          => Helper::organizeVersionHistoryForDisplay($blueprint['slug'], $blueprint['versions']),
+            'previous_content'  => BlueprintService::getBlueprintContent($blueprint['file_id'], $blueprint['previous_version']),
+            'current_content'   => BlueprintService::getBlueprintContent($blueprint['file_id'], $blueprint['current_version']),
             'previous_version'  => $blueprint['previous_version'],
             'current_version'   => $blueprint['current_version'],
         ];
@@ -88,9 +88,7 @@ class BlueprintDiffController implements MiddlewareInterface
         return $this->sendPage();
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function getBlueprint(ServerRequestInterface $request): ?array
     {
         $slug = $request->getAttribute('blueprint_slug');

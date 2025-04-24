@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection PhpUnhandledExceptionInspection */
-/* phpcs:disable Generic.Files.LineLength */
 
 declare(strict_types=1);
 

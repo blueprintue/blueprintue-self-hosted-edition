@@ -13,9 +13,7 @@ use Rancoud\Application\Application;
 
 class BlueprintService
 {
-    /**
-     * @throws \Rancoud\Application\ApplicationException
-     */
+    /** @throws \Rancoud\Application\ApplicationException */
     public static function getBlueprintContent($fileID, $version): ?string
     {
         static $storageFolder = null;
@@ -38,9 +36,7 @@ class BlueprintService
         return \file_get_contents($fullpath);
     }
 
-    /**
-     * @throws \Rancoud\Application\ApplicationException
-     */
+    /** @throws \Rancoud\Application\ApplicationException */
     public static function setBlueprintContent($fileID, $version, $content): void
     {
         static $storageFolder = null;
@@ -129,6 +125,7 @@ class BlueprintService
 
         $forceRollback = false;
         $blueprintID = 0;
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
@@ -280,7 +277,7 @@ class BlueprintService
 
         if ($pageType === 'profile') {
             $showOnlyPublic = $connectedUserID !== $params['id_author'];
-            $results = $blueprintModel->searchWithAuthor($params['id_author'], $showOnlyPublic, $pagination); // phpcs:ignore
+            $results = $blueprintModel->searchWithAuthor($params['id_author'], $showOnlyPublic, $pagination);
         } elseif ($pageType === 'last') {
             $results = $blueprintModel->searchLast($connectedUserID, $pagination);
         } elseif ($pageType === 'most-discussed') {
@@ -323,9 +320,7 @@ class BlueprintService
         return (new BlueprintVersionModel(Application::getDatabase()))->getAllVersions($blueprintID);
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected static function computeExpiration(string $expiration, string $now): ?string
     {
         $expirationDate = null;
@@ -409,7 +404,7 @@ class BlueprintService
 
         if ($blueprint['thumbnail'] !== null) {
             $filepathPreviousFile = Application::getFolder('MEDIAS_BLUEPRINTS') . $blueprint['thumbnail'];
-            if (\preg_match('/^[a-zA-Z0-9]{60}\.png$/D', $blueprint['thumbnail']) === 1 && \file_exists($filepathPreviousFile) && \is_file($filepathPreviousFile)) { // phpcs:ignore
+            if (\preg_match('/^[a-zA-Z0-9]{60}\.png$/D', $blueprint['thumbnail']) === 1 && \file_exists($filepathPreviousFile) && \is_file($filepathPreviousFile)) {
                 \unlink($filepathPreviousFile);
             }
         }
@@ -519,7 +514,7 @@ class BlueprintService
      */
     public static function softDeleteBlueprint(int $blueprintID): void
     {
-        (new BlueprintModel(Application::getDatabase()))->update(['deleted_at' => Helper::getNowUTCFormatted()], $blueprintID); // phpcs:ignore
+        (new BlueprintModel(Application::getDatabase()))->update(['deleted_at' => Helper::getNowUTCFormatted()], $blueprintID);
     }
 
     /**
@@ -534,6 +529,7 @@ class BlueprintService
         $now = Helper::getNowUTCFormatted();
 
         $forceRollback = false;
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
@@ -543,6 +539,7 @@ class BlueprintService
             if ($blueprintInfos === null) {
                 // @codeCoverageIgnoreStart
                 $forceRollback = true;
+
                 throw new \Exception('Blueprint is nil');
                 // @codeCoverageIgnoreEnd
             }
@@ -642,16 +639,13 @@ class BlueprintService
         );
     }
 
-    /**
-     * @return array [video,video_provider]
-     */
+    /** @return array [video,video_provider] */
     public static function findVideoProvider(string $videoURL): array
     {
         if ($videoURL === '') {
             return [null, null];
         }
 
-        // phpcs:disable
         $providersMatcher = [
             [
                 'provider' => 'youtube',
@@ -704,7 +698,6 @@ class BlueprintService
                 'output'   => '//{{1}}/videos/embed/{{2}}',
             ]
         ];
-        // phpcs:enable
 
         foreach ($providersMatcher as $providerMatcher) {
             if (\preg_match($providerMatcher['regex'], $videoURL, $matches) === 1) {
@@ -756,6 +749,7 @@ class BlueprintService
 
         $forceRollback = false;
         $blueprintID = 0;
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();

@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -444,14 +442,11 @@ HTML);
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldNewUsername(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -474,6 +469,5 @@ HTML;
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 }

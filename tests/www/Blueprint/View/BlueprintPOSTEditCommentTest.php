@@ -3,8 +3,6 @@
 /* @noinspection HtmlUnknownTarget */
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -26,9 +24,7 @@ class BlueprintPOSTEditCommentTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function setUpBeforeClass(): void
     {
         static::setDatabaseEmptyStructure();
@@ -68,9 +64,7 @@ class BlueprintPOSTEditCommentTest extends TestCase
         static::$db->exec($sql);
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     protected function setUp(): void
     {
         // comment
@@ -685,6 +679,7 @@ HTML;
             if ($userID === 66) {
                 // user has not the ownership
                 $this->doTestHtmlMainNot($response, '<form data-form-speak-error="Form is invalid:" id="form-edit_comment-' . $commentID . '" method="post">');
+
                 continue;
             }
 
@@ -702,13 +697,10 @@ HTML;
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFormEditComment(int $commentID, string $csrf, string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escHTML($value);
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <form data-form-speak-error="Form is invalid:" id="form-edit_comment-$commentID" method="post">
@@ -741,6 +733,5 @@ HTML;
 <input class="form__button form__button--small" id="form-edit_comment-submit-$commentID" name="form-edit_comment-submit" type="submit" value="Update comment"/>
 <input class="form__button form__button--small form__button--secondary" id="edit_comment-btn-cancel_comment-$commentID" type="submit" value="Cancel"/>
 HTML;
-        // phpcs:enable
     }
 }

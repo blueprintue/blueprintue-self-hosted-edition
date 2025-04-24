@@ -10,9 +10,7 @@ use Rancoud\Model\Model;
 
 class BlueprintVersionModel extends Model
 {
-    /**
-     * @throws FieldException
-     */
+    /** @throws FieldException */
     protected function setFields(): void
     {
         $this->fields = [
@@ -81,9 +79,7 @@ class BlueprintVersionModel extends Model
         return $rows;
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function deleteWithBlueprintID(int $blueprintID): void
     {
         $sql = <<<'SQL'
@@ -96,9 +92,7 @@ class BlueprintVersionModel extends Model
         $this->database->delete($sql, $params);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function deleteWithBlueprintIDAndVersion(int $blueprintID, int $version): void
     {
         $sql = <<<'SQL'

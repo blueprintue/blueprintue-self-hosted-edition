@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -53,9 +51,7 @@ class BlueprintTypeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataCases
-     */
+    /** @dataProvider dataCases */
     #[DataProvider('dataCases')]
     public function testFindBlueprintType(string $content, string $type): void
     {

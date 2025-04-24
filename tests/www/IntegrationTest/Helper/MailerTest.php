@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -20,9 +18,7 @@ class MailerTest extends TestCase
 {
     use Common;
 
-    /**
-     * @return string[][]
-     */
+    /** @return string[][] */
     public static function dataCases(): array
     {
         return [

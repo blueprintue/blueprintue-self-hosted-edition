@@ -22,9 +22,7 @@ class LogoutMiddleware implements MiddlewareInterface
         'CSRF' => 'form-logout-hidden-csrf',
     ];
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (Session::has('userID') === false) {

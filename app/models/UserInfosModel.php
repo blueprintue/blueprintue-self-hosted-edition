@@ -9,9 +9,7 @@ use Rancoud\Model\Model;
 
 class UserInfosModel extends Model
 {
-    /**
-     * @throws \Rancoud\Model\FieldException
-     */
+    /** @throws \Rancoud\Model\FieldException */
     protected function setFields(): void
     {
         $this->fields = [
@@ -56,9 +54,7 @@ class UserInfosModel extends Model
         ];
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function updatePublicAndPrivateBlueprintCount(int $userID, int $count): void
     {
         $sql = <<<'SQL'
@@ -71,9 +67,7 @@ class UserInfosModel extends Model
         $this->database->update($sql, ['userID' => $userID, 'number' => $count]);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function updatePrivateBlueprintCount(int $userID, int $count): void
     {
         $sql = <<<'SQL'
@@ -85,9 +79,7 @@ class UserInfosModel extends Model
         $this->database->update($sql, ['userID' => $userID, 'number' => $count]);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function updatePublicAndPrivateCommentCount(int $userID, int $count): void
     {
         $sql = <<<'SQL'
@@ -100,9 +92,7 @@ class UserInfosModel extends Model
         $this->database->update($sql, ['userID' => $userID, 'number' => $count]);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function updatePrivateCommentCount(int $userID, int $count): void
     {
         $sql = <<<'SQL'
@@ -114,9 +104,7 @@ class UserInfosModel extends Model
         $this->database->update($sql, ['userID' => $userID, 'number' => $count]);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function updatePublicAndPrivateCommentCountWithComments(array $comments): void
     {
         $users = [];
@@ -147,9 +135,7 @@ class UserInfosModel extends Model
         }
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function updatePrivateCommentCountWithComments(array $comments): void
     {
         $users = [];

@@ -38,7 +38,7 @@ class TagService
         }
 
         foreach ($tags as $key => $tag) {
-            $tags[$key]['url'] = Application::getRouter()->generateUrl('tag-blueprints', ['tag_slug' => $tag['slug'], 'page' => '1']); // phpcs:ignore
+            $tags[$key]['url'] = Application::getRouter()->generateUrl('tag-blueprints', ['tag_slug' => $tag['slug'], 'page' => '1']);
         }
 
         return $tags;

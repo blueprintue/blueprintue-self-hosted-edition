@@ -18,9 +18,7 @@ use Rancoud\Security\Security;
 
 class APIController implements MiddlewareInterface
 {
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         [$userID, $error] = $this->findUserWithApiKey($request);
@@ -41,7 +39,7 @@ class APIController implements MiddlewareInterface
             if ($error !== null) {
                 $dataError = \json_encode(['error' => $error], \JSON_THROW_ON_ERROR);
 
-                return (new Factory())->createResponse()->withBody(Stream::create($dataError))->withHeader('Content-type', 'application/json')->withStatus(400); // phpcs:ignore
+                return (new Factory())->createResponse()->withBody(Stream::create($dataError))->withHeader('Content-type', 'application/json')->withStatus(400);
             }
 
             return $this->doProcessUpload($userID, $params);
@@ -82,15 +80,13 @@ class APIController implements MiddlewareInterface
         return [$userID, null];
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function sendUnauthorizedError(string $error): ResponseInterface
     {
         $contentType = 'application/json';
         $data = \json_encode(['error' => $error], \JSON_THROW_ON_ERROR);
 
-        return (new Factory())->createResponse()->withBody(Stream::create($data))->withHeader('Content-type', $contentType)->withStatus(401); // phpcs:ignore
+        return (new Factory())->createResponse()->withBody(Stream::create($data))->withHeader('Content-type', $contentType)->withStatus(401);
     }
     // endregion
 
@@ -127,7 +123,7 @@ class APIController implements MiddlewareInterface
         if ($blueprint === null) {
             $dataError = \json_encode(['error' => 'blueprint_empty'], \JSON_THROW_ON_ERROR);
 
-            return (new Factory())->createResponse()->withBody(Stream::create($dataError))->withHeader('Content-type', 'application/json')->withStatus(400); // phpcs:ignore
+            return (new Factory())->createResponse()->withBody(Stream::create($dataError))->withHeader('Content-type', 'application/json')->withStatus(400);
         }
 
         $data = [
@@ -139,12 +135,10 @@ class APIController implements MiddlewareInterface
 
         $html = $this->generateHTML($data);
 
-        return (new Factory())->createResponse()->withBody(Stream::create($html))->withHeader('Content-type', 'text/html'); // phpcs:ignore
+        return (new Factory())->createResponse()->withBody(Stream::create($html))->withHeader('Content-type', 'text/html');
     }
 
-    /**
-     * @throws \Rancoud\Application\ApplicationException
-     */
+    /** @throws \Rancoud\Application\ApplicationException */
     protected function generateHTML(array $data): string
     {
         \ob_start();
@@ -218,6 +212,7 @@ class APIController implements MiddlewareInterface
         $blueprintSlug = '';
         $forceRollback = false;
         $errorMessage = 'error_insert_blueprint';
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
@@ -243,7 +238,7 @@ class APIController implements MiddlewareInterface
 
             $dataError = \json_encode(['error' => $errorMessage], \JSON_THROW_ON_ERROR);
 
-            return (new Factory())->createResponse()->withBody(Stream::create($dataError))->withHeader('Content-type', 'application/json')->withStatus(400); // phpcs:ignore
+            return (new Factory())->createResponse()->withBody(Stream::create($dataError))->withHeader('Content-type', 'application/json')->withStatus(400);
         } finally {
             if ($forceRollback) {
                 /* @noinspection NullPointerExceptionInspection */
@@ -256,7 +251,7 @@ class APIController implements MiddlewareInterface
 
         $data = \json_encode(['key' => $blueprintSlug], \JSON_THROW_ON_ERROR);
 
-        return (new Factory())->createResponse()->withBody(Stream::create($data))->withHeader('Content-type', 'application/json'); // phpcs:ignore
+        return (new Factory())->createResponse()->withBody(Stream::create($data))->withHeader('Content-type', 'application/json');
     }
     // endregion
 }

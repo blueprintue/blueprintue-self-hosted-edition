@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -50,9 +48,7 @@ class LogoutTest extends TestCase
         static::$db->insert($sql, $userParams);
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     protected function setUp(): void
     {
         $sql = <<<'SQL'

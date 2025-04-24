@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -510,6 +508,7 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                     // blueprint versions
                     static::assertSame(1, (int) $blueprintVersionsAfter[0]['version']);
                     static::assertSame(2, (int) $blueprintVersionsAfter[1]['version']);
+
                     break;
                 case 3:
                     static::assertSame(3, (int) $blueprintAfter['current_version']);
@@ -518,6 +517,7 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
                     static::assertSame(1, (int) $blueprintVersionsAfter[0]['version']);
                     static::assertSame(2, (int) $blueprintVersionsAfter[1]['version']);
                     static::assertSame(3, (int) $blueprintVersionsAfter[2]['version']);
+
                     break;
                 default:
                     static::fail($countVersions . ' not managed');
@@ -578,14 +578,11 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldBlueprint(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escHTML($value);
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -608,17 +605,13 @@ HTML;
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldReason(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escHTML($value);
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -641,6 +634,5 @@ HTML;
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 }

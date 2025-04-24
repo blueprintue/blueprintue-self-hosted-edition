@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -25,9 +23,7 @@ class SearchListTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function setUpBeforeClass(): void
     {
         static::setDatabaseEmptyStructure();
@@ -79,9 +75,7 @@ class SearchListTest extends TestCase
         }
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public static function dataCases(): array
     {
         $cases = [];
@@ -97,9 +91,7 @@ class SearchListTest extends TestCase
         return static::addSearchVersion($cases);
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected static function addSearchError(array $cases): array
     {
         $cases['Search - Error Invalid Term'] = [
@@ -115,9 +107,7 @@ class SearchListTest extends TestCase
         return $cases;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected static function addSearchQuery(array $cases): array
     {
         $searchQuery = new SearchQueryCases();
@@ -135,9 +125,7 @@ class SearchListTest extends TestCase
         return $cases;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected static function addSearchQueryType(array $cases): array
     {
         $searchQueryType = new SearchQueryTypeCases();
@@ -173,9 +161,7 @@ class SearchListTest extends TestCase
         return $cases;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected static function addSearchQueryTypeVersion(array $cases): array
     {
         $searchQueryTypeVersion = new SearchQueryTypeVersionCases();
@@ -211,9 +197,7 @@ class SearchListTest extends TestCase
         return $cases;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected static function addSearchQueryVersion(array $cases): array
     {
         $searchQueryVersion = new SearchQueryVersionCases();
@@ -231,9 +215,7 @@ class SearchListTest extends TestCase
         return $cases;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected static function addSearchType(array $cases): array
     {
         $searchType = new SearchTypeCases();
@@ -269,9 +251,7 @@ class SearchListTest extends TestCase
         return $cases;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected static function addSearchTypeVersion(array $cases): array
     {
         $searchTypeVersion = new SearchTypeVersionCases();
@@ -307,9 +287,7 @@ class SearchListTest extends TestCase
         return $cases;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected static function addSearchVersion(array $cases): array
     {
         $searchVersion = new SearchVersionCases();
@@ -389,21 +367,17 @@ class SearchListTest extends TestCase
         $this->doTestHtmlMain($response, $this->getHTMLFieldVersion($queryParams));
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldQuery(array $queryParams): string
     {
         $v = Security::escAttr($queryParams['query'] ?? $queryParams['form-search-input-query'] ?? '');
 
-        // phpcs:disable
         return <<<HTML
 <div class="form__element home__form--title">
 <label class="form__label" for="form-search-input-query" id="form-search-label-query">Terms to search</label>
 <input aria-invalid="false" aria-labelledby="form-search-label-query" class="form__input" id="form-search-input-query" name="form-search-input-query" type="text" value="$v"/>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     protected function getHTMLFieldType(array $queryParams): string
@@ -419,11 +393,10 @@ HTML;
         $niagara = ($value === 'niagara') ? ' selected="selected"' : '';
         $pcg = ($value === 'pcg') ? ' selected="selected"' : '';
 
-        if ($animation === '' && $behaviorTree === '' && $blueprint === '' && $material === '' && $metasound === '' && $niagara === '' && $pcg === '') { // phpcs:ignore
+        if ($animation === '' && $behaviorTree === '' && $blueprint === '' && $material === '' && $metasound === '' && $niagara === '' && $pcg === '') {
             $all = ' selected="selected"';
         }
 
-        // phpcs:disable
         return <<<HTML
 <div class="form__element home__form--selectors">
 <label class="form__label" for="form-search-select-type" id="form-search-label-type">Type</label>
@@ -441,12 +414,9 @@ HTML;
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldVersion(array $queryParams): string
     {
         $value = $queryParams['form-search-select-ue_version'] ?? '';
@@ -458,10 +428,9 @@ HTML;
 
         $str = '';
         foreach (Helper::getAllUEVersion() as $ueVersion) {
-            $str .= '<option value="' . Security::escAttr($ueVersion) . '"' . (($value === $ueVersion) ? ' selected="selected"' : '') . '>' . Security::escHTML($ueVersion) . '</option>' . "\n"; // phpcs:ignore
+            $str .= '<option value="' . Security::escAttr($ueVersion) . '"' . (($value === $ueVersion) ? ' selected="selected"' : '') . '>' . Security::escHTML($ueVersion) . '</option>' . "\n";
         }
 
-        // phpcs:disable
         return <<<HTML
 <div class="form__element home__form--selectors">
 <label class="form__label" for="form-search-select-ue_version" id="form-search-label-ue_version">UE version</label>
@@ -472,6 +441,5 @@ $str</select>
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 }

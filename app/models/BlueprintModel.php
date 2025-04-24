@@ -10,9 +10,7 @@ use Rancoud\Model\Model;
 
 class BlueprintModel extends Model
 {
-    /**
-     * @throws FieldException
-     */
+    /** @throws FieldException */
     protected function setFields(): void
     {
         $this->fields = [
@@ -21,7 +19,7 @@ class BlueprintModel extends Model
             'slug'            => new Field('varchar', ['max:100', 'not_null']),
             'file_id'         => new Field('varchar', ['max:100', 'not_null']),
             'title'           => new Field('varchar', ['max:255', 'not_null']),
-            'type'            => new Field('enum:animation,behavior_tree,blueprint,material,metasound,niagara,pcg', ['not_null'], 'blueprint'), // phpcs:ignore
+            'type'            => new Field('enum:animation,behavior_tree,blueprint,material,metasound,niagara,pcg', ['not_null'], 'blueprint'),
             'ue_version'      => new Field('varchar', ['max:5', 'not_null'], '4.25'),
             'current_version' => new Field('int', ['unsigned', 'not_null']),
             'thumbnail'       => new Field('varchar', ['max:255']),
@@ -76,9 +74,7 @@ class BlueprintModel extends Model
         return $rows;
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function isNewFileIDAvailable(string $fileID): ?bool
     {
         $sql = <<<'SQL'
@@ -118,9 +114,7 @@ class BlueprintModel extends Model
         return $this->formatValues($row);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function changeAuthor(int $fromID, int $toID): void
     {
         $sql = <<<'SQL'
@@ -133,9 +127,7 @@ class BlueprintModel extends Model
         $this->database->update($sql, $params);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function softDeleteFromAuthor(int $id): void
     {
         $sql = <<<'SQL'
@@ -149,9 +141,7 @@ class BlueprintModel extends Model
         $this->database->update($sql, $params);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function isAuthorBlueprint(int $blueprintID, int $userID): bool
     {
         $sql = <<<'SQL'
@@ -654,9 +644,7 @@ class BlueprintModel extends Model
         return ['rows' => $rows, 'count' => $this->database->count($sqlCountRows, $paramsCountRows)];
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function updateCommentCount(int $blueprintID, int $count): void
     {
         $sql = <<<'SQL'
@@ -669,9 +657,7 @@ class BlueprintModel extends Model
         $this->database->update($sql, $params);
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function getTagsFromPublicBlueprints(?int $connectedUserID): array
     {
         if ($connectedUserID !== null) {

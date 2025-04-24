@@ -78,9 +78,7 @@ class HomeController implements MiddlewareInterface
         return $this->sendPage();
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormCreateBlueprint(ServerRequestInterface $request): ?array
     {
         $params = [];
@@ -162,6 +160,7 @@ class HomeController implements MiddlewareInterface
         $blueprintSlug = '';
         $forceRollback = false;
         $errorMessage = 'Error';
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();

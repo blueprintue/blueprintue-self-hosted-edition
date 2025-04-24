@@ -43,7 +43,6 @@ try {
         (new Factory())->createResponse(404)->withBody(Rancoud\Http\Message\Stream::create('404'))->send();
     }
 } catch (\Throwable $t) {
-    // phpcs:disable
     echo <<<HTML
 <!DOCTYPE html>
 <html lang="en">
@@ -109,5 +108,4 @@ try {
 </body>
 </html>
 HTML;
-    // phpcs:enable
 }

@@ -79,9 +79,9 @@ class BlueprintEditController implements MiddlewareInterface
         $this->pageFile = 'blueprint_edit';
         $this->currentPageForNavBar = 'blueprint_edit';
 
-        $this->url = Helper::getHostname() . Application::getRouter()->generateUrl('blueprint-edit', ['blueprint_slug' => $data['slug']]) ?? '/'; // phpcs:ignore
+        $this->url = Helper::getHostname() . Application::getRouter()->generateUrl('blueprint-edit', ['blueprint_slug' => $data['slug']]) ?? '/';
 
-        $this->title = 'Edit blueprint ' . $data['title'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', ''); // phpcs:ignore
+        $this->title = 'Edit blueprint ' . $data['title'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', '');
 
         $this->description = 'Edit blueprint ' . $data['title'];
     }
@@ -108,7 +108,7 @@ class BlueprintEditController implements MiddlewareInterface
         $this->blueprintID = $blueprint['id'];
         $this->exposure = $blueprint['exposure'];
         $this->expiration = $blueprint['expiration'];
-        $this->blueprintEditURL = Application::getRouter()->generateUrl('blueprint-edit', ['blueprint_slug' => $blueprint['slug']]) ?? '/'; // phpcs:ignore
+        $this->blueprintEditURL = Application::getRouter()->generateUrl('blueprint-edit', ['blueprint_slug' => $blueprint['slug']]) ?? '/';
 
         // form
         $response = $this->treatFormSent($request);
@@ -121,9 +121,7 @@ class BlueprintEditController implements MiddlewareInterface
         return $this->sendPage();
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function getBlueprint(ServerRequestInterface $request): ?array
     {
         $slug = $request->getAttribute('blueprint_slug');
@@ -140,9 +138,7 @@ class BlueprintEditController implements MiddlewareInterface
         return $blueprint;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormSent(ServerRequestInterface $request): ?ResponseInterface
     {
         $formKey = $this->findFormSent($request);
@@ -172,9 +168,7 @@ class BlueprintEditController implements MiddlewareInterface
         return null;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function findFormSent(ServerRequestInterface $request): ?string
     {
         if ($request->getMethod() !== 'POST') {
@@ -187,6 +181,7 @@ class BlueprintEditController implements MiddlewareInterface
         foreach ($this->formCsrfKeys as $csrfFieldName => $formCsrfKey) {
             if (isset($rawParams[$csrfFieldName])) {
                 $formKeyFound = $formCsrfKey;
+
                 break;
             }
         }
@@ -196,7 +191,7 @@ class BlueprintEditController implements MiddlewareInterface
         }
 
         $csrf = Session::get('csrf');
-        if (empty($csrf) || !isset($rawParams[$this->inputs[$formKeyFound]['CSRF']]) || $csrf !== $rawParams[$this->inputs[$formKeyFound]['CSRF']]) { // phpcs:ignore
+        if (empty($csrf) || !isset($rawParams[$this->inputs[$formKeyFound]['CSRF']]) || $csrf !== $rawParams[$this->inputs[$formKeyFound]['CSRF']]) {
             return null;
         }
 
@@ -262,9 +257,7 @@ class BlueprintEditController implements MiddlewareInterface
     // endregion
 
     // region Edit Informations
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormEditInformations(ServerRequestInterface $request, array $inputs): ?array
     {
         $params = $this->cleanRawParamsInRequest($request, $inputs);
@@ -309,7 +302,7 @@ class BlueprintEditController implements MiddlewareInterface
             Session::setFlash('error-form-edit_informations', 'Error(s) on ' . \implode(', ', $errorsForMessage));
             Session::setFlash('form-edit_informations-errors', $errors);
             Session::setFlash('form-edit_informations-values', $values);
-            Session::keepFlash(['error-form-edit_informations', 'form-edit_informations-errors', 'form-edit_informations-values']); // phpcs:ignore
+            Session::keepFlash(['error-form-edit_informations', 'form-edit_informations-errors', 'form-edit_informations-values']);
 
             return null;
         }
@@ -376,9 +369,7 @@ class BlueprintEditController implements MiddlewareInterface
     // endregion
 
     // region Edit Properties
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormEditProperties(ServerRequestInterface $request, array $inputs): ?array
     {
         $params = $this->cleanRawParamsInRequest($request, $inputs);
@@ -423,7 +414,7 @@ class BlueprintEditController implements MiddlewareInterface
             Session::setFlash('error-form-edit_properties', 'Error(s) on ' . \implode(', ', $errorsForMessage));
             Session::setFlash('form-edit_properties-errors', $errors);
             Session::setFlash('form-edit_properties-values', $values);
-            Session::keepFlash(['error-form-edit_properties', 'form-edit_properties-errors', 'form-edit_properties-values']); // phpcs:ignore
+            Session::keepFlash(['error-form-edit_properties', 'form-edit_properties-errors', 'form-edit_properties-values']);
 
             return null;
         }
@@ -488,9 +479,7 @@ class BlueprintEditController implements MiddlewareInterface
     // endregion
 
     // region Add Version
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormAddVersion(ServerRequestInterface $request, array $inputs): ?array
     {
         $params = $this->cleanRawParamsInRequest($request, $inputs);
@@ -519,7 +508,7 @@ class BlueprintEditController implements MiddlewareInterface
             Session::setFlash('error-form-add_version', 'Error(s) on ' . \implode(', ', $errorsForMessage));
             Session::setFlash('form-add_version-errors', $errors);
             Session::setFlash('form-add_version-values', $values);
-            Session::keepFlash(['error-form-add_version', 'form-add_version-errors', 'form-add_version-values']); // phpcs:ignore
+            Session::keepFlash(['error-form-add_version', 'form-add_version-errors', 'form-add_version-values']);
 
             return null;
         }
@@ -553,9 +542,7 @@ class BlueprintEditController implements MiddlewareInterface
     // endregion
 
     // region Delete Blueprint
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormDeleteBlueprint(ServerRequestInterface $request, array $inputs): ?array
     {
         $params = $this->cleanRawParamsInRequest($request, $inputs);
@@ -579,7 +566,7 @@ class BlueprintEditController implements MiddlewareInterface
             Session::setFlash('error-form-delete_blueprint', 'Error(s) on ' . \implode(', ', $errorsForMessage));
             Session::setFlash('form-delete_blueprint-errors', $errors);
             Session::setFlash('form-delete_blueprint-values', $values);
-            Session::keepFlash(['error-form-delete_blueprint', 'form-delete_blueprint-errors', 'form-delete_blueprint-values']); // phpcs:ignore
+            Session::keepFlash(['error-form-delete_blueprint', 'form-delete_blueprint-errors', 'form-delete_blueprint-values']);
 
             return null;
         }
@@ -605,7 +592,7 @@ class BlueprintEditController implements MiddlewareInterface
             $anonymousID = (int) Application::getConfig()->get('ANONYMOUS_ID');
 
             if ($params['ownership'] === 'give' && $anonymousID > 0) {
-                BlueprintService::changeBlueprintAuthor($this->blueprintID, $anonymousID); // phpcs:ignore
+                BlueprintService::changeBlueprintAuthor($this->blueprintID, $anonymousID);
                 UserService::updatePublicAndPrivateBlueprintCount($anonymousID, 1);
             } else {
                 BlueprintService::changeBlueprintAuthor($this->blueprintID, null);

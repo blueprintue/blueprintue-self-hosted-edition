@@ -11,9 +11,7 @@ use Rancoud\Model\Model;
 
 class TagModel extends Model
 {
-    /**
-     * @throws FieldException
-     */
+    /** @throws FieldException */
     protected function setFields(): void
     {
         $this->fields = [

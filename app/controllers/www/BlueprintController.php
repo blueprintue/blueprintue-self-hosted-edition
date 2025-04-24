@@ -64,7 +64,7 @@ class BlueprintController implements MiddlewareInterface
 
         $this->url = Helper::getHostname() . $data['url'];
 
-        $this->title = $data['title'] . ' posted by ' . $data['author'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', ''); // phpcs:ignore
+        $this->title = $data['title'] . ' posted by ' . $data['author'] . ' | ' . Application::getConfig()->get('SITE_BASE_TITLE', '');
 
         $description = Helper::getFitSentence($data['description'] ?? '', 255);
         $this->description = ($description !== '') ? $description : 'No description provided';
@@ -101,7 +101,7 @@ class BlueprintController implements MiddlewareInterface
                 return $this->doProcessClaimBlueprint($blueprint);
             }
 
-            if ($this->hasSentForm($request, 'POST', $this->inputs['delete_version_blueprint'], 'error-form-delete_version_blueprint')) { // phpcs:ignore
+            if ($this->hasSentForm($request, 'POST', $this->inputs['delete_version_blueprint'], 'error-form-delete_version_blueprint')) {
                 $cleanedParams = $this->treatFormDeleteVersion($request);
 
                 return $this->doProcessDeleteVersionBlueprint($blueprint, $cleanedParams);
@@ -120,7 +120,7 @@ class BlueprintController implements MiddlewareInterface
                     return $this->doProcessEditComment($blueprint, $cleanedParams);
                 }
 
-                if ($this->hasSentForm($request, 'POST', $this->inputs['delete_comment'], 'error-form-delete_comment')) { // phpcs:ignore
+                if ($this->hasSentForm($request, 'POST', $this->inputs['delete_comment'], 'error-form-delete_comment')) {
                     $cleanedParams = $this->treatFormDeleteComment($request);
 
                     return $this->doProcessDeleteComment($blueprint, $cleanedParams);
@@ -159,11 +159,12 @@ class BlueprintController implements MiddlewareInterface
                 if ($comment['id_author'] === null) {
                     $comments[$key]['author']['avatar_url'] = null;
                     $comments[$key]['can_edit'] = false;
+
                     continue;
                 }
 
                 $comments[$key]['author'] = Helper::formatUser($users[$comment['id_author']]);
-                $comments[$key]['can_edit'] = ($hasCommentActions && $this->userID !== null && $comments[$key]['author']['id'] === $this->userID); // phpcs:ignore
+                $comments[$key]['can_edit'] = ($hasCommentActions && $this->userID !== null && $comments[$key]['author']['id'] === $this->userID);
 
                 if ($comments[$key]['can_edit']) {
                     $hasOwnComments = true;
@@ -185,17 +186,17 @@ class BlueprintController implements MiddlewareInterface
             'title'             => $blueprint['title'],
             'type'              => $blueprint['type'],
             'ue_version'        => $blueprint['ue_version'],
-            'versions'          => Helper::organizeVersionHistoryForDisplay($blueprint['slug'], $blueprint['versions']), // phpcs:ignore
+            'versions'          => Helper::organizeVersionHistoryForDisplay($blueprint['slug'], $blueprint['versions']),
             'thumbnail_url'     => Helper::getThumbnailUrl($blueprint['thumbnail']),
             'description'       => $blueprint['description'],
-            'published_at'      => Helper::getDateFormattedWithUserTimezone($blueprint['published_at'], 'F j, Y, g:i a'), // phpcs:ignore
+            'published_at'      => Helper::getDateFormattedWithUserTimezone($blueprint['published_at'], 'F j, Y, g:i a'),
             'exposure'          => $blueprint['exposure'],
             'expiration'        => Helper::getTimeleft($blueprint['expiration']),
             'tags'              => TagService::getTagsWithListIDs($blueprint['tags']),
             'video'             => $blueprint['video'],
-            'content'           => BlueprintService::getBlueprintContent($blueprint['file_id'], $blueprint['current_version']), // phpcs:ignore
-            'embed_url'         => '<iframe src="' . Helper::getHostname() . $blueprint['render_url'] . '" scrolling="no" allowfullscreen></iframe>', // phpcs:ignore
-            'edit_url'          => Application::getRouter()->generateUrl('blueprint-edit', ['blueprint_slug' => $blueprint['slug']]), // phpcs:ignore
+            'content'           => BlueprintService::getBlueprintContent($blueprint['file_id'], $blueprint['current_version']),
+            'embed_url'         => '<iframe src="' . Helper::getHostname() . $blueprint['render_url'] . '" scrolling="no" allowfullscreen></iframe>',
+            'edit_url'          => Application::getRouter()->generateUrl('blueprint-edit', ['blueprint_slug' => $blueprint['slug']]),
             'comments'          => $comments,
             'video_provider'    => $blueprint['video_provider'],
             'video_privacy_url' => Helper::getVideoPrivacyURL($blueprint['video_provider']),
@@ -268,9 +269,7 @@ class BlueprintController implements MiddlewareInterface
         return $this->sendPage();
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function getBlueprint(ServerRequestInterface $request): ?array
     {
         $slug = $request->getAttribute('blueprint_slug');
@@ -321,8 +320,8 @@ class BlueprintController implements MiddlewareInterface
                     $hasFoundVersion = true;
                     $blueprint['current_version'] = $version;
 
-                    $blueprint['page_url'] = Helper::getBlueprintLink($blueprint['slug'], $blueprint['current_version']); // phpcs:ignore
-                    $blueprint['render_url'] = Helper::getBlueprintRenderLink($blueprint['slug'], $blueprint['current_version']); // phpcs:ignore
+                    $blueprint['page_url'] = Helper::getBlueprintLink($blueprint['slug'], $blueprint['current_version']);
+                    $blueprint['render_url'] = Helper::getBlueprintRenderLink($blueprint['slug'], $blueprint['current_version']);
 
                     break;
                 }
@@ -361,6 +360,7 @@ class BlueprintController implements MiddlewareInterface
         foreach ($anonymousBlueprints as $anonymousBlueprintID) {
             if ($anonymousBlueprintID === $blueprint['id']) {
                 $foundBlueprint = true;
+
                 continue;
             }
 
@@ -438,6 +438,7 @@ class BlueprintController implements MiddlewareInterface
         foreach ($anonymousBlueprints as $anonymousBlueprintID) {
             if ($anonymousBlueprintID === $blueprint['id']) {
                 $foundBlueprint = true;
+
                 continue;
             }
 
@@ -488,9 +489,7 @@ class BlueprintController implements MiddlewareInterface
 
     // region form delete version blueprint
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormDeleteVersion(ServerRequestInterface $request): ?array
     {
         $params = [];
@@ -513,7 +512,7 @@ class BlueprintController implements MiddlewareInterface
             Session::setFlash('error-form-delete_version_blueprint', 'Error, version to delete is invalid');
             Session::setFlash('form-delete_version_blueprint-errors', $errors);
             Session::setFlash('form-delete_version_blueprint-values', $values);
-            Session::keepFlash(['error-form-delete_version_blueprint', 'form-delete_version_blueprint-errors', 'form-delete_version_blueprint-values']); // phpcs:ignore
+            Session::keepFlash(['error-form-delete_version_blueprint', 'form-delete_version_blueprint-errors', 'form-delete_version_blueprint-values']);
 
             return null;
         }
@@ -533,7 +532,7 @@ class BlueprintController implements MiddlewareInterface
         }
 
         if ($blueprint['id_author'] !== $this->userID) {
-            Session::setFlash('error-form-delete_version_blueprint', 'Error, delete version is invalid on this blueprint'); // phpcs:ignore
+            Session::setFlash('error-form-delete_version_blueprint', 'Error, delete version is invalid on this blueprint');
             Session::keepFlash(['error-form-delete_version_blueprint']);
 
             return $this->redirect($blueprint['page_url']);
@@ -546,7 +545,7 @@ class BlueprintController implements MiddlewareInterface
             $error = BlueprintService::deleteVersion($blueprint['id'], $params['version']);
             if ($error !== null) {
                 if ($error === -1) {
-                    Session::setFlash('error-form-delete_version_blueprint', 'Error, blueprint must have one version left'); // phpcs:ignore
+                    Session::setFlash('error-form-delete_version_blueprint', 'Error, blueprint must have one version left');
                     Session::keepFlash(['error-form-delete_version_blueprint']);
                 } elseif ($error === -2) {
                     Session::setFlash('error-form-delete_version_blueprint', 'Error, version to delete is invalid');
@@ -556,7 +555,7 @@ class BlueprintController implements MiddlewareInterface
                 return $this->redirect($blueprint['page_url']);
             }
 
-            Session::setFlash('success-form-delete_version_blueprint', 'Version ' . $params['version'] . ' has been deleted'); // phpcs:ignore
+            Session::setFlash('success-form-delete_version_blueprint', 'Version ' . $params['version'] . ' has been deleted');
             Session::keepFlash(['success-form-delete_version_blueprint']);
             // @codeCoverageIgnoreStart
         } catch (\Exception $exception) {
@@ -564,7 +563,7 @@ class BlueprintController implements MiddlewareInterface
              * In end 2 end testing we can't arrive here because requirements checkings has been done before
              * For covering we have to mock the database
              */
-            Session::setFlash('error-form-delete_version_blueprint', 'Error, delete version is impossible for the moment'); // phpcs:ignore
+            Session::setFlash('error-form-delete_version_blueprint', 'Error, delete version is impossible for the moment');
             Session::keepFlash(['error-form-delete_version_blueprint']);
             // @codeCoverageIgnoreEnd
         } finally {
@@ -579,9 +578,7 @@ class BlueprintController implements MiddlewareInterface
 
     // region form add comment
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormAddComment(ServerRequestInterface $request): ?array
     {
         $params = [];
@@ -626,6 +623,7 @@ class BlueprintController implements MiddlewareInterface
         }
 
         $commentID = null;
+
         try {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
@@ -676,9 +674,7 @@ class BlueprintController implements MiddlewareInterface
 
     // region form edit_comment
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormEditComment(ServerRequestInterface $request): ?array
     {
         $params = [];
@@ -710,7 +706,7 @@ class BlueprintController implements MiddlewareInterface
             Session::setFlash('form-edit_comment-errors', $errors);
             Session::setFlash('form-edit_comment-values', $values);
             Session::setFlash('form-edit_comment-comment_id', ($values['id'] > 0) ? $values['id'] : null);
-            Session::keepFlash(['error-form-edit_comment', 'form-edit_comment-errors', 'form-edit_comment-values', 'form-edit_comment-comment_id']); // phpcs:ignore
+            Session::keepFlash(['error-form-edit_comment', 'form-edit_comment-errors', 'form-edit_comment-values', 'form-edit_comment-comment_id']);
 
             return null;
         }
@@ -742,7 +738,7 @@ class BlueprintController implements MiddlewareInterface
                 Session::setFlash('error-form-edit_comment', 'Error, this comment does not belong to you');
                 Session::setFlash('form-edit_comment-values', $params);
                 Session::setFlash('form-edit_comment-comment_id', $params['id']);
-                Session::keepFlash(['error-form-edit_comment', 'form-edit_comment-values', 'form-edit_comment-comment_id']); // phpcs:ignore
+                Session::keepFlash(['error-form-edit_comment', 'form-edit_comment-values', 'form-edit_comment-comment_id']);
 
                 return $this->redirect($blueprint['page_url'] . '#comments');
             }
@@ -752,7 +748,7 @@ class BlueprintController implements MiddlewareInterface
             Session::setFlash('success-form-edit_comment', 'Your comment has been edited');
             Session::setFlash('form-edit_comment-values', $params);
             Session::setFlash('form-edit_comment-comment_id', $params['id']);
-            Session::keepFlash(['success-form-edit_comment', 'form-edit_comment-values', 'form-edit_comment-comment_id']); // phpcs:ignore
+            Session::keepFlash(['success-form-edit_comment', 'form-edit_comment-values', 'form-edit_comment-comment_id']);
             // @codeCoverageIgnoreStart
         } catch (\Exception $exception) {
             /*
@@ -775,9 +771,7 @@ class BlueprintController implements MiddlewareInterface
 
     // region form delete_comment
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatFormDeleteComment(ServerRequestInterface $request): ?array
     {
         $params = [];
@@ -802,7 +796,7 @@ class BlueprintController implements MiddlewareInterface
             Session::setFlash('error-form-delete_comment', 'Error, fields are invalid or required');
             Session::setFlash('form-delete_comment-errors', $errors);
             Session::setFlash('form-delete_comment-values', $values);
-            Session::keepFlash(['error-form-delete_comment', 'form-delete_comment-errors', 'form-delete_comment-values']); // phpcs:ignore
+            Session::keepFlash(['error-form-delete_comment', 'form-delete_comment-errors', 'form-delete_comment-values']);
 
             return null;
         }

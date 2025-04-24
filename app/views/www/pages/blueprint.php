@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection PhpUnhandledExceptionInspection */
-/* phpcs:disable Generic.Files.LineLength */
 
 declare(strict_types=1);
 
@@ -331,9 +330,9 @@ use Rancoud\Security\Security;
                                 $divAttrs = 'class="comment__content' . $editContentClass . '" id="edit_comment-edit_content-' . ((int) $comment['id']) . '"';
                                 $formEditComment = new FormHelper();
                                 $formEditComment->setInputValue('comment', $comment['content']);
-                                if ($comment['id'] === $data['form-edit_comment-comment_id']) { // phpcs:ignore
-                                    $formEditComment = $data['form-edit_comment']; // phpcs:ignore
-                                } // phpcs:ignore?>
+                                if ($comment['id'] === $data['form-edit_comment-comment_id']) {
+                                    $formEditComment = $data['form-edit_comment'];
+                                } ?>
                         <div <?php echo $divAttrs; ?>>
                             <form data-form-speak-error="Form is invalid:" id="form-edit_comment-<?php echo Security::escAttr($comment['id']); ?>" method="post">
                                 <div class="form__element">
@@ -352,15 +351,12 @@ use Rancoud\Security\Security;
                                 <input class="form__button form__button--small form__button--secondary" id="edit_comment-btn-cancel_comment-<?php echo Security::escAttr($comment['id']); ?>" type="submit" value="Cancel"/>
                             </form>
                         </div>
-                            <?php
-                            } // phpcs:ignore?>
+                            <?php } ?>
                     </li>
-                        <?php
-                    } // phpcs:ignore?>
+                        <?php } ?>
                 </ul>
             </div>
-                <?php
-                } // phpcs:ignore?>
+                <?php } ?>
         </div>
         <?php } ?>
     </main>

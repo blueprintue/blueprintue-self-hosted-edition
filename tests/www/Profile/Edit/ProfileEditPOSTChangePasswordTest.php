@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -671,7 +669,6 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
 
     protected function getHTMLFieldNewPassword(bool $hasError, string $labelError): string
     {
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -696,12 +693,10 @@ HTML;
 <span class="form__help" id="form-change_password-span-new_password">Minimum of 10 characters with 1 digit and 1 uppercase and 1 lowercase and 1 special characters</span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
     protected function getHTMLFieldNewPasswordConfirm(bool $hasError, string $labelError): string
     {
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__element">
@@ -724,6 +719,5 @@ HTML;
 </div>
 </div>
 HTML;
-        // phpcs:enable
     }
 }

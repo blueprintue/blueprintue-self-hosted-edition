@@ -3,8 +3,6 @@
 /* @noinspection HtmlUnknownTarget */
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -24,9 +22,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function setUpBeforeClass(): void
     {
         static::setDatabaseEmptyStructure();
@@ -66,9 +62,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::$db->exec($sql);
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     protected function setUp(): void
     {
         // comment

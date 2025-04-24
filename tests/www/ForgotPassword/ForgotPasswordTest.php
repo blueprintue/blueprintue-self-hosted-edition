@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -30,9 +28,7 @@ class ForgotPasswordTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function setUpBeforeClass(): void
     {
         static::setDatabaseEmptyStructure();
@@ -94,9 +90,7 @@ class ForgotPasswordTest extends TestCase
         $this->doTestHtmlBody($response, '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" role="alert">Error, could not use this form, "MAIL_FROM_ADDRESS" env variable is invalid.</div>');
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected static function getEmailHTML(): string
     {
         \ob_start();
@@ -531,14 +525,11 @@ class ForgotPasswordTest extends TestCase
         }
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldEmail(string $value, bool $hasError, string $labelError): string
     {
         $v = Security::escAttr($value);
 
-        // phpcs:disable
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
@@ -555,12 +546,9 @@ HTML;
 <span class="form__feedback"></span>
 </div>
 HTML;
-        // phpcs:enable
     }
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function mailForPHPUnit(string $to, string $subject, string $html, string $text, Database $db): bool
     {
         ++$_SESSION['phpunit_mail_called'];

@@ -145,9 +145,7 @@ class UploadController implements MiddlewareInterface
         return $this->sendSuccess('/medias/blueprints/' . $filename);
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function treatUpload(ServerRequestInterface $request, string $name, string $folder): array
     {
         $uploadParameters = $this->extractUploadParameters($request);
@@ -176,6 +174,7 @@ class UploadController implements MiddlewareInterface
         }
 
         $imgDest = null;
+
         try {
             $imgDest = $this->createImageInMemory($avatarRawFile, $uploadParameters);
             if ($imgDest === null) {
@@ -209,9 +208,7 @@ class UploadController implements MiddlewareInterface
         return [$filename, null];
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function extractUploadParameters(ServerRequestInterface $request): ?array
     {
         $params = [];
@@ -240,7 +237,7 @@ class UploadController implements MiddlewareInterface
     {
         if (isset($_FILES[$idxName]) && \is_string($_FILES[$idxName]['tmp_name'])) {
             $filepath = $_FILES[$idxName]['tmp_name'];
-            if (\file_exists($filepath) && \is_file($filepath)) { // phpcs:ignore
+            if (\file_exists($filepath) && \is_file($filepath)) {
                 \unlink($filepath);
             }
         }
@@ -271,12 +268,10 @@ class UploadController implements MiddlewareInterface
 
         $imageSize = \getimagesize($file->getFilename());
 
-        return !($imageSize[0] !== $uploadParameters['canvas_width'] || $imageSize[1] !== $uploadParameters['canvas_height']); // phpcs:ignore
+        return !($imageSize[0] !== $uploadParameters['canvas_width'] || $imageSize[1] !== $uploadParameters['canvas_height']);
     }
 
-    /**
-     * @return resource|null
-     */
+    /** @return resource|null */
     protected function createImageInMemory(UploadedFile $file, array $uploadParameters)
     {
         $imgSrc = @\imagecreatefrompng($file->getFilename());
@@ -304,7 +299,7 @@ class UploadController implements MiddlewareInterface
             // @codeCoverageIgnoreEnd
         }
 
-        if (\imagecopy($imgDest, $imgSrc, 0, 0, $uploadParameters['mask_x'], $uploadParameters['mask_y'], $uploadParameters['mask_width'], $uploadParameters['mask_height']) === false) { // phpcs:ignore
+        if (\imagecopy($imgDest, $imgSrc, 0, 0, $uploadParameters['mask_x'], $uploadParameters['mask_y'], $uploadParameters['mask_width'], $uploadParameters['mask_height']) === false) {
             // @codeCoverageIgnoreStart
             // I don't know how to produce this error
             \imagedestroy($imgSrc);
@@ -327,9 +322,7 @@ class UploadController implements MiddlewareInterface
         return $imgDest;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function writeImageInStorage($imgDest, string $folder): ?string
     {
         do {
@@ -346,23 +339,19 @@ class UploadController implements MiddlewareInterface
         return $file;
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function sendError(string $error): ResponseInterface
     {
         $body = \json_encode(['message' => $error], \JSON_THROW_ON_ERROR);
 
-        return (new Factory())->createResponse(400)->withBody(Stream::create($body))->withHeader('Content-type', 'application/json'); // phpcs:ignore
+        return (new Factory())->createResponse(400)->withBody(Stream::create($body))->withHeader('Content-type', 'application/json');
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function sendSuccess(string $fileUrl): ResponseInterface
     {
         $body = \json_encode(['file_url' => $fileUrl], \JSON_THROW_ON_ERROR);
 
-        return (new Factory())->createResponse()->withBody(Stream::create($body))->withHeader('Content-type', 'application/json'); // phpcs:ignore
+        return (new Factory())->createResponse()->withBody(Stream::create($body))->withHeader('Content-type', 'application/json');
     }
 }

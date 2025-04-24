@@ -2,8 +2,6 @@
 
 /* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
-/* phpcs:disable Generic.Files.LineLength */
-/* phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps */
 
 declare(strict_types=1);
 
@@ -154,9 +152,7 @@ class HelperTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataCasesFitSentence
-     */
+    /** @dataProvider dataCasesFitSentence */
     #[DataProvider('dataCasesFitSentence')]
     public function testFitSentence(string $in, int $max, string $out): void
     {

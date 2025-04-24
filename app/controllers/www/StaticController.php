@@ -27,7 +27,7 @@ class StaticController implements MiddlewareInterface
         $this->pageFile = \str_replace('-', '_', $pageID);
         $this->currentPageForNavBar = $this->pageFile;
 
-        $this->url = Helper::getHostname() . Application::getRouter()->generateUrl('static-pages', ['pageID' => $pageID]) ?? ''; // phpcs:ignore
+        $this->url = Helper::getHostname() . Application::getRouter()->generateUrl('static-pages', ['pageID' => $pageID]) ?? '';
 
         $siteName = (string) Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition');
         $titleBase = (string) Application::getConfig()->get('SITE_BASE_TITLE', '');
@@ -49,10 +49,10 @@ class StaticController implements MiddlewareInterface
     {
         $this->setTemplateProperties(['request' => $request]);
 
-        $this->data += ['site_name' => (string) Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition')]; // phpcs:ignore
+        $this->data += ['site_name' => (string) Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition')];
         $this->data += ['hostname' => Helper::getHostname()];
         $this->data += ['domain' => (string) Application::getConfig()->get('HOST')];
-        $this->data += ['cookie_remember_token' => (string) Application::getConfig()->get('SESSION_REMEMBER_NAME', 'remember_token')]; // phpcs:ignore
+        $this->data += ['cookie_remember_token' => (string) Application::getConfig()->get('SESSION_REMEMBER_NAME', 'remember_token')];
         $this->data += ['contact_email' => (string) Application::getConfig()->get('MAIL_CONTACT_TO', '')];
 
         return $this->sendPage();

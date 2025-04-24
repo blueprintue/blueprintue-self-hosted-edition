@@ -9,9 +9,7 @@ use Rancoud\Model\Model;
 
 class UserApiModel extends Model
 {
-    /**
-     * @throws \Rancoud\Model\FieldException
-     */
+    /** @throws \Rancoud\Model\FieldException */
     protected function setFields(): void
     {
         $this->fields = [
@@ -25,9 +23,7 @@ class UserApiModel extends Model
         $this->table = 'users_api';
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function getApiKey(int $userID): ?string
     {
         $sql = <<<'SQL'
@@ -46,9 +42,7 @@ class UserApiModel extends Model
         return (string) $apiKey;
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function isApiKeyAvailable(string $apiKey): bool
     {
         $sql = <<<'SQL'
@@ -63,9 +57,7 @@ class UserApiModel extends Model
         return $count === 0;
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function getUserID(string $apiKey): ?int
     {
         $sql = <<<'SQL'
