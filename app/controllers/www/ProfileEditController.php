@@ -27,6 +27,7 @@ class ProfileEditController implements MiddlewareInterface
     use TemplateTrait;
 
     protected int $userID = 0;
+
     protected string $profileEditURL = '/';
 
     protected array $formCsrfKeys = [

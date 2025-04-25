@@ -22,6 +22,7 @@ use Rancoud\Session\Session;
 trait Common
 {
     protected static int $userID = 1;
+
     protected static int $anonymousID = 2;
 
     protected string $navBarLogoOnly = <<<'HTML'

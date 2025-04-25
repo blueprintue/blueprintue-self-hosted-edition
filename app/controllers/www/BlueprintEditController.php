@@ -26,9 +26,13 @@ class BlueprintEditController implements MiddlewareInterface
     use TemplateTrait;
 
     protected ?int $userID = null;
+
     protected ?int $blueprintID = null;
+
     protected string $exposure = 'public';
+
     protected ?string $expiration = null;
+
     protected string $blueprintEditURL = '/';
 
     protected array $formCsrfKeys = [

@@ -23,6 +23,7 @@ class BlueprintListController implements MiddlewareInterface
     use TemplateTrait;
 
     protected ?string $routeName = null;
+
     protected ?string $pageType = null;
 
     protected array $params = [

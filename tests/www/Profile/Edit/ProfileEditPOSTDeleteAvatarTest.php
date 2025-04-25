@@ -22,21 +22,6 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
 {
     use Common;
 
-    protected static function cleanMedias(): void
-    {
-        $ds = \DIRECTORY_SEPARATOR;
-        $storageFolder = \dirname(__DIR__, 3) . $ds . 'medias' . $ds;
-        $items = \array_diff(\scandir($storageFolder), ['..', '.']);
-        foreach ($items as $item) {
-            $fullpath = $storageFolder . $item;
-            if (\is_file($fullpath)) {
-                \unlink($fullpath);
-            } elseif (\is_dir($fullpath)) {
-                \rmdir($fullpath);
-            }
-        }
-    }
-
     /**
      * @throws \Rancoud\Crypt\CryptException
      * @throws DatabaseException
@@ -89,6 +74,11 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
         static::$db->insert("replace into users (id, username, password, slug, email, created_at) values (2, 'anonymous', null, 'anonymous', 'anonymous@mail', utc_timestamp())");
     }
 
+    public static function tearDownAfterClass(): void
+    {
+        static::cleanMedias();
+    }
+
     protected function tearDown(): void
     {
         if (Session::isReadOnly() === false) {
@@ -96,9 +86,19 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
         }
     }
 
-    public static function tearDownAfterClass(): void
+    protected static function cleanMedias(): void
     {
-        static::cleanMedias();
+        $ds = \DIRECTORY_SEPARATOR;
+        $storageFolder = \dirname(__DIR__, 3) . $ds . 'medias' . $ds;
+        $items = \array_diff(\scandir($storageFolder), ['..', '.']);
+        foreach ($items as $item) {
+            $fullpath = $storageFolder . $item;
+            if (\is_file($fullpath)) {
+                \unlink($fullpath);
+            } elseif (\is_dir($fullpath)) {
+                \rmdir($fullpath);
+            }
+        }
     }
 
     /** @throws \Exception */

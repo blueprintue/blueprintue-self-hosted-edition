@@ -17,6 +17,7 @@ use Rancoud\Security\Security;
 class UserService
 {
     protected static int $minLenPasword = 10;
+
     protected static string $regexPassword = "/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9\s:])([^\s]){8,}$/";
 
     /**

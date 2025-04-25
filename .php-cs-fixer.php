@@ -51,6 +51,29 @@ $rules = [
     ],
 ];
 
+$classNotationRules = [
+    'class_attributes_separation'              => ['elements' => ['const' => 'one', 'method' => 'one', 'property' => 'one', 'trait_import' => 'none', 'case' => 'none']],
+    'class_definition'                         => ['inline_constructor_arguments' => true, 'multi_line_extends_each_single_line' => false, 'single_item_single_line' => true, 'single_line' => true, 'space_before_parenthesis' => false],
+    'final_class'                              => false,
+    'final_internal_class'                     => false,
+    'final_public_method_for_abstract_class'   => false,
+    'no_blank_lines_after_class_opening'       => true,
+    'no_null_property_initialization'          => true,
+    'no_php4_constructor'                      => true,
+    'no_unneeded_final_method'                 => ['private_methods' => true],
+    'ordered_class_elements'                   => ['case_sensitive' => false, 'order' => ['use_trait', 'case', 'constant_public', 'constant_protected', 'constant_private', 'property_public', 'property_protected', 'property_private', 'construct', 'destruct', 'magic', 'phpunit'], 'sort_algorithm' => 'none'],
+    'ordered_interfaces'                       => ['case_sensitive' => false, 'direction' => 'ascend', 'order' => 'alpha'],
+    'ordered_traits'                           => ['case_sensitive' => false],
+    'ordered_types'                            => ['case_sensitive' => false, 'null_adjustment' => 'always_last', 'sort_algorithm' => 'alpha'],
+    'phpdoc_readonly_class_comment_to_keyword' => true,
+    'protected_to_private'                     => false,
+    'self_accessor'                            => true,
+    'self_static_accessor'                     => true,
+    'single_class_element_per_statement'       => ['elements' => ['const', 'property']],
+    'single_trait_insert_per_statement'        => true,
+    'visibility_required'                      => ['elements' => ['const', 'method', 'property']]
+];
+
 $classUsageRules = [
     'date_time_immutable' => true
 ];
@@ -317,6 +340,7 @@ $whitespaceRules = [
 ];
 
 $rules = \array_merge($rules,
+    $classNotationRules,
     $classUsageRules,
     $commentRules,
     $constantNotationRules,

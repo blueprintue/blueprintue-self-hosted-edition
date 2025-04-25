@@ -29,6 +29,7 @@ class BlueprintGETCommentsTest extends TestCase
         3 => ['username' => 'use<script>alert(1)</script>r_3', 'slug' => '/profile/user_<script>alert(1)</script>3/', 'avatar' => null],
         4 => ['username' => 'use<script>alert(1)</script>r_4', 'slug' => '/profile/user_<script>alert(1)</script>4/', 'avatar' => '/medias/avatars/pict<script>alert(1)</script>ure'],
     ];
+
     protected static array $comments = [
         1 => ['id_author' => 1, 'name_fallback' => null, 'content' => 'comment_content_1', 'date' => ''],
         2 => ['id_author' => 3, 'name_fallback' => null, 'content' => 'comment_content_2', 'date' => ''],
