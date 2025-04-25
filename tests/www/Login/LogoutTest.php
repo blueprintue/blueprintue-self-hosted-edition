@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -18,6 +17,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class LogoutTest extends TestCase
 {
     use Common;
@@ -68,7 +68,7 @@ class LogoutTest extends TestCase
         }
     }
 
-    public static function dataCasesLogoutPOST(): array
+    public static function provideLogoutPOSTDataCases(): iterable
     {
         return [
             'logout OK' => [
@@ -103,14 +103,12 @@ class LogoutTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesLogoutPOST
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesLogoutPOST')]
+    #[DataProvider('provideLogoutPOSTDataCases')]
     public function testLogoutPOST(array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess): void
     {
         // generate csrf

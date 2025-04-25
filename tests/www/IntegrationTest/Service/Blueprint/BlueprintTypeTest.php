@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -11,9 +10,10 @@ use app\services\www\BlueprintService;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
+/** @internal */
 class BlueprintTypeTest extends TestCase
 {
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
         return [
             'BehaviorTreeGraphNode_ = behavior_tree' => [
@@ -51,8 +51,7 @@ class BlueprintTypeTest extends TestCase
         ];
     }
 
-    /** @dataProvider dataCases */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testFindBlueprintType(string $content, string $type): void
     {
         static::assertSame($type, BlueprintService::findBlueprintType($content));

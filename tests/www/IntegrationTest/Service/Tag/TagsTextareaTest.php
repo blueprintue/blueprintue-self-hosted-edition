@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -13,11 +12,12 @@ use PHPUnit\Framework\TestCase;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class TagsTextareaTest extends TestCase
 {
     use Common;
 
-    public static function dataCasesEmptyTextarea(): array
+    public static function provideEmptyTextareaDataCases(): iterable
     {
         return [
             'empty textarea - no tag before' => [
@@ -35,7 +35,7 @@ class TagsTextareaTest extends TestCase
         ];
     }
 
-    public static function dataCasesOneTagInTextarea(): array
+    public static function provideOneTagInTextareaDataCases(): iterable
     {
         return [
             '1 tag in textarea - no tag before' => [
@@ -59,7 +59,7 @@ class TagsTextareaTest extends TestCase
         ];
     }
 
-    public static function dataCasesTwoTagsInTextarea(): array
+    public static function provideTwoTagsInTextareaDataCases(): iterable
     {
         return [
             '2 tags in textarea - no tag before' => [
@@ -101,7 +101,7 @@ class TagsTextareaTest extends TestCase
         ];
     }
 
-    public static function dataCasesCaseSensitiveTags(): array
+    public static function provideCaseSensitiveTagsDataCases(): iterable
     {
         return [
             '4 tags in textarea - 4 tags before - no creation' => [
@@ -130,21 +130,16 @@ class TagsTextareaTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesCaseSensitiveTags
-     * @dataProvider dataCasesEmptyTextarea
-     * @dataProvider dataCasesOneTagInTextarea
-     * @dataProvider dataCasesTwoTagsInTextarea
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Router\RouterException
      */
-    #[DataProvider('dataCasesEmptyTextarea')]
-    #[DataProvider('dataCasesOneTagInTextarea')]
-    #[DataProvider('dataCasesTwoTagsInTextarea')]
-    #[DataProvider('dataCasesCaseSensitiveTags')]
+    #[DataProvider('provideEmptyTextareaDataCases')]
+    #[DataProvider('provideOneTagInTextareaDataCases')]
+    #[DataProvider('provideTwoTagsInTextareaDataCases')]
+    #[DataProvider('provideCaseSensitiveTagsDataCases')]
     public function testCreate(?string $tagsSQLBefore, string $textarea, ?string $tagsIDs, array $tagsAfter): void
     {
         static::setDatabase();

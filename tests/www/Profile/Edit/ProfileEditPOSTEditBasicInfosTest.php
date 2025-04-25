@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -20,6 +19,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ProfileEditPOSTEditBasicInfosTest extends TestCase
 {
     use Common;
@@ -81,7 +81,7 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
         }
     }
 
-    public static function dataCasesEditBasicInfos(): array
+    public static function provideEditBasicInfosDataCases(): iterable
     {
         return [
             'edit OK' => [
@@ -377,15 +377,13 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesEditBasicInfos
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesEditBasicInfos')]
+    #[DataProvider('provideEditBasicInfosDataCases')]
     public function testProfileEditPOSTEditBasicInfos(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue): void
     {
         static::setDatabase();

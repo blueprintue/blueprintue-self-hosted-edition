@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -20,6 +19,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class LastListTest extends TestCase
 {
     use Common;
@@ -81,7 +81,7 @@ class LastListTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCases3PublicUnlistedPrivateBlueprint(): array
+    public static function provide3PublicUnlistedPrivateBlueprintDataCases(): iterable
     {
         return [
             '3 blueprints public/unlisted/private - created but not published - (visitor profile)' => [
@@ -477,7 +477,7 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases30PublicUnlistedPrivateBlueprintPage1(): array
+    public static function provide30PublicUnlistedPrivateBlueprintPage1DataCases(): iterable
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
@@ -1600,7 +1600,7 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases30PublicUnlistedPrivateBlueprintPage2(): array
+    public static function provide30PublicUnlistedPrivateBlueprintPage2DataCases(): iterable
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
@@ -2453,19 +2453,15 @@ HTML,
     }
 
     /**
-     * @dataProvider dataCases30PublicUnlistedPrivateBlueprintPage1
-     * @dataProvider dataCases30PublicUnlistedPrivateBlueprintPage2
-     * @dataProvider dataCases3PublicUnlistedPrivateBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCases3PublicUnlistedPrivateBlueprint')]
-    #[DataProvider('dataCases30PublicUnlistedPrivateBlueprintPage1')]
-    #[DataProvider('dataCases30PublicUnlistedPrivateBlueprintPage2')]
+    #[DataProvider('provide3PublicUnlistedPrivateBlueprintDataCases')]
+    #[DataProvider('provide30PublicUnlistedPrivateBlueprintPage1DataCases')]
+    #[DataProvider('provide30PublicUnlistedPrivateBlueprintPage2DataCases')]
     public function testLastListGET(array $sqlQueries, string $slug, ?string $location, ?int $userID, ?array $contentHead, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();

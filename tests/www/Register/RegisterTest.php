@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -22,6 +21,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class RegisterTest extends TestCase
 {
     use Common;
@@ -81,7 +81,7 @@ class RegisterTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesRegister(): array
+    public static function provideRegisterDataCases(): iterable
     {
         return [
             'xss - register OK - mail OK' => [
@@ -960,15 +960,13 @@ class RegisterTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesRegister
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesRegister')]
+    #[DataProvider('provideRegisterDataCases')]
     public function testRegisterPOST(array $params, bool $useCsrfFromSession, int $mailCalled, string $mailHTML, string $mailText, bool $mailSent, bool $isUserCreated, ?array $userDB, bool $hasRedirection, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         $sessionValues = [

@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintGETEditBlueprintTest extends TestCase
 {
     use Common;
@@ -42,7 +42,7 @@ class BlueprintGETEditBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintGET_EditBlueprint(): array
+    public static function provideBlueprintGETEditBlueprintDataCases(): iterable
     {
         return [
             'visitor - no button edit' => [
@@ -101,15 +101,13 @@ class BlueprintGETEditBlueprintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintGET_EditBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesBlueprintGET_EditBlueprint')]
+    #[DataProvider('provideBlueprintGETEditBlueprintDataCases')]
     public function testBlueprintGETEditBlueprint(array $sqlQueries, string $slug, ?int $userID, ?array $anonymousBlueprints, bool $hasButtonEdit): void
     {
         // sql queries

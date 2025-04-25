@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -18,6 +17,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class HomeLastBlueprintsTest extends TestCase
 {
     use Common;
@@ -41,7 +41,7 @@ class HomeLastBlueprintsTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesLastBlueprints(): array
+    public static function provideLastBlueprintsDataCases(): iterable
     {
         return [
             'no blueprints - nothing in database' => [
@@ -140,14 +140,12 @@ class HomeLastBlueprintsTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesLastBlueprints
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesLastBlueprints')]
+    #[DataProvider('provideLastBlueprintsDataCases')]
     public function testHomeGETLastBlueprints(array $sqlQueries, bool $hasHeader, string $content): void
     {
         static::setDatabase();

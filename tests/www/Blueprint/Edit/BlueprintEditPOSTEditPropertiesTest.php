@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -22,6 +21,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintEditPOSTEditPropertiesTest extends TestCase
 {
     use Common;
@@ -61,7 +61,7 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
         }
     }
 
-    public static function dataCasesEditProperties(): array
+    public static function provideEditPropertiesDataCases(): iterable
     {
         return [
             'update OK - edit properties - no changes' => [
@@ -1009,8 +1009,6 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesEditProperties
-     *
      * @throws \Exception
      * @throws ApplicationException
      * @throws DatabaseException
@@ -1018,7 +1016,7 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesEditProperties')]
+    #[DataProvider('provideEditPropertiesDataCases')]
     public function testBlueprintEditPOSTEditProperties(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();

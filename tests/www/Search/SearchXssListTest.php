@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -21,6 +20,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class SearchXssListTest extends TestCase
 {
     use Common;
@@ -129,7 +129,7 @@ class SearchXssListTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
@@ -1110,15 +1110,13 @@ HTML,
     }
 
     /**
-     * @dataProvider dataCases
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testSearchXssListGET(array $sqlQueries, string $slugInput, string $slugOutput, ?string $location, ?int $userID, ?array $contentHead, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();

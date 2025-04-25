@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -20,6 +19,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintGETTagsAndDescriptionBlueprintTest extends TestCase
 {
     use Common;
@@ -43,7 +43,7 @@ class BlueprintGETTagsAndDescriptionBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintGET_TagsAndDescriptionBlueprint(): array
+    public static function provideBlueprintGETTagsAndDescriptionBlueprintDataCases(): iterable
     {
         return [
             'no tag / no description' => [
@@ -118,15 +118,13 @@ class BlueprintGETTagsAndDescriptionBlueprintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintGET_TagsAndDescriptionBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesBlueprintGET_TagsAndDescriptionBlueprint')]
+    #[DataProvider('provideBlueprintGETTagsAndDescriptionBlueprintDataCases')]
     public function testBlueprintGETTagsAndDescriptionBlueprint(array $sqlQueries, string $slug, ?array $tags, ?string $description): void
     {
         // sql queries

@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -17,6 +16,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintGETVersionsBlueprintTest extends TestCase
 {
     use Common;
@@ -40,7 +40,7 @@ class BlueprintGETVersionsBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintGET_VersionsBlueprint(): array
+    public static function provideBlueprintGETVersionsBlueprintDataCases(): iterable
     {
         $date = '2020-01-01 01:01:01';
         $date1DayLater = '2020-01-02 01:01:01';
@@ -258,14 +258,12 @@ HTML
     }
 
     /**
-     * @dataProvider dataCasesBlueprintGET_VersionsBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesBlueprintGET_VersionsBlueprint')]
+    #[DataProvider('provideBlueprintGETVersionsBlueprintDataCases')]
     public function testBlueprintGETVersionsBlueprint(array $sqlQueries, string $slug, bool $hasListVersions, ?string $html): void
     {
         // sql queries

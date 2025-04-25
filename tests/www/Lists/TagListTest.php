@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -20,6 +19,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class TagListTest extends TestCase
 {
     use Common;
@@ -83,7 +83,7 @@ class TagListTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesTagAccess(): array
+    public static function provideTagAccessDataCases(): iterable
     {
         return [
             'tag not found' => [
@@ -166,7 +166,7 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases3PublicUnlistedPrivateBlueprintTagNotGood(): array
+    public static function provide3PublicUnlistedPrivateBlueprintTagNotGoodDataCases(): iterable
     {
         return [
             '3 blueprints public/unlisted/private - created but not published - (visitor profile) - tag not good' => [
@@ -456,7 +456,7 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases3PublicUnlistedPrivateBlueprintTagGood(): array
+    public static function provide3PublicUnlistedPrivateBlueprintTagGoodDataCases(): iterable
     {
         return [
             '3 blueprints public/unlisted/private - created but not published - (visitor profile) - tag good' => [
@@ -852,7 +852,7 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases30PublicUnlistedPrivateBlueprintTagGoodPage1(): array
+    public static function provide30PublicUnlistedPrivateBlueprintTagGoodPage1DataCases(): iterable
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
@@ -1981,7 +1981,7 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases30PublicUnlistedPrivateBlueprintTagGoodPage2(): array
+    public static function provide30PublicUnlistedPrivateBlueprintTagGoodPage2DataCases(): iterable
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
@@ -2840,23 +2840,17 @@ HTML,
     }
 
     /**
-     * @dataProvider dataCases30PublicUnlistedPrivateBlueprintTagGoodPage1
-     * @dataProvider dataCases30PublicUnlistedPrivateBlueprintTagGoodPage2
-     * @dataProvider dataCases3PublicUnlistedPrivateBlueprintTagGood
-     * @dataProvider dataCases3PublicUnlistedPrivateBlueprintTagNotGood
-     * @dataProvider dataCasesTagAccess
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesTagAccess')]
-    #[DataProvider('dataCases3PublicUnlistedPrivateBlueprintTagNotGood')]
-    #[DataProvider('dataCases3PublicUnlistedPrivateBlueprintTagGood')]
-    #[DataProvider('dataCases30PublicUnlistedPrivateBlueprintTagGoodPage1')]
-    #[DataProvider('dataCases30PublicUnlistedPrivateBlueprintTagGoodPage2')]
+    #[DataProvider('provideTagAccessDataCases')]
+    #[DataProvider('provide3PublicUnlistedPrivateBlueprintTagNotGoodDataCases')]
+    #[DataProvider('provide3PublicUnlistedPrivateBlueprintTagGoodDataCases')]
+    #[DataProvider('provide30PublicUnlistedPrivateBlueprintTagGoodPage1DataCases')]
+    #[DataProvider('provide30PublicUnlistedPrivateBlueprintTagGoodPage2DataCases')]
     public function testTagListGET(array $sqlQueries, string $slug, ?string $location, ?int $userID, ?array $contentHead, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();

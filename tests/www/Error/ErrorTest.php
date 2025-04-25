@@ -16,6 +16,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ErrorTest extends TestCase
 {
     use Common;

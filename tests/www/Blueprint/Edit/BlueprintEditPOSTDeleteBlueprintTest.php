@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
 {
     use Common;
@@ -58,7 +58,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
         }
     }
 
-    public static function dataCasesDeleteBlueprint(): array
+    public static function provideDeleteBlueprintDataCases(): iterable
     {
         return [
             'delete OK - give blueprint - public blueprint' => [
@@ -477,14 +477,12 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesDeleteBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesDeleteBlueprint')]
+    #[DataProvider('provideDeleteBlueprintDataCases')]
     public function testBlueprintEditPOSTDeleteBlueprint(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError, bool $hasAnonymousUser): void
     {
         static::setDatabase();

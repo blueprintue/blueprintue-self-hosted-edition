@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintDiffGETTest extends TestCase
 {
     use Common;
@@ -37,7 +37,7 @@ class BlueprintDiffGETTest extends TestCase
         }
     }
 
-    public static function dataCasesBlueprintGET(): array
+    public static function provideBlueprintGETDataCases(): iterable
     {
         return [
             'no blueprint - KO' => [
@@ -280,7 +280,7 @@ class BlueprintDiffGETTest extends TestCase
         ];
     }
 
-    public static function dataCasesBlueprintGETVersionAccess(): array
+    public static function provideBlueprintGETVersionAccessDataCases(): iterable
     {
         return [
             'visitor user - public blueprint - valid version - OK' => [
@@ -511,17 +511,14 @@ class BlueprintDiffGETTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintGET
-     * @dataProvider dataCasesBlueprintGETVersionAccess
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesBlueprintGET')]
-    #[DataProvider('dataCasesBlueprintGETVersionAccess')]
+    #[DataProvider('provideBlueprintGETDataCases')]
+    #[DataProvider('provideBlueprintGETVersionAccessDataCases')]
     public function testBlueprintGET(array $sqlQueries, ?int $userID, string $slug, int $statusCode, ?string $location, ?string $headerTitle, ?string $headerDescription): void
     {
         // sql queries

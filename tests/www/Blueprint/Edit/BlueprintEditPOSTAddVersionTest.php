@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -20,6 +19,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintEditPOSTAddVersionTest extends TestCase
 {
     use Common;
@@ -59,7 +59,7 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
         }
     }
 
-    public static function dataCasesAddVersion(): array
+    public static function provideAddVersionDataCases(): iterable
     {
         return [
             'update OK - add version' => [
@@ -441,15 +441,13 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesAddVersion
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesAddVersion')]
+    #[DataProvider('provideAddVersionDataCases')]
     public function testBlueprintEditPOSTAddVersion(array $sqlQueries, int $userID, int $countVersions, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();

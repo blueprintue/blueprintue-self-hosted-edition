@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintGETInformationsBlueprintTest extends TestCase
 {
     use Common;
@@ -42,7 +42,7 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintGET_InformationsBlueprint(): array
+    public static function provideBlueprintGETInformationsBlueprintDataCases(): iterable
     {
         return [
             'no thumbnail / type blueprint / exposure public / no expiration / ue version 4.12' => [
@@ -161,15 +161,13 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintGET_InformationsBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesBlueprintGET_InformationsBlueprint')]
+    #[DataProvider('provideBlueprintGETInformationsBlueprintDataCases')]
     public function testBlueprintGETInformationsBlueprint(array $sqlQueries, string $slug, ?string $thumbnail, string $type, string $title, string $exposure, ?string $expiration, string $ueVersion): void
     {
         // sql queries

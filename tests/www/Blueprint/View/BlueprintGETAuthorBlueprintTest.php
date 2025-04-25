@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintGETAuthorBlueprintTest extends TestCase
 {
     use Common;
@@ -42,7 +42,7 @@ class BlueprintGETAuthorBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintGET_AuthorBlueprint(): array
+    public static function provideBlueprintGETAuthorBlueprintDataCases(): iterable
     {
         $date = '2020-01-01 01:01:01';
 
@@ -79,15 +79,13 @@ class BlueprintGETAuthorBlueprintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintGET_AuthorBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesBlueprintGET_AuthorBlueprint')]
+    #[DataProvider('provideBlueprintGETAuthorBlueprintDataCases')]
     public function testBlueprintGETAuthorBlueprint(array $sqlQueries, string $slug, ?string $avatar, string $name, string $url, string $publishedAt): void
     {
         // sql queries

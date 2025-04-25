@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class RenderTest extends TestCase
 {
     use Common;
@@ -37,7 +37,7 @@ class RenderTest extends TestCase
         }
     }
 
-    public static function dataCasesRenderGET_Access(): array
+    public static function provideRenderGETAccessDataCases(): iterable
     {
         return [
             'no blueprint - KO' => [
@@ -310,15 +310,13 @@ class RenderTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesRenderGET_Access
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesRenderGET_Access')]
+    #[DataProvider('provideRenderGETAccessDataCases')]
     public function testRenderGETAccess(array $sqlQueries, ?int $userID, string $slug, int $statusCode, ?string $location, ?string $headerTitle, ?string $headerDescription): void
     {
         // sql queries
@@ -376,7 +374,7 @@ HTML);
      *
      * @return array[]
      */
-    public static function dataCasesRenderGET_FileBlueprint(): array
+    public static function provideRenderGETFileBlueprintDataCases(): iterable
     {
         return [
             'get last version : file 1' => [
@@ -419,15 +417,13 @@ HTML);
     }
 
     /**
-     * @dataProvider dataCasesRenderGET_FileBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesRenderGET_FileBlueprint')]
+    #[DataProvider('provideRenderGETFileBlueprintDataCases')]
     public function testRenderGETFileBlueprint(array $sqlQueries, string $fileID, string $version, string $slug): void
     {
         static::cleanFiles();

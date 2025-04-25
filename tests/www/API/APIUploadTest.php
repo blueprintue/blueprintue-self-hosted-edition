@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -18,6 +17,7 @@ use Rancoud\Http\Message\ServerRequest;
 use Rancoud\Router\RouterException;
 use tests\Common;
 
+/** @internal */
 class APIUploadTest extends TestCase
 {
     use Common;
@@ -31,7 +31,7 @@ class APIUploadTest extends TestCase
         static::$db->insert('INSERT INTO users_infos (id_user) VALUES (1)');
     }
 
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
         return [
             'upload - OK' => [
@@ -263,15 +263,13 @@ class APIUploadTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCases
-     *
      * @throws \Exception
      * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testUploadPOST(array $headers, array $params, int $responseCode, string $responseContent): void
     {
         $ds = \DIRECTORY_SEPARATOR;

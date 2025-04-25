@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -24,6 +23,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ForgotPasswordTest extends TestCase
 {
     use Common;
@@ -137,7 +137,7 @@ class ForgotPasswordTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesForgotPasswordPOST(): array
+    public static function provideForgotPasswordPOSTDataCases(): iterable
     {
         return [
             'forgot password OK + mail sent' => [
@@ -421,15 +421,13 @@ class ForgotPasswordTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesForgotPasswordPOST
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesForgotPasswordPOST')]
+    #[DataProvider('provideForgotPasswordPOSTDataCases')]
     public function testForgotPasswordPOST(array $sqlQueries, array $params, bool $useCsrfFromSession, int $mailCalled, string $mailText, string $mailHTML, bool $mailSent, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         // set how mail must return in $_SESSION

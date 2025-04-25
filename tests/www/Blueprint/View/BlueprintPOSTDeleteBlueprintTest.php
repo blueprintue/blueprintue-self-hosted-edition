@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -17,6 +16,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintPOSTDeleteBlueprintTest extends TestCase
 {
     use Common;
@@ -40,7 +40,7 @@ class BlueprintPOSTDeleteBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintPOST_DeleteBlueprint(): array
+    public static function provideBlueprintPOSTDeleteBlueprintDataCases(): iterable
     {
         return [
             'visitor - no button delete' => [
@@ -412,14 +412,12 @@ class BlueprintPOSTDeleteBlueprintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintPOST_DeleteBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesBlueprintPOST_DeleteBlueprint')]
+    #[DataProvider('provideBlueprintPOSTDeleteBlueprintDataCases')]
     public function testBlueprintPOSTDeleteBlueprint(array $sqlQueries, string $slug, ?int $userID, ?array $anonymousBlueprints, bool $hasButtonDelete, bool $doPostAction, ?array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages): void
     {
         static::cleanFiles();

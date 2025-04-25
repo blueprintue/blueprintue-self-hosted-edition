@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -18,6 +17,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
 {
     use Common;
@@ -84,7 +84,7 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesDeleteThumbnail(): array
+    public static function provideDeleteThumbnailDataCases(): iterable
     {
         $randomThumbailsName = [];
         for ($i = 0; $i < 2; ++$i) {
@@ -251,14 +251,12 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesDeleteThumbnail
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesDeleteThumbnail')]
+    #[DataProvider('provideDeleteThumbnailDataCases')]
     public function testBlueprintEditPOSTDeleteThumbnail(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, ?string $fileOrDirOnDisk, bool $isFile): void
     {
         static::setDatabase();

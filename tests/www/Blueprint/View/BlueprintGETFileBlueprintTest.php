@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintGETFileBlueprintTest extends TestCase
 {
     use Common;
@@ -43,7 +43,7 @@ class BlueprintGETFileBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintGET_FileBlueprint(): array
+    public static function dataCasesBlueprintGET_FileBlueprint(): iterable
     {
         return [
             'get last version : file 1' => [
@@ -86,8 +86,6 @@ class BlueprintGETFileBlueprintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintGET_FileBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException

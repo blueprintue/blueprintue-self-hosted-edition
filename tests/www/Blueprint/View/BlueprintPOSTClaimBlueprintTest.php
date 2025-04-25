@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -17,6 +16,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintPOSTClaimBlueprintTest extends TestCase
 {
     use Common;
@@ -40,7 +40,7 @@ class BlueprintPOSTClaimBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintPOST_ClaimBlueprint(): array
+    public static function provideBlueprintPOSTClaimBlueprintDataCases(): iterable
     {
         return [
             'visitor - no button claim' => [
@@ -401,14 +401,12 @@ class BlueprintPOSTClaimBlueprintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintPOST_ClaimBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesBlueprintPOST_ClaimBlueprint')]
+    #[DataProvider('provideBlueprintPOSTClaimBlueprintDataCases')]
     public function testBlueprintPOSTClaimBlueprint(array $sqlQueries, string $slug, ?int $userID, ?array $anonymousBlueprints, bool $hasButtonClaim, bool $doPostAction, ?array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages): void
     {
         // sql queries

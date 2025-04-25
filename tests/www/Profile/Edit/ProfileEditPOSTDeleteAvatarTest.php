@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -18,6 +17,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ProfileEditPOSTDeleteAvatarTest extends TestCase
 {
     use Common;
@@ -102,7 +102,7 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
     }
 
     /** @throws \Exception */
-    public static function dataCasesDeleteAvatar(): array
+    public static function provideDeleteAvatarDataCases(): iterable
     {
         $randomAvatarsName = [];
         for ($i = 0; $i < 2; ++$i) {
@@ -263,14 +263,12 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesDeleteAvatar
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesDeleteAvatar')]
+    #[DataProvider('provideDeleteAvatarDataCases')]
     public function testProfileEditPOSTDeleteAvatar(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, ?string $fileOrDirOnDisk, bool $isFile): void
     {
         static::setDatabase();

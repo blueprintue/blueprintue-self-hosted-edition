@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -14,6 +13,7 @@ use Rancoud\Http\Message\UploadedFile;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class UploadTest extends TestCase
 {
     use Common;
@@ -122,7 +122,7 @@ class UploadTest extends TestCase
         }
     }
 
-    public static function dataCasesURL404(): array
+    public static function provideURL404DataCases(): iterable
     {
         return [
             'invalid url - user/thumbnail' => [
@@ -148,7 +148,7 @@ class UploadTest extends TestCase
         ];
     }
 
-    public static function dataCasesUserAvatar(): array
+    public static function provideUserAvatarDataCases(): iterable
     {
         $folderUploadedFiles = \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'uploaded_files' . \DIRECTORY_SEPARATOR;
         $files = [
@@ -587,7 +587,7 @@ class UploadTest extends TestCase
         ];
     }
 
-    public static function dataCasesBlueprintThumbnail(): array
+    public static function provideBlueprintThumbnailDataCases(): iterable
     {
         $folderUploadedFiles = \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'uploaded_files' . \DIRECTORY_SEPARATOR;
         $files = [
@@ -1025,18 +1025,14 @@ class UploadTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintThumbnail
-     * @dataProvider dataCasesURL404
-     * @dataProvider dataCasesUserAvatar
-     *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Router\RouterException
      * @throws DatabaseException
      */
-    #[DataProvider('dataCasesURL404')]
-    #[DataProvider('dataCasesUserAvatar')]
-    #[DataProvider('dataCasesBlueprintThumbnail')]
+    #[DataProvider('provideURL404DataCases')]
+    #[DataProvider('provideUserAvatarDataCases')]
+    #[DataProvider('provideBlueprintThumbnailDataCases')]
     public function testUpload(string $slug, int $statusCode, string $responseContent, ?int $userID, array $params, array $file, array $additionalsFolders, bool $isUploaded): void
     {
         $sessionValues = [

@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -17,6 +16,7 @@ use Rancoud\Http\Message\ServerRequest;
 use Rancoud\Router\RouterException;
 use tests\Common;
 
+/** @internal */
 class APIRenderTest extends TestCase
 {
     use Common;
@@ -29,7 +29,7 @@ class APIRenderTest extends TestCase
         static::$db->insert("INSERT INTO users_api (id_user, api_key) VALUES (1, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')");
     }
 
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
         return [
             'render - OK' => [
@@ -162,14 +162,12 @@ HTML,
     }
 
     /**
-     * @dataProvider dataCases
-     *
      * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testRenderPOST(array $headers, array $params, int $responseCode, string $responseContent): void
     {
         $ds = \DIRECTORY_SEPARATOR;

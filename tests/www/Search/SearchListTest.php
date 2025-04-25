@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class SearchListTest extends TestCase
 {
     use Common;
@@ -76,7 +76,7 @@ class SearchListTest extends TestCase
     }
 
     /** @throws \Exception */
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
         $cases = [];
 
@@ -306,15 +306,13 @@ class SearchListTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCases
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testSearchQueryListGET(array $sqlQueries, string $slug, ?string $location, ?int $userID, ?array $contentHead, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();

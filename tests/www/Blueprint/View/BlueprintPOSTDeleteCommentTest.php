@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -18,6 +17,7 @@ use Rancoud\Security\Security;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintPOSTDeleteCommentTest extends TestCase
 {
     use Common;
@@ -104,7 +104,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintPOST_DeleteComment(): array
+    public static function provideBlueprintPOSTDeleteCommentDataCases(): iterable
     {
         return [
             'delete comment OK - public blueprint' => [
@@ -422,15 +422,13 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintPOST_DeleteComment
-     *
      * @throws \Rancoud\Security\SecurityException
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesBlueprintPOST_DeleteComment')]
+    #[DataProvider('provideBlueprintPOSTDeleteCommentDataCases')]
     public function testBlueprintPOSTDeleteComment(array $sqlQueries, string $slug, ?int $userID, ?int $commentID, bool $hasButtonDelete, ?array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages): void
     {
         // sql queries

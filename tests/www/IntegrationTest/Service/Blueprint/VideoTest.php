@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -11,9 +10,10 @@ use app\services\www\BlueprintService;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
+/** @internal */
 class VideoTest extends TestCase
 {
-    public static function dataCasesNoVideo(): array
+    public static function provideNoVideoDataCases(): iterable
     {
         return [
             'url empty' => [
@@ -29,7 +29,7 @@ class VideoTest extends TestCase
         ];
     }
 
-    public static function dataCasesYoutube(): array
+    public static function provideYoutubeDataCases(): iterable
     {
         return [
             'https://www.youtube.com/watch?v=Z-VfaG9ZN_U' => [
@@ -170,7 +170,7 @@ class VideoTest extends TestCase
         ];
     }
 
-    public static function dataCasesVimeo(): array
+    public static function provideVimeoDataCases(): iterable
     {
         return [
             'https://vimeo.com/288789407' => [
@@ -316,7 +316,7 @@ class VideoTest extends TestCase
         ];
     }
 
-    public static function dataCasesDailymotion(): array
+    public static function provideDailymotionDataCases(): iterable
     {
         return [
             'https://www.dailymotion.com/video/x3mfzb3?playlist=x5nmbq' => [
@@ -452,7 +452,7 @@ class VideoTest extends TestCase
         ];
     }
 
-    public static function dataCasesPeertube(): array
+    public static function providePeertubeDataCases(): iterable
     {
         return [
             'https://vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954' => [
@@ -523,7 +523,7 @@ class VideoTest extends TestCase
         ];
     }
 
-    public static function dataCasesBilibili(): array
+    public static function provideBilibiliDataCases(): iterable
     {
         return [
             'https://www.bilibili.com/video/av58844374' => [
@@ -594,7 +594,7 @@ class VideoTest extends TestCase
         ];
     }
 
-    public static function dataCasesNiconico(): array
+    public static function provideNiconicoDataCases(): iterable
     {
         return [
             'https://www.nicovideo.jp/watch/sm34330764' => [
@@ -665,22 +665,13 @@ class VideoTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataCasesBilibili
-     * @dataProvider dataCasesDailymotion
-     * @dataProvider dataCasesNiconico
-     * @dataProvider dataCasesNoVideo
-     * @dataProvider dataCasesPeertube
-     * @dataProvider dataCasesVimeo
-     * @dataProvider dataCasesYoutube
-     */
-    #[DataProvider('dataCasesNoVideo')]
-    #[DataProvider('dataCasesYoutube')]
-    #[DataProvider('dataCasesVimeo')]
-    #[DataProvider('dataCasesDailymotion')]
-    #[DataProvider('dataCasesPeertube')]
-    #[DataProvider('dataCasesBilibili')]
-    #[DataProvider('dataCasesNiconico')]
+    #[DataProvider('provideNoVideoDataCases')]
+    #[DataProvider('provideYoutubeDataCases')]
+    #[DataProvider('provideVimeoDataCases')]
+    #[DataProvider('provideDailymotionDataCases')]
+    #[DataProvider('providePeertubeDataCases')]
+    #[DataProvider('provideBilibiliDataCases')]
+    #[DataProvider('provideNiconicoDataCases')]
     public function testVideo(?string $videoURL, ?string $videoOut, ?string $videoProvider): void
     {
         [$videoFound, $providerFound] = BlueprintService::findVideoProvider($videoURL);

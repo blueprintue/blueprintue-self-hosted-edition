@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -20,6 +19,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintPOSTEditCommentTest extends TestCase
 {
     use Common;
@@ -106,7 +106,7 @@ class BlueprintPOSTEditCommentTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintPOST_EditComment(): array
+    public static function provideBlueprintPOSTEditCommentDataCases(): iterable
     {
         return [
             'edit comment OK - public blueprint' => [
@@ -560,15 +560,13 @@ class BlueprintPOSTEditCommentTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintPOST_EditComment
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesBlueprintPOST_EditComment')]
+    #[DataProvider('provideBlueprintPOSTEditCommentDataCases')]
     public function testBlueprintPOSTEditComment(array $sqlQueries, string $slug, ?int $userID, ?int $commentID, bool $hasButtonEdit, ?array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         // sql queries

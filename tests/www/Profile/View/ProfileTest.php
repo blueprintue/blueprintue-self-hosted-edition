@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -20,6 +19,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ProfileTest extends TestCase
 {
     use Common;
@@ -81,7 +81,7 @@ class ProfileTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesAccess(): array
+    public static function provideAccessDataCases(): iterable
     {
         return [
             'user not exist' => [
@@ -293,7 +293,7 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCasesProfileInfos(): array
+    public static function provideProfileInfosDataCases(): iterable
     {
         return [
             'user + avatar' => [
@@ -1577,7 +1577,7 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases1PrivateBlueprint(): array
+    public static function provide1PrivateBlueprintDataCases(): iterable
     {
         return [
             'user + 1 blueprint private - created but not published - (visitor profile)' => [
@@ -2022,7 +2022,7 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases1UnlistedBlueprint(): array
+    public static function provide1UnlistedBlueprintDataCases(): iterable
     {
         return [
             'user + 1 blueprint unlisted - created but not published - (visitor profile)' => [
@@ -2467,7 +2467,7 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases10Public10PrivateBlueprints(): array
+    public static function provide10Public10PrivateBlueprintsDataCases(): iterable
     {
         return [
             'user + 5 blueprints public + 3 blueprints private - (visitor profile)' => [
@@ -3028,7 +3028,7 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases20Public10PrivateBlueprintsPage1(): array
+    public static function provide20Public10PrivateBlueprintsPage1DataCases(): iterable
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
@@ -4065,7 +4065,7 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases20Public10PrivateBlueprintsPage2(): array
+    public static function provide20Public10PrivateBlueprintsPage2DataCases(): iterable
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
@@ -4818,27 +4818,19 @@ HTML,
     }
 
     /**
-     * @dataProvider dataCases10Public10PrivateBlueprints
-     * @dataProvider dataCases1PrivateBlueprint
-     * @dataProvider dataCases1UnlistedBlueprint
-     * @dataProvider dataCases20Public10PrivateBlueprintsPage1
-     * @dataProvider dataCases20Public10PrivateBlueprintsPage2
-     * @dataProvider dataCasesAccess
-     * @dataProvider dataCasesProfileInfos
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesAccess')]
-    #[DataProvider('dataCasesProfileInfos')]
-    #[DataProvider('dataCases1PrivateBlueprint')]
-    #[DataProvider('dataCases1UnlistedBlueprint')]
-    #[DataProvider('dataCases10Public10PrivateBlueprints')]
-    #[DataProvider('dataCases20Public10PrivateBlueprintsPage1')]
-    #[DataProvider('dataCases20Public10PrivateBlueprintsPage2')]
+    #[DataProvider('provideAccessDataCases')]
+    #[DataProvider('provideProfileInfosDataCases')]
+    #[DataProvider('provide1PrivateBlueprintDataCases')]
+    #[DataProvider('provide1UnlistedBlueprintDataCases')]
+    #[DataProvider('provide10Public10PrivateBlueprintsDataCases')]
+    #[DataProvider('provide20Public10PrivateBlueprintsPage1DataCases')]
+    #[DataProvider('provide20Public10PrivateBlueprintsPage2DataCases')]
     public function testProfileGET(array $sqlQueries, string $slug, ?string $location, ?int $userID, ?array $contentHead, string $contentProfileHTML, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();

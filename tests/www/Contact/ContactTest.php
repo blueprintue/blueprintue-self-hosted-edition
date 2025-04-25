@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -18,6 +17,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ContactTest extends TestCase
 {
     use Common;
@@ -66,7 +66,7 @@ class ContactTest extends TestCase
         $this->doTestNavBarHasNoLinkActive($response);
     }
 
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
         return [
             'xss email - OK' => [
@@ -533,14 +533,12 @@ class ContactTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCases
-     *
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testContactPOST(array $params, bool $useCsrfFromSession, int $mailCalled, string $mailText, bool $mailSent, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         // set how mail must return in $_SESSION

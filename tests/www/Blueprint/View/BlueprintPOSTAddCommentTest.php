@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -20,6 +19,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintPOSTAddCommentTest extends TestCase
 {
     use Common;
@@ -107,7 +107,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintPOST_AddComment(): array
+    public static function provideBlueprintPOSTAddCommentDataCases(): iterable
     {
         return [
             'add comment OK - public blueprint' => [
@@ -390,15 +390,13 @@ class BlueprintPOSTAddCommentTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintPOST_AddComment
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesBlueprintPOST_AddComment')]
+    #[DataProvider('provideBlueprintPOSTAddCommentDataCases')]
     public function testBlueprintPOSTAddComment(array $sqlQueries, string $slug, ?int $userID, ?array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         // sql queries

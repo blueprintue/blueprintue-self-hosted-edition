@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class StaticTest extends TestCase
 {
     use Common;
@@ -73,7 +73,7 @@ class StaticTest extends TestCase
         return $response;
     }
 
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
         return [
             'terms of service' => [
@@ -96,14 +96,12 @@ class StaticTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCases
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testStaticPage(string $url, array $headers, string $content): void
     {
         $response = $this->getResponseFromApplicationWithStatic($url);

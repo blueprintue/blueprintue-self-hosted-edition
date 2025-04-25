@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class HomeTest extends TestCase
 {
     use Common;
@@ -55,7 +55,7 @@ class HomeTest extends TestCase
         $this->doTestNavBarHasLinkHomeActive($response);
     }
 
-    public static function dataCasesCreateBlueprint(): array
+    public static function provideCreateBlueprintDataCases(): iterable
     {
         return [
             'xss - create blueprint OK' => [
@@ -915,12 +915,10 @@ class HomeTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesCreateBlueprint
-     *
      * @throws \Exception
      * @throws DatabaseException
      */
-    #[DataProvider('dataCasesCreateBlueprint')]
+    #[DataProvider('provideCreateBlueprintDataCases')]
     public function testHomePOSTCreateBlueprint(int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError, bool $hasAnonymousUser): void
     {
         // set user in $_SESSION

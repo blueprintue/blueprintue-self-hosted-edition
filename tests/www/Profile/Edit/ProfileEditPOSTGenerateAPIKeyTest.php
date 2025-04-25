@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -17,6 +16,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
 {
     use Common;
@@ -78,7 +78,7 @@ class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
         }
     }
 
-    public static function dataCasesGenerateApiKey(): array
+    public static function provideGenerateApiKeyDataCases(): iterable
     {
         return [
             'edit OK' => [
@@ -143,14 +143,12 @@ class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesGenerateApiKey
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesGenerateApiKey')]
+    #[DataProvider('provideGenerateApiKeyDataCases')]
     public function testProfileEditPOSTGenerateApiKey(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages): void
     {
         static::setDatabase();

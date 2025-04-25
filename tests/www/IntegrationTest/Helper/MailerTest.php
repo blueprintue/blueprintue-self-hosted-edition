@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -14,12 +13,13 @@ use Rancoud\Application\Application;
 use Rancoud\Environment\Environment;
 use tests\Common;
 
+/** @internal */
 class MailerTest extends TestCase
 {
     use Common;
 
     /** @return string[][] */
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
         return [
             'mail text' => [
@@ -172,13 +172,11 @@ class MailerTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCases
-     *
      * @throws \PHPMailer\PHPMailer\Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testMailer(string $envFile, bool $useCustomEmailValidation, array $constructAssertions, array $content): void
     {
         // setup app

@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -21,6 +20,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class LoginTest extends TestCase
 {
     use Common;
@@ -123,7 +123,7 @@ class LoginTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesLoginPOST(): array
+    public static function provideLoginPOSTDataCases(): iterable
     {
         return [
             'login OK' => [
@@ -538,15 +538,13 @@ class LoginTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesLoginPOST
-     *
      * @throws ApplicationException
      * @throws CryptException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesLoginPOST')]
+    #[DataProvider('provideLoginPOSTDataCases')]
     public function testLoginPOST(?int $userID, array $params, bool $useCsrfFromSession, bool $isUserLogged, bool $hasRedirection, array $flashMessages, bool $redirectForConfirm, bool $isUserConfirmed, int $mailCalled, string $mailText, string $mailHTML, bool $mailSent): void
     {
         $sessionValues = [

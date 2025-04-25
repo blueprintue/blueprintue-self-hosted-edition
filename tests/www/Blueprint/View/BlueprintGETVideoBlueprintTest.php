@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintGETVideoBlueprintTest extends TestCase
 {
     use Common;
@@ -42,7 +42,7 @@ class BlueprintGETVideoBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintGET_VideoBlueprint(): array
+    public static function provideBlueprintGETVideoBlueprintDataCases(): iterable
     {
         return [
             'no video' => [
@@ -150,15 +150,13 @@ class BlueprintGETVideoBlueprintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintGET_VideoBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesBlueprintGET_VideoBlueprint')]
+    #[DataProvider('provideBlueprintGETVideoBlueprintDataCases')]
     public function testBlueprintGETVideoBlueprint(array $sqlQueries, string $slug, ?array $video): void
     {
         // sql queries

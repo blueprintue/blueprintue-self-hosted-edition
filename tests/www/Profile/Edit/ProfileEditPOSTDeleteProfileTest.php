@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ProfileEditPOSTDeleteProfileTest extends TestCase
 {
     use Common;
@@ -80,7 +80,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
         }
     }
 
-    public static function dataCasesDeleteProfile(): array
+    public static function provideDeleteProfileDataCases(): iterable
     {
         return [
             'delete OK - give blueprints - keep comments' => [
@@ -771,14 +771,12 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesDeleteProfile
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesDeleteProfile')]
+    #[DataProvider('provideDeleteProfileDataCases')]
     public function testProfileEditPOSTDeleteProfile(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError, bool $hasAnonymousUser): void
     {
         static::setDatabase();

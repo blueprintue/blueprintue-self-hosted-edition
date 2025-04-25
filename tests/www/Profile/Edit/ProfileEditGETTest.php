@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ProfileEditGETTest extends TestCase
 {
     use Common;
@@ -85,7 +85,7 @@ class ProfileEditGETTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesAccess(): array
+    public static function provideAccessDataCases(): iterable
     {
         return [
             'redirect - user not exist' => [
@@ -140,14 +140,12 @@ class ProfileEditGETTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesAccess
-     *
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesAccess')]
+    #[DataProvider('provideAccessDataCases')]
     public function testProfileEditGET(string $slug, ?string $location, ?int $userID, ?array $contentHead): void
     {
         $sessionValues = [

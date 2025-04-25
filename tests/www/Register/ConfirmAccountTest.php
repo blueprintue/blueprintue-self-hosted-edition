@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -17,6 +16,7 @@ use Rancoud\Security\Security;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ConfirmAccountTest extends TestCase
 {
     use Common;
@@ -51,7 +51,7 @@ class ConfirmAccountTest extends TestCase
         }
     }
 
-    public static function dataCasesConfirmAccount(): array
+    public static function provideConfirmAccountDataCases(): iterable
     {
         return [
             'user is logged - redirect' => [
@@ -120,15 +120,13 @@ class ConfirmAccountTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesConfirmAccount
-     *
      * @throws \Rancoud\Security\SecurityException
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesConfirmAccount')]
+    #[DataProvider('provideConfirmAccountDataCases')]
     public function testConfirmAccountPOST(string $slug, ?string $location, ?int $userID, ?array $contentHead, bool $hasRedirection, ?bool $isConfirmedAccount, ?string $text, ?string $jsRedirect): void
     {
         $sessionValues = [

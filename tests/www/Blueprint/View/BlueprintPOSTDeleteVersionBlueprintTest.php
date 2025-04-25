@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -17,6 +16,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
 {
     use Common;
@@ -40,7 +40,7 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintPOST_DeleteVersionBlueprint(): array
+    public static function provideBlueprintPOSTDeleteVersionBlueprintDataCases(): iterable
     {
         return [
             'visitor - no button delete version' => [
@@ -512,14 +512,12 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintPOST_DeleteVersionBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesBlueprintPOST_DeleteVersionBlueprint')]
+    #[DataProvider('provideBlueprintPOSTDeleteVersionBlueprintDataCases')]
     public function testBlueprintPOSTDeleteVersionBlueprint(array $sqlQueries, string $slug, ?int $userID, ?array $anonymousBlueprints, bool $hasButtonDeleteVersion, bool $doPostAction, ?array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages): void
     {
         static::cleanFiles();

@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -18,6 +17,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class TagsListTest extends TestCase
 {
     use Common;
@@ -84,7 +84,7 @@ class TagsListTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
         return [
             'empty page - no tags linked to blueprints (tags null)' => [
@@ -206,15 +206,13 @@ HTML,
     }
 
     /**
-     * @dataProvider dataCases
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testTagsListGET(array $sqlQueries, ?int $userID, ?array $contentHead, string $contentHTML): void
     {
         static::setDatabase();

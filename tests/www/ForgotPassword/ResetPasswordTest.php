@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -21,6 +20,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ResetPasswordTest extends TestCase
 {
     use Common;
@@ -104,7 +104,7 @@ HTML);
 HTML);
     }
 
-    public static function dataCasesResetPasswordPOST(): array
+    public static function provideResetPasswordPOSTDataCases(): iterable
     {
         return [
             'reset password OK' => [
@@ -755,15 +755,13 @@ HTML);
     }
 
     /**
-     * @dataProvider dataCasesResetPasswordPOST
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesResetPasswordPOST')]
+    #[DataProvider('provideResetPasswordPOSTDataCases')]
     public function testResetPasswordPOST(array $params, ?string $resetToken, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         $queryParams = [];

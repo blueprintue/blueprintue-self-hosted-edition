@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -22,6 +21,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintGETCommentsTest extends TestCase
 {
     use Common;
@@ -99,7 +99,7 @@ class BlueprintGETCommentsTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintGET_CommentsBlueprint(): array
+    public static function provideBlueprintGETCommentsBlueprintDataCases(): iterable
     {
         return [
             'visitor - 0 comments - no form' => [
@@ -339,8 +339,6 @@ class BlueprintGETCommentsTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesBlueprintGET_CommentsBlueprint
-     *
      * @throws \Exception
      * @throws ApplicationException
      * @throws DatabaseException
@@ -348,7 +346,7 @@ class BlueprintGETCommentsTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesBlueprintGET_CommentsBlueprint')]
+    #[DataProvider('provideBlueprintGETCommentsBlueprintDataCases')]
     public function testBlueprintGETCommentsBlueprint(array $sqlQueries, string $slug, ?int $userID, bool $hasTitle, int $countComments, bool $hasForm, string $pageURL, bool $isCommentsHidden, bool $isCommentsClosed, array $commentIDs): void
     {
         // sql queries
