@@ -48,7 +48,7 @@ class BlueprintGETCommentsTest extends TestCase
 
         $formattedDates = [];
         for ($i = 0; $i < 10; ++$i) {
-            $formattedDates['-' . $i . ' days'] = (new \DateTime('now', new \DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s');
+            $formattedDates['-' . $i . ' days'] = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s');
         }
 
         // blueprints

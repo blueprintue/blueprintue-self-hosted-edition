@@ -449,8 +449,8 @@ class UserService
         }
 
         if ($user['password_reset_at'] !== null) {
-            $nowTimestamp = (new \DateTime('now', new \DateTimeZone('UTC')))->getTimestamp();
-            $actionDoneTimestamp = (new \DateTime($user['password_reset_at'], new \DateTimeZone('UTC')))->getTimestamp();
+            $nowTimestamp = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->getTimestamp();
+            $actionDoneTimestamp = (new \DateTimeImmutable($user['password_reset_at'], new \DateTimeZone('UTC')))->getTimestamp();
             if (($nowTimestamp - $actionDoneTimestamp) < 300) {
                 return [null, true, null];
             }
@@ -583,8 +583,8 @@ class UserService
         if ($user['confirmed_sent_at'] === null) {
             $hasToSendEmail = true;
         } else {
-            $nowTimestamp = (new \DateTime('now', new \DateTimeZone('UTC')))->getTimestamp();
-            $actionDoneTimestamp = (new \DateTime($user['confirmed_sent_at'], new \DateTimeZone('UTC')))->getTimestamp();
+            $nowTimestamp = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->getTimestamp();
+            $actionDoneTimestamp = (new \DateTimeImmutable($user['confirmed_sent_at'], new \DateTimeZone('UTC')))->getTimestamp();
             if (($nowTimestamp - $actionDoneTimestamp) > 300) {
                 $hasToSendEmail = true;
             }
@@ -681,7 +681,7 @@ class UserService
 
         $html = \ob_get_clean();
 
-        $now = new \DateTime('now', new \DateTimeZone('UTC'));
+        $now = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
 
         $search = [
             '{{TOKEN}}',

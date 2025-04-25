@@ -1072,10 +1072,10 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                 ];
 
                 $startDate = $blueprintBefore['expiration'] ?? $blueprintAfter['updated_at'];
-                $date = (new \DateTime($startDate, new \DateTimeZone('UTC')));
-                $date->modify('+1 ' . $convert[$params['form-edit_properties-select-expiration']]);
+                $startDateAsDateTime = (new \DateTimeImmutable($startDate, new \DateTimeZone('UTC')));
+                $expirationDateTime = $startDateAsDateTime->modify('+1 ' . $convert[$params['form-edit_properties-select-expiration']]);
 
-                static::assertSame($date->format('Y-m-d H:i:s'), $blueprintAfter['expiration']);
+                static::assertSame($expirationDateTime->format('Y-m-d H:i:s'), $blueprintAfter['expiration']);
             }
 
             // comment

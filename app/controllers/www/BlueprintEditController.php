@@ -448,9 +448,9 @@ class BlueprintEditController implements MiddlewareInterface
             ];
 
             $startDate = $this->expiration ?? 'now';
-            $date = (new \DateTime($startDate, new \DateTimeZone('UTC')));
-            $date->modify('+1 ' . $convert[$params['expiration']]);
-            $properties['expiration'] = $date->format('Y-m-d H:i:s');
+            $startDateAsDateTime = (new \DateTimeImmutable($startDate, new \DateTimeZone('UTC')));
+            $expirationDateTime = $startDateAsDateTime->modify('+1 ' . $convert[$params['expiration']]);
+            $properties['expiration'] = $expirationDateTime->format('Y-m-d H:i:s');
         }
 
         // ue_version

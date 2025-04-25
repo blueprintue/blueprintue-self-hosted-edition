@@ -51,6 +51,10 @@ $rules = [
     ],
 ];
 
+$classUsageRules = [
+    'date_time_immutable' => true
+];
+
 $commentRules = [
     'comment_to_phpdoc'                 => ['ignored_tags' => ['codeCoverageIgnoreStart', 'codeCoverageIgnoreEnd']],
     'header_comment'                    => false,
@@ -313,6 +317,7 @@ $whitespaceRules = [
 ];
 
 $rules = \array_merge($rules,
+    $classUsageRules,
     $commentRules,
     $constantNotationRules,
     $controlStructureRules,

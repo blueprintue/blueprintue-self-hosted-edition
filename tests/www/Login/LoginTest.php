@@ -97,7 +97,7 @@ class LoginTest extends TestCase
             'email'             => 'user_95@example.com',
             'grade'             => 'member',
             'remember_token'    => null,
-            'confirmed_sent_at' => (new \DateTime('NOW', new \DateTimeZone('UTC')))->modify('-6 minutes')->format('Y-m-d H:i:s'),
+            'confirmed_sent_at' => (new \DateTimeImmutable('NOW', new \DateTimeZone('UTC')))->modify('-6 minutes')->format('Y-m-d H:i:s'),
             'confirmed_at'      => null,
         ];
         static::$db->insert($sql, $userParams);

@@ -23,8 +23,8 @@ class HelperTest extends TestCase
      */
     public static function provideSinceDataCases(): iterable
     {
-        $future = (new \DateTime('now', new \DateTimeZone('UTC')))->modify('+1 minutes')->format('Y-m-d H:i:s');
-        $nowMinus5Years = (new \DateTime('now', new \DateTimeZone('UTC')))->modify('-5 years')->format('Y-m-d H:i:s');
+        $future = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('+1 minutes')->format('Y-m-d H:i:s');
+        $nowMinus5Years = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('-5 years')->format('Y-m-d H:i:s');
 
         return [
             'empty string = few seconds ago' => [
@@ -62,8 +62,8 @@ class HelperTest extends TestCase
      */
     public static function provideTimeleftDataCases(): iterable
     {
-        $past = (new \DateTime('now', new \DateTimeZone('UTC')))->modify('-1 minutes')->format('Y-m-d H:i:s');
-        $nowPlus2Hours = (new \DateTime('now', new \DateTimeZone('UTC')))->modify('+2 hours +30 minutes +59 seconds')->format('Y-m-d H:i:s');
+        $past = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('-1 minutes')->format('Y-m-d H:i:s');
+        $nowPlus2Hours = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('+2 hours +30 minutes +59 seconds')->format('Y-m-d H:i:s');
 
         return [
             'null = null' => [

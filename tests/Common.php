@@ -350,7 +350,7 @@ HTML;
 
         $html = \ob_get_clean();
 
-        $now = new \DateTime('now', new \DateTimeZone('UTC'));
+        $now = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
 
         $search = [
             '{{URL}}',
@@ -399,8 +399,8 @@ HTML;
     /** @throws \Exception */
     public static function getSince(string $publishedAt): string
     {
-        $publishedAtObject = new \DateTime($publishedAt);
-        $nowObject = new \DateTime();
+        $publishedAtObject = new \DateTimeImmutable($publishedAt);
+        $nowObject = new \DateTimeImmutable();
         if ($publishedAtObject > $nowObject) {
             return 'few seconds ago';
         }

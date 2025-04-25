@@ -981,7 +981,7 @@ class HomeTest extends TestCase
                 } else {
                     static::assertNotNull($blueprint['expiration']);
 
-                    $date = new \DateTime($blueprint['created_at']);
+                    $date = new \DateTimeImmutable($blueprint['created_at']);
                     if ($params['form-add_blueprint-select-expiration'] === '1h') {
                         $expireAt = $date->add(new \DateInterval('PT1H'))->format('Y-m-d H:i:s');
                         static::assertSame($expireAt, $blueprint['expiration']);

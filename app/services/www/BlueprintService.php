@@ -333,7 +333,7 @@ class BlueprintService
         }
 
         if ($delta !== null) {
-            $expirationDate = (new \DateTime($now, new \DateTimeZone('UTC')))->modify($delta)->format('Y-m-d H:i:s');
+            $expirationDate = (new \DateTimeImmutable($now, new \DateTimeZone('UTC')))->modify($delta)->format('Y-m-d H:i:s');
         }
 
         return $expirationDate;

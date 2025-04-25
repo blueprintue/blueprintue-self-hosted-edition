@@ -73,7 +73,7 @@ class ExtendedBlueprintService extends BlueprintService
             'ue_version'      => '4.25',
             'current_version' => 1,
             'exposure'        => 'public',
-            'created_at'      => (new \DateTime('now', new \DateTimeZone('UTC')))->format('Y-m-d H:i:s'),
+            'created_at'      => (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->format('Y-m-d H:i:s'),
         ]);
 
         return $fileID;
@@ -111,7 +111,7 @@ class ExtendedBlueprintService extends BlueprintService
             'ue_version'      => '4.25',
             'current_version' => 1,
             'exposure'        => 'public',
-            'created_at'      => (new \DateTime('now', new \DateTimeZone('UTC')))->format('Y-m-d H:i:s'),
+            'created_at'      => (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->format('Y-m-d H:i:s'),
         ]);
 
         static::setBlueprintContent($fileID, '1', 'aze');

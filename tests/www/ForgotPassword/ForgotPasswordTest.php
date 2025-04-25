@@ -97,7 +97,7 @@ class ForgotPasswordTest extends TestCase
 
         $html = \ob_get_clean();
 
-        $now = new \DateTime('now', new \DateTimeZone('UTC'));
+        $now = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
 
         $search = [
             '{{URL}}',
