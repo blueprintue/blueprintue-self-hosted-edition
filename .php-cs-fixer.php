@@ -51,6 +51,26 @@ $rules = [
     ],
 ];
 
+$returnNotationRules = [
+    'no_useless_return'      => true,
+    'return_assignment'      => true,
+    'simplified_null_return' => true
+];
+
+$semicolonRules = [
+    'multiline_whitespace_before_semicolons'     => ['strategy' => 'no_multi_line'],
+    'no_empty_statement'                         => true,
+    'no_singleline_whitespace_before_semicolons' => true,
+    'semicolon_after_instruction'                => true,
+    'space_after_semicolon'                      => ['remove_in_empty_for_expressions' => true]
+];
+
+$strictRules = [
+    'declare_strict_types' => true,
+    'strict_comparison'    => true,
+    'strict_param'         => true
+];
+
 $stringNotationRules = [
     'explicit_string_variable'          => true,
     'heredoc_closing_marker'            => ['closing_marker' => 'EOD', 'explicit_heredoc_style' => false, 'reserved_closing_markers' => ['CSS', 'DIFF', 'HTML', 'JS', 'JSON', 'MD', 'PHP', 'PYTHON', 'RST', 'TS', 'SQL', 'XML', 'YAML', 'TEXTAREA']],
@@ -86,6 +106,9 @@ $whitespaceRules = [
 ];
 
 $rules = \array_merge($rules,
+    $returnNotationRules,
+    $semicolonRules,
+    $strictRules,
     $stringNotationRules,
     $whitespaceRules);
 

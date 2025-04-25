@@ -271,8 +271,7 @@ class UploadController implements MiddlewareInterface
         return !($imageSize[0] !== $uploadParameters['canvas_width'] || $imageSize[1] !== $uploadParameters['canvas_height']);
     }
 
-    /** @return resource|null */
-    protected function createImageInMemory(UploadedFile $file, array $uploadParameters)
+    protected function createImageInMemory(UploadedFile $file, array $uploadParameters): ?\GdImage
     {
         $imgSrc = @\imagecreatefrompng($file->getFilename());
         if ($imgSrc === false) {
