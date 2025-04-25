@@ -51,6 +51,48 @@ $rules = [
     ],
 ];
 
+$commentRules = [
+    'comment_to_phpdoc'                 => ['ignored_tags' => ['codeCoverageIgnoreStart', 'codeCoverageIgnoreEnd']],
+    'header_comment'                    => false,
+    'multiline_comment_opening_closing' => true,
+    'no_empty_comment'                  => true,
+    'no_trailing_whitespace_in_comment' => true,
+    'single_line_comment_spacing'       => true,
+    'single_line_comment_style'         => ['comment_types' => ['hash']]
+];
+
+$constantNotationRules = [
+    'native_constant_invocation' => ['exclude' => ['null', 'false', 'true'], 'fix_built_in' => true, 'include' => [], 'scope' => 'all', 'strict' => false],
+];
+
+$controlStructureRules = [
+    'control_structure_braces'                => true,
+    'control_structure_continuation_position' => ['position' => 'same_line'],
+    'elseif'                                  => true,
+    'empty_loop_body'                         => ['style' => 'braces'],
+    'empty_loop_condition'                    => ['style' => 'while'],
+    'include'                                 => true,
+    'no_alternative_syntax'                   => ['fix_non_monolithic_code' => true],
+    'no_break_comment'                        => ['comment_text' => 'no break'],
+    'no_superfluous_elseif'                   => true,
+    'no_unneeded_braces'                      => ['namespaces' => true],
+    'no_unneeded_control_parentheses'         => ['statements' => ['break', 'clone', 'continue', 'echo_print', 'others', 'return', 'switch_case', 'yield', 'yield_from']],
+    'no_useless_else'                         => true,
+    'simplified_if_return'                    => true,
+    'switch_case_semicolon_to_colon'          => true,
+    'switch_case_space'                       => true,
+    'switch_continue_to_break'                => true,
+    'trailing_comma_in_multiline'             => false,
+    'yoda_style'                              => false
+];
+
+$doctrineAnnotationRules = [
+    'doctrine_annotation_array_assignment' => false,
+    'doctrine_annotation_braces'           => false,
+    'doctrine_annotation_indentation'      => false,
+    'doctrine_annotation_spaces'           => false
+];
+
 $functionNotationRules = [
     'combine_nested_dirname'                           => true,
     'date_time_create_from_format_call'                => true,
@@ -271,6 +313,10 @@ $whitespaceRules = [
 ];
 
 $rules = \array_merge($rules,
+    $commentRules,
+    $constantNotationRules,
+    $controlStructureRules,
+    $doctrineAnnotationRules,
     $functionNotationRules,
     $importRules,
     $languageConstructRules,

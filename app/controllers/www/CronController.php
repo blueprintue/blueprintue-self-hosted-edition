@@ -75,7 +75,7 @@ class CronController
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
 
-            /* @noinspection NullPointerExceptionInspection */
+            /** @noinspection NullPointerExceptionInspection */
             $userIDs = Application::getDatabase()->selectCol($sqlSelected);
             foreach ($userIDs as $key => $value) {
                 $userIDs[$key] = (int) $value;
@@ -130,7 +130,7 @@ class CronController
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->startTransaction();
 
-            /* @noinspection NullPointerExceptionInspection */
+            /** @noinspection NullPointerExceptionInspection */
             $blueprints = Application::getDatabase()->selectAll($sqlSelected);
             foreach ($blueprints as $blueprint) {
                 $blueprintID = (int) $blueprint['id'];

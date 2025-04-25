@@ -165,7 +165,7 @@ class UploadController implements MiddlewareInterface
             return [null, 'missing file'];
         }
 
-        // @var UploadedFile $avatarRawFile
+        /** @var UploadedFile $avatarRawFile */
         $avatarRawFile = $files[$name];
 
         if ($this->isValidFile($avatarRawFile, $uploadParameters) === false) {
