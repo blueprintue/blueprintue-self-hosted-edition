@@ -7,7 +7,6 @@ namespace app\controllers\www;
 use app\helpers\Helper;
 use app\services\www\BlueprintService;
 use app\services\www\UserService;
-use finfo;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -261,7 +260,7 @@ class UploadController implements MiddlewareInterface
             return false;
         }
 
-        $finfo = new finfo(\FILEINFO_MIME_TYPE);
+        $finfo = new \finfo(\FILEINFO_MIME_TYPE);
         if ($file->getClientMediaType() !== $finfo->file($file->getFilename())) {
             return false;
         }

@@ -7,8 +7,6 @@ declare(strict_types=1);
 namespace tests\www\Blueprint\Edit;
 
 use app\helpers\Helper;
-use DateTime;
-use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -1074,7 +1072,7 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                 ];
 
                 $startDate = $blueprintBefore['expiration'] ?? $blueprintAfter['updated_at'];
-                $date = (new DateTime($startDate, new DateTimeZone('UTC')));
+                $date = (new \DateTime($startDate, new \DateTimeZone('UTC')));
                 $date->modify('+1 ' . $convert[$params['form-edit_properties-select-expiration']]);
 
                 static::assertSame($date->format('Y-m-d H:i:s'), $blueprintAfter['expiration']);

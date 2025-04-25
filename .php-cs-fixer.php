@@ -51,6 +51,81 @@ $rules = [
     ],
 ];
 
+$importRules = [
+    'fully_qualified_strict_types' => ['import_symbols' => false, 'leading_backslash_in_global_namespace' => false, 'phpdoc_tags' => ['param', 'phpstan-param', 'phpstan-property', 'phpstan-property-read', 'phpstan-property-write', 'phpstan-return', 'phpstan-var', 'property', 'property-read', 'property-write', 'psalm-param', 'psalm-property', 'psalm-property-read', 'psalm-property-write', 'psalm-return', 'psalm-var', 'return', 'see', 'throws', 'var']],
+    'global_namespace_import'      => ['import_classes' => false, 'import_constants' => false, 'import_functions' => false],
+    'group_import'                 => false,
+    'no_leading_import_slash'      => true,
+    'no_unneeded_import_alias'     => true,
+    'no_unused_imports'            => true,
+    'ordered_imports'              => ['case_sensitive' => false, 'imports_order' => ['class', 'function', 'const'], 'sort_algorithm' => 'alpha'],
+    'single_import_per_statement'  => ['group_to_single_imports' => true],
+    'single_line_after_imports'    => true
+];
+
+$languageConstructRules = [
+    'class_keyword'                 => false, // specific for this repository
+    'combine_consecutive_issets'    => true,
+    'combine_consecutive_unsets'    => true,
+    'declare_equal_normalize'       => ['space' => 'none'],
+    'declare_parentheses'           => true,
+    'dir_constant'                  => true,
+    'error_suppression'             => ['mute_deprecation_error' => true, 'noise_remaining_usages' => false, 'noise_remaining_usages_exclude' => []],
+    'explicit_indirect_variable'    => true,
+    'function_to_constant'          => ['functions' => ['get_called_class', 'get_class', 'get_class_this', 'php_sapi_name', 'phpversion', 'pi']],
+    'get_class_to_class_keyword'    => true,
+    'is_null'                       => true,
+    'no_unset_on_property'          => true,
+    'nullable_type_declaration'     => ['syntax' => 'question_mark'],
+    'single_space_around_construct' => ['constructs_contain_a_single_space' => ['yield_from'], 'constructs_followed_by_a_single_space' => ['abstract', 'as', 'attribute', 'break', 'case', 'catch', 'class', 'clone', 'comment', 'const', 'const_import', 'continue', 'do', 'echo', 'else', 'elseif', 'enum', 'extends', 'final', 'finally', 'for', 'foreach', 'function', 'function_import', 'global', 'goto', 'if', 'implements', 'include', 'include_once', 'instanceof', 'insteadof', 'interface', 'match', 'named_argument', 'namespace', 'new', 'open_tag_with_echo', 'php_doc', 'php_open', 'print', 'private', 'protected', 'public', 'readonly', 'require', 'require_once', 'return', 'static', 'switch', 'throw', 'trait', 'try', 'type_colon', 'use', 'use_lambda', 'use_trait', 'var', 'while', 'yield', 'yield_from'], 'constructs_preceded_by_a_single_space' => ['as', 'else', 'elseif', 'use_lambda']]
+];
+
+$listNotationRules = [
+    'list_syntax' => ['syntax' => 'short']
+];
+
+$namespaceNotationRules = [
+    'blank_line_after_namespace'      => true,
+    'blank_lines_before_namespace'    => ['min_line_breaks' => 2, 'max_line_breaks' => 2],
+    'clean_namespace'                 => true,
+    'no_leading_namespace_whitespace' => true
+];
+
+$namingRules = [
+    'no_homoglyph_names' => true
+];
+
+$operatorRules = [
+    'assign_null_coalescing_to_coalesce_equal' => true,
+    'binary_operator_spaces'                   => ['default' => 'single_space', 'operators' => ['=>' => 'align']],
+    'concat_space'                             => ['spacing' => 'one'],
+    'increment_style'                          => ['style' => 'pre'],
+    'logical_operators'                        => true,
+    'long_to_shorthand_operator'               => true,
+    'new_with_parentheses'                     => ['anonymous_class' => true, 'named_class' => true],
+    'no_space_around_double_colon'             => true,
+    'no_useless_concat_operator'               => ['juggle_simple_strings' => false],
+    'no_useless_nullsafe_operator'             => true,
+    'not_operator_with_space'                  => false,
+    'not_operator_with_successor_space'        => false,
+    'object_operator_without_whitespace'       => true,
+    'operator_linebreak'                       => ['only_booleans' => true, 'position' => 'beginning'],
+    'standardize_increment'                    => true,
+    'standardize_not_equals'                   => true,
+    'ternary_operator_spaces'                  => true,
+    'ternary_to_elvis_operator'                => true,
+    'ternary_to_null_coalescing'               => true,
+    'unary_operator_spaces'                    => ['only_dec_inc' => false]
+];
+
+$phpTagRules = [
+    'blank_line_after_opening_tag' => true,
+    'echo_tag_syntax'              => ['format' => 'long', 'long_function' => 'echo', 'shorten_simple_statements_only' => true],
+    'full_opening_tag'             => true,
+    'linebreak_after_opening_tag'  => true,
+    'no_closing_tag'               => true
+];
+
 $phpUnitRules = [
     'php_unit_assert_new_names'              => true,
     'php_unit_attributes'                    => ['keep_annotations' => false],
@@ -171,6 +246,13 @@ $whitespaceRules = [
 ];
 
 $rules = \array_merge($rules,
+    $importRules,
+    $languageConstructRules,
+    $listNotationRules,
+    $namespaceNotationRules,
+    $namingRules,
+    $operatorRules,
+    $phpTagRules,
     $phpUnitRules,
     $phpDocRules,
     $returnNotationRules,

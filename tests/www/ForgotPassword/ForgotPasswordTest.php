@@ -7,8 +7,6 @@ declare(strict_types=1);
 namespace tests\www\ForgotPassword;
 
 use app\helpers\Helper;
-use DateTime;
-use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -99,7 +97,7 @@ class ForgotPasswordTest extends TestCase
 
         $html = \ob_get_clean();
 
-        $now = new DateTime('now', new DateTimeZone('UTC'));
+        $now = new \DateTime('now', new \DateTimeZone('UTC'));
 
         $search = [
             '{{URL}}',

@@ -11,8 +11,6 @@ use app\helpers\Helper;
 use app\services\www\BlueprintService;
 use app\services\www\TagService;
 use app\services\www\UserService;
-use DateTime;
-use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -450,7 +448,7 @@ class BlueprintEditController implements MiddlewareInterface
             ];
 
             $startDate = $this->expiration ?? 'now';
-            $date = (new DateTime($startDate, new DateTimeZone('UTC')));
+            $date = (new \DateTime($startDate, new \DateTimeZone('UTC')));
             $date->modify('+1 ' . $convert[$params['expiration']]);
             $properties['expiration'] = $date->format('Y-m-d H:i:s');
         }

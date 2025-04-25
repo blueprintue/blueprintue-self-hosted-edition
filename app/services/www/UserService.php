@@ -9,8 +9,6 @@ use app\helpers\MailerHelper;
 use app\models\UserApiModel;
 use app\models\UserInfosModel;
 use app\models\UserModel;
-use DateTime;
-use DateTimeZone;
 use PHPUnit\Framework\Exception;
 use Rancoud\Application\Application;
 use Rancoud\Crypt\Crypt;
@@ -451,8 +449,8 @@ class UserService
         }
 
         if ($user['password_reset_at'] !== null) {
-            $nowTimestamp = (new DateTime('now', new DateTimeZone('UTC')))->getTimestamp();
-            $actionDoneTimestamp = (new DateTime($user['password_reset_at'], new DateTimeZone('UTC')))->getTimestamp();
+            $nowTimestamp = (new \DateTime('now', new \DateTimeZone('UTC')))->getTimestamp();
+            $actionDoneTimestamp = (new \DateTime($user['password_reset_at'], new \DateTimeZone('UTC')))->getTimestamp();
             if (($nowTimestamp - $actionDoneTimestamp) < 300) {
                 return [null, true, null];
             }
@@ -585,8 +583,8 @@ class UserService
         if ($user['confirmed_sent_at'] === null) {
             $hasToSendEmail = true;
         } else {
-            $nowTimestamp = (new DateTime('now', new DateTimeZone('UTC')))->getTimestamp();
-            $actionDoneTimestamp = (new DateTime($user['confirmed_sent_at'], new DateTimeZone('UTC')))->getTimestamp();
+            $nowTimestamp = (new \DateTime('now', new \DateTimeZone('UTC')))->getTimestamp();
+            $actionDoneTimestamp = (new \DateTime($user['confirmed_sent_at'], new \DateTimeZone('UTC')))->getTimestamp();
             if (($nowTimestamp - $actionDoneTimestamp) > 300) {
                 $hasToSendEmail = true;
             }
@@ -683,7 +681,7 @@ class UserService
 
         $html = \ob_get_clean();
 
-        $now = new DateTime('now', new DateTimeZone('UTC'));
+        $now = new \DateTime('now', new \DateTimeZone('UTC'));
 
         $search = [
             '{{TOKEN}}',

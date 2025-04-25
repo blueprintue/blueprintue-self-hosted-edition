@@ -7,8 +7,6 @@ namespace app\services\www;
 use app\helpers\Helper;
 use app\models\BlueprintModel;
 use app\models\BlueprintVersionModel;
-use DateTime;
-use DateTimeZone;
 use Rancoud\Application\Application;
 
 class BlueprintService
@@ -335,7 +333,7 @@ class BlueprintService
         }
 
         if ($delta !== null) {
-            $expirationDate = (new DateTime($now, new DateTimeZone('UTC')))->modify($delta)->format('Y-m-d H:i:s');
+            $expirationDate = (new \DateTime($now, new \DateTimeZone('UTC')))->modify($delta)->format('Y-m-d H:i:s');
         }
 
         return $expirationDate;

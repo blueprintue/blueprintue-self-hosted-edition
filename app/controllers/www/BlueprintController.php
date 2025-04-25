@@ -12,7 +12,6 @@ use app\services\www\BlueprintService;
 use app\services\www\CommentService;
 use app\services\www\TagService;
 use app\services\www\UserService;
-use Parsedown;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -204,7 +203,7 @@ class BlueprintController implements MiddlewareInterface
             'comments_closed'   => ($blueprint['comments_closed'] === 1),
             'comments_count'    => $blueprint['comments_count'],
         ];
-        $this->data += ['markdown' => (new Parsedown())->setSafeMode(true)];
+        $this->data += ['markdown' => (new \Parsedown())->setSafeMode(true)];
         $this->data += ['can_edit' => $isAuthor];
         $this->data += ['can_comment' => ($this->userID !== null)];
         $this->data += ['can_claim' => $canClaim];

@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace tests\www\Blueprint\View;
 
-use Parsedown;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -149,7 +148,7 @@ class BlueprintGETTagsAndDescriptionBlueprintTest extends TestCase
 
         // description
         if ($description !== null) {
-            $parsedown = (new Parsedown())->setSafeMode(true);
+            $parsedown = (new \Parsedown())->setSafeMode(true);
             $this->doTestHtmlMain($response, '<div class="blueprint__description block__markdown">' . "\n" . $parsedown->text($description) . '                </div>');
         } else {
             $this->doTestHtmlMainNot($response, '<div class="blueprint__description block__markdown">');

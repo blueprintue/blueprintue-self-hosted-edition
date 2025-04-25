@@ -8,8 +8,6 @@ use app\controllers\FormTrait;
 use app\helpers\Helper;
 use app\helpers\MailerHelper;
 use app\services\www\UserService;
-use DateTime;
-use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -194,7 +192,7 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
 
         $html = \ob_get_clean();
 
-        $now = new DateTime('now', new DateTimeZone('UTC'));
+        $now = new \DateTime('now', new \DateTimeZone('UTC'));
 
         $search = [
             '{{URL}}',

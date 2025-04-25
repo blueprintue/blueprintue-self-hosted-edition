@@ -9,8 +9,6 @@ namespace tests\www\IntegrationTest\Service\Blueprint;
 
 use app\models\BlueprintModel;
 use app\services\www\BlueprintService;
-use DateTime;
-use DateTimeZone;
 use Rancoud\Application\Application;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\DatabaseException;
@@ -75,7 +73,7 @@ class ExtendedBlueprintService extends BlueprintService
             'ue_version'      => '4.25',
             'current_version' => 1,
             'exposure'        => 'public',
-            'created_at'      => (new DateTime('now', new DateTimeZone('UTC')))->format('Y-m-d H:i:s'),
+            'created_at'      => (new \DateTime('now', new \DateTimeZone('UTC')))->format('Y-m-d H:i:s'),
         ]);
 
         return $fileID;
@@ -113,7 +111,7 @@ class ExtendedBlueprintService extends BlueprintService
             'ue_version'      => '4.25',
             'current_version' => 1,
             'exposure'        => 'public',
-            'created_at'      => (new DateTime('now', new DateTimeZone('UTC')))->format('Y-m-d H:i:s'),
+            'created_at'      => (new \DateTime('now', new \DateTimeZone('UTC')))->format('Y-m-d H:i:s'),
         ]);
 
         static::setBlueprintContent($fileID, '1', 'aze');

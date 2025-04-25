@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace app\helpers;
 
-use DateTime;
-use DateTimeZone;
 use Rancoud\Application\Application;
 
 class Helper
@@ -71,13 +69,13 @@ class Helper
     public static function getSince(string $publishedAt): string
     {
         try {
-            $publishedAtObject = new DateTime($publishedAt, new DateTimeZone('UTC'));
+            $publishedAtObject = new \DateTime($publishedAt, new \DateTimeZone('UTC'));
         } catch (\Exception $e) {
             // date is invalid so we assume it was a few seconds ago
             return 'few seconds ago';
         }
 
-        $nowObject = new DateTime('now', new DateTimeZone('UTC'));
+        $nowObject = new \DateTime('now', new \DateTimeZone('UTC'));
         if ($publishedAtObject >= $nowObject) {
             return 'few seconds ago';
         }
@@ -170,13 +168,13 @@ class Helper
         }
 
         try {
-            $expirationAtObject = new DateTime($expiration, new DateTimeZone('UTC'));
+            $expirationAtObject = new \DateTime($expiration, new \DateTimeZone('UTC'));
         } catch (\Exception $e) {
             // date is invalid so we assume it was a few seconds ago
             return 'few seconds left';
         }
 
-        $nowObject = new DateTime('now', new DateTimeZone('UTC'));
+        $nowObject = new \DateTime('now', new \DateTimeZone('UTC'));
         if ($expirationAtObject <= $nowObject) {
             return 'few seconds left';
         }
@@ -201,7 +199,7 @@ class Helper
     /** @throws \Exception */
     public static function formatDate(string $datetime, string $format = 'F j, Y'): string
     {
-        return (new DateTime($datetime, new DateTimeZone('UTC')))->format($format);
+        return (new \DateTime($datetime, new \DateTimeZone('UTC')))->format($format);
     }
 
     /** @throws \Exception */
@@ -304,13 +302,13 @@ class Helper
     /** @throws \Exception */
     public static function getNowUTCFormatted(): string
     {
-        return (new DateTime('now', new DateTimeZone('UTC')))->format('Y-m-d H:i:s');
+        return (new \DateTime('now', new \DateTimeZone('UTC')))->format('Y-m-d H:i:s');
     }
 
     /** @throws \Exception */
     public static function getDateFormattedWithUserTimezone(string $date, string $format = 'Y-m-d H:i:s', string $timezone = 'UTC'): string
     {
-        return (new DateTime($date, new DateTimeZone($timezone)))->format($format);
+        return (new \DateTime($date, new \DateTimeZone($timezone)))->format($format);
     }
 
     /**
