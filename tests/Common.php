@@ -420,6 +420,6 @@ HTML;
     }
 }
 
-function isPHPUnit()
+function isPHPUnit(): void
 {
 }

@@ -208,8 +208,8 @@ class MailerTest extends TestCase
         }
 
         if ($useCustomEmailValidation) {
-            static::assertTrue(\call_user_func($mailerProp::$validator, 'a@a'));
-            static::assertFalse(\call_user_func($mailerProp::$validator, "a\na"));
+            static::assertTrue(($mailerProp::$validator)('a@a'));
+            static::assertFalse(($mailerProp::$validator)("a\na"));
         } else {
             static::assertFalse($mailerProp->validateAddress('a@a'));
             static::assertFalse($mailerProp->validateAddress("a\na"));

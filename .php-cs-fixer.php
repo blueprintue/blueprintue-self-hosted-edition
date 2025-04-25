@@ -51,6 +51,31 @@ $rules = [
     ],
 ];
 
+$functionNotationRules = [
+    'combine_nested_dirname'                           => true,
+    'date_time_create_from_format_call'                => true,
+    'fopen_flag_order'                                 => true,
+    'fopen_flags'                                      => ['b_mode' => false],
+    'function_declaration'                             => ['closure_fn_spacing' => 'one', 'closure_function_spacing' => 'one', 'trailing_comma_single_line' => false],
+    'implode_call'                                     => true,
+    'lambda_not_used_import'                           => true,
+    'method_argument_space'                            => ['after_heredoc' => false, 'attribute_placement' => 'ignore', 'keep_multiple_spaces_after_comma' => false, 'on_multiline' => 'ignore'],
+    'native_function_invocation'                       => ['exclude' => [], 'include' => ['@all', '@compiler_optimized', '@internal'], 'scope' => 'all', 'strict' => false],
+    'no_spaces_after_function_name'                    => true,
+    'no_unreachable_default_argument_value'            => true,
+    'no_useless_sprintf'                               => true,
+    'nullable_type_declaration_for_default_null_value' => true,
+    'phpdoc_to_param_type'                             => false,
+    'phpdoc_to_property_type'                          => false,
+    'phpdoc_to_return_type'                            => false,
+    'regular_callable_call'                            => true,
+    'return_type_declaration'                          => ['space_before' => 'none'],
+    'single_line_throw'                                => false,
+    'static_lambda'                                    => true,
+    'use_arrow_functions'                              => false,
+    'void_return'                                      => true
+];
+
 $importRules = [
     'fully_qualified_strict_types' => ['import_symbols' => false, 'leading_backslash_in_global_namespace' => false, 'phpdoc_tags' => ['param', 'phpstan-param', 'phpstan-property', 'phpstan-property-read', 'phpstan-property-write', 'phpstan-return', 'phpstan-var', 'property', 'property-read', 'property-write', 'psalm-param', 'psalm-property', 'psalm-property-read', 'psalm-property-write', 'psalm-return', 'psalm-var', 'return', 'see', 'throws', 'var']],
     'global_namespace_import'      => ['import_classes' => false, 'import_constants' => false, 'import_functions' => false],
@@ -246,6 +271,7 @@ $whitespaceRules = [
 ];
 
 $rules = \array_merge($rules,
+    $functionNotationRules,
     $importRules,
     $languageConstructRules,
     $listNotationRules,
