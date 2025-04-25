@@ -25,11 +25,11 @@ class CronSetSoftDeleteAnonymousPrivateBlueprintsTest extends TestCase
     }
 
     /**
+     * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     public function testCronSetSoftDeleteAnonymousPrivateBlueprintsGET(): void
     {
@@ -56,11 +56,11 @@ class CronSetSoftDeleteAnonymousPrivateBlueprintsTest extends TestCase
     }
 
     /**
+     * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     public function testAbortCronSetSoftDeleteAnonymousPrivateBlueprintsGET(): void
     {
@@ -85,11 +85,11 @@ class CronSetSoftDeleteAnonymousPrivateBlueprintsTest extends TestCase
     }
 
     /**
+     * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     public function testAbortErrorCronSetSoftDeleteAnonymousPrivateBlueprintsGET(): void
     {

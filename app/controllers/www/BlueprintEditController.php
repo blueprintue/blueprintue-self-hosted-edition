@@ -87,9 +87,9 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
-     * @throws \Exception
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -233,9 +233,9 @@ class BlueprintEditController implements MiddlewareInterface
 
     // region Delete Thumbnail
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     protected function doProcessDeleteThumbnail(): ResponseInterface
     {
@@ -311,8 +311,8 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
+     * @throws \Rancoud\Application\ApplicationException
      */
     protected function doProcessEditInformations(?array $params): ?ResponseInterface
     {
@@ -423,8 +423,8 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
+     * @throws \Rancoud\Application\ApplicationException
      */
     protected function doProcessEditProperties(?array $params): ?ResponseInterface
     {
@@ -517,9 +517,9 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     protected function doProcessAddVersion(?array $params): ?ResponseInterface
     {
@@ -575,9 +575,9 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     protected function doProcessDeleteBlueprint(?array $params): ?ResponseInterface
     {
@@ -624,9 +624,9 @@ class BlueprintEditController implements MiddlewareInterface
     // endregion
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
-     * @throws \Exception
      */
     protected function computeDataForRender(array $blueprint): void
     {

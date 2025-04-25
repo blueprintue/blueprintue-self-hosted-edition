@@ -312,8 +312,8 @@ class RenderTest extends TestCase
     /**
      * @dataProvider dataCasesRenderGET_Access
      *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
@@ -421,8 +421,8 @@ HTML);
     /**
      * @dataProvider dataCasesRenderGET_FileBlueprint
      *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException

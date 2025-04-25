@@ -2840,11 +2840,11 @@ HTML,
     }
 
     /**
-     * @dataProvider dataCasesTagAccess
-     * @dataProvider dataCases3PublicUnlistedPrivateBlueprintTagNotGood
-     * @dataProvider dataCases3PublicUnlistedPrivateBlueprintTagGood
      * @dataProvider dataCases30PublicUnlistedPrivateBlueprintTagGoodPage1
      * @dataProvider dataCases30PublicUnlistedPrivateBlueprintTagGoodPage2
+     * @dataProvider dataCases3PublicUnlistedPrivateBlueprintTagGood
+     * @dataProvider dataCases3PublicUnlistedPrivateBlueprintTagNotGood
+     * @dataProvider dataCasesTagAccess
      *
      * @throws ApplicationException
      * @throws DatabaseException

@@ -4818,13 +4818,13 @@ HTML,
     }
 
     /**
-     * @dataProvider dataCasesAccess
-     * @dataProvider dataCasesProfileInfos
+     * @dataProvider dataCases10Public10PrivateBlueprints
      * @dataProvider dataCases1PrivateBlueprint
      * @dataProvider dataCases1UnlistedBlueprint
-     * @dataProvider dataCases10Public10PrivateBlueprints
      * @dataProvider dataCases20Public10PrivateBlueprintsPage1
      * @dataProvider dataCases20Public10PrivateBlueprintsPage2
+     * @dataProvider dataCasesAccess
+     * @dataProvider dataCasesProfileInfos
      *
      * @throws ApplicationException
      * @throws DatabaseException

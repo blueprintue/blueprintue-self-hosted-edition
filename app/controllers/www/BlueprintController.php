@@ -71,10 +71,10 @@ class BlueprintController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
-     * @throws \Exception
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -338,10 +338,10 @@ class BlueprintController implements MiddlewareInterface
     // region form delete_blueprint
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
-     * @throws \Exception
      */
     protected function doProcessDeleteBlueprint(array $blueprint, string $pageURL): ResponseInterface
     {
@@ -416,10 +416,10 @@ class BlueprintController implements MiddlewareInterface
     // region form claim_blueprint
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
-     * @throws \Exception
      */
     protected function doProcessClaimBlueprint(array $blueprint): ResponseInterface
     {
@@ -521,9 +521,9 @@ class BlueprintController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     protected function doProcessDeleteVersionBlueprint(array $blueprint, ?array $params): ResponseInterface
     {
@@ -612,9 +612,9 @@ class BlueprintController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     protected function doProcessAddComment(array $blueprint, ?array $params): ResponseInterface
     {
@@ -715,8 +715,8 @@ class BlueprintController implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
+     * @throws \Rancoud\Application\ApplicationException
      */
     protected function doProcessEditComment(array $blueprint, ?array $params): ResponseInterface
     {
@@ -805,8 +805,8 @@ class BlueprintController implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
+     * @throws \Rancoud\Application\ApplicationException
      */
     protected function doProcessDeleteComment(array $blueprint, ?array $params): ResponseInterface
     {

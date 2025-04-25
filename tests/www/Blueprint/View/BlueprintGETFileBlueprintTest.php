@@ -88,8 +88,8 @@ class BlueprintGETFileBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintGET_FileBlueprint
      *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException

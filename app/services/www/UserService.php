@@ -46,9 +46,9 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public static function generateRememberToken(int $userID): string
     {
@@ -190,8 +190,8 @@ class UserService
 
     /**
      * @throws \Rancoud\Application\ApplicationException
-     * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
      */
     public static function getPublicProfileInfos(string $username): ?array
     {
@@ -214,8 +214,8 @@ class UserService
 
     /**
      * @throws \Rancoud\Application\ApplicationException
-     * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
      */
     public static function getPrivateProfileInfos(int $userID): ?array
     {
@@ -389,8 +389,8 @@ class UserService
     }
 
     /**
-     * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      */
     protected static function getNewApiKey(UserApiModel $userApiModel): string
     {
@@ -412,8 +412,8 @@ class UserService
 
     /**
      * @throws \Rancoud\Application\ApplicationException
-     * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
      */
     public static function generateApiKey(int $userID): void
     {
@@ -435,10 +435,10 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      *
      * @return array [?string $token, bool $userFound, ?string $username]
      */
@@ -554,9 +554,9 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      *
      * @return array [bool $isConfirmedAccount, bool $hasToSendEmail]
      */
@@ -596,12 +596,12 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \PHPMailer\PHPMailer\Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public static function generateAndSendConfirmAccountEmail(int $userID, string $from): bool
     {
@@ -670,10 +670,10 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Security\SecurityException
-     * @throws \Exception
      */
     protected static function getConfirmAccountEmailHTML(string $token, string $username): string
     {
@@ -709,10 +709,10 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public static function validateAccountWithConfirmedToken(string $confirmedToken): bool
     {
@@ -737,9 +737,9 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public static function saveLastLogin(int $userID): bool
     {

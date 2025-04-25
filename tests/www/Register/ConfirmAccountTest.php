@@ -122,11 +122,11 @@ class ConfirmAccountTest extends TestCase
     /**
      * @dataProvider dataCasesConfirmAccount
      *
+     * @throws \Rancoud\Security\SecurityException
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Security\SecurityException
      */
     #[DataProvider('dataCasesConfirmAccount')]
     public function testConfirmAccountPOST(string $slug, ?string $location, ?int $userID, ?array $contentHead, bool $hasRedirection, ?bool $isConfirmedAccount, ?string $text, ?string $jsRedirect): void

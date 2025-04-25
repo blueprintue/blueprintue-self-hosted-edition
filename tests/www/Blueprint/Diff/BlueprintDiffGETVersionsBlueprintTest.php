@@ -325,8 +325,8 @@ HTML
     /**
      * @dataProvider dataCasesBlueprintGET_VersionsBlueprint
      *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */

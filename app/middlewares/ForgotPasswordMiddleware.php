@@ -29,9 +29,9 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
     ];
 
     /**
-     * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
+     * @throws \Rancoud\Database\DatabaseException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -88,9 +88,9 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
+     * @throws \Rancoud\Database\DatabaseException
      *
      * @return ResponseInterface|null
      */
@@ -181,10 +181,10 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Security\SecurityException
-     * @throws \Exception
      */
     protected function getEmailHTML(string $token, string $username): string
     {

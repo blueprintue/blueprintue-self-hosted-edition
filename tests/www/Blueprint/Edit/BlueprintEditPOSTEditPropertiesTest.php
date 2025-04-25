@@ -27,8 +27,8 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
     use Common;
 
     /**
-     * @throws DatabaseException
      * @throws \Rancoud\Crypt\CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {
@@ -1011,12 +1011,12 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
     /**
      * @dataProvider dataCasesEditProperties
      *
+     * @throws \Exception
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
-     * @throws \Exception
      */
     #[DataProvider('dataCasesEditProperties')]
     public function testBlueprintEditPOSTEditProperties(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void

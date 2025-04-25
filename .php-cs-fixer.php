@@ -51,6 +51,45 @@ $rules = [
     ],
 ];
 
+$phpDocRules = [
+    'align_multiline_comment'                       => ['comment_type' => 'phpdocs_only'],
+    'general_phpdoc_annotation_remove'              => ['annotations' => [], 'case_sensitive' => false],
+    'general_phpdoc_tag_rename'                     => ['case_sensitive' => false, 'fix_annotation' => true, 'fix_inline' => true, 'replacements' => ['inheritDocs' => 'inheritDoc']],
+    'no_blank_lines_after_phpdoc'                   => true,
+    'no_empty_phpdoc'                               => true,
+    'no_superfluous_phpdoc_tags'                    => ['allow_hidden_params' => false, 'allow_mixed' => false, 'allow_unused_params' => false, 'remove_inheritdoc' => true],
+    'phpdoc_add_missing_param_annotation'           => ['only_untyped' => true],
+    'phpdoc_align'                                  => ['align' => 'vertical', 'spacing' => ['_default' => 1], 'tags' => ['method', 'param', 'property', 'property-read', 'property-write', 'return', 'throws', 'type', 'var']],
+    'phpdoc_annotation_without_dot'                 => true,
+    'phpdoc_array_type'                             => false,
+    'phpdoc_indent'                                 => true,
+    'phpdoc_inline_tag_normalizer'                  => ['tags' => ['example', 'id', 'internal', 'inheritdoc', 'inheritdocs', 'link', 'source', 'toc', 'tutorial']],
+    'phpdoc_line_span'                              => ['const' => 'single', 'method' => 'single', 'property' => 'single'],
+    'phpdoc_list_type'                              => false,
+    'phpdoc_no_access'                              => true,
+    'phpdoc_no_alias_tag'                           => ['replacements' => ['property-read' => 'property', 'property-write' => 'property', 'type' => 'var', 'link' => 'see']],
+    'phpdoc_no_empty_return'                        => true,
+    'phpdoc_no_package'                             => true,
+    'phpdoc_no_useless_inheritdoc'                  => true,
+    'phpdoc_order_by_value'                         => ['annotations' => ['author', 'covers', 'coversNothing', 'dataProvider', 'depends', 'group', 'internal', 'method', 'mixin', 'property', 'property-read', 'property-write', 'requires', 'throws', 'uses']],
+    'phpdoc_order'                                  => ['order' => ['param', 'throws', 'return']],
+    'phpdoc_param_order'                            => true,
+    'phpdoc_return_self_reference'                  => ['replacements' => ['this' => '$this', '@this' => '$this', '$self' => 'self', '@self' => 'self', '$static' => 'static', '@static' => 'static']],
+    'phpdoc_scalar'                                 => ['types' => ['boolean', 'callback', 'double', 'integer', 'real', 'str']],
+    'phpdoc_separation'                             => ['groups' => [['author', 'copyright', 'license'], ['category', 'package', 'subpackage'], ['property', 'property-read', 'property-write'], ['deprecated', 'link', 'see', 'since']], 'skip_unlisted_annotations' => true],
+    'phpdoc_single_line_var_spacing'                => true,
+    'phpdoc_summary'                                => true,
+    'phpdoc_tag_casing'                             => ['tags' => ['inheritDoc']],
+    'phpdoc_tag_type'                               => ['tags' => ['inheritDoc' => 'inline']],
+    'phpdoc_to_comment'                             => ['allow_before_return_statement' => false, 'ignored_tags' => []],
+    'phpdoc_trim_consecutive_blank_line_separation' => true,
+    'phpdoc_trim'                                   => true,
+    'phpdoc_types'                                  => ['groups' => ['alias', 'meta', 'simple']],
+    'phpdoc_types_order'                            => ['case_sensitive' => false, 'null_adjustment' => 'always_last', 'sort_algorithm' => 'alpha'],
+    'phpdoc_var_annotation_correct_order'           => true,
+    'phpdoc_var_without_name'                       => true
+];
+
 $returnNotationRules = [
     'no_useless_return'      => true,
     'return_assignment'      => true,
@@ -106,6 +145,7 @@ $whitespaceRules = [
 ];
 
 $rules = \array_merge($rules,
+    $phpDocRules,
     $returnNotationRules,
     $semicolonRules,
     $strictRules,

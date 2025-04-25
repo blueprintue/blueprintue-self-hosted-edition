@@ -38,9 +38,9 @@ class StaticTest extends TestCase
 
     /**
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws DatabaseException
      */
     protected function getResponseFromApplicationWithStatic(string $url): ?\Rancoud\Http\Message\Response
     {
@@ -99,9 +99,9 @@ class StaticTest extends TestCase
      * @dataProvider dataCases
      *
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws DatabaseException
      */
     #[DataProvider('dataCases')]
     public function testStaticPage(string $url, array $headers, string $content): void

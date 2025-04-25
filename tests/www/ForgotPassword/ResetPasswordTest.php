@@ -32,8 +32,8 @@ class ResetPasswordTest extends TestCase
     }
 
     /**
-     * @throws DatabaseException
      * @throws CryptException
+     * @throws DatabaseException
      */
     protected function setUp(): void
     {

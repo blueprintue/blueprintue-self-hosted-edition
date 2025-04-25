@@ -917,8 +917,8 @@ class HomeTest extends TestCase
     /**
      * @dataProvider dataCasesCreateBlueprint
      *
-     * @throws DatabaseException
      * @throws \Exception
+     * @throws DatabaseException
      */
     #[DataProvider('dataCasesCreateBlueprint')]
     public function testHomePOSTCreateBlueprint(int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError, bool $hasAnonymousUser): void

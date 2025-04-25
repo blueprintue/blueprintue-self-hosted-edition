@@ -99,10 +99,10 @@ class ProfileEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -123,10 +123,10 @@ class ProfileEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     protected function isAuthor(ServerRequestInterface $request): bool
     {
@@ -257,9 +257,9 @@ class ProfileEditController implements MiddlewareInterface
 
     // region Delete Avatar
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     protected function doProcessDeleteAvatar(): ResponseInterface
     {
@@ -290,9 +290,9 @@ class ProfileEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     protected function doProcessEditBasicInfos(array $params): ResponseInterface
     {
@@ -374,9 +374,9 @@ class ProfileEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     protected function doProcessEditSocials(?array $params): ?ResponseInterface
     {
@@ -395,9 +395,9 @@ class ProfileEditController implements MiddlewareInterface
 
     // region Change Email
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     protected function treatFormChangeEmail(ServerRequestInterface $request, array $inputs): ?array
     {
@@ -452,9 +452,9 @@ class ProfileEditController implements MiddlewareInterface
 
     // region Change Username
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     protected function treatFormChangeUsername(ServerRequestInterface $request, array $inputs): ?array
     {
@@ -489,9 +489,9 @@ class ProfileEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     protected function doProcessChangeUsername(?array $params): ?ResponseInterface
     {
@@ -559,9 +559,9 @@ class ProfileEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     protected function doProcessChangePassword(?array $params): ?ResponseInterface
     {
@@ -580,10 +580,10 @@ class ProfileEditController implements MiddlewareInterface
 
     // region Generate API KEY
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     protected function doProcessGenerateApiKey(): ?ResponseInterface
     {
@@ -632,9 +632,9 @@ class ProfileEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     protected function doProcessDeleteProfile(?array $params): ?ResponseInterface
     {
@@ -703,10 +703,10 @@ class ProfileEditController implements MiddlewareInterface
     // endregion
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     protected function computeEditProfile(int $userID): void
     {
@@ -737,11 +737,11 @@ class ProfileEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     protected function computeDataForRender(ServerRequestInterface $request): void
     {

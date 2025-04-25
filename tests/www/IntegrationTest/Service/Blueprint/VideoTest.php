@@ -666,13 +666,13 @@ class VideoTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCasesNoVideo
-     * @dataProvider dataCasesYoutube
-     * @dataProvider dataCasesVimeo
-     * @dataProvider dataCasesDailymotion
-     * @dataProvider dataCasesPeertube
      * @dataProvider dataCasesBilibili
+     * @dataProvider dataCasesDailymotion
      * @dataProvider dataCasesNiconico
+     * @dataProvider dataCasesNoVideo
+     * @dataProvider dataCasesPeertube
+     * @dataProvider dataCasesVimeo
+     * @dataProvider dataCasesYoutube
      */
     #[DataProvider('dataCasesNoVideo')]
     #[DataProvider('dataCasesYoutube')]

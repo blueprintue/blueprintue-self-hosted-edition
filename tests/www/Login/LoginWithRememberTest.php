@@ -23,8 +23,8 @@ class LoginWithRememberTest extends TestCase
     use Common;
 
     /**
-     * @throws DatabaseException
      * @throws CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {

@@ -130,10 +130,10 @@ class TagsTextareaTest extends TestCase
     }
 
     /**
+     * @dataProvider dataCasesCaseSensitiveTags
      * @dataProvider dataCasesEmptyTextarea
      * @dataProvider dataCasesOneTagInTextarea
      * @dataProvider dataCasesTwoTagsInTextarea
-     * @dataProvider dataCasesCaseSensitiveTags
      *
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException

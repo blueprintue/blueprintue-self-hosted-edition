@@ -38,8 +38,8 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
     }
 
     /**
-     * @throws DatabaseException
      * @throws \Rancoud\Crypt\CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {

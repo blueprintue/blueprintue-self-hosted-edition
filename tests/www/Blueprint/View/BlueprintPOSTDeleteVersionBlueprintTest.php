@@ -514,8 +514,8 @@ class BlueprintPOSTDeleteVersionBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintPOST_DeleteVersionBlueprint
      *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */

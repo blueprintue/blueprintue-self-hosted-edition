@@ -41,8 +41,8 @@ class BlueprintGETCommentsTest extends TestCase
     ];
 
     /**
-     * @throws DatabaseException
      * @throws \Exception
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {
@@ -341,12 +341,12 @@ class BlueprintGETCommentsTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintGET_CommentsBlueprint
      *
-     * @throws DatabaseException
+     * @throws \Exception
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
-     * @throws \Exception
      */
     #[DataProvider('dataCasesBlueprintGET_CommentsBlueprint')]
     public function testBlueprintGETCommentsBlueprint(array $sqlQueries, string $slug, ?int $userID, bool $hasTitle, int $countComments, bool $hasForm, string $pageURL, bool $isCommentsHidden, bool $isCommentsClosed, array $commentIDs): void

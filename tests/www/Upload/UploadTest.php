@@ -1025,14 +1025,14 @@ class UploadTest extends TestCase
     }
 
     /**
+     * @dataProvider dataCasesBlueprintThumbnail
      * @dataProvider dataCasesURL404
      * @dataProvider dataCasesUserAvatar
-     * @dataProvider dataCasesBlueprintThumbnail
      *
-     * @throws DatabaseException
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Router\RouterException
+     * @throws DatabaseException
      */
     #[DataProvider('dataCasesURL404')]
     #[DataProvider('dataCasesUserAvatar')]

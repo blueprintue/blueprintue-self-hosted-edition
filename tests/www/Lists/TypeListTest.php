@@ -4433,14 +4433,14 @@ HTML,
     }
 
     /**
+     * @dataProvider dataCases30PublicUnlistedPrivateBlueprintPage1
+     * @dataProvider dataCases30PublicUnlistedPrivateBlueprintPage2
      * @dataProvider dataCases3PublicUnlistedPrivateAnimationBlueprint
      * @dataProvider dataCases3PublicUnlistedPrivateBehaviorTreeBlueprint
      * @dataProvider dataCases3PublicUnlistedPrivateBlueprint
      * @dataProvider dataCases3PublicUnlistedPrivateMaterialBlueprint
      * @dataProvider dataCases3PublicUnlistedPrivateMetasoundBlueprint
      * @dataProvider dataCases3PublicUnlistedPrivateNiagaraBlueprint
-     * @dataProvider dataCases30PublicUnlistedPrivateBlueprintPage1
-     * @dataProvider dataCases30PublicUnlistedPrivateBlueprintPage2
      *
      * @throws ApplicationException
      * @throws DatabaseException

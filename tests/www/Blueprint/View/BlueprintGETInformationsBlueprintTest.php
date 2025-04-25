@@ -163,8 +163,8 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintGET_InformationsBlueprint
      *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException

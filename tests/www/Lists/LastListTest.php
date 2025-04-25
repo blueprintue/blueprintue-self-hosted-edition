@@ -2453,9 +2453,9 @@ HTML,
     }
 
     /**
-     * @dataProvider dataCases3PublicUnlistedPrivateBlueprint
      * @dataProvider dataCases30PublicUnlistedPrivateBlueprintPage1
      * @dataProvider dataCases30PublicUnlistedPrivateBlueprintPage2
+     * @dataProvider dataCases3PublicUnlistedPrivateBlueprint
      *
      * @throws ApplicationException
      * @throws DatabaseException

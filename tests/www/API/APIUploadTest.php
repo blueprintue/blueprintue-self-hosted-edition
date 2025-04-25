@@ -265,11 +265,11 @@ class APIUploadTest extends TestCase
     /**
      * @dataProvider dataCases
      *
+     * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     #[DataProvider('dataCases')]
     public function testUploadPOST(array $headers, array $params, int $responseCode, string $responseContent): void

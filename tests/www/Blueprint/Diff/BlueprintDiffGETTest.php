@@ -514,8 +514,8 @@ class BlueprintDiffGETTest extends TestCase
      * @dataProvider dataCasesBlueprintGET
      * @dataProvider dataCasesBlueprintGETVersionAccess
      *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException

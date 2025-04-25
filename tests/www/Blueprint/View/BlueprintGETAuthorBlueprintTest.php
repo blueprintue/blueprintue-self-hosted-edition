@@ -81,8 +81,8 @@ class BlueprintGETAuthorBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintGET_AuthorBlueprint
      *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException

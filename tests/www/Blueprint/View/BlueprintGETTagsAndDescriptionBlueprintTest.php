@@ -120,8 +120,8 @@ class BlueprintGETTagsAndDescriptionBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintGET_TagsAndDescriptionBlueprint
      *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException

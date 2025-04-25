@@ -22,9 +22,9 @@ class CommentService
 
     // region Add comment
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public static function addComment(int $blueprintID, int $userID, string $comment): int
     {

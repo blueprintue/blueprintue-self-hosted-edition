@@ -28,10 +28,10 @@ class BlueprintFolderTest extends TestCase
     }
 
     /**
-     * @throws RouterException
-     * @throws EnvironmentException
      * @throws ApplicationException
      * @throws DatabaseException
+     * @throws EnvironmentException
+     * @throws RouterException
      */
     protected function setUp(): void
     {

@@ -74,8 +74,6 @@ class TagModel extends Model
     /**
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return null
      */
     public function findTagWithSlug(string $slug): ?array
     {

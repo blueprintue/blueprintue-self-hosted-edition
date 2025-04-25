@@ -424,11 +424,11 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintPOST_DeleteComment
      *
+     * @throws \Rancoud\Security\SecurityException
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Security\SecurityException
      */
     #[DataProvider('dataCasesBlueprintPOST_DeleteComment')]
     public function testBlueprintPOSTDeleteComment(array $sqlQueries, string $slug, ?int $userID, ?int $commentID, bool $hasButtonDelete, ?array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages): void

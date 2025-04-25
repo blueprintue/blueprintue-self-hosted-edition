@@ -23,8 +23,8 @@ class LogoutTest extends TestCase
     use Common;
 
     /**
-     * @throws DatabaseException
      * @throws CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {
@@ -106,9 +106,9 @@ class LogoutTest extends TestCase
      * @dataProvider dataCasesLogoutPOST
      *
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws DatabaseException
      */
     #[DataProvider('dataCasesLogoutPOST')]
     public function testLogoutPOST(array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess): void

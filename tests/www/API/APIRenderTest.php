@@ -164,10 +164,10 @@ HTML,
     /**
      * @dataProvider dataCases
      *
+     * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Database\DatabaseException
      */
     #[DataProvider('dataCases')]
     public function testRenderPOST(array $headers, array $params, int $responseCode, string $responseContent): void

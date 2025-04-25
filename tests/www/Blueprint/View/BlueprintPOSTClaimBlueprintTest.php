@@ -403,8 +403,8 @@ class BlueprintPOSTClaimBlueprintTest extends TestCase
     /**
      * @dataProvider dataCasesBlueprintPOST_ClaimBlueprint
      *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */

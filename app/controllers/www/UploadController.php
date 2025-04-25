@@ -22,9 +22,9 @@ use Rancoud\Session\Session;
 class UploadController implements MiddlewareInterface
 {
     /**
-     * @throws ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
+     * @throws ApplicationException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -43,9 +43,9 @@ class UploadController implements MiddlewareInterface
     }
 
     /**
-     * @throws ApplicationException
-     * @throws \Rancoud\Model\ModelException
      * @throws \Exception
+     * @throws \Rancoud\Model\ModelException
+     * @throws ApplicationException
      */
     protected function uploadUserAvatar(ServerRequestInterface $request): ResponseInterface
     {
@@ -92,10 +92,10 @@ class UploadController implements MiddlewareInterface
     }
 
     /**
-     * @throws ApplicationException
+     * @throws \Exception
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
+     * @throws ApplicationException
      */
     protected function uploadBlueprintThumbnail(ServerRequestInterface $request): ResponseInterface
     {

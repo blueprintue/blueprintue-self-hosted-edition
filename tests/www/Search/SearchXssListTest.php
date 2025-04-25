@@ -25,9 +25,7 @@ class SearchXssListTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function setUpBeforeClass(): void
     {
         static::setDatabaseEmptyStructure();
@@ -1172,9 +1170,7 @@ HTML,
         $this->doTestHtmlMain($response, $this->getHTMLFieldVersion($queryParams));
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldQuery(array $queryParams): string
     {
         $v = Security::escAttr($queryParams['query'] ?? $queryParams['form-search-input-query'] ?? '');
@@ -1223,9 +1219,7 @@ HTML;
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldVersion(array $queryParams): string
     {
         $value = $queryParams['form-search-select-ue_version'] ?? '';

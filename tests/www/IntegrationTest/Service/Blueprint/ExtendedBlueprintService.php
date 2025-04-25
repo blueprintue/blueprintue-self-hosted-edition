@@ -18,8 +18,8 @@ use Rancoud\Database\DatabaseException;
 class ExtendedBlueprintService extends BlueprintService
 {
     /**
-     * @throws DatabaseException
      * @throws \Exception
+     * @throws DatabaseException
      */
     protected static function getNewFileID(BlueprintModel $blueprints): string
     {
@@ -58,9 +58,9 @@ class ExtendedBlueprintService extends BlueprintService
     }
 
     /**
-     * @throws DatabaseException
-     * @throws ApplicationException
      * @throws \Exception
+     * @throws ApplicationException
+     * @throws DatabaseException
      */
     public static function testNewFileIDOnDatabase(): string
     {
@@ -82,9 +82,9 @@ class ExtendedBlueprintService extends BlueprintService
     }
 
     /**
-     * @throws DatabaseException
-     * @throws ApplicationException
      * @throws \Exception
+     * @throws ApplicationException
+     * @throws DatabaseException
      */
     public static function testNewFileIDOnFileSystem(): string
     {
@@ -96,9 +96,9 @@ class ExtendedBlueprintService extends BlueprintService
     }
 
     /**
-     * @throws DatabaseException
-     * @throws ApplicationException
      * @throws \Exception
+     * @throws ApplicationException
+     * @throws DatabaseException
      */
     public static function testNewFileIDBoth(): string
     {

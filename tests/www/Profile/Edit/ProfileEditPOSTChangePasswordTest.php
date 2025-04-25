@@ -22,8 +22,8 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
     use Common;
 
     /**
-     * @throws DatabaseException
      * @throws \Rancoud\Crypt\CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {

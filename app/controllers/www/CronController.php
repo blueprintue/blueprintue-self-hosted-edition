@@ -166,8 +166,8 @@ class CronController
     }
 
     /**
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      */
     protected function updateUserCounters(int $userID): void
     {
