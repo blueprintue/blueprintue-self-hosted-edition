@@ -43,99 +43,105 @@ class HomeLastBlueprintsTest extends TestCase
      */
     public static function provideLastBlueprintsDataCases(): iterable
     {
-        return [
-            'no blueprints - nothing in database' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints'
-                ],
-                'hasHeader' => false,
-                'content'   => '<p>No blueprints for the moment</p>'
+        yield 'no blueprints - nothing in database' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints'
             ],
-            'no blueprints - no published_at' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (' . static::$anonymousID . ", 'slug', 'file', 'title', 1, utc_timestamp(), null, 'public')",
-                ],
-                'hasHeader' => false,
-                'content'   => '<p>No blueprints for the moment</p>'
+            'hasHeader' => false,
+            'content'   => '<p>No blueprints for the moment</p>'
+        ];
+
+        yield 'no blueprints - no published_at' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (' . static::$anonymousID . ", 'slug', 'file', 'title', 1, utc_timestamp(), null, 'public')",
             ],
-            'no blueprints - public but expiration passed' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, expiration) VALUES (' . static::$anonymousID . ", 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'public', '2020-01-01 01:01:01')",
-                ],
-                'hasHeader' => false,
-                'content'   => '<p>No blueprints for the moment</p>'
+            'hasHeader' => false,
+            'content'   => '<p>No blueprints for the moment</p>'
+        ];
+
+        yield 'no blueprints - public but expiration passed' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, expiration) VALUES (' . static::$anonymousID . ", 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'public', '2020-01-01 01:01:01')",
             ],
-            'no blueprints - deleted' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, deleted_at) VALUES (' . static::$anonymousID . ", 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp())",
-                ],
-                'hasHeader' => false,
-                'content'   => '<p>No blueprints for the moment</p>'
+            'hasHeader' => false,
+            'content'   => '<p>No blueprints for the moment</p>'
+        ];
+
+        yield 'no blueprints - deleted' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, deleted_at) VALUES (' . static::$anonymousID . ", 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp())",
             ],
-            'no blueprints - exposure private' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (' . static::$anonymousID . ", 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'hasHeader' => false,
-                'content'   => '<p>No blueprints for the moment</p>'
+            'hasHeader' => false,
+            'content'   => '<p>No blueprints for the moment</p>'
+        ];
+
+        yield 'no blueprints - exposure private' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (' . static::$anonymousID . ", 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'private')",
             ],
-            'no blueprints - exposure unlisted' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (' . static::$anonymousID . ", 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
-                ],
-                'hasHeader' => false,
-                'content'   => '<p>No blueprints for the moment</p>'
+            'hasHeader' => false,
+            'content'   => '<p>No blueprints for the moment</p>'
+        ];
+
+        yield 'no blueprints - exposure unlisted' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (' . static::$anonymousID . ", 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
             ],
-            '1 blueprint' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'anonymous', NULL, 'anonymous', 'anonymous@mail', utc_timestamp())",
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at) VALUES (' . static::$anonymousID . ", 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp())",
-                ],
-                'hasHeader' => true,
-                'content'   => static::getHTMLItemBlueprint('slug', 'blueprint', '4.0', 'title', 'anonymous', 'anonymous', 'few seconds ago', null),
+            'hasHeader' => false,
+            'content'   => '<p>No blueprints for the moment</p>'
+        ];
+
+        yield '1 blueprint' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'anonymous', NULL, 'anonymous', 'anonymous@mail', utc_timestamp())",
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at) VALUES (' . static::$anonymousID . ", 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp())",
             ],
-            '5 blueprints max - 10 blueprints in database' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'anonymous', NULL, 'anonymous', 'anonymous@mail', utc_timestamp())",
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 1', 'file 1', 'title 1', 1, utc_timestamp(), utc_timestamp() - interval 7 month, '4.20', 'blueprint')",
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 2', 'file 2', 'title 2', 1, utc_timestamp(), utc_timestamp() - interval 2 month, '4.19', 'metasound')",
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 3', 'file 3', 'title 3', 1, utc_timestamp(), utc_timestamp() - interval 8 month, '4.18', 'animation')",
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 4', 'file 4', 'title 4', 1, utc_timestamp(), utc_timestamp() - interval 10 month, '4.17', 'blueprint')",
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 5', 'file 5', 'title 5', 1, utc_timestamp(), utc_timestamp() - interval 9 month, '4.16', 'material')",
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 6', 'file 6', 'title 6', 1, utc_timestamp(), utc_timestamp() - interval 1 month, '4.15', 'animation')",
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 7', 'file 7', 'title 7', 1, utc_timestamp(), utc_timestamp() - interval 6 month, '4.14', 'blueprint')",
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 8', 'file 8', 'title 8', 1, utc_timestamp(), utc_timestamp() - interval 3 month, '4.13', 'material')",
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 9', 'file 9', 'title 9', 1, utc_timestamp(), utc_timestamp() - interval 5 month, '4.12', 'niagara')",
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 10', 'file 10', 'title 10', 1, utc_timestamp(), utc_timestamp() - interval 4 month, '4.4', 'behavior_tree')",
-                ],
-                'hasHeader' => true,
-                'content'   => \implode(
-                    "\n",
-                    [
-                        static::getHTMLItemBlueprint('slug 6', 'animation', '4.15', 'title 6', 'anonymous', 'anonymous', '1 months ago', null),
-                        static::getHTMLItemBlueprint('slug 2', 'metasound', '4.19', 'title 2', 'anonymous', 'anonymous', '2 months ago', null),
-                        static::getHTMLItemBlueprint('slug 8', 'material', '4.13', 'title 8', 'anonymous', 'anonymous', '3 months ago', null),
-                        static::getHTMLItemBlueprint('slug 10', 'behavior_tree', '4.4', 'title 10', 'anonymous', 'anonymous', '4 months ago', null),
-                        static::getHTMLItemBlueprint('slug 9', 'niagara', '4.12', 'title 9', 'anonymous', 'anonymous', '5 months ago', null),
-                    ]
-                )
+            'hasHeader' => true,
+            'content'   => static::getHTMLItemBlueprint('slug', 'blueprint', '4.0', 'title', 'anonymous', 'anonymous', 'few seconds ago', null),
+        ];
+
+        yield '5 blueprints max - 10 blueprints in database' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'anonymous', NULL, 'anonymous', 'anonymous@mail', utc_timestamp())",
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 1', 'file 1', 'title 1', 1, utc_timestamp(), utc_timestamp() - interval 7 month, '4.20', 'blueprint')",
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 2', 'file 2', 'title 2', 1, utc_timestamp(), utc_timestamp() - interval 2 month, '4.19', 'metasound')",
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 3', 'file 3', 'title 3', 1, utc_timestamp(), utc_timestamp() - interval 8 month, '4.18', 'animation')",
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 4', 'file 4', 'title 4', 1, utc_timestamp(), utc_timestamp() - interval 10 month, '4.17', 'blueprint')",
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 5', 'file 5', 'title 5', 1, utc_timestamp(), utc_timestamp() - interval 9 month, '4.16', 'material')",
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 6', 'file 6', 'title 6', 1, utc_timestamp(), utc_timestamp() - interval 1 month, '4.15', 'animation')",
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 7', 'file 7', 'title 7', 1, utc_timestamp(), utc_timestamp() - interval 6 month, '4.14', 'blueprint')",
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 8', 'file 8', 'title 8', 1, utc_timestamp(), utc_timestamp() - interval 3 month, '4.13', 'material')",
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 9', 'file 9', 'title 9', 1, utc_timestamp(), utc_timestamp() - interval 5 month, '4.12', 'niagara')",
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, type) VALUES (' . static::$anonymousID . ", 'slug 10', 'file 10', 'title 10', 1, utc_timestamp(), utc_timestamp() - interval 4 month, '4.4', 'behavior_tree')",
             ],
-            'xss' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, '<script>alert(\"user_name\")</script>', NULL, '<script>alert(\"user_slug\")</script>', 'anonymous@mail', utc_timestamp())",
-                    'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, thumbnail) VALUES (' . static::$anonymousID . ", '<script>alert(\"slug\")</script>', '<script>alert(\"file\")</script>', '<script>alert(\"title\")</script>', 4, utc_timestamp(), utc_timestamp(), '<>4</', '<script>alert(\"thumbnail\")</script>')",
-                ],
-                'hasHeader' => true,
-                'content'   => static::getHTMLItemBlueprint('<script>alert("slug")</script>', 'blueprint', '<>4</', '<script>alert("title")</script>', '<script>alert("user_name")</script>', '<script>alert("user_slug")</script>', 'few seconds ago', '<script>alert("thumbnail")</script>'),
+            'hasHeader' => true,
+            'content'   => \implode(
+                "\n",
+                [
+                    static::getHTMLItemBlueprint('slug 6', 'animation', '4.15', 'title 6', 'anonymous', 'anonymous', '1 months ago', null),
+                    static::getHTMLItemBlueprint('slug 2', 'metasound', '4.19', 'title 2', 'anonymous', 'anonymous', '2 months ago', null),
+                    static::getHTMLItemBlueprint('slug 8', 'material', '4.13', 'title 8', 'anonymous', 'anonymous', '3 months ago', null),
+                    static::getHTMLItemBlueprint('slug 10', 'behavior_tree', '4.4', 'title 10', 'anonymous', 'anonymous', '4 months ago', null),
+                    static::getHTMLItemBlueprint('slug 9', 'niagara', '4.12', 'title 9', 'anonymous', 'anonymous', '5 months ago', null),
+                ]
+            )
+        ];
+
+        yield 'xss' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, '<script>alert(\"user_name\")</script>', NULL, '<script>alert(\"user_slug\")</script>', 'anonymous@mail', utc_timestamp())",
+                'INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, ue_version, thumbnail) VALUES (' . static::$anonymousID . ", '<script>alert(\"slug\")</script>', '<script>alert(\"file\")</script>', '<script>alert(\"title\")</script>', 4, utc_timestamp(), utc_timestamp(), '<>4</', '<script>alert(\"thumbnail\")</script>')",
             ],
+            'hasHeader' => true,
+            'content'   => static::getHTMLItemBlueprint('<script>alert("slug")</script>', 'blueprint', '<>4</', '<script>alert("title")</script>', '<script>alert("user_name")</script>', '<script>alert("user_slug")</script>', 'few seconds ago', '<script>alert("thumbnail")</script>'),
         ];
     }
 

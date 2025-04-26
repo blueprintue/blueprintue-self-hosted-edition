@@ -57,860 +57,887 @@ class HomeTest extends TestCase
 
     public static function provideCreateBlueprintDataCases(): iterable
     {
-        return [
-            'xss - create blueprint OK' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '<script>alert("title")</script>',
-                    'form-add_blueprint-select-exposure'    => 'public',
-                    'form-add_blueprint-select-expiration'  => 'never',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object <script>alert("blueprint")</script>'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => ['exposure', 'expiration', 'ue_version'],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+        yield 'xss - create blueprint OK' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '<script>alert("title")</script>',
+                'form-add_blueprint-select-exposure'    => 'public',
+                'form-add_blueprint-select-expiration'  => 'never',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object <script>alert("blueprint")</script>'
             ],
-            'xss form - KO' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '<script>alert("title")</script>',
-                    'form-add_blueprint-select-exposure'    => '<script>alert("exposure")</script>',
-                    'form-add_blueprint-select-expiration'  => '<script>alert("expiration")</script>',
-                    'form-add_blueprint-select-ue_version'  => '<script>alert("ue_version")</script>',
-                    'form-add_blueprint-textarea-blueprint' => '<script>alert("blueprint")</script>'
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [
-                    'exposure'   => 'Exposure is invalid',
-                    'expiration' => 'Expiration is invalid',
-                    'ue_version' => 'UE version is invalid',
-                    'blueprint'  => 'Blueprint is invalid',
-                ],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
+                ]
             ],
-            'anonymous - create blueprint OK - 1 hour' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => 'title 1 hour',
-                    'form-add_blueprint-select-exposure'    => 'unlisted',
-                    'form-add_blueprint-select-expiration'  => '1h',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object 1'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => ['exposure', 'expiration', 'ue_version'],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'xss form - KO' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '<script>alert("title")</script>',
+                'form-add_blueprint-select-exposure'    => '<script>alert("exposure")</script>',
+                'form-add_blueprint-select-expiration'  => '<script>alert("expiration")</script>',
+                'form-add_blueprint-select-ue_version'  => '<script>alert("ue_version")</script>',
+                'form-add_blueprint-textarea-blueprint' => '<script>alert("blueprint")</script>'
             ],
-            'anonymous - create blueprint OK - 1 day' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => 'title 1 day',
-                    'form-add_blueprint-select-exposure'    => 'unlisted',
-                    'form-add_blueprint-select-expiration'  => '1d',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object 2'
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
+                ]
             ],
-            'anonymous - create blueprint OK - 1 week' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => 'title 1 week',
-                    'form-add_blueprint-select-exposure'    => 'unlisted',
-                    'form-add_blueprint-select-expiration'  => '1w',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object 3'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => ['exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [
+                'exposure'   => 'Exposure is invalid',
+                'expiration' => 'Expiration is invalid',
+                'ue_version' => 'UE version is invalid',
+                'blueprint'  => 'Blueprint is invalid',
             ],
-            'user - create blueprint OK' => [
-                'userID' => static::$userID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => 'title never',
-                    'form-add_blueprint-select-exposure'    => 'private',
-                    'form-add_blueprint-select-expiration'  => 'never',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object 2'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'anonymous - create blueprint OK - 1 hour' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => 'title 1 hour',
+                'form-add_blueprint-select-exposure'    => 'unlisted',
+                'form-add_blueprint-select-expiration'  => '1h',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object 1'
             ],
-            'csrf incorrect' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'incorrect_csrf',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => '0',
-                    'form-add_blueprint-select-expiration'  => '0',
-                    'form-add_blueprint-select-ue_version'  => '0',
-                    'form-add_blueprint-textarea-blueprint' => '0'
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
+                ]
             ],
-            'missing fields - no fields' => [
-                'userID'             => static::$anonymousID,
-                'params'             => [],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'anonymous - create blueprint OK - 1 day' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => 'title 1 day',
+                'form-add_blueprint-select-exposure'    => 'unlisted',
+                'form-add_blueprint-select-expiration'  => '1d',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object 2'
             ],
-            'missing fields - no csrf' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => '0',
-                    'form-add_blueprint-select-expiration'  => '0',
-                    'form-add_blueprint-select-ue_version'  => '0',
-                    'form-add_blueprint-textarea-blueprint' => '0'
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
+                ]
             ],
-            'missing fields - no title' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'incorrect_csrf',
-                    'form-add_blueprint-select-exposure'    => '0',
-                    'form-add_blueprint-select-expiration'  => '0',
-                    'form-add_blueprint-select-ue_version'  => '0',
-                    'form-add_blueprint-textarea-blueprint' => '0'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'anonymous - create blueprint OK - 1 week' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => 'title 1 week',
+                'form-add_blueprint-select-exposure'    => 'unlisted',
+                'form-add_blueprint-select-expiration'  => '1w',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object 3'
             ],
-            'missing fields - no exposure' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'incorrect_csrf',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-input-expiration'   => '0',
-                    'form-add_blueprint-input-ue_version'   => '0',
-                    'form-add_blueprint-textarea-blueprint' => '0'
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
+                ]
             ],
-            'missing fields - no ue_version' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'         => 'incorrect_csrf',
-                    'form-add_blueprint-input-title'         => '0',
-                    'form-add_blueprint-select-exposure'     => '0',
-                    'form-add_blueprint-select-expiration'   => '0',
-                    'form-add_blueprint-selectrea-blueprint' => '0'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'user - create blueprint OK' => [
+            'userID' => static::$userID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => 'title never',
+                'form-add_blueprint-select-exposure'    => 'private',
+                'form-add_blueprint-select-expiration'  => 'never',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object 2'
             ],
-            'missing fields - no blueprint' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'       => 'incorrect_csrf',
-                    'form-add_blueprint-input-title'       => '0',
-                    'form-add_blueprint-select-exposure'   => '0',
-                    'form-add_blueprint-select-expiration' => '0',
-                    'form-add_blueprint-select-ue_version' => '0',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
+                ]
             ],
-            'empty fields - title empty' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => ' ',
-                    'form-add_blueprint-select-exposure'    => 'unlisted',
-                    'form-add_blueprint-select-expiration'  => '1d',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['title'],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [
-                    'title' => 'Title is required'
-                ],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'csrf incorrect' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'incorrect_csrf',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => '0',
+                'form-add_blueprint-select-expiration'  => '0',
+                'form-add_blueprint-select-ue_version'  => '0',
+                'form-add_blueprint-textarea-blueprint' => '0'
             ],
-            'empty fields - exposure empty' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => ' ',
-                    'form-add_blueprint-select-expiration'  => '1d',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object'
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['exposure'],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [
-                    'exposure' => 'Exposure is required'
-                ],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
+                ]
             ],
-            'empty fields - expiration empty' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => 'unlisted',
-                    'form-add_blueprint-select-expiration'  => ' ',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object'
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'missing fields - no fields' => [
+            'userID'             => static::$anonymousID,
+            'params'             => [],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['expiration'],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [
-                    'expiration' => 'Expiration is required'
-                ],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
+                ]
             ],
-            'empty fields - ue_version empty' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => 'unlisted',
-                    'form-add_blueprint-select-expiration'  => '1d',
-                    'form-add_blueprint-select-ue_version'  => ' ',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['ue_version'],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [
-                    'ue_version' => 'UE version is required'
-                ],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => '0',
+                'form-add_blueprint-select-expiration'  => '0',
+                'form-add_blueprint-select-ue_version'  => '0',
+                'form-add_blueprint-textarea-blueprint' => '0'
             ],
-            'empty fields - blueprint empty' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => 'unlisted',
-                    'form-add_blueprint-select-expiration'  => '1d',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => ' '
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['blueprint'],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [
-                    'blueprint' => 'Blueprint is required'
-                ],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
+                ]
             ],
-            'invalid fields - exposure invalid' => [
-                'userID' => static::$userID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => 'invalid',
-                    'form-add_blueprint-select-expiration'  => '1d',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['exposure'],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [
-                    'exposure' => 'Exposure is invalid'
-                ],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'missing fields - no title' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'incorrect_csrf',
+                'form-add_blueprint-select-exposure'    => '0',
+                'form-add_blueprint-select-expiration'  => '0',
+                'form-add_blueprint-select-ue_version'  => '0',
+                'form-add_blueprint-textarea-blueprint' => '0'
             ],
-            'invalid fields - exposure private for anonymous' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => 'private',
-                    'form-add_blueprint-select-expiration'  => '1d',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object'
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['exposure'],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [
-                    'exposure' => 'Private is for member only'
-                ],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'invalid fields - expiration invalid' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => 'unlisted',
-                    'form-add_blueprint-select-expiration'  => '1500s',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['expiration'],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [
-                    'expiration' => 'Expiration is invalid'
-                ],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'missing fields - no exposure' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'incorrect_csrf',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-input-expiration'   => '0',
+                'form-add_blueprint-input-ue_version'   => '0',
+                'form-add_blueprint-textarea-blueprint' => '0'
             ],
-            'invalid fields - ue_version invalid' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => 'unlisted',
-                    'form-add_blueprint-select-expiration'  => '1d',
-                    'form-add_blueprint-select-ue_version'  => 'invalid',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object'
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['ue_version'],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [
-                    'ue_version' => 'UE version is invalid'
-                ],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'invalid fields - blueprint invalid' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => 'unlisted',
-                    'form-add_blueprint-select-expiration'  => '1d',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'spam'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['blueprint'],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [
-                    'blueprint' => 'Blueprint is invalid'
-                ],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'missing fields - no ue_version' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'         => 'incorrect_csrf',
+                'form-add_blueprint-input-title'         => '0',
+                'form-add_blueprint-select-exposure'     => '0',
+                'form-add_blueprint-select-expiration'   => '0',
+                'form-add_blueprint-selectrea-blueprint' => '0'
             ],
-            'throw exception in blueprint creation' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => 'title 1 hour',
-                    'form-add_blueprint-select-exposure'    => 'unlisted',
-                    'form-add_blueprint-select-expiration'  => 'never',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object throw exception'
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, could not create blueprint (#200)</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'throw exception in blueprint creation when no anonymous user set' => [
-                'userID' => 0,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => 'title 1 hour',
-                    'form-add_blueprint-select-exposure'    => 'unlisted',
-                    'form-add_blueprint-select-expiration'  => 'never',
-                    'form-add_blueprint-select-ue_version'  => '4.14',
-                    'form-add_blueprint-textarea-blueprint' => 'Begin Object throw exception'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, could not create blueprint, anonymous user not supported (#50)</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => false
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'missing fields - no blueprint' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'       => 'incorrect_csrf',
+                'form-add_blueprint-input-title'       => '0',
+                'form-add_blueprint-select-exposure'   => '0',
+                'form-add_blueprint-select-expiration' => '0',
+                'form-add_blueprint-select-ue_version' => '0',
             ],
-            'invalid encoding fields - title' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => \chr(99999999),
-                    'form-add_blueprint-select-exposure'    => '0',
-                    'form-add_blueprint-select-expiration'  => '0',
-                    'form-add_blueprint-select-ue_version'  => '0',
-                    'form-add_blueprint-textarea-blueprint' => '0'
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'invalid encoding fields - exposure' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => \chr(99999999),
-                    'form-add_blueprint-select-expiration'  => '0',
-                    'form-add_blueprint-select-ue_version'  => '0',
-                    'form-add_blueprint-textarea-blueprint' => '0'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'empty fields - title empty' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => ' ',
+                'form-add_blueprint-select-exposure'    => 'unlisted',
+                'form-add_blueprint-select-expiration'  => '1d',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object'
             ],
-            'invalid encoding fields - expiration' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => '0',
-                    'form-add_blueprint-select-expiration'  => \chr(99999999),
-                    'form-add_blueprint-select-ue_version'  => '0',
-                    'form-add_blueprint-textarea-blueprint' => '0'
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
+                ]
             ],
-            'invalid encoding fields - ue_version' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => '0',
-                    'form-add_blueprint-select-expiration'  => '0',
-                    'form-add_blueprint-select-ue_version'  => \chr(99999999),
-                    'form-add_blueprint-textarea-blueprint' => '0'
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => ['title'],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [
+                'title' => 'Title is required'
             ],
-            'invalid encoding fields - blueprint' => [
-                'userID' => static::$anonymousID,
-                'params' => [
-                    'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_blueprint-input-title'        => '0',
-                    'form-add_blueprint-select-exposure'    => '0',
-                    'form-add_blueprint-select-expiration'  => '0',
-                    'form-add_blueprint-select-ue_version'  => '0',
-                    'form-add_blueprint-textarea-blueprint' => \chr(99999999)
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'empty fields - exposure empty' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => ' ',
+                'form-add_blueprint-select-expiration'  => '1d',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object'
             ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['exposure'],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [
+                'exposure' => 'Exposure is required'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'empty fields - expiration empty' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => 'unlisted',
+                'form-add_blueprint-select-expiration'  => ' ',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object'
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['expiration'],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [
+                'expiration' => 'Expiration is required'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'empty fields - ue_version empty' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => 'unlisted',
+                'form-add_blueprint-select-expiration'  => '1d',
+                'form-add_blueprint-select-ue_version'  => ' ',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object'
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['ue_version'],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [
+                'ue_version' => 'UE version is required'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'empty fields - blueprint empty' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => 'unlisted',
+                'form-add_blueprint-select-expiration'  => '1d',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => ' '
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['blueprint'],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [
+                'blueprint' => 'Blueprint is required'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid fields - exposure invalid' => [
+            'userID' => static::$userID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => 'invalid',
+                'form-add_blueprint-select-expiration'  => '1d',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object'
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['exposure'],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [
+                'exposure' => 'Exposure is invalid'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid fields - exposure private for anonymous' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => 'private',
+                'form-add_blueprint-select-expiration'  => '1d',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object'
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['exposure'],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [
+                'exposure' => 'Private is for member only'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid fields - expiration invalid' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => 'unlisted',
+                'form-add_blueprint-select-expiration'  => '1500s',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object'
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['expiration'],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [
+                'expiration' => 'Expiration is invalid'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid fields - ue_version invalid' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => 'unlisted',
+                'form-add_blueprint-select-expiration'  => '1d',
+                'form-add_blueprint-select-ue_version'  => 'invalid',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object'
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['ue_version'],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [
+                'ue_version' => 'UE version is invalid'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid fields - blueprint invalid' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => 'unlisted',
+                'form-add_blueprint-select-expiration'  => '1d',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'spam'
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['blueprint'],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [
+                'blueprint' => 'Blueprint is invalid'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'throw exception in blueprint creation' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => 'title 1 hour',
+                'form-add_blueprint-select-exposure'    => 'unlisted',
+                'form-add_blueprint-select-expiration'  => 'never',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object throw exception'
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, could not create blueprint (#200)</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'throw exception in blueprint creation when no anonymous user set' => [
+            'userID' => 0,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => 'title 1 hour',
+                'form-add_blueprint-select-exposure'    => 'unlisted',
+                'form-add_blueprint-select-expiration'  => 'never',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object throw exception'
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, could not create blueprint, anonymous user not supported (#50)</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version', 'blueprint'],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => false
+        ];
+
+        yield 'invalid encoding fields - title' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => \chr(99999999),
+                'form-add_blueprint-select-exposure'    => '0',
+                'form-add_blueprint-select-expiration'  => '0',
+                'form-add_blueprint-select-ue_version'  => '0',
+                'form-add_blueprint-textarea-blueprint' => '0'
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid encoding fields - exposure' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => \chr(99999999),
+                'form-add_blueprint-select-expiration'  => '0',
+                'form-add_blueprint-select-ue_version'  => '0',
+                'form-add_blueprint-textarea-blueprint' => '0'
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid encoding fields - expiration' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => '0',
+                'form-add_blueprint-select-expiration'  => \chr(99999999),
+                'form-add_blueprint-select-ue_version'  => '0',
+                'form-add_blueprint-textarea-blueprint' => '0'
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid encoding fields - ue_version' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => '0',
+                'form-add_blueprint-select-expiration'  => '0',
+                'form-add_blueprint-select-ue_version'  => \chr(99999999),
+                'form-add_blueprint-textarea-blueprint' => '0'
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid encoding fields - blueprint' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => '0',
+                'form-add_blueprint-select-expiration'  => '0',
+                'form-add_blueprint-select-ue_version'  => '0',
+                'form-add_blueprint-textarea-blueprint' => \chr(99999999)
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
         ];
     }
 

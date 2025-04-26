@@ -134,18 +134,17 @@ class SearchXssListTest extends TestCase
             $formattedDates['-' . $i . ' days'] = static::getSince((new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
         }
 
-        return [
-            '30 blueprints public/unlisted/private - xss form-search-input-query' => [
-                'sqlQueries'  => [],
-                'slugInput'   => '/search/?form-search-input-query=<script>alert(1)</script>',
-                'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
-                    'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+        yield '30 blueprints public/unlisted/private - xss form-search-input-query' => [
+            'sqlQueries'  => [],
+            'slugInput'   => '/search/?form-search-input-query=<script>alert(1)</script>',
+            'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
+                'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
+            ],
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">&lt;script&gt;alert(1)&lt;&#47;script&gt;</span></h2>
@@ -443,7 +442,7 @@ class SearchXssListTest extends TestCase
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<'HTML'
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -457,18 +456,19 @@ HTML,
 </li>
 </ul>
 HTML,
+        ];
+
+        yield '30 blueprints public/unlisted/private - xss query' => [
+            'sqlQueries'  => [],
+            'slugInput'   => '/search/?query=<script>alert(1)</script>',
+            'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
+                'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
             ],
-            '30 blueprints public/unlisted/private - xss query' => [
-                'sqlQueries'  => [],
-                'slugInput'   => '/search/?query=<script>alert(1)</script>',
-                'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
-                    'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">&lt;script&gt;alert(1)&lt;&#47;script&gt;</span></h2>
@@ -766,7 +766,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<'HTML'
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -780,18 +780,19 @@ HTML,
 </li>
 </ul>
 HTML,
+        ];
+
+        yield '30 blueprints public/unlisted/private - xss in all fields' => [
+            'sqlQueries'  => [],
+            'slugInput'   => '/search/?form-search-input-query=<script>alert(1)</script>&form-search-select-type=<script>alert(1)</script>&form-search-select-ue_version=<script>alert(1)</script>&page=<script>alert(1)</script>',
+            'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
+                'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
             ],
-            '30 blueprints public/unlisted/private - xss in all fields' => [
-                'sqlQueries'  => [],
-                'slugInput'   => '/search/?form-search-input-query=<script>alert(1)</script>&form-search-select-type=<script>alert(1)</script>&form-search-select-ue_version=<script>alert(1)</script>&page=<script>alert(1)</script>',
-                'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
-                    'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">&lt;script&gt;alert(1)&lt;&#47;script&gt;</span></h2>
@@ -1089,7 +1090,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<'HTML'
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1103,7 +1104,6 @@ HTML,
 </li>
 </ul>
 HTML,
-            ],
         ];
     }
 

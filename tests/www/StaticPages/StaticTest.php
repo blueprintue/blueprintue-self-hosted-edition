@@ -75,23 +75,22 @@ class StaticTest extends TestCase
 
     public static function provideDataCases(): iterable
     {
-        return [
-            'terms of service' => [
-                'url'     => '/terms-of-service/',
-                'headers' => [
-                    'title'       => 'Terms of Service for &lt;strong&gt;this_site_name&lt;&#47;strong&gt; | &lt;strong&gt;This is a base title&lt;&#47;strong&gt;',
-                    'description' => 'Terms&#x20;of&#x20;Service&#x20;for&#x20;&lt;strong&gt;this_site_name&lt;&#x2F;strong&gt;',
-                ],
-                'content' => '<h2 class="block__title">Terms of Service for &lt;strong&gt;this_site_name&lt;&#47;strong&gt;</h2>',
+        yield 'terms of service' => [
+            'url'     => '/terms-of-service/',
+            'headers' => [
+                'title'       => 'Terms of Service for &lt;strong&gt;this_site_name&lt;&#47;strong&gt; | &lt;strong&gt;This is a base title&lt;&#47;strong&gt;',
+                'description' => 'Terms&#x20;of&#x20;Service&#x20;for&#x20;&lt;strong&gt;this_site_name&lt;&#x2F;strong&gt;',
             ],
-            'privacy policy' => [
-                'url'     => '/privacy-policy/',
-                'headers' => [
-                    'title'       => 'Privacy Policy for &lt;strong&gt;this_site_name&lt;&#47;strong&gt; | &lt;strong&gt;This is a base title&lt;&#47;strong&gt;',
-                    'description' => 'Privacy&#x20;Policy&#x20;for&#x20;&lt;strong&gt;this_site_name&lt;&#x2F;strong&gt;',
-                ],
-                'content' => '<h2 class="block__title">Privacy Policy for &lt;strong&gt;this_site_name&lt;&#47;strong&gt;</h2>',
-            ]
+            'content' => '<h2 class="block__title">Terms of Service for &lt;strong&gt;this_site_name&lt;&#47;strong&gt;</h2>',
+        ];
+
+        yield 'privacy policy' => [
+            'url'     => '/privacy-policy/',
+            'headers' => [
+                'title'       => 'Privacy Policy for &lt;strong&gt;this_site_name&lt;&#47;strong&gt; | &lt;strong&gt;This is a base title&lt;&#47;strong&gt;',
+                'description' => 'Privacy&#x20;Policy&#x20;for&#x20;&lt;strong&gt;this_site_name&lt;&#x2F;strong&gt;',
+            ],
+            'content' => '<h2 class="block__title">Privacy Policy for &lt;strong&gt;this_site_name&lt;&#47;strong&gt;</h2>',
         ];
     }
 

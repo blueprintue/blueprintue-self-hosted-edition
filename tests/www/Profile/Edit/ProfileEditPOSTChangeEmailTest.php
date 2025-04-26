@@ -83,252 +83,259 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
 
     public static function provideChangeEmailDataCases(): iterable
     {
-        return [
-            'edit OK' => [
-                'sqlQueries' => [
-                    "UPDATE users SET email = 'user_189@example.com' WHERE id = 189"
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
-                    'form-change_email-input-new_email' => 'user_189@user.com',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">Your new email has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+        yield 'edit OK' => [
+            'sqlQueries' => [
+                "UPDATE users SET email = 'user_189@example.com' WHERE id = 189"
             ],
-            'edit OK - no email previously' => [
-                'sqlQueries' => [
-                    "UPDATE users SET email = 'user_195@example.com' WHERE id = 195"
-                ],
-                'userID' => 195,
-                'params' => [
-                    'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
-                    'form-change_email-input-new_email' => 'user@user.com',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">Your new email has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'userID' => 189,
+            'params' => [
+                'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
+                'form-change_email-input-new_email' => 'user_189@user.com',
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_email-hidden-csrf'     => 'incorrect_csrf',
-                    'form-change_email-input-new_email' => 'user@user.com',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">Your new email has been saved</div>'
                 ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
+                ]
             ],
-            'missing fields - no fields' => [
-                'sqlQueries'         => [],
-                'userID'             => 189,
-                'params'             => [],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'edit OK - no email previously' => [
+            'sqlQueries' => [
+                "UPDATE users SET email = 'user_195@example.com' WHERE id = 195"
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_email-input-new_email' => 'user@user.com',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'userID' => 195,
+            'params' => [
+                'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
+                'form-change_email-input-new_email' => 'user@user.com',
             ],
-            'missing fields - no email' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_email-hidden-csrf' => 'csrf_is_replaced',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">Your new email has been saved</div>'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
+                ]
             ],
-            'empty fields - email empty' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
-                    'form-change_email-input-new_email' => ' ',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error(s) on email</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_email'],
-                'fieldsHasValue'   => ['new_email'],
-                'fieldsLabelError' => [
-                    'new_email' => 'Email is required'
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_email-hidden-csrf'     => 'incorrect_csrf',
+                'form-change_email-input-new_email' => 'user@user.com',
             ],
-            'invalid fields - email invalid' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
-                    'form-change_email-input-new_email' => 'invalid_email',
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error(s) on email</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_email'],
-                'fieldsHasValue'   => ['new_email'],
-                'fieldsLabelError' => [
-                    'new_email' => 'Email is invalid',
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
+                ]
             ],
-            'invalid fields - email unavailable' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
-                    'form-change_email-input-new_email' => 'user_199@example.com',
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no fields' => [
+            'sqlQueries'         => [],
+            'userID'             => 189,
+            'params'             => [],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error(s) on email</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_email'],
-                'fieldsHasValue'   => ['new_email'],
-                'fieldsLabelError' => [
-                    'new_email' => 'Email is unavailable',
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
+                ]
             ],
-            'invalid encoding fields - new_email' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
-                    'form-change_email-input-new_email' => \chr(99999999),
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_email-input-new_email' => 'user@user.com',
             ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no email' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_email-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'empty fields - email empty' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
+                'form-change_email-input-new_email' => ' ',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error(s) on email</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_email'],
+            'fieldsHasValue'   => ['new_email'],
+            'fieldsLabelError' => [
+                'new_email' => 'Email is required'
+            ],
+        ];
+
+        yield 'invalid fields - email invalid' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
+                'form-change_email-input-new_email' => 'invalid_email',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error(s) on email</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_email'],
+            'fieldsHasValue'   => ['new_email'],
+            'fieldsLabelError' => [
+                'new_email' => 'Email is invalid',
+            ],
+        ];
+
+        yield 'invalid fields - email unavailable' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
+                'form-change_email-input-new_email' => 'user_199@example.com',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error(s) on email</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_email'],
+            'fieldsHasValue'   => ['new_email'],
+            'fieldsLabelError' => [
+                'new_email' => 'Email is unavailable',
+            ],
+        ];
+
+        yield 'invalid encoding fields - new_email' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_email-hidden-csrf'     => 'csrf_is_replaced',
+                'form-change_email-input-new_email' => \chr(99999999),
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
         ];
     }
 

@@ -70,35 +70,36 @@ class LogoutTest extends TestCase
 
     public static function provideLogoutPOSTDataCases(): iterable
     {
-        return [
-            'logout OK' => [
-                'params' => [
-                    'form-logout-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
+        yield 'logout OK' => [
+            'params' => [
+                'form-logout-hidden-csrf' => 'csrf_is_replaced',
             ],
-            'csrf incorrect' => [
-                'params' => [
-                    'form-logout-hidden-csrf' => 'incorrect_csrf',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+        ];
+
+        yield 'csrf incorrect' => [
+            'params' => [
+                'form-logout-hidden-csrf' => 'incorrect_csrf',
             ],
-            'missing fields - no fields' => [
-                'params'                => [],
-                'useCsrfFromSession'    => false,
-                'hasRedirection'        => false,
-                'isFormSuccess'         => false,
-            ],
-            'missing fields - no csrf' => [
-                'params'                => [],
-                'useCsrfFromSession'    => false,
-                'hasRedirection'        => false,
-                'isFormSuccess'         => false,
-            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+        ];
+
+        yield 'missing fields - no fields' => [
+            'params'                => [],
+            'useCsrfFromSession'    => false,
+            'hasRedirection'        => false,
+            'isFormSuccess'         => false,
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'params'                => [],
+            'useCsrfFromSession'    => false,
+            'hasRedirection'        => false,
+            'isFormSuccess'         => false,
         ];
     }
 

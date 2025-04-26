@@ -80,64 +80,64 @@ class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
 
     public static function provideGenerateApiKeyDataCases(): iterable
     {
-        return [
-            'edit OK' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-generate_api_key-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">Your api key is now generated</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-generate_api_key" role="alert">'
-                    ]
-                ],
+        yield 'edit OK' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-generate_api_key-hidden-csrf' => 'csrf_is_replaced',
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-generate_api_key-hidden-csrf' => 'incorrect_csrf',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">Your api key is now generated</div>'
                 ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-generate_api_key" role="alert">'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-generate_api_key" role="alert">'
+                ]
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries'         => [],
-                'userID'             => 189,
-                'params'             => [],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-generate_api_key" role="alert">'
-                    ]
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-generate_api_key-hidden-csrf' => 'incorrect_csrf',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">'
                 ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-generate_api_key" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries'         => [],
+            'userID'             => 189,
+            'params'             => [],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-generate_api_key" role="alert">'
+                ]
             ],
         ];
     }

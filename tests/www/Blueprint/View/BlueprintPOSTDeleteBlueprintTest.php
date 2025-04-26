@@ -42,371 +42,380 @@ class BlueprintPOSTDeleteBlueprintTest extends TestCase
      */
     public static function provideBlueprintPOSTDeleteBlueprintDataCases(): iterable
     {
-        return [
-            'visitor - no button delete' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'                 => 'slug_public',
-                'userID'               => null,
-                'anonymousBlueprints'  => null,
-                'hasButtonDelete'      => false,
-                'doPostAction'         => false,
-                'params'               => null,
-                'useCsrfFromSession'   => false,
-                'hasRedirection'       => false,
-                'isFormSuccess'        => false,
-                'flashMessages'        => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
+        yield 'visitor - no button delete' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'user - no button delete' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            'slug'                 => 'slug_public',
+            'userID'               => null,
+            'anonymousBlueprints'  => null,
+            'hasButtonDelete'      => false,
+            'doPostAction'         => false,
+            'params'               => null,
+            'useCsrfFromSession'   => false,
+            'hasRedirection'       => false,
+            'isFormSuccess'        => false,
+            'flashMessages'        => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
                 ],
-                'slug'                 => 'slug_public',
-                'userID'               => 55,
-                'anonymousBlueprints'  => null,
-                'hasButtonDelete'      => false,
-                'doPostAction'         => false,
-                'params'               => null,
-                'useCsrfFromSession'   => false,
-                'hasRedirection'       => false,
-                'isFormSuccess'        => false,
-                'flashMessages'        => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
             ],
-            'author - no button delete' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'                 => 'slug_public',
-                'userID'               => 1,
-                'anonymousBlueprints'  => null,
-                'hasButtonDelete'      => false,
-                'doPostAction'         => false,
-                'params'               => null,
-                'useCsrfFromSession'   => false,
-                'hasRedirection'       => false,
-                'isFormSuccess'        => false,
-                'flashMessages'        => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
+        ];
+
+        yield 'user - no button delete' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'user who post as anonymous - has button delete' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            'slug'                 => 'slug_public',
+            'userID'               => 55,
+            'anonymousBlueprints'  => null,
+            'hasButtonDelete'      => false,
+            'doPostAction'         => false,
+            'params'               => null,
+            'useCsrfFromSession'   => false,
+            'hasRedirection'       => false,
+            'isFormSuccess'        => false,
+            'flashMessages'        => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
                 ],
-                'slug'                 => 'slug_public',
-                'userID'               => 55,
-                'anonymousBlueprints'  => [1, 2, 3],
-                'hasButtonDelete'      => true,
-                'doPostAction'         => false,
-                'params'               => null,
-                'useCsrfFromSession'   => false,
-                'hasRedirection'       => false,
-                'isFormSuccess'        => false,
-                'flashMessages'        => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
             ],
-            'do valid delete action on public blueprint - user' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    'TRUNCATE TABLE comments',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO comments (id_author, id_blueprint, content, created_at) VALUES (2, 579, 'aze', utc_timestamp()), (2, 1, 'aze', utc_timestamp()), (2, 1, 'aze', utc_timestamp()), (1, 1, 'aze', utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
-                    'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint, count_public_comment, count_private_comment) VALUES (2, 1, 2, 10, 60)',
-                    'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint, count_public_comment, count_private_comment) VALUES (1, 0, 0, 8, 5)',
-                ],
-                'slug'                => 'slug_public',
-                'userID'              => 55,
-                'anonymousBlueprints' => [1, 2, 3],
-                'hasButtonDelete'     => true,
-                'doPostAction'        => true,
-                'params'              => [
-                    'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
+        ];
+
+        yield 'author - no button delete' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'do valid delete action on public blueprint - visitor' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    'TRUNCATE TABLE comments',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO comments (id_author, id_blueprint, content, created_at) VALUES (2, 579, 'aze', utc_timestamp()), (2, 1, 'aze', utc_timestamp()), (2, 1, 'aze', utc_timestamp()), (1, 1, 'aze', utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
-                    'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint, count_public_comment, count_private_comment) VALUES (2, 1, 2, 10, 60)',
-                    'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint, count_public_comment, count_private_comment) VALUES (1, 0, 0, 8, 5)',
+            'slug'                 => 'slug_public',
+            'userID'               => 1,
+            'anonymousBlueprints'  => null,
+            'hasButtonDelete'      => false,
+            'doPostAction'         => false,
+            'params'               => null,
+            'useCsrfFromSession'   => false,
+            'hasRedirection'       => false,
+            'isFormSuccess'        => false,
+            'flashMessages'        => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
                 ],
-                'slug'                => 'slug_public',
-                'userID'              => null,
-                'anonymousBlueprints' => [1, 2, 3],
-                'hasButtonDelete'     => true,
-                'doPostAction'        => true,
-                'params'              => [
-                    'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
             ],
-            'do valid delete action on unlisted blueprint - user' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    'TRUNCATE TABLE comments',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_unlisted', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO comments (id_author, id_blueprint, content, created_at) VALUES (2, 579, 'aze', utc_timestamp()), (2, 1, 'aze', utc_timestamp()), (1, 1, 'aze', utc_timestamp()), (1, 1, 'aze', utc_timestamp()), (1, 1, 'aze', utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
-                    'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint, count_public_comment, count_private_comment) VALUES (2, 0, 2, 10, 60)',
-                    'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint, count_public_comment, count_private_comment) VALUES (1, 0, 0, 8, 5)',
-                ],
-                'slug'                => 'slug_unlisted',
-                'userID'              => 55,
-                'anonymousBlueprints' => [1, 2, 3],
-                'hasButtonDelete'     => true,
-                'doPostAction'        => true,
-                'params'              => [
-                    'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
+        ];
+
+        yield 'user who post as anonymous - has button delete' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            'slug'                 => 'slug_public',
+            'userID'               => 55,
+            'anonymousBlueprints'  => [1, 2, 3],
+            'hasButtonDelete'      => true,
+            'doPostAction'         => false,
+            'params'               => null,
+            'useCsrfFromSession'   => false,
+            'hasRedirection'       => false,
+            'isFormSuccess'        => false,
+            'flashMessages'        => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
                 ],
-                'slug'                => 'slug_public',
-                'userID'              => 55,
-                'anonymousBlueprints' => [1, 2, 3],
-                'hasButtonDelete'     => true,
-                'doPostAction'        => true,
-                'params'              => [
-                    'form-delete_blueprint-hidden-csrf' => 'incorrect_csrf',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'                 => 'slug_public',
-                'userID'               => 55,
-                'anonymousBlueprints'  => [1, 2, 3],
-                'hasButtonDelete'      => true,
-                'doPostAction'         => true,
-                'params'               => [],
-                'useCsrfFromSession'   => false,
-                'hasRedirection'       => false,
-                'isFormSuccess'        => false,
-                'flashMessages'        => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
+        ];
+
+        yield 'do valid delete action on public blueprint - user' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                'TRUNCATE TABLE comments',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO comments (id_author, id_blueprint, content, created_at) VALUES (2, 579, 'aze', utc_timestamp()), (2, 1, 'aze', utc_timestamp()), (2, 1, 'aze', utc_timestamp()), (1, 1, 'aze', utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint, count_public_comment, count_private_comment) VALUES (2, 1, 2, 10, 60)',
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint, count_public_comment, count_private_comment) VALUES (1, 0, 0, 8, 5)',
             ],
-            'do invalid delete action - user has no right' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'                => 'slug_public',
-                'userID'              => 55,
-                'anonymousBlueprints' => [5],
-                'hasButtonDelete'     => false,
-                'doPostAction'        => true,
-                'params'              => [
-                    'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error, delete is invalid on this blueprint</div>'
-                    ]
-                ],
+            'slug'                => 'slug_public',
+            'userID'              => 55,
+            'anonymousBlueprints' => [1, 2, 3],
+            'hasButtonDelete'     => true,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
             ],
-            'do invalid delete action - visitor has no right' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
                 ],
-                'slug'                => 'slug_public',
-                'userID'              => null,
-                'anonymousBlueprints' => null,
-                'hasButtonDelete'     => false,
-                'doPostAction'        => true,
-                'params'              => [
-                    'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error, delete is invalid on this blueprint</div>'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
             ],
-            'do invalid delete action - visitor has no right (anonymous_blueprints empty)' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
+        ];
+
+        yield 'do valid delete action on public blueprint - visitor' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                'TRUNCATE TABLE comments',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO comments (id_author, id_blueprint, content, created_at) VALUES (2, 579, 'aze', utc_timestamp()), (2, 1, 'aze', utc_timestamp()), (2, 1, 'aze', utc_timestamp()), (1, 1, 'aze', utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint, count_public_comment, count_private_comment) VALUES (2, 1, 2, 10, 60)',
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint, count_public_comment, count_private_comment) VALUES (1, 0, 0, 8, 5)',
+            ],
+            'slug'                => 'slug_public',
+            'userID'              => null,
+            'anonymousBlueprints' => [1, 2, 3],
+            'hasButtonDelete'     => true,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
                 ],
-                'slug'                => 'slug_public',
-                'userID'              => null,
-                'anonymousBlueprints' => null,
-                'hasButtonDelete'     => false,
-                'doPostAction'        => true,
-                'params'              => [
-                    'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'do valid delete action on unlisted blueprint - user' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                'TRUNCATE TABLE comments',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_unlisted', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO comments (id_author, id_blueprint, content, created_at) VALUES (2, 579, 'aze', utc_timestamp()), (2, 1, 'aze', utc_timestamp()), (1, 1, 'aze', utc_timestamp()), (1, 1, 'aze', utc_timestamp()), (1, 1, 'aze', utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint, count_public_comment, count_private_comment) VALUES (2, 0, 2, 10, 60)',
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint, count_public_comment, count_private_comment) VALUES (1, 0, 0, 8, 5)',
+            ],
+            'slug'                => 'slug_unlisted',
+            'userID'              => 55,
+            'anonymousBlueprints' => [1, 2, 3],
+            'hasButtonDelete'     => true,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error, delete is invalid on this blueprint</div>'
-                    ]
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            ],
+            'slug'                => 'slug_public',
+            'userID'              => 55,
+            'anonymousBlueprints' => [1, 2, 3],
+            'hasButtonDelete'     => true,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-delete_blueprint-hidden-csrf' => 'incorrect_csrf',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
                 ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            ],
+            'slug'                 => 'slug_public',
+            'userID'               => 55,
+            'anonymousBlueprints'  => [1, 2, 3],
+            'hasButtonDelete'      => true,
+            'doPostAction'         => true,
+            'params'               => [],
+            'useCsrfFromSession'   => false,
+            'hasRedirection'       => false,
+            'isFormSuccess'        => false,
+            'flashMessages'        => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'do invalid delete action - user has no right' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            ],
+            'slug'                => 'slug_public',
+            'userID'              => 55,
+            'anonymousBlueprints' => [5],
+            'hasButtonDelete'     => false,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error, delete is invalid on this blueprint</div>'
+                ]
+            ],
+        ];
+
+        yield 'do invalid delete action - visitor has no right' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            ],
+            'slug'                => 'slug_public',
+            'userID'              => null,
+            'anonymousBlueprints' => null,
+            'hasButtonDelete'     => false,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error, delete is invalid on this blueprint</div>'
+                ]
+            ],
+        ];
+
+        yield 'do invalid delete action - visitor has no right (anonymous_blueprints empty)' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
+            ],
+            'slug'                => 'slug_public',
+            'userID'              => null,
+            'anonymousBlueprints' => null,
+            'hasButtonDelete'     => false,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error, delete is invalid on this blueprint</div>'
+                ]
             ],
         ];
     }

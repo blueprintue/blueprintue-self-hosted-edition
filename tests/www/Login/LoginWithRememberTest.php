@@ -65,17 +65,16 @@ class LoginWithRememberTest extends TestCase
 
     public static function provideLoginWithRememberDataCases(): iterable
     {
-        return [
-            'error - no login because remember invalid' => [
-                'rememberToken'   => 'poi',
-                'bodyContains'    => ['<a class="nav__user-button nav__user-button--left" href="#popin-login">Log in</a>'],
-                'bodyNotContains' => ['<button class="nav__user-button-logout" type="submit">Logout</button>'],
-            ],
-            'success login with remember' => [
-                'rememberToken'   => 'XDYtGT691XiPWiUZSUGCt21zWF7svbnEbmqjrxDmdP1Wqs3fkIEuSu98iwSJcddVH8shXtaznY5UNbZlF8Qbyp6m4vxbKlY7GWBLL8V9wAPd4xr0yHfnlZokaPMKfJY3nQkrgHq3xxUkARPe8NhxgaHPpWw8F99rtSn9Tpalf0QiKIwsOG9T0S7ssNUtOENB1lPal2jW4kuqdnAS7Jvy19bYeJasy7koLOyrCo6aqt6UfuSgLI6ClhNVsAtKkm0',
-                'bodyContains'    => ['<button class="nav__user-button-logout" type="submit">Logout</button>'],
-                'bodyNotContains' => ['<a class="nav__user-button nav__user-button--left" href="#popin-login">Log in</a>'],
-            ]
+        yield 'error - no login because remember invalid' => [
+            'rememberToken'   => 'poi',
+            'bodyContains'    => ['<a class="nav__user-button nav__user-button--left" href="#popin-login">Log in</a>'],
+            'bodyNotContains' => ['<button class="nav__user-button-logout" type="submit">Logout</button>'],
+        ];
+
+        yield 'success login with remember' => [
+            'rememberToken'   => 'XDYtGT691XiPWiUZSUGCt21zWF7svbnEbmqjrxDmdP1Wqs3fkIEuSu98iwSJcddVH8shXtaznY5UNbZlF8Qbyp6m4vxbKlY7GWBLL8V9wAPd4xr0yHfnlZokaPMKfJY3nQkrgHq3xxUkARPe8NhxgaHPpWw8F99rtSn9Tpalf0QiKIwsOG9T0S7ssNUtOENB1lPal2jW4kuqdnAS7Jvy19bYeJasy7koLOyrCo6aqt6UfuSgLI6ClhNVsAtKkm0',
+            'bodyContains'    => ['<button class="nav__user-button-logout" type="submit">Logout</button>'],
+            'bodyNotContains' => ['<a class="nav__user-button nav__user-button--left" href="#popin-login">Log in</a>'],
         ];
     }
 

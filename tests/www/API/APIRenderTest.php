@@ -31,16 +31,15 @@ class APIRenderTest extends TestCase
 
     public static function provideDataCases(): iterable
     {
-        return [
-            'render - OK' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'blueprint' => 'begin object 1',
-                ],
-                'responseCode'    => 200,
-                'responseContent' => <<<'HTML'
+        yield 'render - OK' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            ],
+            'params'  => [
+                'blueprint' => 'begin object 1',
+            ],
+            'responseCode'    => 200,
+            'responseContent' => <<<'HTML'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,83 +80,90 @@ class APIRenderTest extends TestCase
 </html>
 
 HTML,
+        ];
+
+        yield 'api key incorrect' => [
+            'headers' => [
+                'X-Token' => 'aaa'
             ],
-            'api key incorrect' => [
-                'headers' => [
-                    'X-Token' => 'aaa'
-                ],
-                'params'  => [
-                    'blueprint' => 'begin object 1',
-                ],
-                'responseCode'    => 401,
-                'responseContent' => '{"error":"api_key_incorrect"}',
+            'params'  => [
+                'blueprint' => 'begin object 1',
             ],
-            'headers empty' => [
-                'headers' => [],
-                'params'  => [
-                    'blueprint' => 'begin object 1',
-                ],
-                'responseCode'    => 401,
-                'responseContent' => '{"error":"api_key_empty"}',
+            'responseCode'    => 401,
+            'responseContent' => '{"error":"api_key_incorrect"}',
+        ];
+
+        yield 'headers empty' => [
+            'headers' => [],
+            'params'  => [
+                'blueprint' => 'begin object 1',
             ],
-            'api key empty' => [
-                'headers' => [
-                    'X-Token' => ''
-                ],
-                'params'  => [
-                    'blueprint' => 'begin object 1',
-                ],
-                'responseCode'    => 401,
-                'responseContent' => '{"error":"api_key_empty"}',
+            'responseCode'    => 401,
+            'responseContent' => '{"error":"api_key_empty"}',
+        ];
+
+        yield 'api key empty' => [
+            'headers' => [
+                'X-Token' => ''
             ],
-            'api key invalid encoding' => [
-                'headers' => [
-                    'X-Token' => \chr(99999999)
-                ],
-                'params'  => [
-                    'blueprint' => 'begin object 1',
-                ],
-                'responseCode'    => 401,
-                'responseContent' => '{"error":"api_key_incorrect"}',
+            'params'  => [
+                'blueprint' => 'begin object 1',
             ],
-            'missing fields - no fields' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'          => [],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"blueprint_empty"}',
+            'responseCode'    => 401,
+            'responseContent' => '{"error":"api_key_empty"}',
+        ];
+
+        yield 'api key invalid encoding' => [
+            'headers' => [
+                'X-Token' => \chr(99999999)
             ],
-            'empty fields - blueprint empty' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'blueprint' => ' ',
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"blueprint_empty"}',
+            'params'  => [
+                'blueprint' => 'begin object 1',
             ],
-            'invalid fields - blueprint' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'blueprint' => 'aze',
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"blueprint_empty"}',
+            'responseCode'    => 401,
+            'responseContent' => '{"error":"api_key_incorrect"}',
+        ];
+
+        yield 'missing fields - no fields' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
             ],
-            'invalid encoding fields - blueprint' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'blueprint' => \chr(99999999)
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"blueprint_empty"}',
-            ]
+            'params'          => [],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"blueprint_empty"}',
+        ];
+
+        yield 'empty fields - blueprint empty' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            ],
+            'params'  => [
+                'blueprint' => ' ',
+            ],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"blueprint_empty"}',
+        ];
+
+        yield 'invalid fields - blueprint' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            ],
+            'params'  => [
+                'blueprint' => 'aze',
+            ],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"blueprint_empty"}',
+        ];
+
+        yield 'invalid encoding fields - blueprint' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            ],
+            'params'  => [
+                'blueprint' => \chr(99999999)
+            ],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"blueprint_empty"}',
         ];
     }
 

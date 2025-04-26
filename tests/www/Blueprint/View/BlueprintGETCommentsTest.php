@@ -100,240 +100,252 @@ class BlueprintGETCommentsTest extends TestCase
      */
     public static function provideBlueprintGETCommentsBlueprintDataCases(): iterable
     {
-        return [
-            'visitor - 0 comments - no form' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 0, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0'
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => null,
-                'hasTitle'         => false,
-                'countComments'    => 0,
-                'hasForm'          => false,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => false,
-                'isCommentsClosed' => false,
-                'commentIDs'       => [],
+        yield 'visitor - 0 comments - no form' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 0, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0'
             ],
-            'visitor - 1 comments - no form' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 1, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                    'UPDATE comments SET id_blueprint = 1 WHERE id = 1'
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => null,
-                'hasTitle'         => true,
-                'countComments'    => 1,
-                'hasForm'          => false,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => false,
-                'isCommentsClosed' => false,
-                'commentIDs'       => [[1, 1]],
+            'slug'             => 'slug_public',
+            'userID'           => null,
+            'hasTitle'         => false,
+            'countComments'    => 0,
+            'hasForm'          => false,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => false,
+            'isCommentsClosed' => false,
+            'commentIDs'       => [],
+        ];
+
+        yield 'visitor - 1 comments - no form' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 1, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
+                'UPDATE comments SET id_blueprint = 1 WHERE id = 1'
             ],
-            'user - 0 comments - has form' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 0, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => 55,
-                'hasTitle'         => true,
-                'countComments'    => 0,
-                'hasForm'          => true,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => false,
-                'isCommentsClosed' => false,
-                'commentIDs'       => [],
+            'slug'             => 'slug_public',
+            'userID'           => null,
+            'hasTitle'         => true,
+            'countComments'    => 1,
+            'hasForm'          => false,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => false,
+            'isCommentsClosed' => false,
+            'commentIDs'       => [[1, 1]],
+        ];
+
+        yield 'user - 0 comments - has form' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 0, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
             ],
-            'user - 1 comments - has form' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 1, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                    'UPDATE comments SET id_blueprint = 1 WHERE id = 2',
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => 55,
-                'hasTitle'         => true,
-                'countComments'    => 1,
-                'hasForm'          => true,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => false,
-                'isCommentsClosed' => false,
-                'commentIDs'       => [[2, 3]],
+            'slug'             => 'slug_public',
+            'userID'           => 55,
+            'hasTitle'         => true,
+            'countComments'    => 0,
+            'hasForm'          => true,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => false,
+            'isCommentsClosed' => false,
+            'commentIDs'       => [],
+        ];
+
+        yield 'user - 1 comments - has form' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 1, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
+                'UPDATE comments SET id_blueprint = 1 WHERE id = 2',
             ],
-            'user - 0 comments - no form - comments closed' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 0, comments_hidden = 0, comments_closed = 1 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => 55,
-                'hasTitle'         => false,
-                'countComments'    => 0,
-                'hasForm'          => false,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => false,
-                'isCommentsClosed' => true,
-                'commentIDs'       => [],
+            'slug'             => 'slug_public',
+            'userID'           => 55,
+            'hasTitle'         => true,
+            'countComments'    => 1,
+            'hasForm'          => true,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => false,
+            'isCommentsClosed' => false,
+            'commentIDs'       => [[2, 3]],
+        ];
+
+        yield 'user - 0 comments - no form - comments closed' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 0, comments_hidden = 0, comments_closed = 1 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
             ],
-            'user - 1 comments - no form - comments closed' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 1, comments_hidden = 0, comments_closed = 1 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                    'UPDATE comments SET id_blueprint = 1 WHERE id = 3',
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => 55,
-                'hasTitle'         => true,
-                'countComments'    => 1,
-                'hasForm'          => false,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => false,
-                'isCommentsClosed' => true,
-                'commentIDs'       => [[3, 4]],
+            'slug'             => 'slug_public',
+            'userID'           => 55,
+            'hasTitle'         => false,
+            'countComments'    => 0,
+            'hasForm'          => false,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => false,
+            'isCommentsClosed' => true,
+            'commentIDs'       => [],
+        ];
+
+        yield 'user - 1 comments - no form - comments closed' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 1, comments_hidden = 0, comments_closed = 1 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
+                'UPDATE comments SET id_blueprint = 1 WHERE id = 3',
             ],
-            'user - 0 comments - no form - comments hidden' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 0, comments_hidden = 1, comments_closed = 0 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => 55,
-                'hasTitle'         => false,
-                'countComments'    => 0,
-                'hasForm'          => false,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => true,
-                'isCommentsClosed' => false,
-                'commentIDs'       => [],
+            'slug'             => 'slug_public',
+            'userID'           => 55,
+            'hasTitle'         => true,
+            'countComments'    => 1,
+            'hasForm'          => false,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => false,
+            'isCommentsClosed' => true,
+            'commentIDs'       => [[3, 4]],
+        ];
+
+        yield 'user - 0 comments - no form - comments hidden' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 0, comments_hidden = 1, comments_closed = 0 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
             ],
-            'user - 1 comments - no form - comments hidden' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 1, comments_hidden = 1, comments_closed = 0 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                    'UPDATE comments SET id_blueprint = 1 WHERE id = 4',
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => 55,
-                'hasTitle'         => false,
-                'countComments'    => 1,
-                'hasForm'          => false,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => true,
-                'isCommentsClosed' => false,
-                'commentIDs'       => [[4, 1]],
+            'slug'             => 'slug_public',
+            'userID'           => 55,
+            'hasTitle'         => false,
+            'countComments'    => 0,
+            'hasForm'          => false,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => true,
+            'isCommentsClosed' => false,
+            'commentIDs'       => [],
+        ];
+
+        yield 'user - 1 comments - no form - comments hidden' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 1, comments_hidden = 1, comments_closed = 0 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
+                'UPDATE comments SET id_blueprint = 1 WHERE id = 4',
             ],
-            'author - 0 comments - has form' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 0, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => 1,
-                'hasTitle'         => true,
-                'countComments'    => 0,
-                'hasForm'          => true,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => false,
-                'isCommentsClosed' => false,
-                'commentIDs'       => [],
+            'slug'             => 'slug_public',
+            'userID'           => 55,
+            'hasTitle'         => false,
+            'countComments'    => 1,
+            'hasForm'          => false,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => true,
+            'isCommentsClosed' => false,
+            'commentIDs'       => [[4, 1]],
+        ];
+
+        yield 'author - 0 comments - has form' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 0, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
             ],
-            'author - 1 comments - has form' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 1, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                    'UPDATE comments SET id_blueprint = 1 WHERE id = 5',
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => 1,
-                'hasTitle'         => true,
-                'countComments'    => 1,
-                'hasForm'          => true,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => false,
-                'isCommentsClosed' => false,
-                'commentIDs'       => [[5, 3]],
+            'slug'             => 'slug_public',
+            'userID'           => 1,
+            'hasTitle'         => true,
+            'countComments'    => 0,
+            'hasForm'          => true,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => false,
+            'isCommentsClosed' => false,
+            'commentIDs'       => [],
+        ];
+
+        yield 'author - 1 comments - has form' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 1, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
+                'UPDATE comments SET id_blueprint = 1 WHERE id = 5',
             ],
-            'author - 1 comments - has form - has edit' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 1, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                    'UPDATE comments SET id_blueprint = 1 WHERE id = 1',
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => 1,
-                'hasTitle'         => true,
-                'countComments'    => 1,
-                'hasForm'          => true,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => false,
-                'isCommentsClosed' => false,
-                'commentIDs'       => [[1, 1]],
+            'slug'             => 'slug_public',
+            'userID'           => 1,
+            'hasTitle'         => true,
+            'countComments'    => 1,
+            'hasForm'          => true,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => false,
+            'isCommentsClosed' => false,
+            'commentIDs'       => [[5, 3]],
+        ];
+
+        yield 'author - 1 comments - has form - has edit' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 1, comments_hidden = 0, comments_closed = 0 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
+                'UPDATE comments SET id_blueprint = 1 WHERE id = 1',
             ],
-            'author - 0 comments - no form - comments closed' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 0, comments_hidden = 0, comments_closed = 1 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => 1,
-                'hasTitle'         => false,
-                'countComments'    => 0,
-                'hasForm'          => false,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => false,
-                'isCommentsClosed' => true,
-                'commentIDs'       => [],
+            'slug'             => 'slug_public',
+            'userID'           => 1,
+            'hasTitle'         => true,
+            'countComments'    => 1,
+            'hasForm'          => true,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => false,
+            'isCommentsClosed' => false,
+            'commentIDs'       => [[1, 1]],
+        ];
+
+        yield 'author - 0 comments - no form - comments closed' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 0, comments_hidden = 0, comments_closed = 1 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
             ],
-            'author - 1 comments - no form - comments closed' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 1, comments_hidden = 0, comments_closed = 1 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                    'UPDATE comments SET id_blueprint = 1 WHERE id = 6',
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => 1,
-                'hasTitle'         => true,
-                'countComments'    => 1,
-                'hasForm'          => false,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => false,
-                'isCommentsClosed' => true,
-                'commentIDs'       => [[6, null]],
+            'slug'             => 'slug_public',
+            'userID'           => 1,
+            'hasTitle'         => false,
+            'countComments'    => 0,
+            'hasForm'          => false,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => false,
+            'isCommentsClosed' => true,
+            'commentIDs'       => [],
+        ];
+
+        yield 'author - 1 comments - no form - comments closed' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 1, comments_hidden = 0, comments_closed = 1 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
+                'UPDATE comments SET id_blueprint = 1 WHERE id = 6',
             ],
-            'author - 0 comments - no form - comments hidden' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 0, comments_hidden = 1, comments_closed = 0 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => 1,
-                'hasTitle'         => false,
-                'countComments'    => 0,
-                'hasForm'          => false,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => true,
-                'isCommentsClosed' => false,
-                'commentIDs'       => [],
+            'slug'             => 'slug_public',
+            'userID'           => 1,
+            'hasTitle'         => true,
+            'countComments'    => 1,
+            'hasForm'          => false,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => false,
+            'isCommentsClosed' => true,
+            'commentIDs'       => [[6, null]],
+        ];
+
+        yield 'author - 0 comments - no form - comments hidden' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 0, comments_hidden = 1, comments_closed = 0 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
             ],
-            'author - 1 comments - no form - comments hidden' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_count = 1, comments_hidden = 1, comments_closed = 0 WHERE id = 1',
-                    'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
-                    'UPDATE comments SET id_blueprint = 1 WHERE id = 1',
-                ],
-                'slug'             => 'slug_public',
-                'userID'           => 1,
-                'hasTitle'         => false,
-                'countComments'    => 1,
-                'hasForm'          => false,
-                'pageURL'          => '/blueprint/slug_public/',
-                'isCommentsHidden' => true,
-                'isCommentsClosed' => false,
-                'commentIDs'       => [[1, 1]],
+            'slug'             => 'slug_public',
+            'userID'           => 1,
+            'hasTitle'         => false,
+            'countComments'    => 0,
+            'hasForm'          => false,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => true,
+            'isCommentsClosed' => false,
+            'commentIDs'       => [],
+        ];
+
+        yield 'author - 1 comments - no form - comments hidden' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_count = 1, comments_hidden = 1, comments_closed = 0 WHERE id = 1',
+                'UPDATE comments SET id_blueprint = 0 WHERE id > 0',
+                'UPDATE comments SET id_blueprint = 1 WHERE id = 1',
             ],
+            'slug'             => 'slug_public',
+            'userID'           => 1,
+            'hasTitle'         => false,
+            'countComments'    => 1,
+            'hasForm'          => false,
+            'pageURL'          => '/blueprint/slug_public/',
+            'isCommentsHidden' => true,
+            'isCommentsClosed' => false,
+            'commentIDs'       => [[1, 1]],
         ];
     }
 

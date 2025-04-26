@@ -61,110 +61,112 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
 
     public static function provideEditInformationsDataCases(): iterable
     {
-        return [
-            'update OK - title' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'new title',
-                    'form-edit_informations-textarea-description' => '',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => '',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+        yield 'update OK - title' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
             ],
-            'update OK - description to text' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'title_1',
-                    'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => '',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'description', 'tags'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'new title',
+                'form-edit_informations-textarea-description' => '',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => '',
             ],
-            'update OK - description to null' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `description`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private', 'description')",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'title_1',
-                    'form-edit_informations-textarea-description' => '',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => '',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
             ],
-            'update OK - tags added (forbidden tags is not added) - limit to 25' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'update OK - description to text' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'title_1',
+                'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => '',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'new title',
-                    'form-edit_informations-textarea-description' => '',
-                    'form-edit_informations-textarea-tags'        => <<<'TEXTAREA'
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'description', 'tags'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'update OK - description to null' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `description`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private', 'description')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'title_1',
+                'form-edit_informations-textarea-description' => '',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => '',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'update OK - tags added (forbidden tags is not added) - limit to 25' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'new title',
+                'form-edit_informations-textarea-description' => '',
+                'form-edit_informations-textarea-tags'        => <<<'TEXTAREA'
                     tag-1
                     tag-2
                     invalid@tag
@@ -200,25 +202,25 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
                     tag 29
                     tag 30
                     TEXTAREA,
-                    'form-edit_informations-input-video'          => '',
+                'form-edit_informations-input-video'          => '',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => <<<'TEXTAREA'
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => <<<'TEXTAREA'
                 tag-1
                 tag-2
                 tag 3
@@ -245,587 +247,604 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
                 tag 23
                 tag 24
                 TEXTAREA,
-                'tags' => [
-                    ['id' => '1', 'name' => 'tag-1', 'slug' => 'tag-1'], ['id' => '2', 'name' => 'tag-2', 'slug' => 'tag-2'],
-                    ['id' => '3', 'name' => 'tag 3', 'slug' => 'tag-3'], ['id' => '4', 'name' => 'tag 4', 'slug' => 'tag-4'],
-                    ['id' => '5', 'name' => '123', 'slug' => '123'], ['id' => '6', 'name' => 'yo lo', 'slug' => 'yo-lo'],
-                    ['id' => '7', 'name' => 'tag 6', 'slug' => 'tag-6'], ['id' => '8', 'name' => 'tag 7', 'slug' => 'tag-7'],
-                    ['id' => '9', 'name' => 'tag 8', 'slug' => 'tag-8'], ['id' => '10', 'name' => 'tag 9', 'slug' => 'tag-9'],
-                    ['id' => '11', 'name' => 'tag 10', 'slug' => 'tag-10'], ['id' => '12', 'name' => 'tag 11', 'slug' => 'tag-11'],
-                    ['id' => '13', 'name' => 'tag 12', 'slug' => 'tag-12'], ['id' => '14', 'name' => 'tag 13', 'slug' => 'tag-13'],
-                    ['id' => '15', 'name' => 'tag 14', 'slug' => 'tag-14'], ['id' => '16', 'name' => 'tag 15', 'slug' => 'tag-15'],
-                    ['id' => '17', 'name' => 'tag 16', 'slug' => 'tag-16'], ['id' => '18', 'name' => 'tag 17', 'slug' => 'tag-17'],
-                    ['id' => '19', 'name' => 'tag 18', 'slug' => 'tag-18'], ['id' => '20', 'name' => 'tag 19', 'slug' => 'tag-19'],
-                    ['id' => '21', 'name' => 'tag 20', 'slug' => 'tag-20'], ['id' => '22', 'name' => 'tag 21', 'slug' => 'tag-21'],
-                    ['id' => '23', 'name' => 'tag 22', 'slug' => 'tag-22'], ['id' => '24', 'name' => 'tag 23', 'slug' => 'tag-23'],
-                    ['id' => '25', 'name' => 'tag 24', 'slug' => 'tag-24']
-                ],
+            'tags' => [
+                ['id' => '1', 'name' => 'tag-1', 'slug' => 'tag-1'], ['id' => '2', 'name' => 'tag-2', 'slug' => 'tag-2'],
+                ['id' => '3', 'name' => 'tag 3', 'slug' => 'tag-3'], ['id' => '4', 'name' => 'tag 4', 'slug' => 'tag-4'],
+                ['id' => '5', 'name' => '123', 'slug' => '123'], ['id' => '6', 'name' => 'yo lo', 'slug' => 'yo-lo'],
+                ['id' => '7', 'name' => 'tag 6', 'slug' => 'tag-6'], ['id' => '8', 'name' => 'tag 7', 'slug' => 'tag-7'],
+                ['id' => '9', 'name' => 'tag 8', 'slug' => 'tag-8'], ['id' => '10', 'name' => 'tag 9', 'slug' => 'tag-9'],
+                ['id' => '11', 'name' => 'tag 10', 'slug' => 'tag-10'], ['id' => '12', 'name' => 'tag 11', 'slug' => 'tag-11'],
+                ['id' => '13', 'name' => 'tag 12', 'slug' => 'tag-12'], ['id' => '14', 'name' => 'tag 13', 'slug' => 'tag-13'],
+                ['id' => '15', 'name' => 'tag 14', 'slug' => 'tag-14'], ['id' => '16', 'name' => 'tag 15', 'slug' => 'tag-15'],
+                ['id' => '17', 'name' => 'tag 16', 'slug' => 'tag-16'], ['id' => '18', 'name' => 'tag 17', 'slug' => 'tag-17'],
+                ['id' => '19', 'name' => 'tag 18', 'slug' => 'tag-18'], ['id' => '20', 'name' => 'tag 19', 'slug' => 'tag-19'],
+                ['id' => '21', 'name' => 'tag 20', 'slug' => 'tag-20'], ['id' => '22', 'name' => 'tag 21', 'slug' => 'tag-21'],
+                ['id' => '23', 'name' => 'tag 22', 'slug' => 'tag-22'], ['id' => '24', 'name' => 'tag 23', 'slug' => 'tag-23'],
+                ['id' => '25', 'name' => 'tag 24', 'slug' => 'tag-24']
             ],
-            'update OK - tags present then removed' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                    "REPLACE INTO tags (`id`, `name`, `slug`) VALUES (1, 'tag 1', 'tag-1'), (5, 'tag 0', 'tag-0'), (10, 'aze', 'rty')",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'new title',
-                    'form-edit_informations-textarea-description' => '',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => '',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+        ];
+
+        yield 'update OK - tags present then removed' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+                "REPLACE INTO tags (`id`, `name`, `slug`) VALUES (1, 'tag 1', 'tag-1'), (5, 'tag 0', 'tag-0'), (10, 'aze', 'rty')",
             ],
-            'update OK - tags added (already created in tags table)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                    "REPLACE INTO tags (`id`, `name`, `slug`) VALUES (1, 'tag 1', 'tag-1')",
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'new title',
+                'form-edit_informations-textarea-description' => '',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => '',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'new title',
-                    'form-edit_informations-textarea-description' => '',
-                    'form-edit_informations-textarea-tags'        => <<<'TEXTAREA'
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'update OK - tags added (already created in tags table)' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+                "REPLACE INTO tags (`id`, `name`, `slug`) VALUES (1, 'tag 1', 'tag-1')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'new title',
+                'form-edit_informations-textarea-description' => '',
+                'form-edit_informations-textarea-tags'        => <<<'TEXTAREA'
                     tag 1
                     TEXTAREA,
-                    'form-edit_informations-input-video'          => '',
+                'form-edit_informations-input-video'          => '',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => <<<'TEXTAREA'
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => <<<'TEXTAREA'
                 tag 1
                 TEXTAREA,
-                'tags' => [
-                    ['id' => '1', 'name' => 'tag 1', 'slug' => 'tag-1']
-                ],
+            'tags' => [
+                ['id' => '1', 'name' => 'tag 1', 'slug' => 'tag-1']
             ],
-            'update OK - video to text' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'title_1',
-                    'form-edit_informations-textarea-description' => '',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => 'youtu.be/5qap5aO4i9A',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags', 'video'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+        ];
+
+        yield 'update OK - video to text' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
             ],
-            'update OK - video to text (peertube)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'title_1',
-                    'form-edit_informations-textarea-description' => '',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => 'https://vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags', 'video'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'title_1',
+                'form-edit_informations-textarea-description' => '',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => 'youtu.be/5qap5aO4i9A',
             ],
-            'update OK - video to null' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `video`, `video_provider`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private', 'youtu.be/5qap5aO4i9A', 'youtube')",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'title_1',
-                    'form-edit_informations-textarea-description' => '',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => '',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
             ],
-            'update OK - xss' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => '<script>alert(1)</script>"/><script>alert(1)</script>',
-                    'form-edit_informations-textarea-description' => '<script>alert(1)</script>"/><script>alert(1)</script>',
-                    'form-edit_informations-textarea-tags'        => '<script>alert(1)</script>"/><script>alert(1)</script>',
-                    'form-edit_informations-input-video'          => 'youtu.be/5qap5aO4i9A&=<script>alert(1)</script>"/><script>alert(1)</script>',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'description', 'tags', 'video'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags', 'video'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'update OK - video to text (peertube)' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'incorrect_csrf',
-                    'form-edit_informations-input-title'          => 'title_1',
-                    'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => 'youtu.be/5qap5aO4i9A',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'title_1',
+                'form-edit_informations-textarea-description' => '',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => 'https://vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954',
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-input-title'          => 'title_1',
-                    'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => 'youtu.be/5qap5aO4i9A',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
             ],
-            'missing fields - no title' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => 'youtu.be/5qap5aO4i9A',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags', 'video'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'update OK - video to null' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `video`, `video_provider`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private', 'youtu.be/5qap5aO4i9A', 'youtube')",
             ],
-            'missing fields - no description' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'   => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'   => 'title_1',
-                    'form-edit_informations-textarea-tags' => '',
-                    'form-edit_informations-input-video'   => 'youtu.be/5qap5aO4i9A',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'title_1',
+                'form-edit_informations-textarea-description' => '',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => '',
             ],
-            'missing fields - no tags' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'title_1',
-                    'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
-                    'form-edit_informations-input-video'          => 'youtu.be/5qap5aO4i9A',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
             ],
-            'missing fields - no video' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'title_1',
-                    'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
-                    'form-edit_informations-textarea-tags'        => '',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title', 'tags'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'update OK - xss' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
             ],
-            'empty fields - title' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => ' ',
-                    'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => '//www.youtube.com/embed/5qap5aO4i9A',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">Error(s) on title</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['title'],
-                'fieldsHasValue'   => ['title', 'description', 'tags', 'video'],
-                'fieldsLabelError' => [
-                    'title' => 'Title is required'
-                ],
-                'tagsTextarea' => '',
-                'tags'         => [],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => '<script>alert(1)</script>"/><script>alert(1)</script>',
+                'form-edit_informations-textarea-description' => '<script>alert(1)</script>"/><script>alert(1)</script>',
+                'form-edit_informations-textarea-tags'        => '<script>alert(1)</script>"/><script>alert(1)</script>',
+                'form-edit_informations-input-video'          => 'youtu.be/5qap5aO4i9A&=<script>alert(1)</script>"/><script>alert(1)</script>',
             ],
-            'invalid fields - video' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'new title',
-                    'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => 'invalid',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">Error(s) on video</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['video'],
-                'fieldsHasValue'   => ['title', 'description', 'tags', 'video'],
-                'fieldsLabelError' => [
-                    'video' => 'Video is invalid'
-                ],
-                'tagsTextarea' => '',
-                'tags'         => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
             ],
-            'invalid encoding fields - title' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => \chr(99999999),
-                    'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => 'invalid',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'description', 'tags', 'video'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
             ],
-            'invalid encoding fields - description' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'title_1',
-                    'form-edit_informations-textarea-description' => \chr(99999999),
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => 'invalid',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'incorrect_csrf',
+                'form-edit_informations-input-title'          => 'title_1',
+                'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => 'youtu.be/5qap5aO4i9A',
             ],
-            'invalid encoding fields - tags' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'title_1',
-                    'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
-                    'form-edit_informations-textarea-tags'        => \chr(99999999),
-                    'form-edit_informations-input-video'          => 'invalid',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
             ],
-            'invalid encoding fields - video' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-input-title'          => 'title_1',
+                'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => 'youtu.be/5qap5aO4i9A',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                    'form-edit_informations-input-title'          => 'title_1',
-                    'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
-                    'form-edit_informations-textarea-tags'        => '',
-                    'form-edit_informations-input-video'          => \chr(99999999),
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'missing fields - no title' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => 'youtu.be/5qap5aO4i9A',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                    ]
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'missing fields - no description' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'   => 'csrf_is_replaced',
+                'form-edit_informations-input-title'   => 'title_1',
+                'form-edit_informations-textarea-tags' => '',
+                'form-edit_informations-input-video'   => 'youtu.be/5qap5aO4i9A',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
                 ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['title'],
-                'fieldsLabelError' => [],
-                'tagsTextarea'     => '',
-                'tags'             => [],
-            ]
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'missing fields - no tags' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'title_1',
+                'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
+                'form-edit_informations-input-video'          => 'youtu.be/5qap5aO4i9A',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'missing fields - no video' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'title_1',
+                'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
+                'form-edit_informations-textarea-tags'        => '',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title', 'tags'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'empty fields - title' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => ' ',
+                'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => '//www.youtube.com/embed/5qap5aO4i9A',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">Error(s) on title</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['title'],
+            'fieldsHasValue'   => ['title', 'description', 'tags', 'video'],
+            'fieldsLabelError' => [
+                'title' => 'Title is required'
+            ],
+            'tagsTextarea' => '',
+            'tags'         => [],
+        ];
+
+        yield 'invalid fields - video' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'new title',
+                'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => 'invalid',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">Error(s) on video</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['video'],
+            'fieldsHasValue'   => ['title', 'description', 'tags', 'video'],
+            'fieldsLabelError' => [
+                'video' => 'Video is invalid'
+            ],
+            'tagsTextarea' => '',
+            'tags'         => [],
+        ];
+
+        yield 'invalid encoding fields - title' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => \chr(99999999),
+                'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => 'invalid',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'invalid encoding fields - description' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'title_1',
+                'form-edit_informations-textarea-description' => \chr(99999999),
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => 'invalid',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'invalid encoding fields - tags' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'title_1',
+                'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
+                'form-edit_informations-textarea-tags'        => \chr(99999999),
+                'form-edit_informations-input-video'          => 'invalid',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
+        ];
+
+        yield 'invalid encoding fields - video' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
+                'form-edit_informations-input-title'          => 'title_1',
+                'form-edit_informations-textarea-description' => 'new' . "\n" . 'description',
+                'form-edit_informations-textarea-tags'        => '',
+                'form-edit_informations-input-video'          => \chr(99999999),
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['title'],
+            'fieldsLabelError' => [],
+            'tagsTextarea'     => '',
+            'tags'             => [],
         ];
     }
 

@@ -46,35 +46,34 @@ class BlueprintGETAuthorBlueprintTest extends TestCase
     {
         $date = '2020-01-01 01:01:01';
 
-        return [
-            'no avatar' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), '" . $date . "', 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'        => 'slug_public',
-                'avatar'      => null,
-                'name'        => 'member',
-                'url'         => '/profile/member/',
-                'publishedAt' => \date('F j, Y, g:i a', \strtotime($date)),
+        yield 'no avatar' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), '" . $date . "', 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'has avatar' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), '" . $date . "', 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (1, 'mem<script>alert(1)</script>ber', null, 'mem\"><script>alert(1)</script>ber', 'member@mail', utc_timestamp(), 'ava\"><script>alert(1)</script>tar.jpg')",
-                ],
-                'slug'        => 'slug_public',
-                'avatar'      => '/medias/avatars/ava"><script>alert(1)</script>tar.jpg',
-                'name'        => 'mem<script>alert(1)</script>ber',
-                'url'         => '/profile/mem"><script>alert(1)</script>ber/',
-                'publishedAt' => \date('F j, Y, g:i a', \strtotime($date)),
+            'slug'        => 'slug_public',
+            'avatar'      => null,
+            'name'        => 'member',
+            'url'         => '/profile/member/',
+            'publishedAt' => \date('F j, Y, g:i a', \strtotime($date)),
+        ];
+
+        yield 'has avatar' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), '" . $date . "', 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (1, 'mem<script>alert(1)</script>ber', null, 'mem\"><script>alert(1)</script>ber', 'member@mail', utc_timestamp(), 'ava\"><script>alert(1)</script>tar.jpg')",
             ],
+            'slug'        => 'slug_public',
+            'avatar'      => '/medias/avatars/ava"><script>alert(1)</script>tar.jpg',
+            'name'        => 'mem<script>alert(1)</script>ber',
+            'url'         => '/profile/mem"><script>alert(1)</script>ber/',
+            'publishedAt' => \date('F j, Y, g:i a', \strtotime($date)),
         ];
     }
 

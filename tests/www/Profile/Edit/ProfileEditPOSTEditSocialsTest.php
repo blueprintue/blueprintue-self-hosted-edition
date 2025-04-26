@@ -83,911 +83,938 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
 
     public static function provideEditSocialsDataCases(): iterable
     {
-        return [
-            'edit OK' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [],
+        yield 'edit OK' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
             ],
-            'edit OK - missing users_infos' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
             ],
-            'edit KO - xss' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook<script>alert("facebook");</script>',
-                    'form-edit_socials-input-twitter'  => 'twitter<script>alert("twitter");</script>',
-                    'form-edit_socials-input-github'   => 'github<script>alert("github");</script>',
-                    'form-edit_socials-input-youtube'  => 'youtube<script>alert("youtube");</script>',
-                    'form-edit_socials-input-twitch'   => 'twitch<script>alert("twitch");</script>',
-                    'form-edit_socials-input-unreal'   => 'unreal<script>alert("unreal");</script>',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Facebook, Twitter, GitHub, Youtube, Twitch, Unreal</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [
-                    'facebook' => 'Expected username containing: digits, letters, symbols: - _ .',
-                    'twitter'  => 'Expected username containing: digits, letters, symbols: - _ .',
-                    'github'   => 'Expected username containing: digits, letters, symbols: - _ .',
-                    'youtube'  => 'Expected username containing: digits, letters, symbols: - _ .',
-                    'twitch'   => 'Expected username containing: digits, letters, symbols: - _ .',
-                    'unreal'   => 'Expected username containing: digits, letters, symbols: - _ .'
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'incorrect_csrf',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'edit OK - missing users_infos' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
             ],
-            'missing fields - no fields' => [
-                'sqlQueries'         => [],
-                'userID'             => 189,
-                'params'             => [],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
                 ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'edit KO - xss' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
             ],
-            'missing fields - no facebook' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook<script>alert("facebook");</script>',
+                'form-edit_socials-input-twitter'  => 'twitter<script>alert("twitter");</script>',
+                'form-edit_socials-input-github'   => 'github<script>alert("github");</script>',
+                'form-edit_socials-input-youtube'  => 'youtube<script>alert("youtube");</script>',
+                'form-edit_socials-input-twitch'   => 'twitch<script>alert("twitch");</script>',
+                'form-edit_socials-input-unreal'   => 'unreal<script>alert("unreal");</script>',
             ],
-            'missing fields - no twitter' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Facebook, Twitter, GitHub, Youtube, Twitch, Unreal</div>'
+                ]
             ],
-            'missing fields - no github' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [
+                'facebook' => 'Expected username containing: digits, letters, symbols: - _ .',
+                'twitter'  => 'Expected username containing: digits, letters, symbols: - _ .',
+                'github'   => 'Expected username containing: digits, letters, symbols: - _ .',
+                'youtube'  => 'Expected username containing: digits, letters, symbols: - _ .',
+                'twitch'   => 'Expected username containing: digits, letters, symbols: - _ .',
+                'unreal'   => 'Expected username containing: digits, letters, symbols: - _ .'
             ],
-            'missing fields - no youtube' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'incorrect_csrf',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
             ],
-            'missing fields - no twitch' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-unreal'   => 'unreal',
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
             ],
-            'missing fields - no unreal' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no fields' => [
+            'sqlQueries'         => [],
+            'userID'             => 189,
+            'params'             => [],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
             ],
-            'edit OK - empty fields - facebook empty' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => ' ',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [
-                    'email' => 'Email is invalid'
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
             ],
-            'edit OK - empty fields - twitter empty' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => ' ',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
             ],
-            'edit OK - empty fields - github empty' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => ' ',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no facebook' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
             ],
-            'edit OK - empty fields - youtube empty' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => ' ',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'edit OK - empty fields - twitch empty' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => ' ',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no twitter' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
             ],
-            'edit OK - empty fields - unreal empty' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => ' ',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'edit KO - invalid facebook' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook<script>alert("facebook");</script>',
-                    'form-edit_socials-input-twitter'  => '',
-                    'form-edit_socials-input-github'   => '',
-                    'form-edit_socials-input-youtube'  => '',
-                    'form-edit_socials-input-twitch'   => '',
-                    'form-edit_socials-input-unreal'   => '',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Facebook</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['facebook'],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [
-                    'facebook' => 'Expected username containing: digits, letters, symbols: - _ .',
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no github' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
             ],
-            'edit KO - invalid twitter' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => '',
-                    'form-edit_socials-input-twitter'  => 'twitter<script>alert("twitter");</script>',
-                    'form-edit_socials-input-github'   => '',
-                    'form-edit_socials-input-youtube'  => '',
-                    'form-edit_socials-input-twitch'   => '',
-                    'form-edit_socials-input-unreal'   => '',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Twitter</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['twitter'],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [
-                    'twitter'  => 'Expected username containing: digits, letters, symbols: - _ .',
-                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'edit KO - invalid github' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => '',
-                    'form-edit_socials-input-twitter'  => '',
-                    'form-edit_socials-input-github'   => 'github<script>alert("github");</script>',
-                    'form-edit_socials-input-youtube'  => '',
-                    'form-edit_socials-input-twitch'   => '',
-                    'form-edit_socials-input-unreal'   => '',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on GitHub</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['github'],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [
-                    'github'   => 'Expected username containing: digits, letters, symbols: - _ .',
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no youtube' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
             ],
-            'edit KO - invalid youtube' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => '',
-                    'form-edit_socials-input-twitter'  => '',
-                    'form-edit_socials-input-github'   => '',
-                    'form-edit_socials-input-youtube'  => 'youtube<script>alert("youtube");</script>',
-                    'form-edit_socials-input-twitch'   => '',
-                    'form-edit_socials-input-unreal'   => '',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Youtube</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['youtube'],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [
-                    'youtube'  => 'Expected username containing: digits, letters, symbols: - _ .',
-                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'edit KO - invalid twitch' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => '',
-                    'form-edit_socials-input-twitter'  => '',
-                    'form-edit_socials-input-github'   => '',
-                    'form-edit_socials-input-youtube'  => '',
-                    'form-edit_socials-input-twitch'   => 'twitch<script>alert("twitch");</script>',
-                    'form-edit_socials-input-unreal'   => '',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Twitch</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['twitch'],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [
-                    'twitch'   => 'Expected username containing: digits, letters, symbols: - _ .',
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no twitch' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-unreal'   => 'unreal',
             ],
-            'edit KO - invalid unreal' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => '',
-                    'form-edit_socials-input-twitter'  => '',
-                    'form-edit_socials-input-github'   => '',
-                    'form-edit_socials-input-youtube'  => '',
-                    'form-edit_socials-input-twitch'   => '',
-                    'form-edit_socials-input-unreal'   => 'unreal<script>alert("1-unreal");</script>',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Unreal</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['unreal'],
-                'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
-                'fieldsLabelError' => [
-                    'unreal'   => 'Expected username containing: digits, letters, symbols: - _ .'
-                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'invalid encoding fields - facebook' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => \chr(99999999),
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no unreal' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
             ],
-            'invalid encoding fields - twitter' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => \chr(99999999),
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'invalid encoding fields - github' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => \chr(99999999),
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'edit OK - empty fields - facebook empty' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
             ],
-            'invalid encoding fields - youtube' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => \chr(99999999),
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => 'unreal',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => ' ',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
             ],
-            'invalid encoding fields - twitch' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => \chr(99999999),
-                    'form-edit_socials-input-unreal'   => 'unreal',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
             ],
-            'invalid encoding fields - unreal' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
-                    'form-edit_socials-input-facebook' => 'facebook',
-                    'form-edit_socials-input-twitter'  => 'twitter',
-                    'form-edit_socials-input-github'   => 'github',
-                    'form-edit_socials-input-youtube'  => 'youtube',
-                    'form-edit_socials-input-twitch'   => 'twitch',
-                    'form-edit_socials-input-unreal'   => \chr(99999999),
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [
+                'email' => 'Email is invalid'
             ],
+        ];
+
+        yield 'edit OK - empty fields - twitter empty' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => ' ',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'edit OK - empty fields - github empty' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => ' ',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'edit OK - empty fields - youtube empty' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => ' ',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'edit OK - empty fields - twitch empty' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => ' ',
+                'form-edit_socials-input-unreal'   => 'unreal',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'edit OK - empty fields - unreal empty' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => ' ',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">Your social profiles has been saved</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'edit KO - invalid facebook' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook<script>alert("facebook");</script>',
+                'form-edit_socials-input-twitter'  => '',
+                'form-edit_socials-input-github'   => '',
+                'form-edit_socials-input-youtube'  => '',
+                'form-edit_socials-input-twitch'   => '',
+                'form-edit_socials-input-unreal'   => '',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Facebook</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['facebook'],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [
+                'facebook' => 'Expected username containing: digits, letters, symbols: - _ .',
+            ],
+        ];
+
+        yield 'edit KO - invalid twitter' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => '',
+                'form-edit_socials-input-twitter'  => 'twitter<script>alert("twitter");</script>',
+                'form-edit_socials-input-github'   => '',
+                'form-edit_socials-input-youtube'  => '',
+                'form-edit_socials-input-twitch'   => '',
+                'form-edit_socials-input-unreal'   => '',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Twitter</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['twitter'],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [
+                'twitter'  => 'Expected username containing: digits, letters, symbols: - _ .',
+            ],
+        ];
+
+        yield 'edit KO - invalid github' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => '',
+                'form-edit_socials-input-twitter'  => '',
+                'form-edit_socials-input-github'   => 'github<script>alert("github");</script>',
+                'form-edit_socials-input-youtube'  => '',
+                'form-edit_socials-input-twitch'   => '',
+                'form-edit_socials-input-unreal'   => '',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on GitHub</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['github'],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [
+                'github'   => 'Expected username containing: digits, letters, symbols: - _ .',
+            ],
+        ];
+
+        yield 'edit KO - invalid youtube' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => '',
+                'form-edit_socials-input-twitter'  => '',
+                'form-edit_socials-input-github'   => '',
+                'form-edit_socials-input-youtube'  => 'youtube<script>alert("youtube");</script>',
+                'form-edit_socials-input-twitch'   => '',
+                'form-edit_socials-input-unreal'   => '',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Youtube</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['youtube'],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [
+                'youtube'  => 'Expected username containing: digits, letters, symbols: - _ .',
+            ],
+        ];
+
+        yield 'edit KO - invalid twitch' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => '',
+                'form-edit_socials-input-twitter'  => '',
+                'form-edit_socials-input-github'   => '',
+                'form-edit_socials-input-youtube'  => '',
+                'form-edit_socials-input-twitch'   => 'twitch<script>alert("twitch");</script>',
+                'form-edit_socials-input-unreal'   => '',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Twitch</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['twitch'],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [
+                'twitch'   => 'Expected username containing: digits, letters, symbols: - _ .',
+            ],
+        ];
+
+        yield 'edit KO - invalid unreal' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `link_facebook`, `link_twitter`, `link_github`, `link_youtube`, `link_twitch`, `link_unreal`) VALUES (189, 'link_facebook_value', 'link_twitter_value', 'link_github_value', 'link_youtube_value', 'link_twitch_value', 'link_unreal_value')"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => '',
+                'form-edit_socials-input-twitter'  => '',
+                'form-edit_socials-input-github'   => '',
+                'form-edit_socials-input-youtube'  => '',
+                'form-edit_socials-input-twitch'   => '',
+                'form-edit_socials-input-unreal'   => 'unreal<script>alert("1-unreal");</script>',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">Error(s) on Unreal</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['unreal'],
+            'fieldsHasValue'   => ['facebook', 'twitter', 'github', 'youtube', 'twitch', 'unreal'],
+            'fieldsLabelError' => [
+                'unreal'   => 'Expected username containing: digits, letters, symbols: - _ .'
+            ],
+        ];
+
+        yield 'invalid encoding fields - facebook' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => \chr(99999999),
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid encoding fields - twitter' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => \chr(99999999),
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid encoding fields - github' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => \chr(99999999),
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid encoding fields - youtube' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => \chr(99999999),
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => 'unreal',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid encoding fields - twitch' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => \chr(99999999),
+                'form-edit_socials-input-unreal'   => 'unreal',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid encoding fields - unreal' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-edit_socials-hidden-csrf'    => 'csrf_is_replaced',
+                'form-edit_socials-input-facebook' => 'facebook',
+                'form-edit_socials-input-twitter'  => 'twitter',
+                'form-edit_socials-input-github'   => 'github',
+                'form-edit_socials-input-youtube'  => 'youtube',
+                'form-edit_socials-input-twitch'   => 'twitch',
+                'form-edit_socials-input-unreal'   => \chr(99999999),
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_socials">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_socials" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
         ];
     }
 

@@ -26,23 +26,24 @@ class HelperTest extends TestCase
         $future = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('+1 minutes')->format('Y-m-d H:i:s');
         $nowMinus5Years = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('-5 years')->format('Y-m-d H:i:s');
 
-        return [
-            'empty string = few seconds ago' => [
-                'in'  => '',
-                'out' => 'few seconds ago',
-            ],
-            'invalid string = few seconds ago' => [
-                'in'  => 'invalid',
-                'out' => 'few seconds ago',
-            ],
-            'future = few seconds ago' => [
-                'in'  => $future,
-                'out' => 'few seconds ago',
-            ],
-            'now - 5 years = 5 years ago' => [
-                'in'  => $nowMinus5Years,
-                'out' => '5 years ago',
-            ]
+        yield 'empty string = few seconds ago' => [
+            'in'  => '',
+            'out' => 'few seconds ago',
+        ];
+
+        yield 'invalid string = few seconds ago' => [
+            'in'  => 'invalid',
+            'out' => 'few seconds ago',
+        ];
+
+        yield 'future = few seconds ago' => [
+            'in'  => $future,
+            'out' => 'few seconds ago',
+        ];
+
+        yield 'now - 5 years = 5 years ago' => [
+            'in'  => $nowMinus5Years,
+            'out' => '5 years ago',
         ];
     }
 
@@ -65,27 +66,29 @@ class HelperTest extends TestCase
         $past = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('-1 minutes')->format('Y-m-d H:i:s');
         $nowPlus2Hours = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('+2 hours +30 minutes +59 seconds')->format('Y-m-d H:i:s');
 
-        return [
-            'null = null' => [
-                'in'  => null,
-                'out' => null,
-            ],
-            'empty string = few seconds left' => [
-                'in'  => '',
-                'out' => 'few seconds left',
-            ],
-            'invalid string = few seconds left' => [
-                'in'  => 'invalid',
-                'out' => 'few seconds left',
-            ],
-            'past = few seconds left' => [
-                'in'  => $past,
-                'out' => 'few seconds left',
-            ],
-            'now + 2 hours and 30 minutes = 2 h and 30 min left' => [
-                'in'  => $nowPlus2Hours,
-                'out' => '2 h and 30 min left',
-            ],
+        yield 'null = null' => [
+            'in'  => null,
+            'out' => null,
+        ];
+
+        yield 'empty string = few seconds left' => [
+            'in'  => '',
+            'out' => 'few seconds left',
+        ];
+
+        yield 'invalid string = few seconds left' => [
+            'in'  => 'invalid',
+            'out' => 'few seconds left',
+        ];
+
+        yield 'past = few seconds left' => [
+            'in'  => $past,
+            'out' => 'few seconds left',
+        ];
+
+        yield 'now + 2 hours and 30 minutes = 2 h and 30 min left' => [
+            'in'  => $nowPlus2Hours,
+            'out' => '2 h and 30 min left',
         ];
     }
 
@@ -108,37 +111,40 @@ class HelperTest extends TestCase
     // region getFitSentence
     public static function provideFitSentenceDataCases(): iterable
     {
-        return [
-            'empty string + max 0 = empty string' => [
-                'in'  => '',
-                'max' => 0,
-                'out' => '',
-            ],
-            '"aaa" + max 0 = empty string' => [
-                'in'  => 'aaa',
-                'max' => 0,
-                'out' => '',
-            ],
-            '"aaa" + max 5 = "aaa"' => [
-                'in'  => 'aaa',
-                'max' => 5,
-                'out' => 'aaa',
-            ],
-            '"aaa" + max 2 = empty string' => [
-                'in'  => 'aaa',
-                'max' => 2,
-                'out' => '',
-            ],
-            '"aa a" + max 2 = "aa"' => [
-                'in'  => 'aa a',
-                'max' => 2,
-                'out' => 'aa',
-            ],
-            '"a b c" + max 2 = "a"' => [
-                'in'  => 'a b c',
-                'max' => 2,
-                'out' => 'a',
-            ],
+        yield 'empty string + max 0 = empty string' => [
+            'in'  => '',
+            'max' => 0,
+            'out' => '',
+        ];
+
+        yield '"aaa" + max 0 = empty string' => [
+            'in'  => 'aaa',
+            'max' => 0,
+            'out' => '',
+        ];
+
+        yield '"aaa" + max 5 = "aaa"' => [
+            'in'  => 'aaa',
+            'max' => 5,
+            'out' => 'aaa',
+        ];
+
+        yield '"aaa" + max 2 = empty string' => [
+            'in'  => 'aaa',
+            'max' => 2,
+            'out' => '',
+        ];
+
+        yield '"aa a" + max 2 = "aa"' => [
+            'in'  => 'aa a',
+            'max' => 2,
+            'out' => 'aa',
+        ];
+
+        yield '"a b c" + max 2 = "a"' => [
+            'in'  => 'a b c',
+            'max' => 2,
+            'out' => 'a',
         ];
     }
 

@@ -45,31 +45,31 @@ class BlueprintGETVersionsBlueprintTest extends TestCase
         $date = '2020-01-01 01:01:01';
         $date1DayLater = '2020-01-02 01:01:01';
 
-        return [
-            '1 version' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', '" . $date . "', '" . $date . "')",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'            => 'slug_public',
-                'hasListVersions' => false,
-                'html'            => null,
+        yield '1 version' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', '" . $date . "', '" . $date . "')",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            '2 versions - same day' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', '" . $date . "', '" . $date . "')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', '" . $date . "', '" . $date . "')",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'            => 'slug_public',
-                'hasListVersions' => true,
-                'html'            => <<<'HTML'
+            'slug'            => 'slug_public',
+            'hasListVersions' => false,
+            'html'            => null,
+        ];
+
+        yield '2 versions - same day' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', '" . $date . "', '" . $date . "')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', '" . $date . "', '" . $date . "')",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            ],
+            'slug'            => 'slug_public',
+            'hasListVersions' => true,
+            'html'            => <<<'HTML'
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -95,19 +95,20 @@ class BlueprintGETVersionsBlueprintTest extends TestCase
 </li>
 </ol>
 HTML
+        ];
+
+        yield '2 versions - not same day' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', '" . $date . "', '" . $date . "')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            '2 versions - not same day' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', '" . $date . "', '" . $date . "')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'            => 'slug_public',
-                'hasListVersions' => true,
-                'html'            => <<<'HTML'
+            'slug'            => 'slug_public',
+            'hasListVersions' => true,
+            'html'            => <<<'HTML'
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -141,20 +142,21 @@ HTML
 </li>
 </ol>
 HTML
+        ];
+
+        yield '3 versions - 2 same day, 1 another day' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', '" . $date . "', '" . $date . "')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 3, 'Third commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            '3 versions - 2 same day, 1 another day' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', '" . $date . "', '" . $date . "')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 3, 'Third commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'            => 'slug_public',
-                'hasListVersions' => true,
-                'html'            => <<<'HTML'
+            'slug'            => 'slug_public',
+            'hasListVersions' => true,
+            'html'            => <<<'HTML'
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -197,20 +199,21 @@ HTML
 </li>
 </ol>
 HTML
+        ];
+
+        yield '3 versions but versions 2 is selected - 2 same day, 1 another day' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', '" . $date . "', '" . $date . "')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 3, 'Third commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            '3 versions but versions 2 is selected - 2 same day, 1 another day' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', '" . $date . "', '" . $date . "')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'Second commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 3, 'Third commit', '" . $date1DayLater . "', '" . $date1DayLater . "')",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'            => 'slug_public/2',
-                'hasListVersions' => true,
-                'html'            => <<<'HTML'
+            'slug'            => 'slug_public/2',
+            'hasListVersions' => true,
+            'html'            => <<<'HTML'
 <div class="blueprint__versions-header">
 <svg class="blueprint__version-svg">
 <use href="/sprite/sprite.svg#icon-blueprintue"></use>
@@ -253,7 +256,6 @@ HTML
 </li>
 </ol>
 HTML
-            ]
         ];
     }
 

@@ -86,17 +86,16 @@ class TagsListTest extends TestCase
      */
     public static function provideDataCases(): iterable
     {
-        return [
-            'empty page - no tags linked to blueprints (tags null)' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET tags = NULL WHERE id > 0'
-                ],
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Blueprint\'s Tags | This is a base title',
-                    'description' => 'List of tags associated to blueprints'
-                ],
-                'contentHTML' => <<<'HTML'
+        yield 'empty page - no tags linked to blueprints (tags null)' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET tags = NULL WHERE id > 0'
+            ],
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Blueprint\'s Tags | This is a base title',
+                'description' => 'List of tags associated to blueprints'
+            ],
+            'contentHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -104,17 +103,18 @@ class TagsListTest extends TestCase
 </div>
 </div>
 HTML,
+        ];
+
+        yield 'empty page - no tags linked to blueprints (tags string empty)' => [
+            'sqlQueries' => [
+                "UPDATE blueprints SET tags = '' WHERE id > 0"
             ],
-            'empty page - no tags linked to blueprints (tags string empty)' => [
-                'sqlQueries' => [
-                    "UPDATE blueprints SET tags = '' WHERE id > 0"
-                ],
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Blueprint\'s Tags | This is a base title',
-                    'description' => 'List of tags associated to blueprints'
-                ],
-                'contentHTML' => <<<'HTML'
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Blueprint\'s Tags | This is a base title',
+                'description' => 'List of tags associated to blueprints'
+            ],
+            'contentHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -122,18 +122,19 @@ HTML,
 </div>
 </div>
 HTML,
+        ];
+
+        yield 'empty page - tags linked to private / unlisted blueprints' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET tags = NULL WHERE id = 1',
+                "UPDATE blueprints SET tags = '14' WHERE id > 1"
             ],
-            'empty page - tags linked to private / unlisted blueprints' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET tags = NULL WHERE id = 1',
-                    "UPDATE blueprints SET tags = '14' WHERE id > 1"
-                ],
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Blueprint\'s Tags | This is a base title',
-                    'description' => 'List of tags associated to blueprints'
-                ],
-                'contentHTML' => <<<'HTML'
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Blueprint\'s Tags | This is a base title',
+                'description' => 'List of tags associated to blueprints'
+            ],
+            'contentHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -141,19 +142,20 @@ HTML,
 </div>
 </div>
 HTML,
+        ];
+
+        yield '1 tag - tags linked to private / unlisted blueprints - user private blueprint' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET tags = NULL WHERE id = 1',
+                "UPDATE blueprints SET tags = '14' WHERE id = 2",
+                "UPDATE blueprints SET tags = '34' WHERE id = 3"
             ],
-            '1 tag - tags linked to private / unlisted blueprints - user private blueprint' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET tags = NULL WHERE id = 1',
-                    "UPDATE blueprints SET tags = '14' WHERE id = 2",
-                    "UPDATE blueprints SET tags = '34' WHERE id = 3"
-                ],
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Blueprint\'s Tags | This is a base title',
-                    'description' => 'List of tags associated to blueprints'
-                ],
-                'contentHTML' => <<<'HTML'
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Blueprint\'s Tags | This is a base title',
+                'description' => 'List of tags associated to blueprints'
+            ],
+            'contentHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -168,19 +170,20 @@ HTML,
 </div>
 </div>
 HTML,
+        ];
+
+        yield '3 tags - tags linked to public blueprints' => [
+            'sqlQueries' => [
+                "UPDATE blueprints SET tags = '14,24' WHERE id = 1",
+                "UPDATE blueprints SET tags = '14' WHERE id = 2",
+                "UPDATE blueprints SET tags = '34' WHERE id = 3"
             ],
-            '3 tags - tags linked to public blueprints' => [
-                'sqlQueries' => [
-                    "UPDATE blueprints SET tags = '14,24' WHERE id = 1",
-                    "UPDATE blueprints SET tags = '14' WHERE id = 2",
-                    "UPDATE blueprints SET tags = '34' WHERE id = 3"
-                ],
-                'userID'      => 169,
-                'contentHead' => [
-                    'title'       => 'Blueprint\'s Tags | This is a base title',
-                    'description' => 'List of tags associated to blueprints'
-                ],
-                'contentHTML' => <<<'HTML'
+            'userID'      => 169,
+            'contentHead' => [
+                'title'       => 'Blueprint\'s Tags | This is a base title',
+                'description' => 'List of tags associated to blueprints'
+            ],
+            'contentHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Blueprint's <span class="block__title--emphasis">tags</span></h2>
@@ -201,7 +204,6 @@ HTML,
 </div>
 </div>
 HTML,
-            ],
         ];
     }
 

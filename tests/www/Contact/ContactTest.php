@@ -68,467 +68,481 @@ class ContactTest extends TestCase
 
     public static function provideDataCases(): iterable
     {
-        return [
-            'xss email - OK' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-contact-input-name'       => '0<script>alert("name");</script>',
-                    'form-contact-input-email'      => '0<script>alert("email");</script>@<script>alert("email");</script>',
-                    'form-contact-textarea-message' => '0<script>alert("message");</script>'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 1,
-                'mailText'           => "Name: 0<script>alert(\"name\");</script>\nEmail: 0<script>alert(\"email\");</script>@<script>alert(\"email\");</script>\nMessage: 0<script>alert(\"message\");</script>",
-                'mailSent'           => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">Message sent successfully</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+        yield 'xss email - OK' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'csrf_is_replaced',
+                'form-contact-input-name'       => '0<script>alert("name");</script>',
+                'form-contact-input-email'      => '0<script>alert("email");</script>@<script>alert("email");</script>',
+                'form-contact-textarea-message' => '0<script>alert("message");</script>'
             ],
-            'xss form - KO' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-contact-input-name'       => '1<script>alert("name");</script>',
-                    'form-contact-input-email'      => '1<script>alert("email");</script><script>alert("email");</script>',
-                    'form-contact-textarea-message' => '1<script>alert("message");</script>'
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 1,
+            'mailText'           => "Name: 0<script>alert(\"name\");</script>\nEmail: 0<script>alert(\"email\");</script>@<script>alert(\"email\");</script>\nMessage: 0<script>alert(\"message\");</script>",
+            'mailSent'           => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">Message sent successfully</div>'
                 ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['email'],
-                'fieldsHasValue'   => ['name', 'email', 'message'],
-                'fieldsLabelError' => [
-                    'email' => 'Email is invalid'
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
+                ]
             ],
-            'send mail OK' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-contact-input-name'       => '20',
-                    'form-contact-input-email'      => '20@0',
-                    'form-contact-textarea-message' => '20'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 1,
-                'mailText'           => "Name: 20\nEmail: 20@0\nMessage: 20",
-                'mailSent'           => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">Message sent successfully</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'xss form - KO' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'csrf_is_replaced',
+                'form-contact-input-name'       => '1<script>alert("name");</script>',
+                'form-contact-input-email'      => '1<script>alert("email");</script><script>alert("email");</script>',
+                'form-contact-textarea-message' => '1<script>alert("message");</script>'
             ],
-            'send mail KO' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-contact-input-name'       => '30',
-                    'form-contact-input-email'      => '30@0',
-                    'form-contact-textarea-message' => '30'
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
                 ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 1,
-                'mailText'           => "Name: 30\nEmail: 30@0\nMessage: 30",
-                'mailSent'           => false,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, could not sent message, try later</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
+                ]
             ],
-            'csrf incorrect' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'incorrect_csrf',
-                    'form-contact-input-name'       => '40',
-                    'form-contact-input-email'      => '40',
-                    'form-contact-textarea-message' => '40'
-                ],
-                'useCsrfFromSession' => false,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => ['email'],
+            'fieldsHasValue'   => ['name', 'email', 'message'],
+            'fieldsLabelError' => [
+                'email' => 'Email is invalid'
             ],
-            'missing fields - no fields' => [
-                'params'             => [],
-                'useCsrfFromSession' => false,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+        ];
+
+        yield 'send mail OK' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'csrf_is_replaced',
+                'form-contact-input-name'       => '20',
+                'form-contact-input-email'      => '20@0',
+                'form-contact-textarea-message' => '20'
             ],
-            'missing fields - no csrf' => [
-                'params' => [
-                    'form-contact-input-name'       => '50',
-                    'form-contact-input-email'      => '50',
-                    'form-contact-textarea-message' => '50'
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 1,
+            'mailText'           => "Name: 20\nEmail: 20@0\nMessage: 20",
+            'mailSent'           => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">Message sent successfully</div>'
                 ],
-                'useCsrfFromSession' => false,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
+                ]
             ],
-            'missing fields - no name' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'incorrect_csrf',
-                    'form-contact-input-email'      => '60',
-                    'form-contact-textarea-message' => '60'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'send mail KO' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'csrf_is_replaced',
+                'form-contact-input-name'       => '30',
+                'form-contact-input-email'      => '30@0',
+                'form-contact-textarea-message' => '30'
             ],
-            'missing fields - no email' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'incorrect_csrf',
-                    'form-contact-input-name'       => '70',
-                    'form-contact-textarea-message' => '70'
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 1,
+            'mailText'           => "Name: 30\nEmail: 30@0\nMessage: 30",
+            'mailSent'           => false,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
                 ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, could not sent message, try later</div>'
+                ]
             ],
-            'missing fields - no message' => [
-                'params' => [
-                    'form-contact-hidden-csrf'   => 'incorrect_csrf',
-                    'form-contact-input-name'    => '80',
-                    'form-contact-input-email'   => '80',
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'csrf incorrect' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'incorrect_csrf',
+                'form-contact-input-name'       => '40',
+                'form-contact-input-email'      => '40',
+                'form-contact-textarea-message' => '40'
             ],
-            'empty fields - name empty' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-contact-input-name'       => ' ',
-                    'form-contact-input-email'      => 'em@ail',
-                    'form-contact-textarea-message' => 'message'
+            'useCsrfFromSession' => false,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
                 ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['name'],
-                'fieldsHasValue'   => ['name', 'email', 'message'],
-                'fieldsLabelError' => [
-                    'name' => 'Name is required'
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
+                ]
             ],
-            'empty fields - email empty' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-contact-input-name'       => 'name',
-                    'form-contact-input-email'      => ' ',
-                    'form-contact-textarea-message' => '0'
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no fields' => [
+            'params'             => [],
+            'useCsrfFromSession' => false,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
                 ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['email'],
-                'fieldsHasValue'   => ['name', 'email', 'message'],
-                'fieldsLabelError' => [
-                    'email' => 'Email is required'
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
+                ]
             ],
-            'empty fields - message empty' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-contact-input-name'       => 'name',
-                    'form-contact-input-email'      => 'em@ail',
-                    'form-contact-textarea-message' => ' '
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['message'],
-                'fieldsHasValue'   => ['name', 'email', 'message'],
-                'fieldsLabelError' => [
-                    'message' => 'Message is required'
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'params' => [
+                'form-contact-input-name'       => '50',
+                'form-contact-input-email'      => '50',
+                'form-contact-textarea-message' => '50'
             ],
-            'invalid fields - email' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-contact-input-name'       => 'name',
-                    'form-contact-input-email'      => 'a',
-                    'form-contact-textarea-message' => 'message'
+            'useCsrfFromSession' => false,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
                 ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['email'],
-                'fieldsHasValue'   => ['name', 'email', 'message'],
-                'fieldsLabelError' => [
-                    'email' => 'Email is invalid'
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
+                ]
             ],
-            'invalid encoding fields - name' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-contact-input-name'       => \chr(99999999),
-                    'form-contact-input-email'      => '40',
-                    'form-contact-textarea-message' => '40'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no name' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'incorrect_csrf',
+                'form-contact-input-email'      => '60',
+                'form-contact-textarea-message' => '60'
             ],
-            'invalid encoding fields - email' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-contact-input-name'       => '40',
-                    'form-contact-input-email'      => \chr(99999999),
-                    'form-contact-textarea-message' => '40'
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
                 ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'invalid encoding fields - message' => [
-                'params' => [
-                    'form-contact-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-contact-input-name'       => '40',
-                    'form-contact-input-email'      => '40',
-                    'form-contact-textarea-message' => \chr(99999999)
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailText'           => '',
-                'mailSent'           => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no email' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'incorrect_csrf',
+                'form-contact-input-name'       => '70',
+                'form-contact-textarea-message' => '70'
             ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no message' => [
+            'params' => [
+                'form-contact-hidden-csrf'   => 'incorrect_csrf',
+                'form-contact-input-name'    => '80',
+                'form-contact-input-email'   => '80',
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'empty fields - name empty' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'csrf_is_replaced',
+                'form-contact-input-name'       => ' ',
+                'form-contact-input-email'      => 'em@ail',
+                'form-contact-textarea-message' => 'message'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['name'],
+            'fieldsHasValue'   => ['name', 'email', 'message'],
+            'fieldsLabelError' => [
+                'name' => 'Name is required'
+            ],
+        ];
+
+        yield 'empty fields - email empty' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'csrf_is_replaced',
+                'form-contact-input-name'       => 'name',
+                'form-contact-input-email'      => ' ',
+                'form-contact-textarea-message' => '0'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['email'],
+            'fieldsHasValue'   => ['name', 'email', 'message'],
+            'fieldsLabelError' => [
+                'email' => 'Email is required'
+            ],
+        ];
+
+        yield 'empty fields - message empty' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'csrf_is_replaced',
+                'form-contact-input-name'       => 'name',
+                'form-contact-input-email'      => 'em@ail',
+                'form-contact-textarea-message' => ' '
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['message'],
+            'fieldsHasValue'   => ['name', 'email', 'message'],
+            'fieldsLabelError' => [
+                'message' => 'Message is required'
+            ],
+        ];
+
+        yield 'invalid fields - email' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'csrf_is_replaced',
+                'form-contact-input-name'       => 'name',
+                'form-contact-input-email'      => 'a',
+                'form-contact-textarea-message' => 'message'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['email'],
+            'fieldsHasValue'   => ['name', 'email', 'message'],
+            'fieldsLabelError' => [
+                'email' => 'Email is invalid'
+            ],
+        ];
+
+        yield 'invalid encoding fields - name' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'csrf_is_replaced',
+                'form-contact-input-name'       => \chr(99999999),
+                'form-contact-input-email'      => '40',
+                'form-contact-textarea-message' => '40'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid encoding fields - email' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'csrf_is_replaced',
+                'form-contact-input-name'       => '40',
+                'form-contact-input-email'      => \chr(99999999),
+                'form-contact-textarea-message' => '40'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid encoding fields - message' => [
+            'params' => [
+                'form-contact-hidden-csrf'      => 'csrf_is_replaced',
+                'form-contact-input-name'       => '40',
+                'form-contact-input-email'      => '40',
+                'form-contact-textarea-message' => \chr(99999999)
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailText'           => '',
+            'mailSent'           => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-contact">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-contact" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
         ];
     }
 

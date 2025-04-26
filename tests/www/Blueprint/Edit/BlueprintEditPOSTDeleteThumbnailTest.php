@@ -98,155 +98,158 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
             } while (!$good);
         }
 
-        return [
-            'delete thumbnail OK - no thumbnail before' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_thumbnail-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">Blueprint thumbnail is now deleted</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
-                    ]
-                ],
-                'fileOrDirOnDisk' => null,
-                'isFile'          => false,
+        yield 'delete thumbnail OK - no thumbnail before' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
             ],
-            'delete thumbnail OK - has thumbnail before (file is not in disk)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '<script>alert(1)</script>')",
-                    "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_thumbnail-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">Blueprint thumbnail is now deleted</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
-                    ]
-                ],
-                'fileOrDirOnDisk' => null,
-                'isFile'          => false,
+            'userID' => 189,
+            'params' => [
+                'form-delete_thumbnail-hidden-csrf' => 'csrf_is_replaced',
             ],
-            'delete thumbnail OK - has thumbnail before (file is in disk)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '" . $randomThumbailsName[0] . "')",
-                    "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">Blueprint thumbnail is now deleted</div>'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_thumbnail-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">Blueprint thumbnail is now deleted</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
-                    ]
-                ],
-                'fileOrDirOnDisk' => $randomThumbailsName[0],
-                'isFile'          => true,
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
+                ]
             ],
-            'delete thumbnail OK - has thumbnail before (file is in disk as dir but not delete)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '" . $randomThumbailsName[1] . "')",
-                    "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_thumbnail-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">Blueprint thumbnail is now deleted</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
-                    ]
-                ],
-                'fileOrDirOnDisk' => $randomThumbailsName[1],
-                'isFile'          => false,
+            'fileOrDirOnDisk' => null,
+            'isFile'          => false,
+        ];
+
+        yield 'delete thumbnail OK - has thumbnail before (file is not in disk)' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '<script>alert(1)</script>')",
+                "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '<script>alert(1)</script>')",
-                    "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_thumbnail-hidden-csrf' => 'incorrect_csrf',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
-                    ]
-                ],
-                'fileOrDirOnDisk' => null,
-                'isFile'          => false,
+            'userID' => 189,
+            'params' => [
+                'form-delete_thumbnail-hidden-csrf' => 'csrf_is_replaced',
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries'           => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '<script>alert(1)</script>')",
-                    "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">Blueprint thumbnail is now deleted</div>'
                 ],
-                'userID'             => 189,
-                'params'             => [],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
-                    ]
-                ],
-                'fileOrDirOnDisk' => null,
-                'isFile'          => false,
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
+                ]
             ],
+            'fileOrDirOnDisk' => null,
+            'isFile'          => false,
+        ];
+
+        yield 'delete thumbnail OK - has thumbnail before (file is in disk)' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '" . $randomThumbailsName[0] . "')",
+                "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_thumbnail-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">Blueprint thumbnail is now deleted</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
+                ]
+            ],
+            'fileOrDirOnDisk' => $randomThumbailsName[0],
+            'isFile'          => true,
+        ];
+
+        yield 'delete thumbnail OK - has thumbnail before (file is in disk as dir but not delete)' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '" . $randomThumbailsName[1] . "')",
+                "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_thumbnail-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">Blueprint thumbnail is now deleted</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
+                ]
+            ],
+            'fileOrDirOnDisk' => $randomThumbailsName[1],
+            'isFile'          => false,
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '<script>alert(1)</script>')",
+                "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_thumbnail-hidden-csrf' => 'incorrect_csrf',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
+                ]
+            ],
+            'fileOrDirOnDisk' => null,
+            'isFile'          => false,
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries'           => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '<script>alert(1)</script>')",
+                "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID'             => 189,
+            'params'             => [],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_thumbnail">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_thumbnail" role="alert">'
+                ]
+            ],
+            'fileOrDirOnDisk' => null,
+            'isFile'          => false,
         ];
     }
 

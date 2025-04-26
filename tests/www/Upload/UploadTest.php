@@ -124,27 +124,26 @@ class UploadTest extends TestCase
 
     public static function provideURL404DataCases(): iterable
     {
-        return [
-            'invalid url - user/thumbnail' => [
-                'slug'               => '/upload/user/1/thumbnail/',
-                'statusCode'         => 404,
-                'responseContent'    => '',
-                'userID'             => null,
-                'params'             => [],
-                'file'               => [],
-                'additionalsFolders' => [],
-                'isUploaded'         => false,
-            ],
-            'invalid url - blueprint/avatar' => [
-                'slug'               => '/upload/blueprint/1/avatar/',
-                'statusCode'         => 404,
-                'responseContent'    => '',
-                'userID'             => null,
-                'params'             => [],
-                'file'               => [],
-                'additionalsFolders' => [],
-                'isUploaded'         => false,
-            ]
+        yield 'invalid url - user/thumbnail' => [
+            'slug'               => '/upload/user/1/thumbnail/',
+            'statusCode'         => 404,
+            'responseContent'    => '',
+            'userID'             => null,
+            'params'             => [],
+            'file'               => [],
+            'additionalsFolders' => [],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid url - blueprint/avatar' => [
+            'slug'               => '/upload/blueprint/1/avatar/',
+            'statusCode'         => 404,
+            'responseContent'    => '',
+            'userID'             => null,
+            'params'             => [],
+            'file'               => [],
+            'additionalsFolders' => [],
+            'isUploaded'         => false,
         ];
     }
 
@@ -163,427 +162,462 @@ class UploadTest extends TestCase
             'corrupt imagecreatefrompng'  => new UploadedFile($folderUploadedFiles . 'corrupt_imagecreatefrompng.tmp', 1, \UPLOAD_ERR_OK, 'avatar', 'image/png'),
         ];
 
-        return [
-            'user not logged - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"user not logged"}',
-                'userID'             => null,
-                'params'             => [],
-                'file'               => [],
-                'additionalsFolders' => [],
-                'isUploaded'         => false,
+        yield 'user not logged - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"user not logged"}',
+            'userID'             => null,
+            'params'             => [],
+            'file'               => [],
+            'additionalsFolders' => [],
+            'isUploaded'         => false,
+        ];
+
+        yield 'entity id is not same as user logged - user/avatar' => [
+            'slug'               => '/upload/user/9/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"user forbidden"}',
+            'userID'             => 1,
+            'params'             => [],
+            'file'               => [],
+            'additionalsFolders' => [],
+            'isUploaded'         => false,
+        ];
+
+        yield 'folder not initialize in Application - user/avatar' => [
+            'slug'            => '/upload/user/129/avatar/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"folder for avatars not found"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['310x310'],
             ],
-            'entity id is not same as user logged - user/avatar' => [
-                'slug'               => '/upload/user/9/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"user forbidden"}',
-                'userID'             => 1,
-                'params'             => [],
-                'file'               => [],
-                'additionalsFolders' => [],
-                'isUploaded'         => false,
+            'additionalsFolders' => [],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing all params - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => [],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params canvas_width - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_height' => '', 'mask_width' => '', 'mask_height' => '', 'mask_x' => '', 'mask_y' => ''],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params canvas_height - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => '', 'mask_width' => '', 'mask_height' => '', 'mask_x' => '', 'mask_y' => ''],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params mask_width - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_height' => '', 'mask_x' => '', 'mask_y' => ''],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params mask_height - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_width' => '', 'mask_x' => '', 'mask_y' => ''],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params mask_x - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_width' => '', 'mask_height' => '', 'mask_y' => ''],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params mask_y - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_width' => '', 'mask_height' => '', 'mask_x' => ''],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params canvas_width - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => -1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params canvas_height - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 0, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params mask_width - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => -1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params mask_height - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 0, 'mask_x' => 1, 'mask_y' => 1],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params mask_x - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => -1, 'mask_y' => 1],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params mask_y - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 0],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params csrf - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params csrf - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1, 'csrf' => 'incorrect_csrf'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid constraint value in params canvas_width - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid constraints parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid constraint value in params canvas_height - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid constraints parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 310, 'canvas_height' => 1, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid constraint value in params mask_width - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid constraints parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 1, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid constraint value in params mask_height - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid constraints parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 1, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid constraint value in params mask_x - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid constraints parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 1, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid constraint value in params mask_y - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid constraints parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 1, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing file - user/avatar' => [
+            'slug'               => '/upload/user/129/avatar/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"missing file"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - missing type - user/avatar' => [
+            'slug'            => '/upload/user/129/avatar/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['no tmp file'],
             ],
-            'folder not initialize in Application - user/avatar' => [
-                'slug'            => '/upload/user/129/avatar/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"folder for avatars not found"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['310x310'],
-                ],
-                'additionalsFolders' => [],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - invalid type - user/avatar' => [
+            'slug'            => '/upload/user/129/avatar/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['invalid file - invalid type'],
             ],
-            'missing all params - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => [],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - invalid size - user/avatar' => [
+            'slug'            => '/upload/user/129/avatar/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['invalid file - invalid size'],
             ],
-            'missing params canvas_width - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_height' => '', 'mask_width' => '', 'mask_height' => '', 'mask_x' => '', 'mask_y' => ''],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - error upload - user/avatar' => [
+            'slug'            => '/upload/user/129/avatar/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['invalid file - upload error'],
             ],
-            'missing params canvas_height - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => '', 'mask_width' => '', 'mask_height' => '', 'mask_x' => '', 'mask_y' => ''],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - no file found - user/avatar' => [
+            'slug'            => '/upload/user/129/avatar/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['invalid file - not found'],
             ],
-            'missing params mask_width - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_height' => '', 'mask_x' => '', 'mask_y' => ''],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - mismatch file and header - user/avatar' => [
+            'slug'            => '/upload/user/129/avatar/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['invalid file - fake image'],
             ],
-            'missing params mask_height - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_width' => '', 'mask_x' => '', 'mask_y' => ''],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - mismatch size file and canvas width params (file invalid) - user/avatar' => [
+            'slug'            => '/upload/user/129/avatar/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['1x1'],
             ],
-            'missing params mask_x - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_width' => '', 'mask_height' => '', 'mask_y' => ''],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - mismatch size file and canvas height params (file invalid) - user/avatar' => [
+            'slug'            => '/upload/user/129/avatar/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['1x1'],
             ],
-            'missing params mask_y - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_width' => '', 'mask_height' => '', 'mask_x' => ''],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - mismatch size file and canvas params (file invalid) - user/avatar' => [
+            'slug'            => '/upload/user/129/avatar/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['1x1'],
             ],
-            'invalid value in params canvas_width - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => -1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        /*'could not use image - imagecreatefrompng - user/avatar' => [
+            'slug'            => '/upload/user/129/avatar/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"could not use image"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['corrupt imagecreatefrompng'],
             ],
-            'invalid value in params canvas_height - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 0, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ],*/
+        yield 'could not update user avatar - user not found - user/avatar' => [
+            'slug'            => '/upload/user/1/avatar/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"could not update user avatar"}',
+            'userID'          => 1,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['310x310'],
             ],
-            'invalid value in params mask_width - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => -1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'update OK - user with no avatar before - user/avatar' => [
+            'slug'            => '/upload/user/129/avatar/',
+            'statusCode'      => 200,
+            'responseContent' => '',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['310x310'],
             ],
-            'invalid value in params mask_height - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 0, 'mask_x' => 1, 'mask_y' => 1],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => true,
+        ];
+
+        yield 'update OK - user with avatar before - user/avatar' => [
+            'slug'            => '/upload/user/139/avatar/',
+            'statusCode'      => 200,
+            'responseContent' => '',
+            'userID'          => 139,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['310x310'],
             ],
-            'invalid value in params mask_x - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => -1, 'mask_y' => 1],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => true,
+        ];
+
+        yield 'update OK - user with avatar exploit before - user/avatar' => [
+            'slug'            => '/upload/user/149/avatar/',
+            'statusCode'      => 200,
+            'responseContent' => '',
+            'userID'          => 149,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'avatar' => $files['310x310'],
             ],
-            'invalid value in params mask_y - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 0],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'missing params csrf - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid value in params csrf - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1, 'csrf' => 'incorrect_csrf'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid constraint value in params canvas_width - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid constraints parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid constraint value in params canvas_height - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid constraints parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 310, 'canvas_height' => 1, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid constraint value in params mask_width - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid constraints parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 1, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid constraint value in params mask_height - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid constraints parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 1, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid constraint value in params mask_x - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid constraints parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 1, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid constraint value in params mask_y - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid constraints parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 1, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'missing file - user/avatar' => [
-                'slug'               => '/upload/user/129/avatar/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"missing file"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - missing type - user/avatar' => [
-                'slug'            => '/upload/user/129/avatar/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['no tmp file'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - invalid type - user/avatar' => [
-                'slug'            => '/upload/user/129/avatar/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['invalid file - invalid type'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - invalid size - user/avatar' => [
-                'slug'            => '/upload/user/129/avatar/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['invalid file - invalid size'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - error upload - user/avatar' => [
-                'slug'            => '/upload/user/129/avatar/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['invalid file - upload error'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - no file found - user/avatar' => [
-                'slug'            => '/upload/user/129/avatar/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['invalid file - not found'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - mismatch file and header - user/avatar' => [
-                'slug'            => '/upload/user/129/avatar/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['invalid file - fake image'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - mismatch size file and canvas width params (file invalid) - user/avatar' => [
-                'slug'            => '/upload/user/129/avatar/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['1x1'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - mismatch size file and canvas height params (file invalid) - user/avatar' => [
-                'slug'            => '/upload/user/129/avatar/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['1x1'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - mismatch size file and canvas params (file invalid) - user/avatar' => [
-                'slug'            => '/upload/user/129/avatar/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['1x1'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            /*'could not use image - imagecreatefrompng - user/avatar' => [
-                'slug'            => '/upload/user/129/avatar/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"could not use image"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['corrupt imagecreatefrompng'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],*/
-            'could not update user avatar - user not found - user/avatar' => [
-                'slug'            => '/upload/user/1/avatar/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"could not update user avatar"}',
-                'userID'          => 1,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['310x310'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'update OK - user with no avatar before - user/avatar' => [
-                'slug'            => '/upload/user/129/avatar/',
-                'statusCode'      => 200,
-                'responseContent' => '',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['310x310'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => true,
-            ],
-            'update OK - user with avatar before - user/avatar' => [
-                'slug'            => '/upload/user/139/avatar/',
-                'statusCode'      => 200,
-                'responseContent' => '',
-                'userID'          => 139,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['310x310'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => true,
-            ],
-            'update OK - user with avatar exploit before - user/avatar' => [
-                'slug'            => '/upload/user/149/avatar/',
-                'statusCode'      => 200,
-                'responseContent' => '',
-                'userID'          => 149,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'avatar' => $files['310x310'],
-                ],
-                'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => true,
-            ],
+            'additionalsFolders' => ['MEDIAS_AVATARS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => true,
         ];
     }
 
@@ -602,425 +636,460 @@ class UploadTest extends TestCase
             'corrupt imagecreatefrompng'  => new UploadedFile($folderUploadedFiles . 'corrupt_imagecreatefrompng.tmp', 1, \UPLOAD_ERR_OK, 'thumbnail', 'image/png'),
         ];
 
-        return [
-            'user not logged - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"user not logged"}',
-                'userID'             => null,
-                'params'             => [],
-                'file'               => [],
-                'additionalsFolders' => [],
-                'isUploaded'         => false,
+        yield 'user not logged - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"user not logged"}',
+            'userID'             => null,
+            'params'             => [],
+            'file'               => [],
+            'additionalsFolders' => [],
+            'isUploaded'         => false,
+        ];
+
+        yield 'blueprint id is not valid bluepint - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/1/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"user not author"}',
+            'userID'             => 1,
+            'params'             => [],
+            'file'               => [],
+            'additionalsFolders' => [],
+            'isUploaded'         => false,
+        ];
+
+        yield 'blueprint id is not owned by the user logged - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"user not author"}',
+            'userID'             => 1,
+            'params'             => [],
+            'file'               => [],
+            'additionalsFolders' => [],
+            'isUploaded'         => false,
+        ];
+
+        yield 'folder not initialize in Application - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/965/thumbnail/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"folder for thumbnails not found"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['310x310'],
             ],
-            'blueprint id is not valid bluepint - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/1/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"user not author"}',
-                'userID'             => 1,
-                'params'             => [],
-                'file'               => [],
-                'additionalsFolders' => [],
-                'isUploaded'         => false,
+            'additionalsFolders' => [],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing all params - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => [],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params canvas_width - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_height' => '', 'mask_width' => '', 'mask_height' => '', 'mask_x' => '', 'mask_y' => ''],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params canvas_height - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => '', 'mask_width' => '', 'mask_height' => '', 'mask_x' => '', 'mask_y' => ''],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params mask_width - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_height' => '', 'mask_x' => '', 'mask_y' => ''],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params mask_height - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_width' => '', 'mask_x' => '', 'mask_y' => ''],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params mask_x - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_width' => '', 'mask_height' => '', 'mask_y' => ''],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params mask_y - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_width' => '', 'mask_height' => '', 'mask_x' => ''],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params canvas_width - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => -1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params canvas_height - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 0, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params mask_width - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => -1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params mask_height - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 0, 'mask_x' => 1, 'mask_y' => 1],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params mask_x - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => -1, 'mask_y' => 1],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params mask_y - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 0],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing params csrf - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid value in params csrf - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1, 'csrf' => 'incorrect_csrf'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid constraint value in params canvas_width - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid constraints parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 1, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid constraint value in params canvas_height - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid constraints parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 310, 'canvas_height' => 1, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid constraint value in params mask_width - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid constraints parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 1, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid constraint value in params mask_height - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid constraints parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 1, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid constraint value in params mask_x - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid constraints parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 1, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid constraint value in params mask_y - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"invalid constraints parameters"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 1, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'missing file - blueprint/thumbnail' => [
+            'slug'               => '/upload/blueprint/965/thumbnail/',
+            'statusCode'         => 400,
+            'responseContent'    => '{"message":"missing file"}',
+            'userID'             => 129,
+            'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'               => [],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - missing type - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/965/thumbnail/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['no tmp file'],
             ],
-            'blueprint id is not owned by the user logged - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"user not author"}',
-                'userID'             => 1,
-                'params'             => [],
-                'file'               => [],
-                'additionalsFolders' => [],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - invalid type - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/965/thumbnail/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['invalid file - invalid type'],
             ],
-            'folder not initialize in Application - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/965/thumbnail/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"folder for thumbnails not found"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['310x310'],
-                ],
-                'additionalsFolders' => [],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - invalid size - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/965/thumbnail/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['invalid file - invalid size'],
             ],
-            'missing all params - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => [],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - error upload - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/965/thumbnail/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['invalid file - upload error'],
             ],
-            'missing params canvas_width - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_height' => '', 'mask_width' => '', 'mask_height' => '', 'mask_x' => '', 'mask_y' => ''],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - no file found - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/965/thumbnail/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['invalid file - not found'],
             ],
-            'missing params canvas_height - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => '', 'mask_width' => '', 'mask_height' => '', 'mask_x' => '', 'mask_y' => ''],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - mismatch file and header - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/965/thumbnail/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['invalid file - fake image'],
             ],
-            'missing params mask_width - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_height' => '', 'mask_x' => '', 'mask_y' => ''],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - mismatch size file and canvas width params (file invalid) - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/965/thumbnail/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['1x1'],
             ],
-            'missing params mask_height - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_width' => '', 'mask_x' => '', 'mask_y' => ''],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - mismatch size file and canvas height params (file invalid) - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/965/thumbnail/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['1x1'],
             ],
-            'missing params mask_x - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_width' => '', 'mask_height' => '', 'mask_y' => ''],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        yield 'invalid file - mismatch size file and canvas params (file invalid) - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/965/thumbnail/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"invalid file"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['1x1'],
             ],
-            'missing params mask_y - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => '', 'canvas_height' => '', 'mask_width' => '', 'mask_height' => '', 'mask_x' => ''],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ];
+
+        /*'could not use image - imagecreatefrompng - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/965/thumbnail/',
+            'statusCode'      => 400,
+            'responseContent' => '{"message":"could not use image"}',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['corrupt imagecreatefrompng'],
             ],
-            'invalid value in params canvas_width - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => -1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => false,
+        ],*/
+        yield 'update OK - blueprint with no thumbnail before - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/965/thumbnail/',
+            'statusCode'      => 200,
+            'responseContent' => '',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['310x310'],
             ],
-            'invalid value in params canvas_height - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 0, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => true,
+        ];
+
+        yield 'update OK - blueprint with thumbnail before - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/975/thumbnail/',
+            'statusCode'      => 200,
+            'responseContent' => '',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['310x310'],
             ],
-            'invalid value in params mask_width - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => -1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => true,
+        ];
+
+        yield 'update OK - blueprint with thumbnail exploit before - blueprint/thumbnail' => [
+            'slug'            => '/upload/blueprint/985/thumbnail/',
+            'statusCode'      => 200,
+            'responseContent' => '',
+            'userID'          => 129,
+            'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
+            'file'            => [
+                'thumbnail' => $files['310x310'],
             ],
-            'invalid value in params mask_height - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 0, 'mask_x' => 1, 'mask_y' => 1],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid value in params mask_x - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => -1, 'mask_y' => 1],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid value in params mask_y - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 0],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'missing params csrf - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid value in params csrf - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 1, 'mask_width' => 1, 'mask_height' => 1, 'mask_x' => 1, 'mask_y' => 1, 'csrf' => 'incorrect_csrf'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid constraint value in params canvas_width - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid constraints parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 1, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid constraint value in params canvas_height - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid constraints parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 310, 'canvas_height' => 1, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid constraint value in params mask_width - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid constraints parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 1, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid constraint value in params mask_height - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid constraints parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 1, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid constraint value in params mask_x - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid constraints parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 1, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid constraint value in params mask_y - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"invalid constraints parameters"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 1, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'missing file - blueprint/thumbnail' => [
-                'slug'               => '/upload/blueprint/965/thumbnail/',
-                'statusCode'         => 400,
-                'responseContent'    => '{"message":"missing file"}',
-                'userID'             => 129,
-                'params'             => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'               => [],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - missing type - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/965/thumbnail/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['no tmp file'],
-                ],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - invalid type - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/965/thumbnail/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['invalid file - invalid type'],
-                ],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - invalid size - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/965/thumbnail/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['invalid file - invalid size'],
-                ],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - error upload - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/965/thumbnail/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['invalid file - upload error'],
-                ],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - no file found - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/965/thumbnail/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['invalid file - not found'],
-                ],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - mismatch file and header - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/965/thumbnail/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['invalid file - fake image'],
-                ],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - mismatch size file and canvas width params (file invalid) - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/965/thumbnail/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['1x1'],
-                ],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - mismatch size file and canvas height params (file invalid) - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/965/thumbnail/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['1x1'],
-                ],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            'invalid file - mismatch size file and canvas params (file invalid) - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/965/thumbnail/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"invalid file"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['1x1'],
-                ],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],
-            /*'could not use image - imagecreatefrompng - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/965/thumbnail/',
-                'statusCode'      => 400,
-                'responseContent' => '{"message":"could not use image"}',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['corrupt imagecreatefrompng'],
-                ],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => false,
-            ],*/
-            'update OK - blueprint with no thumbnail before - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/965/thumbnail/',
-                'statusCode'      => 200,
-                'responseContent' => '',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['310x310'],
-                ],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => true,
-            ],
-            'update OK - blueprint with thumbnail before - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/975/thumbnail/',
-                'statusCode'      => 200,
-                'responseContent' => '',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['310x310'],
-                ],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => true,
-            ],
-            'update OK - blueprint with thumbnail exploit before - blueprint/thumbnail' => [
-                'slug'            => '/upload/blueprint/985/thumbnail/',
-                'statusCode'      => 200,
-                'responseContent' => '',
-                'userID'          => 129,
-                'params'          => ['canvas_width' => 310, 'canvas_height' => 310, 'mask_width' => 200, 'mask_height' => 200, 'mask_x' => 55, 'mask_y' => 55, 'csrf' => 'csrf_is_replaced'],
-                'file'            => [
-                    'thumbnail' => $files['310x310'],
-                ],
-                'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
-                'isUploaded'         => true,
-            ],
+            'additionalsFolders' => ['MEDIAS_BLUEPRINTS' => \dirname(__DIR__, 2) . \DIRECTORY_SEPARATOR . 'medias'],
+            'isUploaded'         => true,
         ];
     }
 

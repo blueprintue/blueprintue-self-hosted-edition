@@ -83,296 +83,305 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
 
     public static function provideEditBasicInfosDataCases(): iterable
     {
-        return [
-            'edit OK' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `bio`, `link_website`) VALUES (189, 'bio_value\nline 2', 'link_website_value')"
-                ],
-                'userID'      => 189,
-                'params'      => [
-                    'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
-                    'form-edit_basic_infos-textarea-bio'  => "my\nbio",
-                    'form-edit_basic_infos-input-website' => 'my-website',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
-                    ]
-                ],
-                'fieldsHasError' => [],
-                'fieldsHasValue' => ['bio', 'website'],
+        yield 'edit OK' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `bio`, `link_website`) VALUES (189, 'bio_value\nline 2', 'link_website_value')"
             ],
-            'edit OK - xss' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `bio`, `link_website`) VALUES (189, 'bio_value\nline 2', 'link_website_value')"
-                ],
-                'userID'      => 189,
-                'params'      => [
-                    'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
-                    'form-edit_basic_infos-textarea-bio'  => '<script>alert("bio");</script>',
-                    'form-edit_basic_infos-input-website' => '<script>alert("website");</script>',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
-                    ]
-                ],
-                'fieldsHasError' => [],
-                'fieldsHasValue' => ['bio', 'website'],
+            'userID'      => 189,
+            'params'      => [
+                'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
+                'form-edit_basic_infos-textarea-bio'  => "my\nbio",
+                'form-edit_basic_infos-input-website' => 'my-website',
             ],
-            'edit OK - missing users_infos' => [
-                'sqlQueries'  => [],
-                'userID'      => 189,
-                'params'      => [
-                    'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
-                    'form-edit_basic_infos-textarea-bio'  => "my\nbio",
-                    'form-edit_basic_infos-input-website' => 'my-website',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
-                    ]
-                ],
-                'fieldsHasError' => [],
-                'fieldsHasValue' => ['bio', 'website'],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
+                ]
             ],
-            'csrf incorrect' => [
-                'sqlQueries'  => [],
-                'userID'      => 189,
-                'params'      => [
-                    'form-edit_basic_infos-hidden-csrf'   => 'incorrect_csrf',
-                    'form-edit_basic_infos-textarea-bio'  => "my\nbio",
-                    'form-edit_basic_infos-input-website' => 'my-website',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
-                    ]
-                ],
-                'fieldsHasError' => [],
-                'fieldsHasValue' => [],
+            'fieldsHasError' => [],
+            'fieldsHasValue' => ['bio', 'website'],
+        ];
+
+        yield 'edit OK - xss' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `bio`, `link_website`) VALUES (189, 'bio_value\nline 2', 'link_website_value')"
             ],
-            'missing fields - no fields' => [
-                'sqlQueries'            => [],
-                'userID'                => 189,
-                'params'                => [],
-                'useCsrfFromSession'    => false,
-                'hasRedirection'        => false,
-                'isFormSuccess'         => false,
-                'flashMessages'         => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
-                    ]
-                ],
-                'fieldsHasError' => [],
-                'fieldsHasValue' => [],
+            'userID'      => 189,
+            'params'      => [
+                'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
+                'form-edit_basic_infos-textarea-bio'  => '<script>alert("bio");</script>',
+                'form-edit_basic_infos-input-website' => '<script>alert("website");</script>',
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries'  => [],
-                'userID'      => 189,
-                'params'      => [
-                    'form-edit_basic_infos-textarea-bio'  => "my\nbio",
-                    'form-edit_basic_infos-input-website' => 'my-website',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
                 ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
-                    ]
-                ],
-                'fieldsHasError' => [],
-                'fieldsHasValue' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
+                ]
             ],
-            'missing fields - no bio' => [
-                'sqlQueries'  => [],
-                'userID'      => 189,
-                'params'      => [
-                    'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
-                    'form-edit_basic_infos-input-website' => 'my-website',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError' => [],
-                'fieldsHasValue' => [],
+            'fieldsHasError' => [],
+            'fieldsHasValue' => ['bio', 'website'],
+        ];
+
+        yield 'edit OK - missing users_infos' => [
+            'sqlQueries'  => [],
+            'userID'      => 189,
+            'params'      => [
+                'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
+                'form-edit_basic_infos-textarea-bio'  => "my\nbio",
+                'form-edit_basic_infos-input-website' => 'my-website',
             ],
-            'missing fields - no website' => [
-                'sqlQueries'  => [],
-                'userID'      => 189,
-                'params'      => [
-                    'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
-                    'form-edit_basic_infos-textarea-bio'  => "my\nbio",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError' => [],
-                'fieldsHasValue' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
+                ]
             ],
-            'edit OK - empty fields - bio empty' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `bio`, `link_website`) VALUES (189, 'bio_value\nline 2', 'link_website_value')"
-                ],
-                'userID'      => 189,
-                'params'      => [
-                    'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
-                    'form-edit_basic_infos-textarea-bio'  => ' ',
-                    'form-edit_basic_infos-input-website' => 'my-website',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
-                    ]
-                ],
-                'fieldsHasError' => [],
-                'fieldsHasValue' => ['bio', 'website'],
+            'fieldsHasError' => [],
+            'fieldsHasValue' => ['bio', 'website'],
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries'  => [],
+            'userID'      => 189,
+            'params'      => [
+                'form-edit_basic_infos-hidden-csrf'   => 'incorrect_csrf',
+                'form-edit_basic_infos-textarea-bio'  => "my\nbio",
+                'form-edit_basic_infos-input-website' => 'my-website',
             ],
-            'edit OK - empty fields - website empty' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (`id_user`, `bio`, `link_website`) VALUES (189, 'bio_value\nline 2', 'link_website_value')"
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
                 ],
-                'userID'      => 189,
-                'params'      => [
-                    'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
-                    'form-edit_basic_infos-textarea-bio'  => "my\nbio",
-                    'form-edit_basic_infos-input-website' => ' ',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
-                    ]
-                ],
-                'fieldsHasError' => [],
-                'fieldsHasValue' => ['bio', 'website'],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
+                ]
             ],
-            'invalid encoding fields - bio' => [
-                'sqlQueries'  => [],
-                'userID'      => 189,
-                'params'      => [
-                    'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
-                    'form-edit_basic_infos-textarea-bio'  => \chr(99999999),
-                    'form-edit_basic_infos-input-website' => 'my-website',
+            'fieldsHasError' => [],
+            'fieldsHasValue' => [],
+        ];
+
+        yield 'missing fields - no fields' => [
+            'sqlQueries'            => [],
+            'userID'                => 189,
+            'params'                => [],
+            'useCsrfFromSession'    => false,
+            'hasRedirection'        => false,
+            'isFormSuccess'         => false,
+            'flashMessages'         => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
-                    ]
-                ],
-                'fieldsHasError' => [],
-                'fieldsHasValue' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
+                ]
             ],
-            'invalid encoding fields - website' => [
-                'sqlQueries'  => [],
-                'userID'      => 189,
-                'params'      => [
-                    'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
-                    'form-edit_basic_infos-textarea-bio'  => "my\nbio",
-                    'form-edit_basic_infos-input-website' => \chr(99999999),
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
-                    ]
-                ],
-                'fieldsHasError' => [],
-                'fieldsHasValue' => [],
+            'fieldsHasError' => [],
+            'fieldsHasValue' => [],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries'  => [],
+            'userID'      => 189,
+            'params'      => [
+                'form-edit_basic_infos-textarea-bio'  => "my\nbio",
+                'form-edit_basic_infos-input-website' => 'my-website',
             ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
+                ]
+            ],
+            'fieldsHasError' => [],
+            'fieldsHasValue' => [],
+        ];
+
+        yield 'missing fields - no bio' => [
+            'sqlQueries'  => [],
+            'userID'      => 189,
+            'params'      => [
+                'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
+                'form-edit_basic_infos-input-website' => 'my-website',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError' => [],
+            'fieldsHasValue' => [],
+        ];
+
+        yield 'missing fields - no website' => [
+            'sqlQueries'  => [],
+            'userID'      => 189,
+            'params'      => [
+                'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
+                'form-edit_basic_infos-textarea-bio'  => "my\nbio",
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError' => [],
+            'fieldsHasValue' => [],
+        ];
+
+        yield 'edit OK - empty fields - bio empty' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `bio`, `link_website`) VALUES (189, 'bio_value\nline 2', 'link_website_value')"
+            ],
+            'userID'      => 189,
+            'params'      => [
+                'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
+                'form-edit_basic_infos-textarea-bio'  => ' ',
+                'form-edit_basic_infos-input-website' => 'my-website',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
+                ]
+            ],
+            'fieldsHasError' => [],
+            'fieldsHasValue' => ['bio', 'website'],
+        ];
+
+        yield 'edit OK - empty fields - website empty' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (`id_user`, `bio`, `link_website`) VALUES (189, 'bio_value\nline 2', 'link_website_value')"
+            ],
+            'userID'      => 189,
+            'params'      => [
+                'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
+                'form-edit_basic_infos-textarea-bio'  => "my\nbio",
+                'form-edit_basic_infos-input-website' => ' ',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">Your basic informations has been saved</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
+                ]
+            ],
+            'fieldsHasError' => [],
+            'fieldsHasValue' => ['bio', 'website'],
+        ];
+
+        yield 'invalid encoding fields - bio' => [
+            'sqlQueries'  => [],
+            'userID'      => 189,
+            'params'      => [
+                'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
+                'form-edit_basic_infos-textarea-bio'  => \chr(99999999),
+                'form-edit_basic_infos-input-website' => 'my-website',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
+                ]
+            ],
+            'fieldsHasError' => [],
+            'fieldsHasValue' => [],
+        ];
+
+        yield 'invalid encoding fields - website' => [
+            'sqlQueries'  => [],
+            'userID'      => 189,
+            'params'      => [
+                'form-edit_basic_infos-hidden-csrf'   => 'csrf_is_replaced',
+                'form-edit_basic_infos-textarea-bio'  => "my\nbio",
+                'form-edit_basic_infos-input-website' => \chr(99999999),
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_basic_infos">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_basic_infos" role="alert">'
+                ]
+            ],
+            'fieldsHasError' => [],
+            'fieldsHasValue' => [],
         ];
     }
 

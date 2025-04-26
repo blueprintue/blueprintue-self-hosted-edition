@@ -51,6 +51,23 @@ $rules = [
     ],
 ];
 
+$arrayNotationRules = [
+    'array_syntax'                                => ['syntax' => 'short'],
+    'no_multiline_whitespace_around_double_arrow' => true,
+    'no_whitespace_before_comma_in_array'         => ['after_heredoc' => true],
+    'normalize_index_brace'                       => true,
+    'return_to_yield_from'                        => true,
+    'trim_array_spaces'                           => true,
+    'whitespace_after_comma_in_array'             => ['ensure_single_space' => true],
+    'yield_from_array_to_yields'                  => true
+];
+
+$attributeNotationRules = [
+    'attribute_empty_parentheses' => ['use_parentheses' => false],
+    'general_attribute_remove'    => ['attributes' => []],
+    'ordered_attributes'          => ['order' => [], 'sort_algorithm' => 'alpha']
+];
+
 $basicRules = [
     'braces_position' => [
         'allow_single_line_anonymous_functions'     => true,
@@ -381,6 +398,8 @@ $whitespaceRules = [
 ];
 
 $rules = \array_merge($rules,
+    $arrayNotationRules,
+    $attributeNotationRules,
     $basicRules,
     $casingRules,
     $castNotationRules,
