@@ -12,7 +12,7 @@ use Rancoud\Application\Application;
 class BlueprintService
 {
     /** @throws \Rancoud\Application\ApplicationException */
-    public static function getBlueprintContent(string $fileID, string $version): ?string
+    public static function getBlueprintContent(string $fileID, int $version): ?string
     {
         static $storageFolder = null;
         if ($storageFolder === null) {
