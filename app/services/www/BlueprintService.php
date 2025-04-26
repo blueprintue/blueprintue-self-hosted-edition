@@ -554,14 +554,6 @@ class BlueprintService
             $blueprintVersionModel = (new BlueprintVersionModel(Application::getDatabase()));
             $nextVersion = $blueprintVersionModel->getNextVersion($blueprintID);
 
-            if ($nextVersion === null) {
-                // @codeCoverageIgnoreStart
-                $forceRollback = true;
-
-                throw new \Exception('Blueprint is nil');
-                // @codeCoverageIgnoreEnd
-            }
-
             $errorCode = '#300';
             $blueprintVersionModel->create(
                 [
