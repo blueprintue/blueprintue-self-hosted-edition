@@ -51,6 +51,47 @@ $rules = [
     ],
 ];
 
+$basicRules = [
+    'braces_position' => [
+        'allow_single_line_anonymous_functions'     => true,
+        'allow_single_line_empty_anonymous_classes' => true,
+        'anonymous_classes_opening_brace'           => 'same_line',
+        'anonymous_functions_opening_brace'         => 'same_line',
+        'classes_opening_brace'                     => 'next_line_unless_newline_at_signature_end',
+        'control_structures_opening_brace'          => 'same_line',
+        'functions_opening_brace'                   => 'next_line_unless_newline_at_signature_end'
+    ],
+    'encoding'                        => true,
+    'no_multiple_statements_per_line' => true,
+    'no_trailing_comma_in_singleline' => ['elements' => ['arguments', 'array', 'array_destructuring', 'group_import']],
+    'non_printable_character'         => ['use_escape_sequences_in_strings' => true],
+    'numeric_literal_separator'       => false,
+    'octal_notation'                  => true,
+    'psr_autoloading'                 => ['dir' => null],
+    'single_line_empty_body'          => true
+];
+
+$casingRules = [
+    'class_reference_name_casing'    => true,
+    'constant_case'                  => ['case' => 'lower'],
+    'integer_literal_case'           => true,
+    'lowercase_keywords'             => true,
+    'lowercase_static_reference'     => true,
+    'magic_constant_casing'          => true,
+    'magic_method_casing'            => true,
+    'native_function_casing'         => true,
+    'native_type_declaration_casing' => true
+];
+
+$castNotationRules = [
+    'cast_spaces'             => ['space' => 'single'],
+    'lowercase_cast'          => true,
+    'modernize_types_casting' => true,
+    'no_short_bool_cast'      => true,
+    'no_unset_cast'           => true,
+    'short_scalar_cast'       => true
+];
+
 $classNotationRules = [
     'class_attributes_separation'              => ['elements' => ['const' => 'one', 'method' => 'one', 'property' => 'one', 'trait_import' => 'none', 'case' => 'none']],
     'class_definition'                         => ['inline_constructor_arguments' => true, 'multi_line_extends_each_single_line' => false, 'single_item_single_line' => true, 'single_line' => true, 'space_before_parenthesis' => false],
@@ -340,6 +381,9 @@ $whitespaceRules = [
 ];
 
 $rules = \array_merge($rules,
+    $basicRules,
+    $casingRules,
+    $castNotationRules,
     $classNotationRules,
     $classUsageRules,
     $commentRules,

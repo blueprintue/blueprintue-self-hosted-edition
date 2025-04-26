@@ -421,6 +421,4 @@ HTML;
     }
 }
 
-function isPHPUnit(): void
-{
-}
+function isPHPUnit(): void {}

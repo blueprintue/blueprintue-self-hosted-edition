@@ -178,7 +178,7 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
             }
 
             if (!\is_dir($storageFolder . \DIRECTORY_SEPARATOR . $subfolder)) {
-                \mkdir($storageFolder . \DIRECTORY_SEPARATOR . $subfolder, 0777, true);
+                \mkdir($storageFolder . \DIRECTORY_SEPARATOR . $subfolder, 0o777, true);
             }
 
             $fullpath = $storageFolder . \DIRECTORY_SEPARATOR . $subfolder . $dir['fileID'] . '-1.txt';
