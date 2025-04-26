@@ -1,14 +1,11 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
 
 namespace tests\www\Profile\View;
 
-use DateTime;
-use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -20,6 +17,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ProfileTest extends TestCase
 {
     use Common;
@@ -81,39 +79,40 @@ class ProfileTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesAccess(): array
+    public static function provideAccessDataCases(): iterable
     {
-        return [
-            'user not exist' => [
-                'sqlQueries'            => [],
-                'slug'                  => '4564879864564/',
-                'location'              => '/',
-                'userID'                => null,
-                'contentHead'           => null,
-                'contentProfileHTML'    => '',
-                'contentBlueprintsHTML' => '',
-                'contentPaginationHTML' => '',
+        yield 'user not exist' => [
+            'sqlQueries'            => [],
+            'slug'                  => '4564879864564/',
+            'location'              => '/',
+            'userID'                => null,
+            'contentHead'           => null,
+            'contentProfileHTML'    => '',
+            'contentBlueprintsHTML' => '',
+            'contentPaginationHTML' => '',
+        ];
+
+        yield 'public profile - no blueprints - page 2' => [
+            'sqlQueries'            => [],
+            'slug'                  => 'user_159/?page=2',
+            'location'              => '/profile/user_159/',
+            'userID'                => null,
+            'contentHead'           => null,
+            'contentProfileHTML'    => '',
+            'contentBlueprintsHTML' => '',
+            'contentPaginationHTML' => '',
+        ];
+
+        yield 'public profile - visitor' => [
+            'sqlQueries'  => [],
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
             ],
-            'public profile - no blueprints - page 2' => [
-                'sqlQueries'            => [],
-                'slug'                  => 'user_159/?page=2',
-                'location'              => '/profile/user_159/',
-                'userID'                => null,
-                'contentHead'           => null,
-                'contentProfileHTML'    => '',
-                'contentBlueprintsHTML' => '',
-                'contentPaginationHTML' => '',
-            ],
-            'public profile - visitor' => [
-                'sqlQueries'  => [],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -149,7 +148,7 @@ class ProfileTest extends TestCase
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -158,22 +157,23 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'public profile - user connected' => [
+            'sqlQueries'  => [],
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
             ],
-            'public profile - user connected' => [
-                'sqlQueries'  => [],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -209,7 +209,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -218,22 +218,23 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'author profile' => [
+            'sqlQueries'  => [],
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
             ],
-            'author profile' => [
-                'sqlQueries'  => [],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -270,7 +271,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -279,12 +280,11 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
-            ],
         ];
     }
 
@@ -293,19 +293,18 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCasesProfileInfos(): array
+    public static function provideProfileInfosDataCases(): iterable
     {
-        return [
-            'user + avatar' => [
-                'sqlQueries'  => [],
-                'slug'        => 'user_179/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_179 <script>alert(1)</script> | Page 1 | This is a base title',
-                    'description' => 'Profile of user_179 <script>alert(1)</script>'
-                ],
-                'contentProfileHTML' => <<<HTML
+        yield 'user + avatar' => [
+            'sqlQueries'  => [],
+            'slug'        => 'user_179/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_179 <script>alert(1)</script> | Page 1 | This is a base title',
+                'description' => 'Profile of user_179 <script>alert(1)</script>'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -337,7 +336,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -346,24 +345,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio) VALUES (159, 'user_bio')"
             ],
-            'user + avatar + bio' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio) VALUES (159, 'user_bio')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -399,7 +399,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -408,24 +408,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio xss' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio) VALUES (159, 'user_bio <script>alert(1)</script>')"
             ],
-            'user + avatar + bio xss' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio) VALUES (159, 'user_bio <script>alert(1)</script>')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -461,7 +462,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -470,24 +471,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio + site' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website) VALUES (159, 'user_bio\nsecond line', 'website')"
             ],
-            'user + avatar + bio + site' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website) VALUES (159, 'user_bio\nsecond line', 'website')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -525,7 +527,7 @@ second line</p>
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -534,24 +536,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio + http site' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website) VALUES (159, 'user_bio', 'http://website')"
             ],
-            'user + avatar + bio + http site' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website) VALUES (159, 'user_bio', 'http://website')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -588,7 +591,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -597,24 +600,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio + https site' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website) VALUES (159, 'user_bio', 'https://website')"
             ],
-            'user + avatar + bio + https site' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website) VALUES (159, 'user_bio', 'https://website')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -651,7 +655,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -660,24 +664,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio xss + site xss' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>')"
             ],
-            'user + avatar + bio xss + site xss' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -714,7 +719,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -723,24 +728,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio + site + facebook' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website, link_facebook) VALUES (159, 'user_bio', 'website', 'facebook')"
             ],
-            'user + avatar + bio + site + facebook' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website, link_facebook) VALUES (159, 'user_bio', 'website', 'facebook')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -784,7 +790,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -793,24 +799,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio xss + site xss + facebook xss' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website, link_facebook) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>', 'facebook\"><script>alert(1)</script>')"
             ],
-            'user + avatar + bio xss + site xss + facebook xss' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website, link_facebook) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>', 'facebook\"><script>alert(1)</script>')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -854,7 +861,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -863,24 +870,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio + site + twitter' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website, link_twitter) VALUES (159, 'user_bio', 'website', 'twitter')"
             ],
-            'user + avatar + bio + site + twitter' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website, link_twitter) VALUES (159, 'user_bio', 'website', 'twitter')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -924,7 +932,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -933,24 +941,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio xss + site xss + twitter xss' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website, link_twitter) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>', 'twitter\"><script>alert(1)</script>')"
             ],
-            'user + avatar + bio xss + site xss + twitter xss' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website, link_twitter) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>', 'twitter\"><script>alert(1)</script>')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -994,7 +1003,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1003,24 +1012,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio + site + github' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website, link_github) VALUES (159, 'user_bio', 'website', 'github')"
             ],
-            'user + avatar + bio + site + github' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website, link_github) VALUES (159, 'user_bio', 'website', 'github')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1064,7 +1074,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1073,24 +1083,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio xss + site xss + github xss' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website, link_github) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>', 'github\"><script>alert(1)</script>')"
             ],
-            'user + avatar + bio xss + site xss + github xss' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website, link_github) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>', 'github\"><script>alert(1)</script>')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1134,7 +1145,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1143,24 +1154,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio + site + youtube' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website, link_youtube) VALUES (159, 'user_bio', 'website', 'youtube')"
             ],
-            'user + avatar + bio + site + youtube' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website, link_youtube) VALUES (159, 'user_bio', 'website', 'youtube')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1204,7 +1216,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1213,24 +1225,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio xss + site xss + youtube xss' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website, link_youtube) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>', 'youtube\"><script>alert(1)</script>')"
             ],
-            'user + avatar + bio xss + site xss + youtube xss' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website, link_youtube) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>', 'youtube\"><script>alert(1)</script>')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1274,7 +1287,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1283,24 +1296,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio + site + twitch' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website, link_twitch) VALUES (159, 'user_bio', 'website', 'twitch')"
             ],
-            'user + avatar + bio + site + twitch' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website, link_twitch) VALUES (159, 'user_bio', 'website', 'twitch')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1344,7 +1358,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1353,24 +1367,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio xss + site xss + twitch xss' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website, link_twitch) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>', 'twitch\"><script>alert(1)</script>')"
             ],
-            'user + avatar + bio xss + site xss + twitch xss' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website, link_twitch) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>', 'twitch\"><script>alert(1)</script>')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1414,7 +1429,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1423,24 +1438,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio + site + unreal' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website, link_unreal) VALUES (159, 'user_bio', 'website', 'unreal')"
             ],
-            'user + avatar + bio + site + unreal' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website, link_unreal) VALUES (159, 'user_bio', 'website', 'unreal')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1484,7 +1500,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1493,24 +1509,25 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + avatar + bio xss + site xss + unreal xss' => [
+            'sqlQueries' => [
+                "INSERT INTO users_infos (id_user, bio, link_website, link_unreal) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>', 'unreal\"><script>alert(1)</script>')"
             ],
-            'user + avatar + bio xss + site xss + unreal xss' => [
-                'sqlQueries' => [
-                    "INSERT INTO users_infos (id_user, bio, link_website, link_unreal) VALUES (159, 'user_bio <script>alert(1)</script>', 'website <script>alert(1)</script>', 'unreal\"><script>alert(1)</script>')"
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1554,7 +1571,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1563,12 +1580,11 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
-            ],
         ];
     }
 
@@ -1577,22 +1593,21 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases1PrivateBlueprint(): array
+    public static function provide1PrivateBlueprintDataCases(): iterable
     {
-        return [
-            'user + 1 blueprint private - created but not published - (visitor profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+        yield 'user + 1 blueprint private - created but not published - (visitor profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
+                "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+            ],
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1628,7 +1643,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1637,25 +1652,26 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + 1 blueprint private - created but not published - (public profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
+                "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
             ],
-            'user + 1 blueprint private - created but not published - (public profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1691,7 +1707,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1700,25 +1716,26 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + 1 blueprint private - created but not published - (author profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
+                "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
             ],
-            'user + 1 blueprint private - created but not published - (author profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1755,7 +1772,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1787,7 +1804,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1796,20 +1813,21 @@ HTML,
 </ul>
 </nav>            </div>
 HTML,
+        ];
+
+        yield 'user + 1 blueprint private - (visitor profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
+                "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
             ],
-            'user + 1 blueprint private - (visitor profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1845,7 +1863,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1854,25 +1872,26 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + 1 blueprint private - (public profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
+                "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
             ],
-            'user + 1 blueprint private - (public profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1908,7 +1927,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -1917,25 +1936,26 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + 1 blueprint private - (author profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
+                "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
             ],
-            'user + 1 blueprint private - (author profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -1972,7 +1992,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2004,7 +2024,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2013,7 +2033,6 @@ HTML,
 </ul>
 </nav>            </div>
 HTML,
-            ],
         ];
     }
 
@@ -2022,22 +2041,21 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases1UnlistedBlueprint(): array
+    public static function provide1UnlistedBlueprintDataCases(): iterable
     {
-        return [
-            'user + 1 blueprint unlisted - created but not published - (visitor profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+        yield 'user + 1 blueprint unlisted - created but not published - (visitor profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
+                "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
+            ],
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2073,7 +2091,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2082,25 +2100,26 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + 1 blueprint unlisted - created but not published - (public profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
+                "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
             ],
-            'user + 1 blueprint unlisted - created but not published - (public profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2136,7 +2155,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2145,25 +2164,26 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + 1 blueprint unlisted - created but not published - (author profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
+                "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
             ],
-            'user + 1 blueprint unlisted - created but not published - (author profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2200,7 +2220,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2232,7 +2252,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2241,20 +2261,21 @@ HTML,
 </ul>
 </nav>            </div>
 HTML,
+        ];
+
+        yield 'user + 1 blueprint unlisted - (visitor profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
+                "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
             ],
-            'user + 1 blueprint unlisted - (visitor profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2290,7 +2311,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2299,25 +2320,26 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + 1 blueprint unlisted - (public profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
+                "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
             ],
-            'user + 1 blueprint unlisted - (public profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2353,7 +2375,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2362,25 +2384,26 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield 'user + 1 blueprint unlisted - (author profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
+                "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
             ],
-            'user + 1 blueprint unlisted - (author profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 0, 1)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2417,7 +2440,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2449,7 +2472,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2458,7 +2481,6 @@ HTML,
 </ul>
 </nav>            </div>
 HTML,
-            ],
         ];
     }
 
@@ -2467,13 +2489,13 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases10Public10PrivateBlueprints(): array
+    public static function provide10Public10PrivateBlueprintsDataCases(): iterable
     {
-        return [
-            'user + 5 blueprints public + 3 blueprints private - (visitor profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 5, 8)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+        yield 'user + 5 blueprints public + 3 blueprints private - (visitor profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 5, 8)',
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -2494,16 +2516,17 @@ HTML,
                                (159, 'slug_18', 'file_18', 'title_18', 1, utc_timestamp() - interval 17 day, utc_timestamp() - interval 17 day, 'public'),
                                (179, 'slug_19', 'file_19', 'title_19', 1, utc_timestamp() - interval 20 day, utc_timestamp() - interval 20 day, 'public'),
                                (169, 'slug_20', 'file_20', 'title_20', 1, utc_timestamp() - interval 7 day, utc_timestamp() - interval 7 day, 'public')
-                    ",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+
+                    SQL,
+            ],
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2539,7 +2562,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2627,7 +2650,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2636,11 +2659,13 @@ HTML,
 </ul>
 </nav>            </div>
 HTML,
-            ],
-            'user + 5 blueprints public + 3 blueprints private - (public profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 5, 8)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+        ];
+
+        yield 'user + 5 blueprints public + 3 blueprints private - (public profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 5, 8)',
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -2661,16 +2686,17 @@ HTML,
                                (159, 'slug_18', 'file_18', 'title_18', 1, utc_timestamp() - interval 17 day, utc_timestamp() - interval 17 day, 'public'),
                                (179, 'slug_19', 'file_19', 'title_19', 1, utc_timestamp() - interval 20 day, utc_timestamp() - interval 20 day, 'public'),
                                (169, 'slug_20', 'file_20', 'title_20', 1, utc_timestamp() - interval 7 day, utc_timestamp() - interval 7 day, 'public')
-                    ",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+
+                    SQL,
+            ],
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2706,7 +2732,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -2794,7 +2820,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -2803,11 +2829,13 @@ HTML,
 </ul>
 </nav>            </div>
 HTML,
-            ],
-            'user + 5 blueprints public + 3 blueprints private - (author profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 5, 8)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+        ];
+
+        yield 'user + 5 blueprints public + 3 blueprints private - (author profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 5, 8)',
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -2828,16 +2856,17 @@ HTML,
                                (159, 'slug_18', 'file_18', 'title_18', 1, utc_timestamp() - interval 17 day, utc_timestamp() - interval 17 day, 'public'),
                                (179, 'slug_19', 'file_19', 'title_19', 1, utc_timestamp() - interval 20 day, utc_timestamp() - interval 20 day, 'public'),
                                (169, 'slug_20', 'file_20', 'title_20', 1, utc_timestamp() - interval 7 day, utc_timestamp() - interval 7 day, 'public')
-                    ",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+
+                    SQL,
+            ],
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -2874,7 +2903,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -3004,7 +3033,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -3013,7 +3042,6 @@ HTML,
 </ul>
 </nav>            </div>
 HTML,
-            ],
         ];
     }
 
@@ -3022,18 +3050,18 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases20Public10PrivateBlueprintsPage1(): array
+    public static function provide20Public10PrivateBlueprintsPage1DataCases(): iterable
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
-            $formattedDates['-' . $i . ' days'] = static::getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
+            $formattedDates['-' . $i . ' days'] = static::getSince((new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
         }
 
-        return [
-            'user + 20 blueprints public + 10 blueprints private - page 1 - (visitor profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+        yield 'user + 20 blueprints public + 10 blueprints private - page 1 - (visitor profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -3079,16 +3107,17 @@ HTML,
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public'),
                                (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public')
-                    ",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+
+                    SQL,
+            ],
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -3124,7 +3153,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -3352,7 +3381,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -3367,11 +3396,13 @@ HTML,
 </ul>
 </nav>            </div>
 HTML,
-            ],
-            'user + 20 blueprints public + 10 blueprints private - page 1 - (public profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+        ];
+
+        yield 'user + 20 blueprints public + 10 blueprints private - page 1 - (public profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -3417,16 +3448,17 @@ HTML,
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public'),
                                (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public')
-                    ",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+
+                    SQL,
+            ],
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -3462,7 +3494,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -3690,7 +3722,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -3705,11 +3737,13 @@ HTML,
 </ul>
 </nav>            </div>
 HTML,
-            ],
-            'user + 20 blueprints public + 10 blueprints private - page 1 - (author profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+        ];
+
+        yield 'user + 20 blueprints public + 10 blueprints private - page 1 - (author profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -3755,16 +3789,17 @@ HTML,
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public'),
                                (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public')
-                    ",
-                ],
-                'slug'        => 'user_159/',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 1 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+
+                    SQL,
+            ],
+            'slug'        => 'user_159/',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 1 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -3801,7 +3836,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -4029,7 +4064,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -4044,7 +4079,6 @@ HTML,
 </ul>
 </nav>            </div>
 HTML,
-            ],
         ];
     }
 
@@ -4053,18 +4087,18 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases20Public10PrivateBlueprintsPage2(): array
+    public static function provide20Public10PrivateBlueprintsPage2DataCases(): iterable
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
-            $formattedDates['-' . $i . ' days'] = static::getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
+            $formattedDates['-' . $i . ' days'] = static::getSince((new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
         }
 
-        return [
-            'user + 20 blueprints public + 10 blueprints private - page 2 - (visitor profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+        yield 'user + 20 blueprints public + 10 blueprints private - page 2 - (visitor profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -4110,16 +4144,17 @@ HTML,
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public'),
                                (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public')
-                    ",
-                ],
-                'slug'        => 'user_159/?page=2',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 2 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+
+                    SQL,
+            ],
+            'slug'        => 'user_159/?page=2',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 2 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -4155,7 +4190,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -4243,7 +4278,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -4258,11 +4293,13 @@ HTML,
 </ul>
 </nav>            </div>
 HTML,
-            ],
-            'user + 20 blueprints public + 10 blueprints private - page 2 - (public profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+        ];
+
+        yield 'user + 20 blueprints public + 10 blueprints private - page 2 - (public profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -4308,16 +4345,17 @@ HTML,
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public'),
                                (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public')
-                    ",
-                ],
-                'slug'        => 'user_159/?page=2',
-                'location'    => null,
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 2 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+
+                    SQL,
+            ],
+            'slug'        => 'user_159/?page=2',
+            'location'    => null,
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 2 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -4353,7 +4391,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -4441,7 +4479,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -4456,11 +4494,13 @@ HTML,
 </ul>
 </nav>            </div>
 HTML,
-            ],
-            'user + 20 blueprints public + 10 blueprints private - page 2 - (author profile)' => [
-                'sqlQueries' => [
-                    'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
+        ];
+
+        yield 'user + 20 blueprints public + 10 blueprints private - page 2 - (author profile)' => [
+            'sqlQueries' => [
+                'INSERT INTO users_infos (`id_user`, `count_public_blueprint`, `count_private_blueprint`) VALUES (159, 20, 30)',
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public'),
@@ -4506,16 +4546,17 @@ HTML,
                                (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public'),
                                (159, 'slug_44', 'file_44', 'title_44', 1, utc_timestamp() - interval 44 day, utc_timestamp() - interval 44 day, 'public'),
                                (159, 'slug_45', 'file_45', 'title_45', 1, utc_timestamp() - interval 45 day, utc_timestamp() - interval 45 day, 'public')
-                    ",
-                ],
-                'slug'        => 'user_159/?page=2',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Profile of user_159 | Page 2 | This is a base title',
-                    'description' => 'Profile of user_159'
-                ],
-                'contentProfileHTML' => <<<HTML
+
+                    SQL,
+            ],
+            'slug'        => 'user_159/?page=2',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Profile of user_159 | Page 2 | This is a base title',
+                'description' => 'Profile of user_159'
+            ],
+            'contentProfileHTML' => <<<'HTML'
 <div class="block__container block__container--first">
 <div class="block__element">
 <div class="profile">
@@ -4552,7 +4593,7 @@ HTML,
 </div>
 </div>
 HTML,
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--last block__container--white-grey block__container--shadow-top">
 <div class="block__element">
 <h2 class="block__title">Owned <span class="block__title--emphasis">blueprints</span></h2>
@@ -4780,7 +4821,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -4795,32 +4836,23 @@ HTML,
 </ul>
 </nav>            </div>
 HTML,
-            ],
         ];
     }
 
     /**
-     * @dataProvider dataCasesAccess
-     * @dataProvider dataCasesProfileInfos
-     * @dataProvider dataCases1PrivateBlueprint
-     * @dataProvider dataCases1UnlistedBlueprint
-     * @dataProvider dataCases10Public10PrivateBlueprints
-     * @dataProvider dataCases20Public10PrivateBlueprintsPage1
-     * @dataProvider dataCases20Public10PrivateBlueprintsPage2
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesAccess')]
-    #[DataProvider('dataCasesProfileInfos')]
-    #[DataProvider('dataCases1PrivateBlueprint')]
-    #[DataProvider('dataCases1UnlistedBlueprint')]
-    #[DataProvider('dataCases10Public10PrivateBlueprints')]
-    #[DataProvider('dataCases20Public10PrivateBlueprintsPage1')]
-    #[DataProvider('dataCases20Public10PrivateBlueprintsPage2')]
+    #[DataProvider('provideAccessDataCases')]
+    #[DataProvider('provideProfileInfosDataCases')]
+    #[DataProvider('provide1PrivateBlueprintDataCases')]
+    #[DataProvider('provide1UnlistedBlueprintDataCases')]
+    #[DataProvider('provide10Public10PrivateBlueprintsDataCases')]
+    #[DataProvider('provide20Public10PrivateBlueprintsPage1DataCases')]
+    #[DataProvider('provide20Public10PrivateBlueprintsPage2DataCases')]
     public function testProfileGET(array $sqlQueries, string $slug, ?string $location, ?int $userID, ?array $contentHead, string $contentProfileHTML, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();

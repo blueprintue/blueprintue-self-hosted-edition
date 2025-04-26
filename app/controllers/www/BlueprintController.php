@@ -12,7 +12,6 @@ use app\services\www\BlueprintService;
 use app\services\www\CommentService;
 use app\services\www\TagService;
 use app\services\www\UserService;
-use Parsedown;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -71,10 +70,10 @@ class BlueprintController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
-     * @throws \Exception
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -204,7 +203,7 @@ class BlueprintController implements MiddlewareInterface
             'comments_closed'   => ($blueprint['comments_closed'] === 1),
             'comments_count'    => $blueprint['comments_count'],
         ];
-        $this->data += ['markdown' => (new Parsedown())->setSafeMode(true)];
+        $this->data += ['markdown' => (new \Parsedown())->setSafeMode(true)];
         $this->data += ['can_edit' => $isAuthor];
         $this->data += ['can_comment' => ($this->userID !== null)];
         $this->data += ['can_claim' => $canClaim];
@@ -338,10 +337,10 @@ class BlueprintController implements MiddlewareInterface
     // region form delete_blueprint
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
-     * @throws \Exception
      */
     protected function doProcessDeleteBlueprint(array $blueprint, string $pageURL): ResponseInterface
     {
@@ -416,10 +415,10 @@ class BlueprintController implements MiddlewareInterface
     // region form claim_blueprint
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
-     * @throws \Exception
      */
     protected function doProcessClaimBlueprint(array $blueprint): ResponseInterface
     {
@@ -497,7 +496,7 @@ class BlueprintController implements MiddlewareInterface
         $rawParams = $request->getParsedBody();
         foreach ($rawParams as $key => $rawParam) {
             if (\in_array($key, $htmlNames, true)) {
-                $params[$key] = Helper::trim($rawParam);
+                $params[$key] = \mb_trim($rawParam);
             }
         }
 
@@ -521,9 +520,9 @@ class BlueprintController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     protected function doProcessDeleteVersionBlueprint(array $blueprint, ?array $params): ResponseInterface
     {
@@ -586,7 +585,7 @@ class BlueprintController implements MiddlewareInterface
         $rawParams = $request->getParsedBody();
         foreach ($rawParams as $key => $rawParam) {
             if (\in_array($key, $htmlNames, true)) {
-                $params[$key] = Helper::trim($rawParam);
+                $params[$key] = \mb_trim($rawParam);
             }
         }
 
@@ -612,9 +611,9 @@ class BlueprintController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     protected function doProcessAddComment(array $blueprint, ?array $params): ResponseInterface
     {
@@ -682,7 +681,7 @@ class BlueprintController implements MiddlewareInterface
         $rawParams = $request->getParsedBody();
         foreach ($rawParams as $key => $rawParam) {
             if (\in_array($key, $htmlNames, true)) {
-                $params[$key] = Helper::trim($rawParam);
+                $params[$key] = \mb_trim($rawParam);
             }
         }
 
@@ -715,8 +714,8 @@ class BlueprintController implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
+     * @throws \Rancoud\Application\ApplicationException
      */
     protected function doProcessEditComment(array $blueprint, ?array $params): ResponseInterface
     {
@@ -779,7 +778,7 @@ class BlueprintController implements MiddlewareInterface
         $rawParams = $request->getParsedBody();
         foreach ($rawParams as $key => $rawParam) {
             if (\in_array($key, $htmlNames, true)) {
-                $params[$key] = Helper::trim($rawParam);
+                $params[$key] = \mb_trim($rawParam);
             }
         }
 
@@ -805,8 +804,8 @@ class BlueprintController implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
+     * @throws \Rancoud\Application\ApplicationException
      */
     protected function doProcessDeleteComment(array $blueprint, ?array $params): ResponseInterface
     {

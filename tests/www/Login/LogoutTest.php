@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -18,13 +17,14 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class LogoutTest extends TestCase
 {
     use Common;
 
     /**
-     * @throws DatabaseException
      * @throws CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {
@@ -68,49 +68,48 @@ class LogoutTest extends TestCase
         }
     }
 
-    public static function dataCasesLogoutPOST(): array
+    public static function provideLogoutPOSTDataCases(): iterable
     {
-        return [
-            'logout OK' => [
-                'params' => [
-                    'form-logout-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
+        yield 'logout OK' => [
+            'params' => [
+                'form-logout-hidden-csrf' => 'csrf_is_replaced',
             ],
-            'csrf incorrect' => [
-                'params' => [
-                    'form-logout-hidden-csrf' => 'incorrect_csrf',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+        ];
+
+        yield 'csrf incorrect' => [
+            'params' => [
+                'form-logout-hidden-csrf' => 'incorrect_csrf',
             ],
-            'missing fields - no fields' => [
-                'params'                => [],
-                'useCsrfFromSession'    => false,
-                'hasRedirection'        => false,
-                'isFormSuccess'         => false,
-            ],
-            'missing fields - no csrf' => [
-                'params'                => [],
-                'useCsrfFromSession'    => false,
-                'hasRedirection'        => false,
-                'isFormSuccess'         => false,
-            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+        ];
+
+        yield 'missing fields - no fields' => [
+            'params'                => [],
+            'useCsrfFromSession'    => false,
+            'hasRedirection'        => false,
+            'isFormSuccess'         => false,
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'params'                => [],
+            'useCsrfFromSession'    => false,
+            'hasRedirection'        => false,
+            'isFormSuccess'         => false,
         ];
     }
 
     /**
-     * @dataProvider dataCasesLogoutPOST
-     *
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws DatabaseException
      */
-    #[DataProvider('dataCasesLogoutPOST')]
+    #[DataProvider('provideLogoutPOSTDataCases')]
     public function testLogoutPOST(array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess): void
     {
         // generate csrf

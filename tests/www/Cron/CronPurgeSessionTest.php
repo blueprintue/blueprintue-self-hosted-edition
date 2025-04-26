@@ -13,6 +13,7 @@ use Rancoud\Environment\EnvironmentException;
 use Rancoud\Router\RouterException;
 use tests\Common;
 
+/** @internal */
 class CronPurgeSessionTest extends TestCase
 {
     use Common;
@@ -24,15 +25,15 @@ class CronPurgeSessionTest extends TestCase
     }
 
     /**
+     * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     public function testCronPurgeSessionGET(): void
     {
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             INSERT INTO sessions (id, last_access, content)
             VALUES ('now + 30h', utc_timestamp() + interval 30 hour, '1'),
                    ('now + 1h', utc_timestamp() + interval 1 hour, '2'),

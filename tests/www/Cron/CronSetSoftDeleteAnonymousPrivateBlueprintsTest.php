@@ -13,6 +13,7 @@ use Rancoud\Environment\EnvironmentException;
 use Rancoud\Router\RouterException;
 use tests\Common;
 
+/** @internal */
 class CronSetSoftDeleteAnonymousPrivateBlueprintsTest extends TestCase
 {
     use Common;
@@ -25,15 +26,15 @@ class CronSetSoftDeleteAnonymousPrivateBlueprintsTest extends TestCase
     }
 
     /**
+     * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     public function testCronSetSoftDeleteAnonymousPrivateBlueprintsGET(): void
     {
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             INSERT INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure)
             VALUES
                 (101, 2, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public'),
@@ -56,15 +57,15 @@ class CronSetSoftDeleteAnonymousPrivateBlueprintsTest extends TestCase
     }
 
     /**
+     * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     public function testAbortCronSetSoftDeleteAnonymousPrivateBlueprintsGET(): void
     {
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             INSERT INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure)
             VALUES
                 (101, 2, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public'),
@@ -85,15 +86,15 @@ class CronSetSoftDeleteAnonymousPrivateBlueprintsTest extends TestCase
     }
 
     /**
+     * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     public function testAbortErrorCronSetSoftDeleteAnonymousPrivateBlueprintsGET(): void
     {
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             INSERT INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure)
             VALUES
                 (101, 2, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public'),
@@ -106,7 +107,7 @@ class CronSetSoftDeleteAnonymousPrivateBlueprintsTest extends TestCase
 
         static::$db->exec($sql);
 
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             ALTER TABLE `blueprints` DROP `exposure`
         SQL;
 

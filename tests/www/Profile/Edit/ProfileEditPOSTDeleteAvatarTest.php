@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -18,28 +17,14 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ProfileEditPOSTDeleteAvatarTest extends TestCase
 {
     use Common;
 
-    protected static function cleanMedias(): void
-    {
-        $ds = \DIRECTORY_SEPARATOR;
-        $storageFolder = \dirname(__DIR__, 3) . $ds . 'medias' . $ds;
-        $items = \array_diff(\scandir($storageFolder), ['..', '.']);
-        foreach ($items as $item) {
-            $fullpath = $storageFolder . $item;
-            if (\is_file($fullpath)) {
-                \unlink($fullpath);
-            } elseif (\is_dir($fullpath)) {
-                \rmdir($fullpath);
-            }
-        }
-    }
-
     /**
-     * @throws DatabaseException
      * @throws \Rancoud\Crypt\CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {
@@ -89,6 +74,11 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
         static::$db->insert("replace into users (id, username, password, slug, email, created_at) values (2, 'anonymous', null, 'anonymous', 'anonymous@mail', utc_timestamp())");
     }
 
+    public static function tearDownAfterClass(): void
+    {
+        static::cleanMedias();
+    }
+
     protected function tearDown(): void
     {
         if (Session::isReadOnly() === false) {
@@ -96,13 +86,23 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
         }
     }
 
-    public static function tearDownAfterClass(): void
+    protected static function cleanMedias(): void
     {
-        static::cleanMedias();
+        $ds = \DIRECTORY_SEPARATOR;
+        $storageFolder = \dirname(__DIR__, 3) . $ds . 'medias' . $ds;
+        $items = \array_diff(\scandir($storageFolder), ['..', '.']);
+        foreach ($items as $item) {
+            $fullpath = $storageFolder . $item;
+            if (\is_file($fullpath)) {
+                \unlink($fullpath);
+            } elseif (\is_dir($fullpath)) {
+                \rmdir($fullpath);
+            }
+        }
     }
 
     /** @throws \Exception */
-    public static function dataCasesDeleteAvatar(): array
+    public static function provideDeleteAvatarDataCases(): iterable
     {
         $randomAvatarsName = [];
         for ($i = 0; $i < 2; ++$i) {
@@ -116,161 +116,162 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
             } while (!$good);
         }
 
-        return [
-            'delete avatar OK - no avatar before' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp())"
-                ],
-                'userID' => 489,
-                'params' => [
-                    'form-delete_avatar-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">Your avatar is now deleted</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
-                    ]
-                ],
-                'fileOrDirOnDisk' => null,
-                'isFile'          => false,
+        yield 'delete avatar OK - no avatar before' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp())"
             ],
-            'delete avatar OK - has avatar before  (file is not in disk)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '<script>alert(1)</script>')"
-                ],
-                'userID' => 489,
-                'params' => [
-                    'form-delete_avatar-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">Your avatar is now deleted</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
-                    ]
-                ],
-                'fileOrDirOnDisk' => null,
-                'isFile'          => false,
+            'userID' => 489,
+            'params' => [
+                'form-delete_avatar-hidden-csrf' => 'csrf_is_replaced',
             ],
-            'delete avatar OK - has avatar before  (file is in disk)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '" . $randomAvatarsName[0] . "')"
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">Your avatar is now deleted</div>'
                 ],
-                'userID' => 489,
-                'params' => [
-                    'form-delete_avatar-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">Your avatar is now deleted</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
-                    ]
-                ],
-                'fileOrDirOnDisk' => $randomAvatarsName[0],
-                'isFile'          => true,
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
+                ]
             ],
-            'delete avatar OK - has avatar before  (file is in disk as dir but not delete)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '" . $randomAvatarsName[1] . "')"
-                ],
-                'userID' => 489,
-                'params' => [
-                    'form-delete_avatar-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">Your avatar is now deleted</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
-                    ]
-                ],
-                'fileOrDirOnDisk' => $randomAvatarsName[1],
-                'isFile'          => false,
+            'fileOrDirOnDisk' => null,
+            'isFile'          => false,
+        ];
+
+        yield 'delete avatar OK - has avatar before  (file is not in disk)' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '<script>alert(1)</script>')"
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '<script>alert(1)</script>')"
-                ],
-                'userID' => 489,
-                'params' => [
-                    'form-delete_avatar-hidden-csrf' => 'incorrect_csrf',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
-                    ]
-                ],
-                'fileOrDirOnDisk' => null,
-                'isFile'          => false,
+            'userID' => 489,
+            'params' => [
+                'form-delete_avatar-hidden-csrf' => 'csrf_is_replaced',
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '<script>alert(1)</script>')"
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">Your avatar is now deleted</div>'
                 ],
-                'userID'             => 489,
-                'params'             => [],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
-                    ]
-                ],
-                'fileOrDirOnDisk' => null,
-                'isFile'          => false,
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
+                ]
             ],
+            'fileOrDirOnDisk' => null,
+            'isFile'          => false,
+        ];
+
+        yield 'delete avatar OK - has avatar before  (file is in disk)' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '" . $randomAvatarsName[0] . "')"
+            ],
+            'userID' => 489,
+            'params' => [
+                'form-delete_avatar-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">Your avatar is now deleted</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
+                ]
+            ],
+            'fileOrDirOnDisk' => $randomAvatarsName[0],
+            'isFile'          => true,
+        ];
+
+        yield 'delete avatar OK - has avatar before  (file is in disk as dir but not delete)' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '" . $randomAvatarsName[1] . "')"
+            ],
+            'userID' => 489,
+            'params' => [
+                'form-delete_avatar-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">Your avatar is now deleted</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
+                ]
+            ],
+            'fileOrDirOnDisk' => $randomAvatarsName[1],
+            'isFile'          => false,
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '<script>alert(1)</script>')"
+            ],
+            'userID' => 489,
+            'params' => [
+                'form-delete_avatar-hidden-csrf' => 'incorrect_csrf',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
+                ]
+            ],
+            'fileOrDirOnDisk' => null,
+            'isFile'          => false,
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (id, username, password, slug, email, created_at, avatar) VALUES (489, 'user_489', null, 'user_489', null, utc_timestamp(), '<script>alert(1)</script>')"
+            ],
+            'userID'             => 489,
+            'params'             => [],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success block__info--side" data-flash-success-for="form-delete_avatar">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error block__info--side" data-flash-error-for="form-delete_avatar" role="alert">'
+                ]
+            ],
+            'fileOrDirOnDisk' => null,
+            'isFile'          => false,
         ];
     }
 
     /**
-     * @dataProvider dataCasesDeleteAvatar
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesDeleteAvatar')]
+    #[DataProvider('provideDeleteAvatarDataCases')]
     public function testProfileEditPOSTDeleteAvatar(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, ?string $fileOrDirOnDisk, bool $isFile): void
     {
         static::setDatabase();

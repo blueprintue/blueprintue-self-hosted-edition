@@ -16,22 +16,16 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintFolderTest extends TestCase
 {
     use Common;
 
-    protected function tearDown(): void
-    {
-        if (Session::isReadOnly() === false) {
-            Session::commit();
-        }
-    }
-
     /**
-     * @throws RouterException
-     * @throws EnvironmentException
      * @throws ApplicationException
      * @throws DatabaseException
+     * @throws EnvironmentException
+     * @throws RouterException
      */
     protected function setUp(): void
     {
@@ -78,6 +72,13 @@ class BlueprintFolderTest extends TestCase
             if (\is_dir($dir . $possibility[0] . $ds . $possibility[1] . $ds . 'c' . $ds)) {
                 \rmdir($dir . $possibility[0] . $ds . $possibility[1] . $ds . 'c' . $ds);
             }
+        }
+    }
+
+    protected function tearDown(): void
+    {
+        if (Session::isReadOnly() === false) {
+            Session::commit();
         }
     }
 

@@ -7,8 +7,6 @@ namespace app\services\www;
 use app\helpers\Helper;
 use app\models\BlueprintModel;
 use app\models\BlueprintVersionModel;
-use DateTime;
-use DateTimeZone;
 use Rancoud\Application\Application;
 
 class BlueprintService
@@ -71,9 +69,9 @@ class BlueprintService
     }
 
     /**
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
+     * @throws \Rancoud\Application\ApplicationException
+     * @throws \Rancoud\Database\DatabaseException
      */
     public static function getLastFive(): ?array
     {
@@ -99,9 +97,9 @@ class BlueprintService
     }
 
     /**
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
+     * @throws \Rancoud\Application\ApplicationException
+     * @throws \Rancoud\Database\DatabaseException
      */
     public static function createFromHome(array $params): array
     {
@@ -172,7 +170,7 @@ class BlueprintService
                  * For covering we have to mock the database
                  */
                 Application::getDatabase()->rollbackTransaction();
-            // @codeCoverageIgnoreEnd
+                // @codeCoverageIgnoreEnd
             } else {
                 /* @noinspection NullPointerExceptionInspection */
                 Application::getDatabase()->completeTransaction();
@@ -217,8 +215,8 @@ class BlueprintService
     }
 
     /**
-     * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      */
     protected static function getNewFileID(BlueprintModel $blueprints): string
     {
@@ -264,10 +262,10 @@ class BlueprintService
      * @param string $pageType [profile,last,most-discussed,type,tag,search]
      * @param array  $params   [page,count]
      *
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public static function search(string $pageType, ?int $connectedUserID, array $params = []): array
     {
@@ -335,7 +333,7 @@ class BlueprintService
         }
 
         if ($delta !== null) {
-            $expirationDate = (new DateTime($now, new DateTimeZone('UTC')))->modify($delta)->format('Y-m-d H:i:s');
+            $expirationDate = (new \DateTimeImmutable($now, new \DateTimeZone('UTC')))->modify($delta)->format('Y-m-d H:i:s');
         }
 
         return $expirationDate;
@@ -508,9 +506,9 @@ class BlueprintService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public static function softDeleteBlueprint(int $blueprintID): void
     {
@@ -518,9 +516,9 @@ class BlueprintService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     public static function addVersion(int $blueprintID, string $blueprint, string $reason): ?string
     {
@@ -583,7 +581,7 @@ class BlueprintService
                 /* @noinspection NullPointerExceptionInspection */
                 // @codeCoverageIgnoreStart
                 Application::getDatabase()->rollbackTransaction();
-            // @codeCoverageIgnoreEnd
+                // @codeCoverageIgnoreEnd
             } else {
                 /* @noinspection NullPointerExceptionInspection */
                 Application::getDatabase()->completeTransaction();
@@ -596,9 +594,9 @@ class BlueprintService
     /**
      * @param array $params [exposure,expiration,ue_version,comments_hidden,comments_closed]
      *
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public static function updateProperties(int $blueprintID, array $params): void
     {
@@ -619,9 +617,9 @@ class BlueprintService
     /**
      * @param array $params [title,description,video_url]
      *
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public static function updateInformations(int $blueprintID, array $params): void
     {
@@ -723,9 +721,9 @@ class BlueprintService
     }
 
     /**
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
+     * @throws \Rancoud\Application\ApplicationException
+     * @throws \Rancoud\Database\DatabaseException
      */
     public static function createFromAPI(array $params): array
     {
@@ -796,7 +794,7 @@ class BlueprintService
                  * For covering we have to mock the database
                  */
                 Application::getDatabase()->rollbackTransaction();
-            // @codeCoverageIgnoreEnd
+                // @codeCoverageIgnoreEnd
             } else {
                 /* @noinspection NullPointerExceptionInspection */
                 Application::getDatabase()->completeTransaction();

@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintGETEditBlueprintTest extends TestCase
 {
     use Common;
@@ -42,74 +42,73 @@ class BlueprintGETEditBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintGET_EditBlueprint(): array
+    public static function provideBlueprintGETEditBlueprintDataCases(): iterable
     {
-        return [
-            'visitor - no button edit' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'                => 'slug_public',
-                'userID'              => null,
-                'anonymousBlueprints' => null,
-                'hasButtonEdit'       => false,
+        yield 'visitor - no button edit' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'user - no button edit' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'                => 'slug_public',
-                'userID'              => 55,
-                'anonymousBlueprints' => null,
-                'hasButtonEdit'       => false,
+            'slug'                => 'slug_public',
+            'userID'              => null,
+            'anonymousBlueprints' => null,
+            'hasButtonEdit'       => false,
+        ];
+
+        yield 'user - no button edit' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'author - has button edit' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'                => 'slug_public',
-                'userID'              => 1,
-                'anonymousBlueprints' => null,
-                'hasButtonEdit'       => true,
+            'slug'                => 'slug_public',
+            'userID'              => 55,
+            'anonymousBlueprints' => null,
+            'hasButtonEdit'       => false,
+        ];
+
+        yield 'author - has button edit' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'user who post as anonymous - no button delete' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'                => 'slug_public',
-                'userID'              => 55,
-                'anonymousBlueprints' => [1, 2, 3],
-                'hasButtonEdit'       => false,
+            'slug'                => 'slug_public',
+            'userID'              => 1,
+            'anonymousBlueprints' => null,
+            'hasButtonEdit'       => true,
+        ];
+
+        yield 'user who post as anonymous - no button delete' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
+            'slug'                => 'slug_public',
+            'userID'              => 55,
+            'anonymousBlueprints' => [1, 2, 3],
+            'hasButtonEdit'       => false,
         ];
     }
 
     /**
-     * @dataProvider dataCasesBlueprintGET_EditBlueprint
-     *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesBlueprintGET_EditBlueprint')]
+    #[DataProvider('provideBlueprintGETEditBlueprintDataCases')]
     public function testBlueprintGETEditBlueprint(array $sqlQueries, string $slug, ?int $userID, ?array $anonymousBlueprints, bool $hasButtonEdit): void
     {
         // sql queries

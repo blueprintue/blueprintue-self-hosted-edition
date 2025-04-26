@@ -83,11 +83,11 @@ class ProfileController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Pagination\PaginationException
-     * @throws \Exception
      */
     protected function completeViewProfile(ServerRequestInterface $request, array $userInfos): void
     {

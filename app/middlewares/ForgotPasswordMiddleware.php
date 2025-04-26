@@ -8,8 +8,6 @@ use app\controllers\FormTrait;
 use app\helpers\Helper;
 use app\helpers\MailerHelper;
 use app\services\www\UserService;
-use DateTime;
-use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -29,9 +27,9 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
     ];
 
     /**
-     * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
+     * @throws \Rancoud\Database\DatabaseException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -56,7 +54,7 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
         $rawParams = $request->getParsedBody();
         foreach ($rawParams as $key => $rawParam) {
             if (\in_array($key, $htmlNames, true)) {
-                $params[$key] = Helper::trim($rawParam);
+                $params[$key] = \mb_trim($rawParam);
             }
         }
 
@@ -88,9 +86,9 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
+     * @throws \Rancoud\Database\DatabaseException
      *
      * @return ResponseInterface|null
      */
@@ -181,10 +179,10 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Security\SecurityException
-     * @throws \Exception
      */
     protected function getEmailHTML(string $token, string $username): string
     {
@@ -194,7 +192,7 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
 
         $html = \ob_get_clean();
 
-        $now = new DateTime('now', new DateTimeZone('UTC'));
+        $now = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
 
         $search = [
             '{{URL}}',

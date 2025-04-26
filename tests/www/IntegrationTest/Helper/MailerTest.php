@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -14,171 +13,174 @@ use Rancoud\Application\Application;
 use Rancoud\Environment\Environment;
 use tests\Common;
 
+/** @internal */
 class MailerTest extends TestCase
 {
     use Common;
 
     /** @return string[][] */
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
-        return [
-            'mail text' => [
-                'envFile'                  => 'mail.env',
-                'useCustomEmailValidation' => false,
-                'constructAssertions'      => [
-                    'Mailer'      => 'mail',
-                    'Host'        => 'localhost',
-                    'Port'        => 25,
-                    'SMTPAutoTLS' => true,
-                    'SMTPAuth'    => false,
-                    'SMTPSecure'  => '',
-                    'Username'    => '',
-                    'Password'    => '',
-                    'From'        => 'no-reply@blueprintue.test',
-                    'FromName'    => 'blueprintUE_from_name',
-                ],
-                'content' => [
-                    'type'    => 'text',
-                    'subject' => 'my subject',
-                    'message' => 'my message',
-                ],
+        yield 'mail text' => [
+            'envFile'                  => 'mail.env',
+            'useCustomEmailValidation' => false,
+            'constructAssertions'      => [
+                'Mailer'      => 'mail',
+                'Host'        => 'localhost',
+                'Port'        => 25,
+                'SMTPAutoTLS' => true,
+                'SMTPAuth'    => false,
+                'SMTPSecure'  => '',
+                'Username'    => '',
+                'Password'    => '',
+                'From'        => 'no-reply@blueprintue.test',
+                'FromName'    => 'blueprintUE_from_name',
             ],
-            'smtp html' => [
-                'envFile'                  => 'mail_smtp.env',
-                'useCustomEmailValidation' => false,
-                'constructAssertions'      => [
-                    'Mailer'      => 'smtp',
-                    'Host'        => 'smtp_host.com',
-                    'Port'        => 72,
-                    'SMTPAutoTLS' => false,
-                    'SMTPAuth'    => false,
-                    'SMTPSecure'  => '',
-                    'Username'    => '',
-                    'Password'    => '',
-                    'From'        => 'no-reply@blueprintue.test',
-                    'FromName'    => 'blueprintUE_from_name',
-                ],
-                'content' => [
-                    'type'    => 'html',
-                    'subject' => 'my subject',
-                    'html'    => 'my message in html',
-                    'text'    => 'my message in text',
-                ],
+            'content' => [
+                'type'    => 'text',
+                'subject' => 'my subject',
+                'message' => 'my message',
             ],
-            'smtp + auth' => [
-                'envFile'                  => 'mail_smtp_auth.env',
-                'useCustomEmailValidation' => false,
-                'constructAssertions'      => [
-                    'Mailer'      => 'smtp',
-                    'Host'        => 'smtp_auth_host.com',
-                    'Port'        => 954,
-                    'SMTPAutoTLS' => false,
-                    'SMTPAuth'    => true,
-                    'SMTPSecure'  => '',
-                    'Username'    => 'the user',
-                    'Password'    => 'the password',
-                    'From'        => 'no-reply@blueprintue.test',
-                    'FromName'    => 'blueprintUE_from_name',
-                ],
-                'content' => [
-                    'type'    => 'text',
-                    'subject' => 'my subject',
-                    'message' => 'my message',
-                ],
+        ];
+
+        yield 'smtp html' => [
+            'envFile'                  => 'mail_smtp.env',
+            'useCustomEmailValidation' => false,
+            'constructAssertions'      => [
+                'Mailer'      => 'smtp',
+                'Host'        => 'smtp_host.com',
+                'Port'        => 72,
+                'SMTPAutoTLS' => false,
+                'SMTPAuth'    => false,
+                'SMTPSecure'  => '',
+                'Username'    => '',
+                'Password'    => '',
+                'From'        => 'no-reply@blueprintue.test',
+                'FromName'    => 'blueprintUE_from_name',
             ],
-            'smtp + auth + tls' => [
-                'envFile'                  => 'mail_smtp_auth_tls.env',
-                'useCustomEmailValidation' => false,
-                'constructAssertions'      => [
-                    'Mailer'      => 'smtp',
-                    'Host'        => 'smtp_auth_host.com',
-                    'Port'        => 954,
-                    'SMTPAutoTLS' => false,
-                    'SMTPAuth'    => true,
-                    'SMTPSecure'  => 'tls',
-                    'Username'    => 'the user',
-                    'Password'    => 'the password',
-                    'From'        => 'no-reply@blueprintue.test',
-                    'FromName'    => 'blueprintUE_from_name',
-                ],
-                'content' => [
-                    'type'    => 'text',
-                    'subject' => 'my subject',
-                    'message' => 'my message',
-                ],
+            'content' => [
+                'type'    => 'html',
+                'subject' => 'my subject',
+                'html'    => 'my message in html',
+                'text'    => 'my message in text',
             ],
-            'exception because subject and body are empty' => [
-                'envFile'                  => 'mail.env',
-                'useCustomEmailValidation' => false,
-                'constructAssertions'      => [
-                    'Mailer'      => 'mail',
-                    'Host'        => 'localhost',
-                    'Port'        => 25,
-                    'SMTPAutoTLS' => true,
-                    'SMTPAuth'    => false,
-                    'SMTPSecure'  => '',
-                    'Username'    => '',
-                    'Password'    => '',
-                    'From'        => 'no-reply@blueprintue.test',
-                    'FromName'    => 'blueprintUE_from_name',
-                ],
-                'content' => [
-                    'type' => 'none',
-                ],
+        ];
+
+        yield 'smtp + auth' => [
+            'envFile'                  => 'mail_smtp_auth.env',
+            'useCustomEmailValidation' => false,
+            'constructAssertions'      => [
+                'Mailer'      => 'smtp',
+                'Host'        => 'smtp_auth_host.com',
+                'Port'        => 954,
+                'SMTPAutoTLS' => false,
+                'SMTPAuth'    => true,
+                'SMTPSecure'  => '',
+                'Username'    => 'the user',
+                'Password'    => 'the password',
+                'From'        => 'no-reply@blueprintue.test',
+                'FromName'    => 'blueprintUE_from_name',
             ],
-            'invalid address' => [
-                'envFile'                  => 'mail_invalid_address.env',
-                'useCustomEmailValidation' => false,
-                'constructAssertions'      => [
-                    'Mailer'      => 'mail',
-                    'Host'        => 'localhost',
-                    'Port'        => 25,
-                    'SMTPAutoTLS' => true,
-                    'SMTPAuth'    => false,
-                    'SMTPSecure'  => '',
-                    'Username'    => '',
-                    'Password'    => '',
-                    'From'        => '',
-                    'FromName'    => '',
-                ],
-                'content' => [
-                    'type'    => 'text',
-                    'subject' => 'my subject',
-                    'message' => 'my message',
-                ],
+            'content' => [
+                'type'    => 'text',
+                'subject' => 'my subject',
+                'message' => 'my message',
             ],
-            'use custom email validation' => [
-                'envFile'                  => 'mail.env',
-                'useCustomEmailValidation' => true,
-                'constructAssertions'      => [
-                    'Mailer'      => 'mail',
-                    'Host'        => 'localhost',
-                    'Port'        => 25,
-                    'SMTPAutoTLS' => true,
-                    'SMTPAuth'    => false,
-                    'SMTPSecure'  => '',
-                    'Username'    => '',
-                    'Password'    => '',
-                    'From'        => 'no-reply@blueprintue.test',
-                    'FromName'    => 'blueprintUE_from_name',
-                ],
-                'content' => [
-                    'type'    => 'text',
-                    'subject' => 'my subject',
-                    'message' => 'my message',
-                ],
+        ];
+
+        yield 'smtp + auth + tls' => [
+            'envFile'                  => 'mail_smtp_auth_tls.env',
+            'useCustomEmailValidation' => false,
+            'constructAssertions'      => [
+                'Mailer'      => 'smtp',
+                'Host'        => 'smtp_auth_host.com',
+                'Port'        => 954,
+                'SMTPAutoTLS' => false,
+                'SMTPAuth'    => true,
+                'SMTPSecure'  => 'tls',
+                'Username'    => 'the user',
+                'Password'    => 'the password',
+                'From'        => 'no-reply@blueprintue.test',
+                'FromName'    => 'blueprintUE_from_name',
+            ],
+            'content' => [
+                'type'    => 'text',
+                'subject' => 'my subject',
+                'message' => 'my message',
+            ],
+        ];
+
+        yield 'exception because subject and body are empty' => [
+            'envFile'                  => 'mail.env',
+            'useCustomEmailValidation' => false,
+            'constructAssertions'      => [
+                'Mailer'      => 'mail',
+                'Host'        => 'localhost',
+                'Port'        => 25,
+                'SMTPAutoTLS' => true,
+                'SMTPAuth'    => false,
+                'SMTPSecure'  => '',
+                'Username'    => '',
+                'Password'    => '',
+                'From'        => 'no-reply@blueprintue.test',
+                'FromName'    => 'blueprintUE_from_name',
+            ],
+            'content' => [
+                'type' => 'none',
+            ],
+        ];
+
+        yield 'invalid address' => [
+            'envFile'                  => 'mail_invalid_address.env',
+            'useCustomEmailValidation' => false,
+            'constructAssertions'      => [
+                'Mailer'      => 'mail',
+                'Host'        => 'localhost',
+                'Port'        => 25,
+                'SMTPAutoTLS' => true,
+                'SMTPAuth'    => false,
+                'SMTPSecure'  => '',
+                'Username'    => '',
+                'Password'    => '',
+                'From'        => '',
+                'FromName'    => '',
+            ],
+            'content' => [
+                'type'    => 'text',
+                'subject' => 'my subject',
+                'message' => 'my message',
+            ],
+        ];
+
+        yield 'use custom email validation' => [
+            'envFile'                  => 'mail.env',
+            'useCustomEmailValidation' => true,
+            'constructAssertions'      => [
+                'Mailer'      => 'mail',
+                'Host'        => 'localhost',
+                'Port'        => 25,
+                'SMTPAutoTLS' => true,
+                'SMTPAuth'    => false,
+                'SMTPSecure'  => '',
+                'Username'    => '',
+                'Password'    => '',
+                'From'        => 'no-reply@blueprintue.test',
+                'FromName'    => 'blueprintUE_from_name',
+            ],
+            'content' => [
+                'type'    => 'text',
+                'subject' => 'my subject',
+                'message' => 'my message',
             ],
         ];
     }
 
     /**
-     * @dataProvider dataCases
-     *
      * @throws \PHPMailer\PHPMailer\Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testMailer(string $envFile, bool $useCustomEmailValidation, array $constructAssertions, array $content): void
     {
         // setup app
@@ -210,8 +212,8 @@ class MailerTest extends TestCase
         }
 
         if ($useCustomEmailValidation) {
-            static::assertTrue(\call_user_func($mailerProp::$validator, 'a@a'));
-            static::assertFalse(\call_user_func($mailerProp::$validator, "a\na"));
+            static::assertTrue(($mailerProp::$validator)('a@a'));
+            static::assertFalse(($mailerProp::$validator)("a\na"));
         } else {
             static::assertFalse($mailerProp->validateAddress('a@a'));
             static::assertFalse($mailerProp->validateAddress("a\na"));

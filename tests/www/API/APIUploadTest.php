@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -18,6 +17,7 @@ use Rancoud\Http\Message\ServerRequest;
 use Rancoud\Router\RouterException;
 use tests\Common;
 
+/** @internal */
 class APIUploadTest extends TestCase
 {
     use Common;
@@ -31,247 +31,262 @@ class APIUploadTest extends TestCase
         static::$db->insert('INSERT INTO users_infos (id_user) VALUES (1)');
     }
 
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
-        return [
-            'upload - OK' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'title'     => 'my title',
-                    'blueprint' => 'begin object 1',
-                ],
-                'responseCode'    => 200,
-                'responseContent' => '{"key":"xxxxxxxx"}',
+        yield 'upload - OK' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
             ],
-            'upload with extra infos - OK' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'title'      => 'my title 2',
-                    'blueprint'  => 'begin object 2',
-                    'exposure'   => 'private',
-                    'expiration' => '3600',
-                    'version'    => '4.12',
-                ],
-                'responseCode'    => 200,
-                'responseContent' => '{"key":"xxxxxxxx"}',
+            'params'  => [
+                'title'     => 'my title',
+                'blueprint' => 'begin object 1',
             ],
-            'api key incorrect' => [
-                'headers' => [
-                    'X-Token' => 'aaa'
-                ],
-                'params'  => [
-                    'blueprint' => 'begin object 1',
-                ],
-                'responseCode'    => 401,
-                'responseContent' => '{"error":"api_key_incorrect"}',
+            'responseCode'    => 200,
+            'responseContent' => '{"key":"xxxxxxxx"}',
+        ];
+
+        yield 'upload with extra infos - OK' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
             ],
-            'headers empty' => [
-                'headers' => [],
-                'params'  => [
-                    'blueprint' => 'begin object 1',
-                ],
-                'responseCode'    => 401,
-                'responseContent' => '{"error":"api_key_empty"}',
+            'params'  => [
+                'title'      => 'my title 2',
+                'blueprint'  => 'begin object 2',
+                'exposure'   => 'private',
+                'expiration' => '3600',
+                'version'    => '4.12',
             ],
-            'api key empty' => [
-                'headers' => [
-                    'X-Token' => ''
-                ],
-                'params'  => [
-                    'blueprint' => 'begin object 1',
-                ],
-                'responseCode'    => 401,
-                'responseContent' => '{"error":"api_key_empty"}',
+            'responseCode'    => 200,
+            'responseContent' => '{"key":"xxxxxxxx"}',
+        ];
+
+        yield 'api key incorrect' => [
+            'headers' => [
+                'X-Token' => 'aaa'
             ],
-            'api key invalid encoding' => [
-                'headers' => [
-                    'X-Token' => \chr(99999999)
-                ],
-                'params'  => [
-                    'blueprint' => 'begin object 1',
-                ],
-                'responseCode'    => 401,
-                'responseContent' => '{"error":"api_key_incorrect"}',
+            'params'  => [
+                'blueprint' => 'begin object 1',
             ],
-            'missing fields - no fields' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'           => [],
-                'responseCode'     => 400,
-                'responseContent'  => '{"error":"required_title"}',
+            'responseCode'    => 401,
+            'responseContent' => '{"error":"api_key_incorrect"}',
+        ];
+
+        yield 'headers empty' => [
+            'headers' => [],
+            'params'  => [
+                'blueprint' => 'begin object 1',
             ],
-            'missing fields - no title' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'           => [
-                    'blueprint' => 'begin object 1',
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"required_title"}',
+            'responseCode'    => 401,
+            'responseContent' => '{"error":"api_key_empty"}',
+        ];
+
+        yield 'api key empty' => [
+            'headers' => [
+                'X-Token' => ''
             ],
-            'missing fields - no blueprint' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'           => [
-                    'title'     => 'my title',
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"invalid_blueprint"}',
+            'params'  => [
+                'blueprint' => 'begin object 1',
             ],
-            'empty fields - title empty' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'title'     => ' ',
-                    'blueprint' => 'begin object 1',
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"required_title"}',
+            'responseCode'    => 401,
+            'responseContent' => '{"error":"api_key_empty"}',
+        ];
+
+        yield 'api key invalid encoding' => [
+            'headers' => [
+                'X-Token' => \chr(99999999)
             ],
-            'empty fields - blueprint empty' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'title'     => 'my title',
-                    'blueprint' => ' ',
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"invalid_blueprint"}',
+            'params'  => [
+                'blueprint' => 'begin object 1',
             ],
-            'invalid fields - blueprint' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'title'     => 'my title',
-                    'blueprint' => 'aze',
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"invalid_blueprint"}',
+            'responseCode'    => 401,
+            'responseContent' => '{"error":"api_key_incorrect"}',
+        ];
+
+        yield 'missing fields - no fields' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
             ],
-            'invalid fields - exposure' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'title'      => 'my title',
-                    'blueprint'  => 'begin object 1',
-                    'exposure'   => 'xxx',
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"invalid_exposure"}',
+            'params'           => [],
+            'responseCode'     => 400,
+            'responseContent'  => '{"error":"required_title"}',
+        ];
+
+        yield 'missing fields - no title' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
             ],
-            'invalid fields - expiration' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'title'      => 'my title',
-                    'blueprint'  => 'begin object 1',
-                    'expiration' => 'xxx'
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"invalid_expiration"}',
+            'params'           => [
+                'blueprint' => 'begin object 1',
             ],
-            'invalid fields - version' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'title'      => 'my title',
-                    'blueprint'  => 'begin object 1',
-                    'version'    => 'xxx',
-                    'expiration' => '604800'
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"invalid_version"}',
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"required_title"}',
+        ];
+
+        yield 'missing fields - no blueprint' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
             ],
-            'do throw exception' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'title'              => 'my title',
-                    'blueprint'          => 'begin object 1',
-                    'do throw exception' => 'do throw exception'
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"error_insert_blueprint_#200"}',
+            'params'           => [
+                'title'     => 'my title',
             ],
-            'invalid encoding fields - title' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'title'      => \chr(99999999),
-                    'blueprint'  => 'begin object 1',
-                    'version'    => 'public',
-                    'expiration' => '604800'
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"invalid"}',
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"invalid_blueprint"}',
+        ];
+
+        yield 'empty fields - title empty' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
             ],
-            'invalid encoding fields - blueprint' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'title'      => 'my title',
-                    'blueprint'  => \chr(99999999),
-                    'version'    => 'public',
-                    'expiration' => '604800'
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"invalid"}',
+            'params'  => [
+                'title'     => ' ',
+                'blueprint' => 'begin object 1',
             ],
-            'invalid encoding fields - version' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'title'      => 'my title',
-                    'blueprint'  => 'begin object 1',
-                    'version'    => \chr(99999999),
-                    'expiration' => '604800'
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"invalid"}',
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"required_title"}',
+        ];
+
+        yield 'empty fields - blueprint empty' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
             ],
-            'invalid encoding fields - expiration' => [
-                'headers' => [
-                    'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                ],
-                'params'  => [
-                    'title'      => 'my title',
-                    'blueprint'  => 'begin object 1',
-                    'version'    => 'public',
-                    'expiration' => \chr(99999999)
-                ],
-                'responseCode'    => 400,
-                'responseContent' => '{"error":"invalid"}',
-            ]
+            'params'  => [
+                'title'     => 'my title',
+                'blueprint' => ' ',
+            ],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"invalid_blueprint"}',
+        ];
+
+        yield 'invalid fields - blueprint' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            ],
+            'params'  => [
+                'title'     => 'my title',
+                'blueprint' => 'aze',
+            ],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"invalid_blueprint"}',
+        ];
+
+        yield 'invalid fields - exposure' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            ],
+            'params'  => [
+                'title'      => 'my title',
+                'blueprint'  => 'begin object 1',
+                'exposure'   => 'xxx',
+            ],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"invalid_exposure"}',
+        ];
+
+        yield 'invalid fields - expiration' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            ],
+            'params'  => [
+                'title'      => 'my title',
+                'blueprint'  => 'begin object 1',
+                'expiration' => 'xxx'
+            ],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"invalid_expiration"}',
+        ];
+
+        yield 'invalid fields - version' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            ],
+            'params'  => [
+                'title'      => 'my title',
+                'blueprint'  => 'begin object 1',
+                'version'    => 'xxx',
+                'expiration' => '604800'
+            ],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"invalid_version"}',
+        ];
+
+        yield 'do throw exception' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            ],
+            'params'  => [
+                'title'              => 'my title',
+                'blueprint'          => 'begin object 1',
+                'do throw exception' => 'do throw exception'
+            ],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"error_insert_blueprint_#200"}',
+        ];
+
+        yield 'invalid encoding fields - title' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            ],
+            'params'  => [
+                'title'      => \chr(99999999),
+                'blueprint'  => 'begin object 1',
+                'version'    => 'public',
+                'expiration' => '604800'
+            ],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"invalid"}',
+        ];
+
+        yield 'invalid encoding fields - blueprint' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            ],
+            'params'  => [
+                'title'      => 'my title',
+                'blueprint'  => \chr(99999999),
+                'version'    => 'public',
+                'expiration' => '604800'
+            ],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"invalid"}',
+        ];
+
+        yield 'invalid encoding fields - version' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            ],
+            'params'  => [
+                'title'      => 'my title',
+                'blueprint'  => 'begin object 1',
+                'version'    => \chr(99999999),
+                'expiration' => '604800'
+            ],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"invalid"}',
+        ];
+
+        yield 'invalid encoding fields - expiration' => [
+            'headers' => [
+                'X-Token' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            ],
+            'params'  => [
+                'title'      => 'my title',
+                'blueprint'  => 'begin object 1',
+                'version'    => 'public',
+                'expiration' => \chr(99999999)
+            ],
+            'responseCode'    => 400,
+            'responseContent' => '{"error":"invalid"}',
         ];
     }
 
     /**
-     * @dataProvider dataCases
-     *
+     * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testUploadPOST(array $headers, array $params, int $responseCode, string $responseContent): void
     {
         $ds = \DIRECTORY_SEPARATOR;

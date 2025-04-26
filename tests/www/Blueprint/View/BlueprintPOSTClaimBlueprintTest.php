@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -17,6 +16,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintPOSTClaimBlueprintTest extends TestCase
 {
     use Common;
@@ -40,375 +40,382 @@ class BlueprintPOSTClaimBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintPOST_ClaimBlueprint(): array
+    public static function provideBlueprintPOSTClaimBlueprintDataCases(): iterable
     {
-        return [
-            'visitor - no button claim' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'                => 'slug_public',
-                'userID'              => null,
-                'anonymousBlueprints' => null,
-                'hasButtonClaim'      => false,
-                'doPostAction'        => false,
-                'params'              => null,
-                'useCsrfFromSession'  => false,
-                'hasRedirection'      => false,
-                'isFormSuccess'       => false,
-                'flashMessages'       => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
-                    ]
-                ],
+        yield 'visitor - no button claim' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'user - no button claim' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            'slug'                => 'slug_public',
+            'userID'              => null,
+            'anonymousBlueprints' => null,
+            'hasButtonClaim'      => false,
+            'doPostAction'        => false,
+            'params'              => null,
+            'useCsrfFromSession'  => false,
+            'hasRedirection'      => false,
+            'isFormSuccess'       => false,
+            'flashMessages'       => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
                 ],
-                'slug'                => 'slug_public',
-                'userID'              => 55,
-                'anonymousBlueprints' => null,
-                'hasButtonClaim'      => false,
-                'doPostAction'        => false,
-                'params'              => null,
-                'useCsrfFromSession'  => false,
-                'hasRedirection'      => false,
-                'isFormSuccess'       => false,
-                'flashMessages'       => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
+                ]
             ],
-            'author - no button claim' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'                => 'slug_public',
-                'userID'              => 1,
-                'anonymousBlueprints' => null,
-                'hasButtonClaim'      => false,
-                'doPostAction'        => false,
-                'params'              => null,
-                'useCsrfFromSession'  => false,
-                'hasRedirection'      => false,
-                'isFormSuccess'       => false,
-                'flashMessages'       => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
-                    ]
-                ],
+        ];
+
+        yield 'user - no button claim' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'user who post as anonymous - has button claim' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            'slug'                => 'slug_public',
+            'userID'              => 55,
+            'anonymousBlueprints' => null,
+            'hasButtonClaim'      => false,
+            'doPostAction'        => false,
+            'params'              => null,
+            'useCsrfFromSession'  => false,
+            'hasRedirection'      => false,
+            'isFormSuccess'       => false,
+            'flashMessages'       => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
                 ],
-                'slug'                => 'slug_public',
-                'userID'              => 55,
-                'anonymousBlueprints' => [1, 2, 3],
-                'hasButtonClaim'      => true,
-                'doPostAction'        => false,
-                'params'              => null,
-                'useCsrfFromSession'  => false,
-                'hasRedirection'      => false,
-                'isFormSuccess'       => false,
-                'flashMessages'       => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
+                ]
             ],
-            'user who post as anonymous then claim but $_SESSION still have the references - no button claim' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'                => 'slug_public',
-                'userID'              => 1,
-                'anonymousBlueprints' => [1, 2, 3],
-                'hasButtonClaim'      => false,
-                'doPostAction'        => false,
-                'params'              => null,
-                'useCsrfFromSession'  => false,
-                'hasRedirection'      => false,
-                'isFormSuccess'       => false,
-                'flashMessages'       => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
-                    ]
-                ],
+        ];
+
+        yield 'author - no button claim' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'do valid claim action on public blueprint' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (55, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
-                    'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (2, 1, 1)',
-                    'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (55, 0, 0)',
+            'slug'                => 'slug_public',
+            'userID'              => 1,
+            'anonymousBlueprints' => null,
+            'hasButtonClaim'      => false,
+            'doPostAction'        => false,
+            'params'              => null,
+            'useCsrfFromSession'  => false,
+            'hasRedirection'      => false,
+            'isFormSuccess'       => false,
+            'flashMessages'       => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
                 ],
-                'slug'                => 'slug_public',
-                'userID'              => 55,
-                'anonymousBlueprints' => [1, 2, 3],
-                'hasButtonClaim'      => true,
-                'doPostAction'        => true,
-                'params'              => [
-                    'form-claim_blueprint-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">This blueprint is now yours</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
+                ]
             ],
-            'do valid claim action on unlisted blueprint' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_unlisted', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (55, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
-                    'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (2, 0, 1)',
-                    'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (55, 0, 0)',
-                ],
-                'slug'                => 'slug_unlisted',
-                'userID'              => 55,
-                'anonymousBlueprints' => [1, 2, 3],
-                'hasButtonClaim'      => true,
-                'doPostAction'        => true,
-                'params'              => [
-                    'form-claim_blueprint-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">This blueprint is now yours</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
-                    ]
-                ],
+        ];
+
+        yield 'user who post as anonymous - has button claim' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            'slug'                => 'slug_public',
+            'userID'              => 55,
+            'anonymousBlueprints' => [1, 2, 3],
+            'hasButtonClaim'      => true,
+            'doPostAction'        => false,
+            'params'              => null,
+            'useCsrfFromSession'  => false,
+            'hasRedirection'      => false,
+            'isFormSuccess'       => false,
+            'flashMessages'       => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
                 ],
-                'slug'                => 'slug_public',
-                'userID'              => 55,
-                'anonymousBlueprints' => [1, 2, 3],
-                'hasButtonClaim'      => true,
-                'doPostAction'        => true,
-                'params'              => [
-                    'form-claim_blueprint-hidden-csrf' => 'incorrect_csrf',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
+                ]
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'                => 'slug_public',
-                'userID'              => 55,
-                'anonymousBlueprints' => [1, 2, 3],
-                'hasButtonClaim'      => true,
-                'doPostAction'        => true,
-                'params'              => [],
-                'useCsrfFromSession'  => false,
-                'hasRedirection'      => false,
-                'isFormSuccess'       => false,
-                'flashMessages'       => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
-                    ]
-                ],
+        ];
+
+        yield 'user who post as anonymous then claim but $_SESSION still have the references - no button claim' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'do invalid claim action - anonymous blueprints is not listed' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            'slug'                => 'slug_public',
+            'userID'              => 1,
+            'anonymousBlueprints' => [1, 2, 3],
+            'hasButtonClaim'      => false,
+            'doPostAction'        => false,
+            'params'              => null,
+            'useCsrfFromSession'  => false,
+            'hasRedirection'      => false,
+            'isFormSuccess'       => false,
+            'flashMessages'       => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
                 ],
-                'slug'                => 'slug_public',
-                'userID'              => 55,
-                'anonymousBlueprints' => [5],
-                'hasButtonClaim'      => false,
-                'doPostAction'        => true,
-                'params'              => [
-                    'form-claim_blueprint-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">Error, claim is invalid on this blueprint</div>'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
+                ]
             ],
-            'do invalid claim action - only possible on anonymous user' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'                => 'slug_public',
-                'userID'              => 55,
-                'anonymousBlueprints' => [5],
-                'hasButtonClaim'      => false,
-                'doPostAction'        => true,
-                'params'              => [
-                    'form-claim_blueprint-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">Error, claim is invalid on this blueprint</div>'
-                    ]
-                ],
+        ];
+
+        yield 'do valid claim action on public blueprint' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member', null, 'member', 'member@mail', utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (55, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (2, 1, 1)',
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (55, 0, 0)',
             ],
-            'do invalid claim action - visitor try to hack' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            'slug'                => 'slug_public',
+            'userID'              => 55,
+            'anonymousBlueprints' => [1, 2, 3],
+            'hasButtonClaim'      => true,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-claim_blueprint-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">This blueprint is now yours</div>'
                 ],
-                'slug'                => 'slug_public',
-                'userID'              => null,
-                'anonymousBlueprints' => null,
-                'hasButtonClaim'      => false,
-                'doPostAction'        => true,
-                'params'              => [
-                    'form-claim_blueprint-hidden-csrf' => 'csrf_is_replaced',
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'do valid claim action on unlisted blueprint' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_unlisted', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member', null, 'member', 'member@mail', utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (55, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (2, 0, 1)',
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (55, 0, 0)',
+            ],
+            'slug'                => 'slug_unlisted',
+            'userID'              => 55,
+            'anonymousBlueprints' => [1, 2, 3],
+            'hasButtonClaim'      => true,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-claim_blueprint-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">This blueprint is now yours</div>'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
-                    ]
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            ],
+            'slug'                => 'slug_public',
+            'userID'              => 55,
+            'anonymousBlueprints' => [1, 2, 3],
+            'hasButtonClaim'      => true,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-claim_blueprint-hidden-csrf' => 'incorrect_csrf',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
                 ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            ],
+            'slug'                => 'slug_public',
+            'userID'              => 55,
+            'anonymousBlueprints' => [1, 2, 3],
+            'hasButtonClaim'      => true,
+            'doPostAction'        => true,
+            'params'              => [],
+            'useCsrfFromSession'  => false,
+            'hasRedirection'      => false,
+            'isFormSuccess'       => false,
+            'flashMessages'       => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'do invalid claim action - anonymous blueprints is not listed' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            ],
+            'slug'                => 'slug_public',
+            'userID'              => 55,
+            'anonymousBlueprints' => [5],
+            'hasButtonClaim'      => false,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-claim_blueprint-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">Error, claim is invalid on this blueprint</div>'
+                ]
+            ],
+        ];
+
+        yield 'do invalid claim action - only possible on anonymous user' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            ],
+            'slug'                => 'slug_public',
+            'userID'              => 55,
+            'anonymousBlueprints' => [5],
+            'hasButtonClaim'      => false,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-claim_blueprint-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">Error, claim is invalid on this blueprint</div>'
+                ]
+            ],
+        ];
+
+        yield 'do invalid claim action - visitor try to hack' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
+            ],
+            'slug'                => 'slug_public',
+            'userID'              => null,
+            'anonymousBlueprints' => null,
+            'hasButtonClaim'      => false,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-claim_blueprint-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
+                ]
             ],
         ];
     }
 
     /**
-     * @dataProvider dataCasesBlueprintPOST_ClaimBlueprint
-     *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesBlueprintPOST_ClaimBlueprint')]
+    #[DataProvider('provideBlueprintPOSTClaimBlueprintDataCases')]
     public function testBlueprintPOSTClaimBlueprint(array $sqlQueries, string $slug, ?int $userID, ?array $anonymousBlueprints, bool $hasButtonClaim, bool $doPostAction, ?array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages): void
     {
         // sql queries

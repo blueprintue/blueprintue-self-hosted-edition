@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class RenderTest extends TestCase
 {
     use Common;
@@ -37,288 +37,301 @@ class RenderTest extends TestCase
         }
     }
 
-    public static function dataCasesRenderGET_Access(): array
+    public static function provideRenderGETAccessDataCases(): iterable
     {
-        return [
-            'no blueprint - KO' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                ],
-                'userID'            => null,
-                'slug'              => 'slug_incorrect',
-                'statusCode'        => 301,
-                'location'          => '/',
-                'headerTitle'       => null,
-                'headerDescription' => null,
+        yield 'no blueprint - KO' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
             ],
-            'no blueprints - no published_at - KO' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug', 'file', 'title', 1, utc_timestamp(), null, 'public')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => null,
-                'slug'              => 'slug',
-                'statusCode'        => 301,
-                'location'          => '/',
-                'headerTitle'       => null,
-                'headerDescription' => null,
+            'userID'            => null,
+            'slug'              => 'slug_incorrect',
+            'statusCode'        => 301,
+            'location'          => '/',
+            'headerTitle'       => null,
+            'headerDescription' => null,
+        ];
+
+        yield 'no blueprints - no published_at - KO' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug', 'file', 'title', 1, utc_timestamp(), null, 'public')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'no blueprints - public but expiration passed - KO' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, expiration) VALUES (1, 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'public', '2020-01-01 01:01:01')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => null,
-                'slug'              => 'slug',
-                'statusCode'        => 301,
-                'location'          => '/',
-                'headerTitle'       => null,
-                'headerDescription' => null,
+            'userID'            => null,
+            'slug'              => 'slug',
+            'statusCode'        => 301,
+            'location'          => '/',
+            'headerTitle'       => null,
+            'headerDescription' => null,
+        ];
+
+        yield 'no blueprints - public but expiration passed - KO' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, expiration) VALUES (1, 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'public', '2020-01-01 01:01:01')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'no blueprints - deleted - KO' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, deleted_at) VALUES (1, 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp())",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => null,
-                'slug'              => 'slug',
-                'statusCode'        => 301,
-                'location'          => '/',
-                'headerTitle'       => null,
-                'headerDescription' => null,
+            'userID'            => null,
+            'slug'              => 'slug',
+            'statusCode'        => 301,
+            'location'          => '/',
+            'headerTitle'       => null,
+            'headerDescription' => null,
+        ];
+
+        yield 'no blueprints - deleted - KO' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, deleted_at) VALUES (1, 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp())",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'no blueprints - missing blueprints_versions - KO' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => null,
-                'slug'              => 'slug',
-                'statusCode'        => 301,
-                'location'          => '/',
-                'headerTitle'       => null,
-                'headerDescription' => null,
+            'userID'            => null,
+            'slug'              => 'slug',
+            'statusCode'        => 301,
+            'location'          => '/',
+            'headerTitle'       => null,
+            'headerDescription' => null,
+        ];
+
+        yield 'no blueprints - missing blueprints_versions - KO' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'no blueprints - invalid version - KO' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => null,
-                'slug'              => 'slug/2',
-                'statusCode'        => 301,
-                'location'          => '/',
-                'headerTitle'       => null,
-                'headerDescription' => null,
+            'userID'            => null,
+            'slug'              => 'slug',
+            'statusCode'        => 301,
+            'location'          => '/',
+            'headerTitle'       => null,
+            'headerDescription' => null,
+        ];
+
+        yield 'no blueprints - invalid version - KO' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug', 'file', 'title', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'visitor user - public blueprint - OK' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at) VALUES (1, 'slug_public', 'file', 'visitor user - public blueprint - OK', 1, utc_timestamp(), utc_timestamp())",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => null,
-                'slug'              => 'slug_public',
-                'statusCode'        => 200,
-                'location'          => null,
-                'headerTitle'       => 'visitor user - public blueprint - OK posted by member | This is a base title',
-                'headerDescription' => 'No description provided',
+            'userID'            => null,
+            'slug'              => 'slug/2',
+            'statusCode'        => 301,
+            'location'          => '/',
+            'headerTitle'       => null,
+            'headerDescription' => null,
+        ];
+
+        yield 'visitor user - public blueprint - OK' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at) VALUES (1, 'slug_public', 'file', 'visitor user - public blueprint - OK', 1, utc_timestamp(), utc_timestamp())",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'visitor user - unlisted blueprint - OK' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_unlisted', 'file', 'visitor user - unlisted blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => null,
-                'slug'              => 'slug_unlisted',
-                'statusCode'        => 200,
-                'location'          => null,
-                'headerTitle'       => 'visitor user - unlisted blueprint - OK posted by member | This is a base title',
-                'headerDescription' => 'No description provided',
+            'userID'            => null,
+            'slug'              => 'slug_public',
+            'statusCode'        => 200,
+            'location'          => null,
+            'headerTitle'       => 'visitor user - public blueprint - OK posted by member | This is a base title',
+            'headerDescription' => 'No description provided',
+        ];
+
+        yield 'visitor user - unlisted blueprint - OK' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_unlisted', 'file', 'visitor user - unlisted blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'visitor user - private blueprint - KO' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_private', 'file', 'visitor user - private blueprint - KO', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => null,
-                'slug'              => 'slug_private',
-                'statusCode'        => 301,
-                'location'          => '/',
-                'headerTitle'       => null,
-                'headerDescription' => null,
+            'userID'            => null,
+            'slug'              => 'slug_unlisted',
+            'statusCode'        => 200,
+            'location'          => null,
+            'headerTitle'       => 'visitor user - unlisted blueprint - OK posted by member | This is a base title',
+            'headerDescription' => 'No description provided',
+        ];
+
+        yield 'visitor user - private blueprint - KO' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_private', 'file', 'visitor user - private blueprint - KO', 1, utc_timestamp(), utc_timestamp(), 'private')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'visitor user - deleted blueprint - KO' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, deleted_at) VALUES (1, 'slug_private', 'file', 'visitor user - private blueprint - KO', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp())",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => null,
-                'slug'              => 'slug_private',
-                'statusCode'        => 301,
-                'location'          => '/',
-                'headerTitle'       => null,
-                'headerDescription' => null,
+            'userID'            => null,
+            'slug'              => 'slug_private',
+            'statusCode'        => 301,
+            'location'          => '/',
+            'headerTitle'       => null,
+            'headerDescription' => null,
+        ];
+
+        yield 'visitor user - deleted blueprint - KO' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, deleted_at) VALUES (1, 'slug_private', 'file', 'visitor user - private blueprint - KO', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp())",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'user lambda - public blueprint - OK' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_public', 'file', 'user lambda - public blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => 10,
-                'slug'              => 'slug_public',
-                'statusCode'        => 200,
-                'location'          => null,
-                'headerTitle'       => 'user lambda - public blueprint - OK posted by member | This is a base title',
-                'headerDescription' => 'No description provided',
+            'userID'            => null,
+            'slug'              => 'slug_private',
+            'statusCode'        => 301,
+            'location'          => '/',
+            'headerTitle'       => null,
+            'headerDescription' => null,
+        ];
+
+        yield 'user lambda - public blueprint - OK' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_public', 'file', 'user lambda - public blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'user lambda - unlisted blueprint - OK' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_unlisted', 'file', 'user lambda - unlisted blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => 10,
-                'slug'              => 'slug_unlisted',
-                'statusCode'        => 200,
-                'location'          => null,
-                'headerTitle'       => 'user lambda - unlisted blueprint - OK posted by member | This is a base title',
-                'headerDescription' => 'No description provided',
+            'userID'            => 10,
+            'slug'              => 'slug_public',
+            'statusCode'        => 200,
+            'location'          => null,
+            'headerTitle'       => 'user lambda - public blueprint - OK posted by member | This is a base title',
+            'headerDescription' => 'No description provided',
+        ];
+
+        yield 'user lambda - unlisted blueprint - OK' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_unlisted', 'file', 'user lambda - unlisted blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'user lambda - private blueprint - KO' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_private', 'file', 'user lambda - private blueprint - KO', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => 10,
-                'slug'              => 'slug_private',
-                'statusCode'        => 301,
-                'location'          => '/',
-                'headerTitle'       => null,
-                'headerDescription' => null,
+            'userID'            => 10,
+            'slug'              => 'slug_unlisted',
+            'statusCode'        => 200,
+            'location'          => null,
+            'headerTitle'       => 'user lambda - unlisted blueprint - OK posted by member | This is a base title',
+            'headerDescription' => 'No description provided',
+        ];
+
+        yield 'user lambda - private blueprint - KO' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_private', 'file', 'user lambda - private blueprint - KO', 1, utc_timestamp(), utc_timestamp(), 'private')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'user lambda - deleted blueprint - KO' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, deleted_at) VALUES (1, 'slug_private', 'file', 'user lambda - private blueprint - KO', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp())",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => 10,
-                'slug'              => 'slug_private',
-                'statusCode'        => 301,
-                'location'          => '/',
-                'headerTitle'       => null,
-                'headerDescription' => null,
+            'userID'            => 10,
+            'slug'              => 'slug_private',
+            'statusCode'        => 301,
+            'location'          => '/',
+            'headerTitle'       => null,
+            'headerDescription' => null,
+        ];
+
+        yield 'user lambda - deleted blueprint - KO' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, deleted_at) VALUES (1, 'slug_private', 'file', 'user lambda - private blueprint - KO', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp())",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'author - public blueprint - OK' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_public', 'file', 'author - public blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => 1,
-                'slug'              => 'slug_public',
-                'statusCode'        => 200,
-                'location'          => null,
-                'headerTitle'       => 'author - public blueprint - OK posted by member | This is a base title',
-                'headerDescription' => 'No description provided',
+            'userID'            => 10,
+            'slug'              => 'slug_private',
+            'statusCode'        => 301,
+            'location'          => '/',
+            'headerTitle'       => null,
+            'headerDescription' => null,
+        ];
+
+        yield 'author - public blueprint - OK' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_public', 'file', 'author - public blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'author - unlisted blueprint - OK' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_unlisted', 'file', 'author - unlisted blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => 1,
-                'slug'              => 'slug_unlisted',
-                'statusCode'        => 200,
-                'location'          => null,
-                'headerTitle'       => 'author - unlisted blueprint - OK posted by member | This is a base title',
-                'headerDescription' => 'No description provided',
+            'userID'            => 1,
+            'slug'              => 'slug_public',
+            'statusCode'        => 200,
+            'location'          => null,
+            'headerTitle'       => 'author - public blueprint - OK posted by member | This is a base title',
+            'headerDescription' => 'No description provided',
+        ];
+
+        yield 'author - unlisted blueprint - OK' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 'slug_unlisted', 'file', 'author - unlisted blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'author - private blueprint - OK' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, description) VALUES (1, 'slug_private', 'file', 'author - private blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'private', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => 1,
-                'slug'              => 'slug_private',
-                'statusCode'        => 200,
-                'location'          => null,
-                'headerTitle'       => 'author - private blueprint - OK posted by member | This is a base title',
-                'headerDescription' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has',
+            'userID'            => 1,
+            'slug'              => 'slug_unlisted',
+            'statusCode'        => 200,
+            'location'          => null,
+            'headerTitle'       => 'author - unlisted blueprint - OK posted by member | This is a base title',
+            'headerDescription' => 'No description provided',
+        ];
+
+        yield 'author - private blueprint - OK' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, description) VALUES (1, 'slug_private', 'file', 'author - private blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'private', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'author - deleted blueprint - KO' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, description, deleted_at) VALUES (1, 'slug_private', 'file', 'author - private blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'private', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', utc_timestamp())",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'userID'            => 1,
-                'slug'              => 'slug_private',
-                'statusCode'        => 301,
-                'location'          => '/',
-                'headerTitle'       => null,
-                'headerDescription' => null,
+            'userID'            => 1,
+            'slug'              => 'slug_private',
+            'statusCode'        => 200,
+            'location'          => null,
+            'headerTitle'       => 'author - private blueprint - OK posted by member | This is a base title',
+            'headerDescription' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has',
+        ];
+
+        yield 'author - deleted blueprint - KO' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, description, deleted_at) VALUES (1, 'slug_private', 'file', 'author - private blueprint - OK', 1, utc_timestamp(), utc_timestamp(), 'private', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', utc_timestamp())",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
+            'userID'            => 1,
+            'slug'              => 'slug_private',
+            'statusCode'        => 301,
+            'location'          => '/',
+            'headerTitle'       => null,
+            'headerDescription' => null,
         ];
     }
 
     /**
-     * @dataProvider dataCasesRenderGET_Access
-     *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesRenderGET_Access')]
+    #[DataProvider('provideRenderGETAccessDataCases')]
     public function testRenderGETAccess(array $sqlQueries, ?int $userID, string $slug, int $statusCode, ?string $location, ?string $headerTitle, ?string $headerDescription): void
     {
         // sql queries
@@ -354,7 +367,7 @@ class RenderTest extends TestCase
             'description' => Security::escAttr($headerDescription),
         ]);
 
-        $this->doTestHtmlBody($response, <<<HTML
+        $this->doTestHtmlBody($response, <<<'HTML'
 <body>
 <div class="playground"></div>
 <textarea class="hidden" id="pastebin_data"></textarea>
@@ -376,58 +389,56 @@ HTML);
      *
      * @return array[]
      */
-    public static function dataCasesRenderGET_FileBlueprint(): array
+    public static function provideRenderGETFileBlueprintDataCases(): iterable
     {
-        return [
-            'get last version : file 1' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.10')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'fileID'  => 'a',
-                'version' => '1',
-                'slug'    => 'slug_public',
+        yield 'get last version : file 1' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.10')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'get specific version : file 3' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 3, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.10')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 3, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'fileID'  => 'a',
-                'version' => '3',
-                'slug'    => 'slug_public/3',
+            'fileID'  => 'a',
+            'version' => '1',
+            'slug'    => 'slug_public',
+        ];
+
+        yield 'get specific version : file 3' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 3, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.10')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 3, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'missing file' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 2, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.10')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'fileID'  => 'a',
-                'version' => 'missing',
-                'slug'    => 'slug_public',
+            'fileID'  => 'a',
+            'version' => '3',
+            'slug'    => 'slug_public/3',
+        ];
+
+        yield 'missing file' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 2, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.10')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 2, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
+            'fileID'  => 'a',
+            'version' => 'missing',
+            'slug'    => 'slug_public',
         ];
     }
 
     /**
-     * @dataProvider dataCasesRenderGET_FileBlueprint
-     *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesRenderGET_FileBlueprint')]
+    #[DataProvider('provideRenderGETFileBlueprintDataCases')]
     public function testRenderGETFileBlueprint(array $sqlQueries, string $fileID, string $version, string $slug): void
     {
         static::cleanFiles();
@@ -452,7 +463,7 @@ HTML);
         $this->doTestHtmlBody($response, <<<HTML
 <body>
 <div class="playground"></div>
-<textarea class="hidden" id="pastebin_data">$v</textarea>
+<textarea class="hidden" id="pastebin_data">{$v}</textarea>
 <script src="https&#x3A;&#x2F;&#x2F;blueprintue.test/bue-render/render.js"></script>
 <script>
 new window.blueprintUE.render.Main(

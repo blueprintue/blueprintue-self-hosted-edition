@@ -36,10 +36,10 @@ class TagsController implements MiddlewareInterface
 
     /**
      * @throws \Rancoud\Application\ApplicationException
+     * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Session\SessionException
-     * @throws \Rancoud\Database\DatabaseException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

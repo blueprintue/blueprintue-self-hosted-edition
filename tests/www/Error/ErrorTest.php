@@ -16,6 +16,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ErrorTest extends TestCase
 {
     use Common;
@@ -56,7 +57,7 @@ class ErrorTest extends TestCase
 <div class="block__element">
 <h2 class="block__title">Error</h2>
 <div class="block__markdown">
-<p>$v</p>
+<p>{$v}</p>
 </div>
 <a class="blog__link" href="/">Back to homepage</a>
 </div>

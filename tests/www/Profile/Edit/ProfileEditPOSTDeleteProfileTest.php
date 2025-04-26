@@ -1,13 +1,11 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
 
 namespace tests\www\Profile\Edit;
 
-use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\Application;
@@ -19,13 +17,14 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ProfileEditPOSTDeleteProfileTest extends TestCase
 {
     use Common;
 
     /**
-     * @throws DatabaseException
      * @throws \Rancoud\Crypt\CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {
@@ -80,705 +79,721 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
         }
     }
 
-    public static function dataCasesDeleteProfile(): array
+    public static function provideDeleteProfileDataCases(): iterable
     {
-        return [
-            'delete OK - give blueprints - keep comments' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'give',
-                    'form-delete_profile-select-comments_ownership'   => 'keep',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+        yield 'delete OK - give blueprints - keep comments' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
             ],
-            'delete OK - delete blueprints - keep comments' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'delete',
-                    'form-delete_profile-select-comments_ownership'   => 'keep',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'give',
+                'form-delete_profile-select-comments_ownership'   => 'keep',
             ],
-            'delete OK - give blueprints - anonymize comments' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'give',
-                    'form-delete_profile-select-comments_ownership'   => 'anonymize',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
+                ]
             ],
-            'delete OK - delete blueprints - anonymize comments' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'delete',
-                    'form-delete_profile-select-comments_ownership'   => 'anonymize',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete OK - delete blueprints - keep comments' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
             ],
-            'delete OK - give blueprints - delete comments' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'give',
-                    'form-delete_profile-select-comments_ownership'   => 'delete',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'delete',
+                'form-delete_profile-select-comments_ownership'   => 'keep',
             ],
-            'delete OK - delete blueprints - delete comments' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'delete',
-                    'form-delete_profile-select-comments_ownership'   => 'delete',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
+                ]
             ],
-            'delete OK - no anonymous user - delete blueprints even if "give" sent - anonymize comments' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'give',
-                    'form-delete_profile-select-comments_ownership'   => 'anonymize',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => false
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete OK - give blueprints - anonymize comments' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'incorrect_csrf',
-                    'form-delete_profile-select-blueprints_ownership' => 'give',
-                    'form-delete_profile-select-comments_ownership'   => 'keep',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'give',
+                'form-delete_profile-select-comments_ownership'   => 'anonymize',
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-select-blueprints_ownership' => 'give',
-                    'form-delete_profile-select-comments_ownership'   => 'keep',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
+                ]
             ],
-            'missing fields - no blueprints_ownership' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'               => 'csrf_is_replaced',
-                    'form-delete_profile-select-comments_ownership' => 'keep',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete OK - delete blueprints - anonymize comments' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
             ],
-            'missing fields - no comments_ownership' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'keep',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'delete',
+                'form-delete_profile-select-comments_ownership'   => 'anonymize',
             ],
-            'empty fields - blueprints_ownership' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => ' ',
-                    'form-delete_profile-select-comments_ownership'   => 'keep',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on blueprints ownership</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['blueprints_ownership'],
-                'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
-                'fieldsLabelError' => [
-                    'blueprints_ownership' => 'Blueprints Ownership is invalid'
-                ],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
+                ]
             ],
-            'empty fields - comments_ownership' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'give',
-                    'form-delete_profile-select-comments_ownership'   => ' ',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on comments ownership</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['comments_ownership'],
-                'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
-                'fieldsLabelError' => [
-                    'comments_ownership' => 'Comments Ownership is invalid'
-                ],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete OK - give blueprints - delete comments' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
             ],
-            'invalid fields - blueprints_ownership invalid (keep-comments)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'invalid',
-                    'form-delete_profile-select-comments_ownership'   => 'keep',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on blueprints ownership</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['blueprints_ownership'],
-                'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
-                'fieldsLabelError' => [
-                    'blueprints_ownership' => 'Blueprints Ownership is invalid'
-                ],
-                'hasAnonymousUser' => true
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'give',
+                'form-delete_profile-select-comments_ownership'   => 'delete',
             ],
-            'invalid fields - blueprints_ownership invalid (anonymize-comments)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'invalid',
-                    'form-delete_profile-select-comments_ownership'   => 'anonymize',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on blueprints ownership</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['blueprints_ownership'],
-                'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
-                'fieldsLabelError' => [
-                    'blueprints_ownership' => 'Blueprints Ownership is invalid'
-                ],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
+                ]
             ],
-            'invalid fields - blueprints_ownership invalid (delete-comments)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'invalid',
-                    'form-delete_profile-select-comments_ownership'   => 'delete',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on blueprints ownership</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['blueprints_ownership'],
-                'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
-                'fieldsLabelError' => [
-                    'blueprints_ownership' => 'Blueprints Ownership is invalid'
-                ],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete OK - delete blueprints - delete comments' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
             ],
-            'invalid fields - comments_ownership invalid (give-blueprints)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'give',
-                    'form-delete_profile-select-comments_ownership'   => 'invalid',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on comments ownership</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['comments_ownership'],
-                'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
-                'fieldsLabelError' => [
-                    'comments_ownership' => 'Comments Ownership is invalid'
-                ],
-                'hasAnonymousUser' => true
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'delete',
+                'form-delete_profile-select-comments_ownership'   => 'delete',
             ],
-            'invalid fields - comments_ownership invalid (delete-blueprints)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'delete',
-                    'form-delete_profile-select-comments_ownership'   => 'invalid',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on comments ownership</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['comments_ownership'],
-                'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
-                'fieldsLabelError' => [
-                    'comments_ownership' => 'Comments Ownership is invalid'
-                ],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
+                ]
             ],
-            'invalid encoding fields - blueprints_ownership' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => \chr(99999999),
-                    'form-delete_profile-select-comments_ownership'   => 'keep',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete OK - no anonymous user - delete blueprints even if "give" sent - anonymize comments' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
             ],
-            'invalid encoding fields - comments_ownership' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'give',
-                    'form-delete_profile-select-comments_ownership'   => \chr(99999999),
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'give',
+                'form-delete_profile-select-comments_ownership'   => 'anonymize',
             ],
-            'delete KO - delete user failed with exception (always to run last)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
-                    'form-delete_profile-select-blueprints_ownership' => 'delete',
-                    'form-delete_profile-select-comments_ownership'   => 'delete',
-                    'raise_exception'                                 => true,
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error, could not delete your profile</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
+                ]
             ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => false
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'incorrect_csrf',
+                'form-delete_profile-select-blueprints_ownership' => 'give',
+                'form-delete_profile-select-comments_ownership'   => 'keep',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-select-blueprints_ownership' => 'give',
+                'form-delete_profile-select-comments_ownership'   => 'keep',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'missing fields - no blueprints_ownership' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'               => 'csrf_is_replaced',
+                'form-delete_profile-select-comments_ownership' => 'keep',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'missing fields - no comments_ownership' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'keep',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'empty fields - blueprints_ownership' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => ' ',
+                'form-delete_profile-select-comments_ownership'   => 'keep',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on blueprints ownership</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['blueprints_ownership'],
+            'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
+            'fieldsLabelError' => [
+                'blueprints_ownership' => 'Blueprints Ownership is invalid'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'empty fields - comments_ownership' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'give',
+                'form-delete_profile-select-comments_ownership'   => ' ',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on comments ownership</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['comments_ownership'],
+            'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
+            'fieldsLabelError' => [
+                'comments_ownership' => 'Comments Ownership is invalid'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid fields - blueprints_ownership invalid (keep-comments)' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'invalid',
+                'form-delete_profile-select-comments_ownership'   => 'keep',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on blueprints ownership</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['blueprints_ownership'],
+            'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
+            'fieldsLabelError' => [
+                'blueprints_ownership' => 'Blueprints Ownership is invalid'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid fields - blueprints_ownership invalid (anonymize-comments)' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'invalid',
+                'form-delete_profile-select-comments_ownership'   => 'anonymize',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on blueprints ownership</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['blueprints_ownership'],
+            'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
+            'fieldsLabelError' => [
+                'blueprints_ownership' => 'Blueprints Ownership is invalid'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid fields - blueprints_ownership invalid (delete-comments)' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'invalid',
+                'form-delete_profile-select-comments_ownership'   => 'delete',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on blueprints ownership</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['blueprints_ownership'],
+            'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
+            'fieldsLabelError' => [
+                'blueprints_ownership' => 'Blueprints Ownership is invalid'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid fields - comments_ownership invalid (give-blueprints)' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'give',
+                'form-delete_profile-select-comments_ownership'   => 'invalid',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on comments ownership</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['comments_ownership'],
+            'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
+            'fieldsLabelError' => [
+                'comments_ownership' => 'Comments Ownership is invalid'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid fields - comments_ownership invalid (delete-blueprints)' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'delete',
+                'form-delete_profile-select-comments_ownership'   => 'invalid',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error(s) on comments ownership</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['comments_ownership'],
+            'fieldsHasValue'   => ['blueprints_ownership', 'comments_ownership'],
+            'fieldsLabelError' => [
+                'comments_ownership' => 'Comments Ownership is invalid'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid encoding fields - blueprints_ownership' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => \chr(99999999),
+                'form-delete_profile-select-comments_ownership'   => 'keep',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid encoding fields - comments_ownership' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'give',
+                'form-delete_profile-select-comments_ownership'   => \chr(99999999),
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete KO - delete user failed with exception (always to run last)' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', null, 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-select-blueprints_ownership' => 'delete',
+                'form-delete_profile-select-comments_ownership'   => 'delete',
+                'raise_exception'                                 => true,
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error, could not delete your profile</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
         ];
     }
 
     /**
-     * @dataProvider dataCasesDeleteProfile
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesDeleteProfile')]
+    #[DataProvider('provideDeleteProfileDataCases')]
     public function testProfileEditPOSTDeleteProfile(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError, bool $hasAnonymousUser): void
     {
         static::setDatabase();
@@ -821,7 +836,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
         $response = $this->getResponseFromApplication('POST', '/profile/user_' . $userID . '/edit/', $params, [], [], [], [], [], [], $envFile);
 
         if (isset($params['raise_exception'])) {
-            $sql = <<<SQL
+            $sql = <<<'SQL'
                 create table if not exists users_api
                 (
                     id_user int unsigned not null
@@ -920,12 +935,12 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'blueprints_ownership') {
-                $value = $hasValue ? Helper::trim($params['form-delete_profile-select-blueprints_ownership']) : '';
+                $value = $hasValue ? \mb_trim($params['form-delete_profile-select-blueprints_ownership']) : '';
                 $this->doTestHtmlForm($response, '#form-delete_profile', $this->getHTMLFieldBlueprintsOwnership($value, $hasError, $labelError));
             }
 
             if ($field === 'comments_ownership') {
-                $value = $hasValue ? Helper::trim($params['form-delete_profile-select-comments_ownership']) : '';
+                $value = $hasValue ? \mb_trim($params['form-delete_profile-select-comments_ownership']) : '';
                 $this->doTestHtmlForm($response, '#form-delete_profile', $this->getHTMLFieldCommentsOwnership($value, $hasError, $labelError));
             }
         }
@@ -942,11 +957,11 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
 <label class="form__label" for="form-delete_profile-select-blueprints_ownership" id="form-delete_profile-label-blueprints_ownership">Blueprints ownership</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-delete_profile-label-blueprints_ownership form-delete_profile-label-blueprints_ownership-error" aria-required="true" class="form__input form__input--select form__input--error" id="form-delete_profile-select-blueprints_ownership" name="form-delete_profile-select-blueprints_ownership">
-<option value="give"$give>Give my blueprints to anonymous user</option>
-<option value="delete"$delete>Delete my blueprints</option>
+<option value="give"{$give}>Give my blueprints to anonymous user</option>
+<option value="delete"{$delete}>Delete my blueprints</option>
 </select>
 </div>
-<label class="form__label form__label--error" for="form-delete_profile-select-blueprints_ownership" id="form-delete_profile-label-blueprints_ownership-error">$labelError</label>
+<label class="form__label form__label--error" for="form-delete_profile-select-blueprints_ownership" id="form-delete_profile-label-blueprints_ownership-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -956,8 +971,8 @@ HTML;
 <label class="form__label" for="form-delete_profile-select-blueprints_ownership" id="form-delete_profile-label-blueprints_ownership">Blueprints ownership</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-delete_profile-label-blueprints_ownership" aria-required="true" class="form__input form__input--select" id="form-delete_profile-select-blueprints_ownership" name="form-delete_profile-select-blueprints_ownership">
-<option value="give"$give>Give my blueprints to anonymous user</option>
-<option value="delete"$delete>Delete my blueprints</option>
+<option value="give"{$give}>Give my blueprints to anonymous user</option>
+<option value="delete"{$delete}>Delete my blueprints</option>
 </select>
 </div>
 </div>
@@ -976,12 +991,12 @@ HTML;
 <label class="form__label" for="form-delete_profile-select-comments_ownership" id="form-delete_profile-label-comments_ownership">Comments ownership</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-delete_profile-label-comments_ownership form-delete_profile-label-comments_ownership-error" aria-required="true" class="form__input form__input--select form__input--error" id="form-delete_profile-select-comments_ownership" name="form-delete_profile-select-comments_ownership">
-<option value="keep"$keep>Keep my name and comments</option>
-<option value="anonymize"$anonymize>Use guest name and keep comments</option>
-<option value="delete"$delete>Delete comments</option>
+<option value="keep"{$keep}>Keep my name and comments</option>
+<option value="anonymize"{$anonymize}>Use guest name and keep comments</option>
+<option value="delete"{$delete}>Delete comments</option>
 </select>
 </div>
-<label class="form__label form__label--error" for="form-delete_profile-select-comments_ownership" id="form-delete_profile-label-comments_ownership-error">$labelError</label>
+<label class="form__label form__label--error" for="form-delete_profile-select-comments_ownership" id="form-delete_profile-label-comments_ownership-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -991,9 +1006,9 @@ HTML;
 <label class="form__label" for="form-delete_profile-select-comments_ownership" id="form-delete_profile-label-comments_ownership">Comments ownership</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-delete_profile-label-comments_ownership" aria-required="true" class="form__input form__input--select" id="form-delete_profile-select-comments_ownership" name="form-delete_profile-select-comments_ownership">
-<option value="keep"$keep>Keep my name and comments</option>
-<option value="anonymize"$anonymize>Use guest name and keep comments</option>
-<option value="delete"$delete>Delete comments</option>
+<option value="keep"{$keep}>Keep my name and comments</option>
+<option value="anonymize"{$anonymize}>Use guest name and keep comments</option>
+<option value="delete"{$delete}>Delete comments</option>
 </select>
 </div>
 </div>

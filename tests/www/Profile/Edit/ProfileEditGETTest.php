@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,13 +18,14 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ProfileEditGETTest extends TestCase
 {
     use Common;
 
     /**
-     * @throws DatabaseException
      * @throws \Rancoud\Crypt\CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {
@@ -85,69 +85,71 @@ class ProfileEditGETTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesAccess(): array
+    public static function provideAccessDataCases(): iterable
     {
-        return [
-            'redirect - user not exist' => [
-                'slug'        => '4564879864564',
-                'location'    => '/profile/4564879864564/',
-                'userID'      => null,
-                'contentHead' => null,
+        yield 'redirect - user not exist' => [
+            'slug'        => '4564879864564',
+            'location'    => '/profile/4564879864564/',
+            'userID'      => null,
+            'contentHead' => null,
+        ];
+
+        yield 'redirect - visitor' => [
+            'slug'        => 'user_189',
+            'location'    => '/profile/user_189/',
+            'userID'      => null,
+            'contentHead' => null,
+        ];
+
+        yield 'redirect - user connected' => [
+            'slug'        => 'user_189',
+            'location'    => '/profile/user_189/',
+            'userID'      => 199,
+            'contentHead' => null,
+        ];
+
+        yield 'redirect - anonymous user connected (not possible)' => [
+            'slug'        => 'anonymous',
+            'location'    => '/profile/anonymous/',
+            'userID'      => 2,
+            'contentHead' => null,
+        ];
+
+        yield 'redirect - user connected but not exists in database (not possible)' => [
+            'slug'        => 'inexistent_user',
+            'location'    => '/profile/inexistent_user/',
+            'userID'      => 50,
+            'contentHead' => null,
+        ];
+
+        yield 'OK - user is author' => [
+            'slug'        => 'user_189',
+            'location'    => null,
+            'userID'      => 189,
+            'contentHead' => [
+                'title'       => 'Edit profile of user_189 | This is a base title',
+                'description' => 'Edit profile of user_189'
             ],
-            'redirect - visitor' => [
-                'slug'        => 'user_189',
-                'location'    => '/profile/user_189/',
-                'userID'      => null,
-                'contentHead' => null,
-            ],
-            'redirect - user connected' => [
-                'slug'        => 'user_189',
-                'location'    => '/profile/user_189/',
-                'userID'      => 199,
-                'contentHead' => null,
-            ],
-            'redirect - anonymous user connected (not possible)' => [
-                'slug'        => 'anonymous',
-                'location'    => '/profile/anonymous/',
-                'userID'      => 2,
-                'contentHead' => null,
-            ],
-            'redirect - user connected but not exists in database (not possible)' => [
-                'slug'        => 'inexistent_user',
-                'location'    => '/profile/inexistent_user/',
-                'userID'      => 50,
-                'contentHead' => null,
-            ],
-            'OK - user is author' => [
-                'slug'        => 'user_189',
-                'location'    => null,
-                'userID'      => 189,
-                'contentHead' => [
-                    'title'       => 'Edit profile of user_189 | This is a base title',
-                    'description' => 'Edit profile of user_189'
-                ],
-            ],
-            'OK - user is author (xss)' => [
-                'slug'        => 'user_199',
-                'location'    => null,
-                'userID'      => 199,
-                'contentHead' => [
-                    'title'       => 'Edit profile of user_199 | This is a base title',
-                    'description' => 'Edit profile of user_199'
-                ],
+        ];
+
+        yield 'OK - user is author (xss)' => [
+            'slug'        => 'user_199',
+            'location'    => null,
+            'userID'      => 199,
+            'contentHead' => [
+                'title'       => 'Edit profile of user_199 | This is a base title',
+                'description' => 'Edit profile of user_199'
             ],
         ];
     }
 
     /**
-     * @dataProvider dataCasesAccess
-     *
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesAccess')]
+    #[DataProvider('provideAccessDataCases')]
     public function testProfileEditGET(string $slug, ?string $location, ?int $userID, ?array $contentHead): void
     {
         $sessionValues = [
@@ -188,7 +190,7 @@ class ProfileEditGETTest extends TestCase
 
         // verif avatar
         if ($userID === 189) {
-            $this->doTestHtmlBody($response, <<<HTML
+            $this->doTestHtmlBody($response, <<<'HTML'
 <div class="profile__avatar-container" id="current-avatar">
 <img alt="avatar author" class="profile__avatar-container profile__avatar-container--hidden" id="upload-current-avatar"/>
 <div class="profile__avatar-container profile__avatar-container--background" id="upload-fallback-avatar">
@@ -199,7 +201,7 @@ class ProfileEditGETTest extends TestCase
 </div>
 HTML);
         } else {
-            $this->doTestHtmlBody($response, <<<HTML
+            $this->doTestHtmlBody($response, <<<'HTML'
 <div class="profile__avatar-container" id="current-avatar">
 <img alt="avatar author" class="profile__avatar-container" id="upload-current-avatar" src="&#x2F;medias&#x2F;avatars&#x2F;mem&#x5C;&quot;&gt;&lt;script&gt;alert&#x28;1&#x29;&lt;&#x2F;script&gt;fromage.jpg"/>
 </div>

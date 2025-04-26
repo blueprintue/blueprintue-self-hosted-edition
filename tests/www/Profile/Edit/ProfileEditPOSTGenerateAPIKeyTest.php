@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -17,13 +16,14 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
 {
     use Common;
 
     /**
-     * @throws DatabaseException
      * @throws \Rancoud\Crypt\CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {
@@ -78,79 +78,77 @@ class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
         }
     }
 
-    public static function dataCasesGenerateApiKey(): array
+    public static function provideGenerateApiKeyDataCases(): iterable
     {
-        return [
-            'edit OK' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-generate_api_key-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">Your api key is now generated</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-generate_api_key" role="alert">'
-                    ]
-                ],
+        yield 'edit OK' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-generate_api_key-hidden-csrf' => 'csrf_is_replaced',
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-generate_api_key-hidden-csrf' => 'incorrect_csrf',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">Your api key is now generated</div>'
                 ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-generate_api_key" role="alert">'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-generate_api_key" role="alert">'
+                ]
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries'         => [],
-                'userID'             => 189,
-                'params'             => [],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-generate_api_key" role="alert">'
-                    ]
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-generate_api_key-hidden-csrf' => 'incorrect_csrf',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">'
                 ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-generate_api_key" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries'         => [],
+            'userID'             => 189,
+            'params'             => [],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-generate_api_key">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-generate_api_key" role="alert">'
+                ]
             ],
         ];
     }
 
     /**
-     * @dataProvider dataCasesGenerateApiKey
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesGenerateApiKey')]
+    #[DataProvider('provideGenerateApiKeyDataCases')]
     public function testProfileEditPOSTGenerateApiKey(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages): void
     {
         static::setDatabase();
@@ -216,7 +214,7 @@ class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
         $this->doTestHtmlBody($response, <<<HTML
 <div class="form__element">
 <label class="form__label" for="form-generate_api_key-input-current_api_key" id="form-generate_api_key-label-current_api_key">Current API Key</label>
-<input aria-labelledby="form-generate_api_key-label-current_api_key" class="form__input form__input--disabled" disabled id="form-generate_api_key-input-current_api_key" name="form-generate_api_key-input-current_api_key" type="text" value="$apiKey"/>
+<input aria-labelledby="form-generate_api_key-label-current_api_key" class="form__input form__input--disabled" disabled id="form-generate_api_key-input-current_api_key" name="form-generate_api_key-input-current_api_key" type="text" value="{$apiKey}"/>
 </div>
 HTML);
     }

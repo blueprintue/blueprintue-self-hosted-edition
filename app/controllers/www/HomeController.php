@@ -49,11 +49,11 @@ class HomeController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -86,7 +86,7 @@ class HomeController implements MiddlewareInterface
         $rawParams = $request->getParsedBody();
         foreach ($rawParams as $key => $rawParam) {
             if (\in_array($key, $htmlNames, true)) {
-                $params[$key] = Helper::trim($rawParam);
+                $params[$key] = \mb_trim($rawParam);
             }
         }
 
@@ -146,9 +146,9 @@ class HomeController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     protected function doProcessCreateBlueprint(?array $params): ResponseInterface
     {

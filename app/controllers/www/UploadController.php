@@ -7,7 +7,6 @@ namespace app\controllers\www;
 use app\helpers\Helper;
 use app\services\www\BlueprintService;
 use app\services\www\UserService;
-use finfo;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -22,9 +21,9 @@ use Rancoud\Session\Session;
 class UploadController implements MiddlewareInterface
 {
     /**
-     * @throws ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
+     * @throws ApplicationException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -43,9 +42,9 @@ class UploadController implements MiddlewareInterface
     }
 
     /**
-     * @throws ApplicationException
-     * @throws \Rancoud\Model\ModelException
      * @throws \Exception
+     * @throws \Rancoud\Model\ModelException
+     * @throws ApplicationException
      */
     protected function uploadUserAvatar(ServerRequestInterface $request): ResponseInterface
     {
@@ -92,10 +91,10 @@ class UploadController implements MiddlewareInterface
     }
 
     /**
-     * @throws ApplicationException
+     * @throws \Exception
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
+     * @throws ApplicationException
      */
     protected function uploadBlueprintThumbnail(ServerRequestInterface $request): ResponseInterface
     {
@@ -166,7 +165,7 @@ class UploadController implements MiddlewareInterface
             return [null, 'missing file'];
         }
 
-        // @var UploadedFile $avatarRawFile
+        /** @var UploadedFile $avatarRawFile */
         $avatarRawFile = $files[$name];
 
         if ($this->isValidFile($avatarRawFile, $uploadParameters) === false) {
@@ -261,7 +260,7 @@ class UploadController implements MiddlewareInterface
             return false;
         }
 
-        $finfo = new finfo(\FILEINFO_MIME_TYPE);
+        $finfo = new \finfo(\FILEINFO_MIME_TYPE);
         if ($file->getClientMediaType() !== $finfo->file($file->getFilename())) {
             return false;
         }
@@ -271,8 +270,7 @@ class UploadController implements MiddlewareInterface
         return !($imageSize[0] !== $uploadParameters['canvas_width'] || $imageSize[1] !== $uploadParameters['canvas_height']);
     }
 
-    /** @return resource|null */
-    protected function createImageInMemory(UploadedFile $file, array $uploadParameters)
+    protected function createImageInMemory(UploadedFile $file, array $uploadParameters): ?\GdImage
     {
         $imgSrc = @\imagecreatefrompng($file->getFilename());
         if ($imgSrc === false) {

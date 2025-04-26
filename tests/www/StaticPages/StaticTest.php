@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class StaticTest extends TestCase
 {
     use Common;
@@ -38,9 +38,9 @@ class StaticTest extends TestCase
 
     /**
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws DatabaseException
      */
     protected function getResponseFromApplicationWithStatic(string $url): ?\Rancoud\Http\Message\Response
     {
@@ -73,37 +73,34 @@ class StaticTest extends TestCase
         return $response;
     }
 
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
-        return [
-            'terms of service' => [
-                'url'     => '/terms-of-service/',
-                'headers' => [
-                    'title'       => 'Terms of Service for &lt;strong&gt;this_site_name&lt;&#47;strong&gt; | &lt;strong&gt;This is a base title&lt;&#47;strong&gt;',
-                    'description' => 'Terms&#x20;of&#x20;Service&#x20;for&#x20;&lt;strong&gt;this_site_name&lt;&#x2F;strong&gt;',
-                ],
-                'content' => '<h2 class="block__title">Terms of Service for &lt;strong&gt;this_site_name&lt;&#47;strong&gt;</h2>',
+        yield 'terms of service' => [
+            'url'     => '/terms-of-service/',
+            'headers' => [
+                'title'       => 'Terms of Service for &lt;strong&gt;this_site_name&lt;&#47;strong&gt; | &lt;strong&gt;This is a base title&lt;&#47;strong&gt;',
+                'description' => 'Terms&#x20;of&#x20;Service&#x20;for&#x20;&lt;strong&gt;this_site_name&lt;&#x2F;strong&gt;',
             ],
-            'privacy policy' => [
-                'url'     => '/privacy-policy/',
-                'headers' => [
-                    'title'       => 'Privacy Policy for &lt;strong&gt;this_site_name&lt;&#47;strong&gt; | &lt;strong&gt;This is a base title&lt;&#47;strong&gt;',
-                    'description' => 'Privacy&#x20;Policy&#x20;for&#x20;&lt;strong&gt;this_site_name&lt;&#x2F;strong&gt;',
-                ],
-                'content' => '<h2 class="block__title">Privacy Policy for &lt;strong&gt;this_site_name&lt;&#47;strong&gt;</h2>',
-            ]
+            'content' => '<h2 class="block__title">Terms of Service for &lt;strong&gt;this_site_name&lt;&#47;strong&gt;</h2>',
+        ];
+
+        yield 'privacy policy' => [
+            'url'     => '/privacy-policy/',
+            'headers' => [
+                'title'       => 'Privacy Policy for &lt;strong&gt;this_site_name&lt;&#47;strong&gt; | &lt;strong&gt;This is a base title&lt;&#47;strong&gt;',
+                'description' => 'Privacy&#x20;Policy&#x20;for&#x20;&lt;strong&gt;this_site_name&lt;&#x2F;strong&gt;',
+            ],
+            'content' => '<h2 class="block__title">Privacy Policy for &lt;strong&gt;this_site_name&lt;&#47;strong&gt;</h2>',
         ];
     }
 
     /**
-     * @dataProvider dataCases
-     *
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws DatabaseException
      */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testStaticPage(string $url, array $headers, string $content): void
     {
         $response = $this->getResponseFromApplicationWithStatic($url);

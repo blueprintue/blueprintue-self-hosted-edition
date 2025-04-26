@@ -45,8 +45,8 @@ class ResetPasswordController implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
+     * @throws \Rancoud\Application\ApplicationException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -91,7 +91,7 @@ class ResetPasswordController implements MiddlewareInterface
         $rawParams = $request->getParsedBody();
         foreach ($rawParams as $key => $rawParam) {
             if (\in_array($key, $htmlNames, true)) {
-                $params[$key] = Helper::trim($rawParam);
+                $params[$key] = \mb_trim($rawParam);
             }
         }
 
@@ -111,7 +111,7 @@ class ResetPasswordController implements MiddlewareInterface
         }
 
         // token
-        $values['token'] = Helper::trim($request->getQueryParams()['reset_token']);
+        $values['token'] = \mb_trim($request->getQueryParams()['reset_token']);
 
         // password
         $values['password'] = $params[$this->inputs['password']];
@@ -153,9 +153,9 @@ class ResetPasswordController implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
+     * @throws \Rancoud\Database\DatabaseException
      */
     protected function doProcessResetPassword(?array $params): void
     {

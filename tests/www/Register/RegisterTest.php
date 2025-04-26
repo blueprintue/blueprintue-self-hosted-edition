@@ -1,13 +1,11 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
 
 namespace tests\www\Register;
 
-use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -22,6 +20,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class RegisterTest extends TestCase
 {
     use Common;
@@ -33,8 +32,8 @@ class RegisterTest extends TestCase
     }
 
     /**
-     * @throws DatabaseException
      * @throws CryptException
+     * @throws DatabaseException
      */
     protected function setUp(): void
     {
@@ -81,894 +80,921 @@ class RegisterTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesRegister(): array
+    public static function provideRegisterDataCases(): iterable
     {
-        return [
-            'xss - register OK - mail OK' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => 'a-zA-Z0-9._ -',
-                    'form-register-input-email'            => '0<script>alert("email");</script>@<script>alert("email");</script>',
-                    'form-register-input-password'         => '0<script>alert("Password");</script>',
-                    'form-register-input-password_confirm' => '0<script>alert("Password");</script>'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 1,
-                'mailHTML'           => static::getEmailHTMLConfirmAccount('a-zA-Z0-9._ -'),
-                'mailText'           => static::getEmailTextConfirmAccount('a-zA-Z0-9._ -'),
-                'mailSent'           => true,
-                'isUserCreated'      => true,
-                'userDB'             => [
-                    'username' => 'a-zA-Z0-9._ -',
-                    'slug'     => 'a-za-z0-9-_',
-                    'email'    => '0<script>alert("email");</script>@<script>alert("email");</script>'
-                ],
-                'hasRedirection' => true,
-                'flashMessages'  => [
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+        yield 'xss - register OK - mail OK' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => 'a-zA-Z0-9._ -',
+                'form-register-input-email'            => '0<script>alert("email");</script>@<script>alert("email");</script>',
+                'form-register-input-password'         => '0<script>alert("Password");</script>',
+                'form-register-input-password_confirm' => '0<script>alert("Password");</script>'
             ],
-            'xss - register KO' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => '0<script>alert("name");</script>',
-                    'form-register-input-email'            => '0<script>alert("email");</script><script>alert("email");</script>',
-                    'form-register-input-password'         => '0<script>alert("password");</script>',
-                    'form-register-input-password_confirm' => '0<script>alert("password_confirm");</script>'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username, email, password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['username', 'email', 'password_confirm'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'username'         => 'Username is invalid',
-                    'email'            => 'Email is invalid',
-                    'password_confirm' => 'Confirm Password must be the same as Password'
-                ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 1,
+            'mailHTML'           => static::getEmailHTMLConfirmAccount('a-zA-Z0-9._ -'),
+            'mailText'           => static::getEmailTextConfirmAccount('a-zA-Z0-9._ -'),
+            'mailSent'           => true,
+            'isUserCreated'      => true,
+            'userDB'             => [
+                'username' => 'a-zA-Z0-9._ -',
+                'slug'     => 'a-za-z0-9-_',
+                'email'    => '0<script>alert("email");</script>@<script>alert("email");</script>'
             ],
-            'register OK - mail OK' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 1,
-                'mailHTML'           => static::getEmailHTMLConfirmAccount('- user-001 -'),
-                'mailText'           => static::getEmailTextConfirmAccount('- user-001 -'),
-                'mailSent'           => true,
-                'isUserCreated'      => true,
-                'userDB'             => [
-                    'username' => '- user-001 -',
-                    'slug'     => 'user-001',
-                    'email'    => 'user@example.com'
-                ],
-                'hasRedirection' => true,
-                'flashMessages'  => [
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'hasRedirection' => true,
+            'flashMessages'  => [
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" role="alert">'
+                ]
             ],
-            'register OK - mail KO' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 1,
-                'mailHTML'           => static::getEmailHTMLConfirmAccount('- user-001 -'),
-                'mailText'           => static::getEmailTextConfirmAccount('- user-001 -'),
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => [
-                    'username' => '- user-001 -',
-                    'slug'     => 'user-001',
-                    'email'    => 'user@example.com'
-                ],
-                'hasRedirection' => true,
-                'flashMessages'  => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, could not create account (#500)</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'xss - register KO' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => '0<script>alert("name");</script>',
+                'form-register-input-email'            => '0<script>alert("email");</script><script>alert("email");</script>',
+                'form-register-input-password'         => '0<script>alert("password");</script>',
+                'form-register-input-password_confirm' => '0<script>alert("password_confirm");</script>'
             ],
-            'csrf incorrect' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'incorrect_csrf',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => false,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => false,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username, email, password</div>'
+                ]
             ],
-            'missing fields - no fields' => [
-                'params'             => [],
-                'useCsrfFromSession' => false,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => false,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => ['username', 'email', 'password_confirm'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'username'         => 'Username is invalid',
+                'email'            => 'Email is invalid',
+                'password_confirm' => 'Confirm Password must be the same as Password'
             ],
-            'missing fields - no csrf' => [
-                'params' => [
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => false,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => false,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+        ];
+
+        yield 'register OK - mail OK' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
             ],
-            'missing fields - no username' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => false,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 1,
+            'mailHTML'           => static::getEmailHTMLConfirmAccount('- user-001 -'),
+            'mailText'           => static::getEmailTextConfirmAccount('- user-001 -'),
+            'mailSent'           => true,
+            'isUserCreated'      => true,
+            'userDB'             => [
+                'username' => '- user-001 -',
+                'slug'     => 'user-001',
+                'email'    => 'user@example.com'
             ],
-            'missing fields - no email' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => false,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'hasRedirection' => true,
+            'flashMessages'  => [
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
+                ]
             ],
-            'missing fields - no password' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => false,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'register OK - mail KO' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
             ],
-            'missing fields - no password_confirm' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => false,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 1,
+            'mailHTML'           => static::getEmailHTMLConfirmAccount('- user-001 -'),
+            'mailText'           => static::getEmailTextConfirmAccount('- user-001 -'),
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => [
+                'username' => '- user-001 -',
+                'slug'     => 'user-001',
+                'email'    => 'user@example.com'
             ],
-            'empty fields - username empty' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['username'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'username' => 'Username is required'
-                ],
+            'hasRedirection' => true,
+            'flashMessages'  => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, could not create account (#500)</div>'
+                ]
             ],
-            'empty fields - email empty' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => ' ',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on email</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['email'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'email' => 'Email is required'
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'csrf incorrect' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'incorrect_csrf',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
             ],
-            'empty fields - password empty' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => ' ',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['password'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'password' => 'Password must be at least 10 characters in length'
-                ],
+            'useCsrfFromSession' => false,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => false,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
+                ]
             ],
-            'empty fields - password confirm' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => ' '
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['password_confirm'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'password_confirm' => 'Password must be at least 10 characters in length'
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no fields' => [
+            'params'             => [],
+            'useCsrfFromSession' => false,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => false,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
+                ]
             ],
-            'invalid fields - username invalid chars' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user/-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['username'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'username' => 'Username is invalid'
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'params' => [
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
             ],
-            'invalid fields - username already used' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => 'user_1',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['username'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'username' => 'Username is unavailable'
-                ],
+            'useCsrfFromSession' => false,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => false,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
+                ]
             ],
-            'invalid fields - username already used (slug collide)' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => '-user_1-',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['username'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'username' => 'Username is unavailable'
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no username' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
             ],
-            'invalid fields - email invalid' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'userexample.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on email</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['email'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'email' => 'Email is invalid'
-                ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => false,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'invalid fields - email already used' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user_1@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on email</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['email'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'email' => 'Email is unavailable'
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no email' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
             ],
-            'invalid fields - password incorrect length' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'my',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['password'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'password' => 'Password must be at least 10 characters in length'
-                ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => false,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'invalid fields - password incorrect format (miss lowercase)' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => '_*_123RTYY',
-                    'form-register-input-password_confirm' => '_*_123RTYY'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['password'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no password' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password_confirm' => 'My_password01$'
             ],
-            'invalid fields - password incorrect format (miss uppercase)' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'aaze123_*_',
-                    'form-register-input-password_confirm' => 'aaze123_*_'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['password'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
-                ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => false,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'invalid fields - password incorrect format (miss digit)' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'aaze_*_RTY',
-                    'form-register-input-password_confirm' => 'aaze_*_RTY'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['password'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no password_confirm' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$'
             ],
-            'invalid fields - password incorrect format (miss special characters)' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'aaze123RTY',
-                    'form-register-input-password_confirm' => 'aaze123RTY'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['password'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
-                ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => false,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'invalid fields - password_confirm incorrect length' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'my'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['password_confirm'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'password_confirm' => 'Password must be at least 10 characters in length'
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'empty fields - username empty' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
             ],
-            'invalid fields - password and password_confirm incorrect length' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'my',
-                    'form-register-input-password_confirm' => 'my'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['password', 'password_confirm'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'password'         => 'Password must be at least 10 characters in length',
-                    'password_confirm' => 'Password must be at least 10 characters in length'
-                ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username</div>'
+                ]
             ],
-            'invalid fields - password and password_confirm different' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password02$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => true,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['password_confirm'],
-                'fieldsHasValue'   => ['username', 'email'],
-                'fieldsLabelError' => [
-                    'password_confirm' => 'Confirm Password must be the same as Password'
-                ],
+            'fieldsHasError'   => ['username'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'username' => 'Username is required'
             ],
-            'invalid encoding fields - username' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => \chr(99999999),
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => false,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+        ];
+
+        yield 'empty fields - email empty' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => ' ',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
             ],
-            'invalid encoding fields - email' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => \chr(99999999),
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => false,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on email</div>'
+                ]
             ],
-            'invalid encoding fields - password' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => \chr(99999999),
-                    'form-register-input-password_confirm' => 'My_password01$'
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => false,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => ['email'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'email' => 'Email is required'
             ],
-            'invalid encoding fields - password_confirm' => [
-                'params' => [
-                    'form-register-hidden-csrf'            => 'csrf_is_replaced',
-                    'form-register-input-username'         => ' - user-001 - ',
-                    'form-register-input-email'            => 'user@example.com',
-                    'form-register-input-password'         => 'My_password01$',
-                    'form-register-input-password_confirm' => \chr(99999999)
-                ],
-                'useCsrfFromSession' => true,
-                'mailCalled'         => 0,
-                'mailHTML'           => '',
-                'mailText'           => '',
-                'mailSent'           => false,
-                'isUserCreated'      => false,
-                'userDB'             => null,
-                'hasRedirection'     => false,
-                'flashMessages'      => [
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+        ];
+
+        yield 'empty fields - password empty' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => ' ',
+                'form-register-input-password_confirm' => 'My_password01$'
             ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['password'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'password' => 'Password must be at least 10 characters in length'
+            ],
+        ];
+
+        yield 'empty fields - password confirm' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => ' '
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['password_confirm'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'password_confirm' => 'Password must be at least 10 characters in length'
+            ],
+        ];
+
+        yield 'invalid fields - username invalid chars' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user/-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['username'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'username' => 'Username is invalid'
+            ],
+        ];
+
+        yield 'invalid fields - username already used' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => 'user_1',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['username'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'username' => 'Username is unavailable'
+            ],
+        ];
+
+        yield 'invalid fields - username already used (slug collide)' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => '-user_1-',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on username</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['username'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'username' => 'Username is unavailable'
+            ],
+        ];
+
+        yield 'invalid fields - email invalid' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'userexample.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on email</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['email'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'email' => 'Email is invalid'
+            ],
+        ];
+
+        yield 'invalid fields - email already used' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user_1@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on email</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['email'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'email' => 'Email is unavailable'
+            ],
+        ];
+
+        yield 'invalid fields - password incorrect length' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'my',
+                'form-register-input-password_confirm' => 'My_password01$'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['password'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'password' => 'Password must be at least 10 characters in length'
+            ],
+        ];
+
+        yield 'invalid fields - password incorrect format (miss lowercase)' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => '_*_123RTYY',
+                'form-register-input-password_confirm' => '_*_123RTYY'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['password'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
+            ],
+        ];
+
+        yield 'invalid fields - password incorrect format (miss uppercase)' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'aaze123_*_',
+                'form-register-input-password_confirm' => 'aaze123_*_'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['password'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
+            ],
+        ];
+
+        yield 'invalid fields - password incorrect format (miss digit)' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'aaze_*_RTY',
+                'form-register-input-password_confirm' => 'aaze_*_RTY'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['password'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
+            ],
+        ];
+
+        yield 'invalid fields - password incorrect format (miss special characters)' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'aaze123RTY',
+                'form-register-input-password_confirm' => 'aaze123RTY'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['password'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters'
+            ],
+        ];
+
+        yield 'invalid fields - password_confirm incorrect length' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'my'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['password_confirm'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'password_confirm' => 'Password must be at least 10 characters in length'
+            ],
+        ];
+
+        yield 'invalid fields - password and password_confirm incorrect length' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'my',
+                'form-register-input-password_confirm' => 'my'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['password', 'password_confirm'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'password'         => 'Password must be at least 10 characters in length',
+                'password_confirm' => 'Password must be at least 10 characters in length'
+            ],
+        ];
+
+        yield 'invalid fields - password and password_confirm different' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password02$'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => true,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">Error(s) on password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['password_confirm'],
+            'fieldsHasValue'   => ['username', 'email'],
+            'fieldsLabelError' => [
+                'password_confirm' => 'Confirm Password must be the same as Password'
+            ],
+        ];
+
+        yield 'invalid encoding fields - username' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => \chr(99999999),
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => false,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid encoding fields - email' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => \chr(99999999),
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => 'My_password01$'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => false,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid encoding fields - password' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => \chr(99999999),
+                'form-register-input-password_confirm' => 'My_password01$'
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => false,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid encoding fields - password_confirm' => [
+            'params' => [
+                'form-register-hidden-csrf'            => 'csrf_is_replaced',
+                'form-register-input-username'         => ' - user-001 - ',
+                'form-register-input-email'            => 'user@example.com',
+                'form-register-input-password'         => 'My_password01$',
+                'form-register-input-password_confirm' => \chr(99999999)
+            ],
+            'useCsrfFromSession' => true,
+            'mailCalled'         => 0,
+            'mailHTML'           => '',
+            'mailText'           => '',
+            'mailSent'           => false,
+            'isUserCreated'      => false,
+            'userDB'             => null,
+            'hasRedirection'     => false,
+            'flashMessages'      => [
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-register" data-popin="register" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
         ];
     }
 
     /**
-     * @dataProvider dataCasesRegister
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesRegister')]
+    #[DataProvider('provideRegisterDataCases')]
     public function testRegisterPOST(array $params, bool $useCsrfFromSession, int $mailCalled, string $mailHTML, string $mailText, bool $mailSent, bool $isUserCreated, ?array $userDB, bool $hasRedirection, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         $sessionValues = [
@@ -1045,12 +1071,12 @@ class RegisterTest extends TestCase
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'username') {
-                $value = $hasValue ? Helper::trim($params['form-register-input-username']) : '';
+                $value = $hasValue ? \mb_trim($params['form-register-input-username']) : '';
                 $this->doTestHtmlForm($response, '#popin-register', $this->getHTMLFieldUsername($value, $hasError, $labelError));
             }
 
             if ($field === 'email') {
-                $value = $hasValue ? Helper::trim($params['form-register-input-email']) : '';
+                $value = $hasValue ? \mb_trim($params['form-register-input-email']) : '';
                 $this->doTestHtmlForm($response, '#popin-register', $this->getHTMLFieldEmail($value, $hasError, $labelError));
             }
 
@@ -1072,16 +1098,16 @@ class RegisterTest extends TestCase
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-labelledby="form-register-label-username form-register-label-username-error" aria-required="true" autocomplete="username" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-register-input-username" name="form-register-input-username" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-register-label-username form-register-label-username-error" aria-required="true" autocomplete="username" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-register-input-username" name="form-register-input-username" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-register-input-username" id="form-register-label-username-error">$labelError</label>
+<label class="form__label form__label--error" for="form-register-input-username" id="form-register-label-username-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container">
-<input aria-invalid="false" aria-labelledby="form-register-label-username" aria-required="true" autocomplete="username" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-register-input-username" name="form-register-input-username" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-register-label-username" aria-required="true" autocomplete="username" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-register-input-username" name="form-register-input-username" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 HTML;
@@ -1095,16 +1121,16 @@ HTML;
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-labelledby="form-register-label-email form-register-label-email-error" aria-required="true" autocomplete="email" class="form__input form__input--invisible form__input--error" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-register-input-email" name="form-register-input-email" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-register-label-email form-register-label-email-error" aria-required="true" autocomplete="email" class="form__input form__input--invisible form__input--error" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-register-input-email" name="form-register-input-email" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-register-input-email" id="form-register-label-email-error">$labelError</label>
+<label class="form__label form__label--error" for="form-register-input-email" id="form-register-label-email-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container">
-<input aria-invalid="false" aria-labelledby="form-register-label-email" aria-required="true" autocomplete="email" class="form__input form__input--invisible" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-register-input-email" name="form-register-input-email" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-register-label-email" aria-required="true" autocomplete="email" class="form__input form__input--invisible" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-register-input-email" name="form-register-input-email" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 HTML;
@@ -1118,7 +1144,7 @@ HTML;
 <input aria-describedby="form-register-span-password" aria-invalid="false" aria-labelledby="form-register-label-password form-register-label-password-error" aria-required="true" autocomplete="new-password" class="form__input form__input--invisible form__input--error" data-form-error-min="Password must be at least 10 characters in length" data-form-error-regex="Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters" data-form-has-container data-form-rules="min:10|regex:^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9\s:])([^\s]){8,}$" id="form-register-input-password" name="form-register-input-password" type="password"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-register-input-password" id="form-register-label-password-error">$labelError</label>
+<label class="form__label form__label--error" for="form-register-input-password" id="form-register-label-password-error">{$labelError}</label>
 HTML;
         }
 
@@ -1138,11 +1164,11 @@ HTML;
 <input aria-invalid="false" aria-labelledby="form-register-label-password_confirm form-register-label-password_confirm-error" aria-required="true" autocomplete="new-password" class="form__input form__input--invisible form__input--error" data-form-error-equal_field="Confirm Password must be the same as Password" data-form-error-required="Confirm Password is required" data-form-has-container data-form-rules="required|equal_field:form-register-input-password" id="form-register-input-password_confirm" name="form-register-input-password_confirm" type="password"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-register-input-password_confirm" id="form-register-label-password_confirm-error">$labelError</label>
+<label class="form__label form__label--error" for="form-register-input-password_confirm" id="form-register-label-password_confirm-error">{$labelError}</label>
 HTML;
         }
 
-        return <<<HTML
+        return <<<'HTML'
 <div class="form__container">
 <input aria-invalid="false" aria-labelledby="form-register-label-password_confirm" aria-required="true" autocomplete="new-password" class="form__input form__input--invisible" data-form-error-equal_field="Confirm Password must be the same as Password" data-form-error-required="Confirm Password is required" data-form-has-container data-form-rules="required|equal_field:form-register-input-password" id="form-register-input-password_confirm" name="form-register-input-password_confirm" type="password"/>
 <span class="form__feedback"></span>

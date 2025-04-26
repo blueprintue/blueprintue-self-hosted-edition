@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -17,6 +16,7 @@ use Rancoud\Security\Security;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ConfirmAccountTest extends TestCase
 {
     use Common;
@@ -51,84 +51,84 @@ class ConfirmAccountTest extends TestCase
         }
     }
 
-    public static function dataCasesConfirmAccount(): array
+    public static function provideConfirmAccountDataCases(): iterable
     {
-        return [
-            'user is logged - redirect' => [
-                'slug'               => '/confirm-account/',
-                'location'           => '/',
-                'userID'             => 4,
-                'contentHead'        => [],
-                'hasRedirection'     => true,
-                'isConfirmedAccount' => null,
-                'text'               => null,
-                'jsRedirect'         => null,
+        yield 'user is logged - redirect' => [
+            'slug'               => '/confirm-account/',
+            'location'           => '/',
+            'userID'             => 4,
+            'contentHead'        => [],
+            'hasRedirection'     => true,
+            'isConfirmedAccount' => null,
+            'text'               => null,
+            'jsRedirect'         => null,
+        ];
+
+        yield 'no token - welcome to blueprintUE.com' => [
+            'slug'        => '/confirm-account/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Confirm Account | This is a base title',
+                'description' => 'Confirm Account',
+                'url'         => '/confirm-account/',
             ],
-            'no token - welcome to blueprintUE.com' => [
-                'slug'        => '/confirm-account/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Confirm Account | This is a base title',
-                    'description' => 'Confirm Account',
-                    'url'         => '/confirm-account/',
-                ],
-                'hasRedirection'     => false,
-                'isConfirmedAccount' => null,
-                'text'               => '<p>Welcome to this_site_name</p><p>Before log in to your account you need to confirm it.<br />You will receive an email with a link for the confirmation.</p>',
-                'jsRedirect'         => "<script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>",
+            'hasRedirection'     => false,
+            'isConfirmedAccount' => null,
+            'text'               => '<p>Welcome to this_site_name</p><p>Before log in to your account you need to confirm it.<br />You will receive an email with a link for the confirmation.</p>',
+            'jsRedirect'         => "<script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>",
+        ];
+
+        yield 'token invalid - Your account is maybe already confirmed' => [
+            'slug'        => '/confirm-account/?confirmed_token=invalid',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Confirm Account | This is a base title',
+                'description' => 'Confirm Account',
+                'url'         => '/confirm-account/',
             ],
-            'token invalid - Your account is maybe already confirmed' => [
-                'slug'        => '/confirm-account/?confirmed_token=invalid',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Confirm Account | This is a base title',
-                    'description' => 'Confirm Account',
-                    'url'         => '/confirm-account/',
-                ],
-                'hasRedirection'     => false,
-                'isConfirmedAccount' => false,
-                'text'               => '<p>Your account is maybe already confirmed or your confirmed token is invalid.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>',
-                'jsRedirect'         => "<script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>",
+            'hasRedirection'     => false,
+            'isConfirmedAccount' => false,
+            'text'               => '<p>Your account is maybe already confirmed or your confirmed token is invalid.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>',
+            'jsRedirect'         => "<script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>",
+        ];
+
+        yield 'token valid - Your account is now confirmed!' => [
+            'slug'        => '/confirm-account/?confirmed_token=I8jJaUjUlIRUHfWZeUf4Ntmkj0Uvo0Ij7b9vMr9bSZpSBGlIlekNK5N5cqWsdJVb98IoRu3nvxoIesT6pKW65S25vagl1bSqyuDSGZ4GTKFBmuOwrptiF7ygnY6HOnEZPiRQ2FycFn84tNXkDgVDs68keZkbqu5D9KlVs4ghlIbpKcDlpQWo83ZgYGDwlv4exw6FSxKODPEuv2lNgMLqZKvPXZHKki4fHstdGdnQU6BnGaBzToB1oebnLAHPZ2R',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Confirm Account | This is a base title',
+                'description' => 'Confirm Account',
+                'url'         => '/confirm-account/',
             ],
-            'token valid - Your account is now confirmed!' => [
-                'slug'        => '/confirm-account/?confirmed_token=I8jJaUjUlIRUHfWZeUf4Ntmkj0Uvo0Ij7b9vMr9bSZpSBGlIlekNK5N5cqWsdJVb98IoRu3nvxoIesT6pKW65S25vagl1bSqyuDSGZ4GTKFBmuOwrptiF7ygnY6HOnEZPiRQ2FycFn84tNXkDgVDs68keZkbqu5D9KlVs4ghlIbpKcDlpQWo83ZgYGDwlv4exw6FSxKODPEuv2lNgMLqZKvPXZHKki4fHstdGdnQU6BnGaBzToB1oebnLAHPZ2R',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Confirm Account | This is a base title',
-                    'description' => 'Confirm Account',
-                    'url'         => '/confirm-account/',
-                ],
-                'hasRedirection'     => false,
-                'isConfirmedAccount' => true,
-                'text'               => '<p>Your account is now confirmed!<br />You can now log to your account.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>',
-                'jsRedirect'         => "<script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>",
-            ],
-            'token invalid - bad encoding - redirect home' => [
-                'slug'               => '/confirm-account/?confirmed_token=' . \chr(99999999),
-                'location'           => '/',
-                'userID'             => null,
-                'contentHead'        => [],
-                'hasRedirection'     => true,
-                'isConfirmedAccount' => null,
-                'text'               => null,
-                'jsRedirect'         => null,
-            ],
+            'hasRedirection'     => false,
+            'isConfirmedAccount' => true,
+            'text'               => '<p>Your account is now confirmed!<br />You can now log to your account.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>',
+            'jsRedirect'         => "<script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>",
+        ];
+
+        yield 'token invalid - bad encoding - redirect home' => [
+            'slug'               => '/confirm-account/?confirmed_token=' . \chr(99999999),
+            'location'           => '/',
+            'userID'             => null,
+            'contentHead'        => [],
+            'hasRedirection'     => true,
+            'isConfirmedAccount' => null,
+            'text'               => null,
+            'jsRedirect'         => null,
         ];
     }
 
     /**
-     * @dataProvider dataCasesConfirmAccount
-     *
+     * @throws \Rancoud\Security\SecurityException
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Security\SecurityException
      */
-    #[DataProvider('dataCasesConfirmAccount')]
+    #[DataProvider('provideConfirmAccountDataCases')]
     public function testConfirmAccountPOST(string $slug, ?string $location, ?int $userID, ?array $contentHead, bool $hasRedirection, ?bool $isConfirmedAccount, ?string $text, ?string $jsRedirect): void
     {
         $sessionValues = [

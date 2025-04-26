@@ -1,13 +1,11 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
 
 namespace tests\www\Blueprint\Edit;
 
-use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -20,13 +18,14 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintEditPOSTAddVersionTest extends TestCase
 {
     use Common;
 
     /**
-     * @throws DatabaseException
      * @throws \Rancoud\Crypt\CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {
@@ -59,397 +58,404 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
         }
     }
 
-    public static function dataCasesAddVersion(): array
+    public static function provideAddVersionDataCases(): iterable
     {
-        return [
-            'update OK - add version' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                    "INSERT INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID'        => 189,
-                'countVersions' => 2,
-                'params'        => [
-                    'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_version-textarea-blueprint' => 'Begin object 1234',
-                    'form-add_version-textarea-reason'    => 'new version',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">The new version has been published</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+        yield 'update OK - add version' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+                "INSERT INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
             ],
-            'update OK - add version with max id + 1' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 2, utc_timestamp(), utc_timestamp(), 'private')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), null)",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (901, 80, 2, 'Second commit', utc_timestamp(), null)",
-                ],
-                'userID'        => 189,
-                'countVersions' => 3,
-                'params'        => [
-                    'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_version-textarea-blueprint' => 'Begin object 1234',
-                    'form-add_version-textarea-reason'    => 'new version',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">The new version has been published</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'userID'        => 189,
+            'countVersions' => 2,
+            'params'        => [
+                'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_version-textarea-blueprint' => 'Begin object 1234',
+                'form-add_version-textarea-reason'    => 'new version',
             ],
-            'update KO - add version failed because blueprint versions keys integrity failed' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 99999, utc_timestamp(), utc_timestamp(), 'private')",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">The new version has been published</div>'
                 ],
-                'userID'        => 189,
-                'countVersions' => 0,
-                'params'        => [
-                    'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_version-textarea-blueprint' => 'Begin object 1234',
-                    'form-add_version-textarea-reason'    => 'new version',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error, could not add version blueprint (#300)</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => ['blueprint', 'reason'],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
+                ]
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID'        => 189,
-                'countVersions' => 1,
-                'params'        => [
-                    'form-add_version-hidden-csrf'        => 'incorrect_csrf',
-                    'form-add_version-textarea-blueprint' => 'Begin object 1234',
-                    'form-add_version-textarea-reason'    => 'new version',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'update OK - add version with max id + 1' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 2, utc_timestamp(), utc_timestamp(), 'private')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), null)",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (901, 80, 2, 'Second commit', utc_timestamp(), null)",
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID'        => 189,
-                'countVersions' => 1,
-                'params'        => [
-                    'form-add_version-textarea-blueprint' => 'Begin object 1234',
-                    'form-add_version-textarea-reason'    => 'new version',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'userID'        => 189,
+            'countVersions' => 3,
+            'params'        => [
+                'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_version-textarea-blueprint' => 'Begin object 1234',
+                'form-add_version-textarea-reason'    => 'new version',
             ],
-            'missing fields - no blueprint' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">The new version has been published</div>'
                 ],
-                'userID'        => 189,
-                'countVersions' => 1,
-                'params'        => [
-                    'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_version-textarea-reason'    => 'new version',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
+                ]
             ],
-            'missing fields - no reason' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID'        => 189,
-                'countVersions' => 1,
-                'params'        => [
-                    'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_version-textarea-blueprint' => 'Begin object 1234',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'update KO - add version failed because blueprint versions keys integrity failed' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 99999, utc_timestamp(), utc_timestamp(), 'private')",
             ],
-            'empty fields - blueprint' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID'        => 189,
-                'countVersions' => 1,
-                'params'        => [
-                    'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_version-textarea-blueprint' => ' ',
-                    'form-add_version-textarea-reason'    => 'new version',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error(s) on blueprint</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['blueprint'],
-                'fieldsHasValue'   => ['blueprint', 'reason'],
-                'fieldsLabelError' => [
-                    'blueprint' => 'Blueprint is required'
-                ],
+            'userID'        => 189,
+            'countVersions' => 0,
+            'params'        => [
+                'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_version-textarea-blueprint' => 'Begin object 1234',
+                'form-add_version-textarea-reason'    => 'new version',
             ],
-            'empty fields - reason' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
                 ],
-                'userID'        => 189,
-                'countVersions' => 1,
-                'params'        => [
-                    'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_version-textarea-blueprint' => 'Begin object 1234',
-                    'form-add_version-textarea-reason'    => ' ',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error(s) on reason</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['reason'],
-                'fieldsHasValue'   => ['blueprint', 'reason'],
-                'fieldsLabelError' => [
-                    'reason' => 'Reason is required'
-                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error, could not add version blueprint (#300)</div>'
+                ]
             ],
-            'invalid fields - blueprint invalid' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID'        => 189,
-                'countVersions' => 1,
-                'params'        => [
-                    'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_version-textarea-blueprint' => '<script>alert(1)</script></textarea><script>alert(1)</script>',
-                    'form-add_version-textarea-reason'    => '<script>alert(1)</script></textarea><script>alert(1)</script>',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error(s) on blueprint</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['blueprint'],
-                'fieldsHasValue'   => ['blueprint', 'reason'],
-                'fieldsLabelError' => [
-                    'blueprint' => 'Blueprint is invalid'
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['blueprint', 'reason'],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
             ],
-            'invalid encoding fields - blueprint' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID'        => 189,
-                'countVersions' => 1,
-                'params'        => [
-                    'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_version-textarea-blueprint' => \chr(99999999),
-                    'form-add_version-textarea-reason'    => 'new version',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'userID'        => 189,
+            'countVersions' => 1,
+            'params'        => [
+                'form-add_version-hidden-csrf'        => 'incorrect_csrf',
+                'form-add_version-textarea-blueprint' => 'Begin object 1234',
+                'form-add_version-textarea-reason'    => 'new version',
             ],
-            'invalid encoding fields - reason' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
                 ],
-                'userID'        => 189,
-                'countVersions' => 1,
-                'params'        => [
-                    'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-add_version-textarea-blueprint' => 'Begin object 1234',
-                    'form-add_version-textarea-reason'    => \chr(99999999),
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
+                ]
             ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID'        => 189,
+            'countVersions' => 1,
+            'params'        => [
+                'form-add_version-textarea-blueprint' => 'Begin object 1234',
+                'form-add_version-textarea-reason'    => 'new version',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no blueprint' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID'        => 189,
+            'countVersions' => 1,
+            'params'        => [
+                'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_version-textarea-reason'    => 'new version',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no reason' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID'        => 189,
+            'countVersions' => 1,
+            'params'        => [
+                'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_version-textarea-blueprint' => 'Begin object 1234',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'empty fields - blueprint' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID'        => 189,
+            'countVersions' => 1,
+            'params'        => [
+                'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_version-textarea-blueprint' => ' ',
+                'form-add_version-textarea-reason'    => 'new version',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error(s) on blueprint</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['blueprint'],
+            'fieldsHasValue'   => ['blueprint', 'reason'],
+            'fieldsLabelError' => [
+                'blueprint' => 'Blueprint is required'
+            ],
+        ];
+
+        yield 'empty fields - reason' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID'        => 189,
+            'countVersions' => 1,
+            'params'        => [
+                'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_version-textarea-blueprint' => 'Begin object 1234',
+                'form-add_version-textarea-reason'    => ' ',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error(s) on reason</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['reason'],
+            'fieldsHasValue'   => ['blueprint', 'reason'],
+            'fieldsLabelError' => [
+                'reason' => 'Reason is required'
+            ],
+        ];
+
+        yield 'invalid fields - blueprint invalid' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID'        => 189,
+            'countVersions' => 1,
+            'params'        => [
+                'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_version-textarea-blueprint' => '<script>alert(1)</script></textarea><script>alert(1)</script>',
+                'form-add_version-textarea-reason'    => '<script>alert(1)</script></textarea><script>alert(1)</script>',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">Error(s) on blueprint</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['blueprint'],
+            'fieldsHasValue'   => ['blueprint', 'reason'],
+            'fieldsLabelError' => [
+                'blueprint' => 'Blueprint is invalid'
+            ],
+        ];
+
+        yield 'invalid encoding fields - blueprint' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID'        => 189,
+            'countVersions' => 1,
+            'params'        => [
+                'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_version-textarea-blueprint' => \chr(99999999),
+                'form-add_version-textarea-reason'    => 'new version',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid encoding fields - reason' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID'        => 189,
+            'countVersions' => 1,
+            'params'        => [
+                'form-add_version-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_version-textarea-blueprint' => 'Begin object 1234',
+                'form-add_version-textarea-reason'    => \chr(99999999),
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_version">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_version" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
         ];
     }
 
     /**
-     * @dataProvider dataCasesAddVersion
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesAddVersion')]
+    #[DataProvider('provideAddVersionDataCases')]
     public function testBlueprintEditPOSTAddVersion(array $sqlQueries, int $userID, int $countVersions, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();
@@ -567,12 +573,12 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'blueprint') {
-                $value = $hasValue ? Helper::trim($params['form-add_version-textarea-blueprint']) : '';
+                $value = $hasValue ? \mb_trim($params['form-add_version-textarea-blueprint']) : '';
                 $this->doTestHtmlForm($response, '#form-add_version', $this->getHTMLFieldBlueprint($value, $hasError, $labelError));
             }
 
             if ($field === 'reason') {
-                $value = $hasValue ? Helper::trim($params['form-add_version-textarea-reason']) : '';
+                $value = $hasValue ? \mb_trim($params['form-add_version-textarea-reason']) : '';
                 $this->doTestHtmlForm($response, '#form-add_version', $this->getHTMLFieldReason($value, $hasError, $labelError));
             }
         }
@@ -588,10 +594,10 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
 <div class="form__element">
 <label class="form__label" for="form-add_version-textarea-blueprint" id="form-add_version-label-blueprint">New version <span class="form__label--info">(required)</span></label>
 <div class="form__container form__container--blueprint form__container--textarea form__container--error">
-<textarea aria-invalid="false" aria-labelledby="form-add_version-label-blueprint form-add_version-label-blueprint-error" aria-required="true" class="form__input form__input--blueprint form__input--invisible form__input--textarea form__input--error" data-form-error-required="Blueprint is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-blueprint" name="form-add_version-textarea-blueprint">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_version-label-blueprint form-add_version-label-blueprint-error" aria-required="true" class="form__input form__input--blueprint form__input--invisible form__input--textarea form__input--error" data-form-error-required="Blueprint is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-blueprint" name="form-add_version-textarea-blueprint">{$v}</textarea>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-add_version-textarea-blueprint" id="form-add_version-label-blueprint-error">$labelError</label>
+<label class="form__label form__label--error" for="form-add_version-textarea-blueprint" id="form-add_version-label-blueprint-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -600,7 +606,7 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-add_version-textarea-blueprint" id="form-add_version-label-blueprint">New version <span class="form__label--info">(required)</span></label>
 <div class="form__container form__container--blueprint form__container--textarea">
-<textarea aria-invalid="false" aria-labelledby="form-add_version-label-blueprint" aria-required="true" class="form__input form__input--blueprint form__input--invisible form__input--textarea" data-form-error-required="Blueprint is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-blueprint" name="form-add_version-textarea-blueprint">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_version-label-blueprint" aria-required="true" class="form__input form__input--blueprint form__input--invisible form__input--textarea" data-form-error-required="Blueprint is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-blueprint" name="form-add_version-textarea-blueprint">{$v}</textarea>
 <span class="form__feedback"></span>
 </div>
 </div>
@@ -617,10 +623,10 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-add_version-textarea-reason" id="form-add_version-label-reason">Reason <span class="form__label--info">(required)</span></label>
 <div class="form__container form__container--textarea form__container--error">
-<textarea aria-invalid="false" aria-labelledby="form-add_version-label-reason form-add_version-label-reason-error" aria-required="true" class="form__input form__input--invisible form__input--textarea form__input--error" data-form-error-required="Reason is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-reason" name="form-add_version-textarea-reason">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_version-label-reason form-add_version-label-reason-error" aria-required="true" class="form__input form__input--invisible form__input--textarea form__input--error" data-form-error-required="Reason is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-reason" name="form-add_version-textarea-reason">{$v}</textarea>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-add_version-textarea-reason" id="form-add_version-label-reason-error">$labelError</label>
+<label class="form__label form__label--error" for="form-add_version-textarea-reason" id="form-add_version-label-reason-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -629,7 +635,7 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-add_version-textarea-reason" id="form-add_version-label-reason">Reason <span class="form__label--info">(required)</span></label>
 <div class="form__container form__container--textarea">
-<textarea aria-invalid="false" aria-labelledby="form-add_version-label-reason" aria-required="true" class="form__input form__input--invisible form__input--textarea" data-form-error-required="Reason is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-reason" name="form-add_version-textarea-reason">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_version-label-reason" aria-required="true" class="form__input form__input--invisible form__input--textarea" data-form-error-required="Reason is required" data-form-has-container data-form-rules="required" id="form-add_version-textarea-reason" name="form-add_version-textarea-reason">{$v}</textarea>
 <span class="form__feedback"></span>
 </div>
 </div>

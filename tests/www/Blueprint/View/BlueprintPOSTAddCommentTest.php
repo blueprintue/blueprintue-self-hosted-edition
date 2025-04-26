@@ -1,14 +1,12 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
 
 namespace tests\www\Blueprint\View;
 
-use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -20,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintPOSTAddCommentTest extends TestCase
 {
     use Common;
@@ -30,7 +29,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         static::setDatabaseEmptyStructure();
 
         // user
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO users (`id`, `username`, `slug`, `grade`, `created_at`)
             VALUES (65, 'user_65', 'user_65', 'member', utc_timestamp()),
                    (66, 'user_66', 'user_66', 'member', utc_timestamp())
@@ -38,7 +37,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         static::$db->exec($sql);
 
         // user infos
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO users_infos (id_user, count_public_comment, count_private_comment)
             VALUES (65, 1, 3),
                    (66, 0, 0)
@@ -46,7 +45,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         static::$db->exec($sql);
 
         // blueprints
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure)
             VALUES (966, 65, 'slug_public',   'a1', 'my title 1', 1, utc_timestamp(), utc_timestamp(), 'public'),
                    (967, 65, 'slug_unlisted', 'a2', 'my title 2', 1, utc_timestamp(), utc_timestamp(), 'unlisted'),
@@ -55,7 +54,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         static::$db->exec($sql);
 
         // blueprints version
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at)
             VALUES (966, 1, 'First commit', utc_timestamp(), utc_timestamp()),
                    (967, 1, 'First commit', utc_timestamp(), utc_timestamp()),
@@ -69,7 +68,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
     {
         static::$db->truncateTables('comments');
         // comment
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO comments (id, id_author, id_blueprint, content, created_at)
             VALUES (10, 65, 966, 'com 1 public', utc_timestamp()),
                    (11, 65, 967, 'com 1 unlisted', utc_timestamp()),
@@ -78,7 +77,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         static::$db->exec($sql);
 
         // user infos
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO users_infos (id_user, count_public_comment, count_private_comment)
             VALUES (65, 1, 3),
                    (66, 0, 0)
@@ -86,7 +85,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
         static::$db->exec($sql);
 
         // blueprints
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, comments_count, comments_closed, comments_hidden)
             VALUES (966, 65, 'slug_public',   'a1', 'my title 1', 1, utc_timestamp(), utc_timestamp(), 'public', 1, 0, 0),
                    (967, 65, 'slug_unlisted', 'a2', 'my title 2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 1, 0, 0),
@@ -107,298 +106,304 @@ class BlueprintPOSTAddCommentTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintPOST_AddComment(): array
+    public static function provideBlueprintPOSTAddCommentDataCases(): iterable
     {
-        return [
-            'add comment OK - public blueprint' => [
-                'sqlQueries' => [],
-                'slug'       => 'slug_public',
-                'userID'     => 65,
-                'params'     => [
-                    'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-add_comment-textarea-comment' => 'my comment',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">Your comment has been added</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+        yield 'add comment OK - public blueprint' => [
+            'sqlQueries' => [],
+            'slug'       => 'slug_public',
+            'userID'     => 65,
+            'params'     => [
+                'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
+                'form-add_comment-textarea-comment' => 'my comment',
             ],
-            'add comment OK - unlisted blueprint' => [
-                'sqlQueries' => [],
-                'slug'       => 'slug_unlisted',
-                'userID'     => 65,
-                'params'     => [
-                    'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-add_comment-textarea-comment' => 'my comment',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">Your comment has been added</div>'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">Your comment has been added</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
+                ]
             ],
-            'add comment OK - private blueprint' => [
-                'sqlQueries' => [],
-                'slug'       => 'slug_private',
-                'userID'     => 65,
-                'params'     => [
-                    'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-add_comment-textarea-comment' => 'my comment',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">Your comment has been added</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'add comment OK - unlisted blueprint' => [
+            'sqlQueries' => [],
+            'slug'       => 'slug_unlisted',
+            'userID'     => 65,
+            'params'     => [
+                'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
+                'form-add_comment-textarea-comment' => 'my comment',
             ],
-            'add comment KO - comments close' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_closed = 1 WHERE id = 966'
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">Your comment has been added</div>'
                 ],
-                'slug'   => 'slug_public',
-                'userID' => 65,
-                'params' => [
-                    'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-add_comment-textarea-comment' => 'my comment',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
+                ]
             ],
-            'add comment KO - comments hidden' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_hidden = 1 WHERE id = 966'
-                ],
-                'slug'   => 'slug_public',
-                'userID' => 65,
-                'params' => [
-                    'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-add_comment-textarea-comment' => 'my comment',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'add comment OK - private blueprint' => [
+            'sqlQueries' => [],
+            'slug'       => 'slug_private',
+            'userID'     => 65,
+            'params'     => [
+                'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
+                'form-add_comment-textarea-comment' => 'my comment',
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [],
-                'slug'       => 'slug_public',
-                'userID'     => 65,
-                'params'     => [
-                    'form-add_comment-hidden-csrf'      => 'incorrect_csrf',
-                    'form-add_comment-textarea-comment' => 'my comment',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">Your comment has been added</div>'
                 ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
+                ]
             ],
-            'missing fields - no fields' => [
-                'sqlQueries'         => [],
-                'slug'               => 'slug_public',
-                'userID'             => 65,
-                'params'             => [],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'add comment KO - comments close' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_closed = 1 WHERE id = 966'
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries' => [],
-                'slug'       => 'slug_public',
-                'userID'     => 65,
-                'params'     => [
-                    'form-add_comment-textarea-comment' => 'my comment',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'slug'   => 'slug_public',
+            'userID' => 65,
+            'params' => [
+                'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
+                'form-add_comment-textarea-comment' => 'my comment',
             ],
-            'missing fields - no comment' => [
-                'sqlQueries' => [],
-                'slug'       => 'slug_public',
-                'userID'     => 65,
-                'params'     => [
-                    'form-add_comment-hidden-csrf' => 'csrf_is_replaced',
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
+                ]
             ],
-            'empty fields - comment empty' => [
-                'sqlQueries' => [],
-                'slug'       => 'slug_public',
-                'userID'     => 65,
-                'params'     => [
-                    'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-add_comment-textarea-comment' => ' ',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['comment'],
-                'fieldsHasValue'   => ['comment'],
-                'fieldsLabelError' => [
-                    'comment' => 'Comment is required'
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'add comment KO - comments hidden' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_hidden = 1 WHERE id = 966'
             ],
-            'invalid encoding fields - comment' => [
-                'sqlQueries' => [],
-                'slug'       => 'slug_public',
-                'userID'     => 65,
-                'params'     => [
-                    'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-add_comment-textarea-comment' => \chr(99999999),
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'slug'   => 'slug_public',
+            'userID' => 65,
+            'params' => [
+                'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
+                'form-add_comment-textarea-comment' => 'my comment',
             ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [],
+            'slug'       => 'slug_public',
+            'userID'     => 65,
+            'params'     => [
+                'form-add_comment-hidden-csrf'      => 'incorrect_csrf',
+                'form-add_comment-textarea-comment' => 'my comment',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no fields' => [
+            'sqlQueries'         => [],
+            'slug'               => 'slug_public',
+            'userID'             => 65,
+            'params'             => [],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries' => [],
+            'slug'       => 'slug_public',
+            'userID'     => 65,
+            'params'     => [
+                'form-add_comment-textarea-comment' => 'my comment',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no comment' => [
+            'sqlQueries' => [],
+            'slug'       => 'slug_public',
+            'userID'     => 65,
+            'params'     => [
+                'form-add_comment-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'empty fields - comment empty' => [
+            'sqlQueries' => [],
+            'slug'       => 'slug_public',
+            'userID'     => 65,
+            'params'     => [
+                'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
+                'form-add_comment-textarea-comment' => ' ',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['comment'],
+            'fieldsHasValue'   => ['comment'],
+            'fieldsLabelError' => [
+                'comment' => 'Comment is required'
+            ],
+        ];
+
+        yield 'invalid encoding fields - comment' => [
+            'sqlQueries' => [],
+            'slug'       => 'slug_public',
+            'userID'     => 65,
+            'params'     => [
+                'form-add_comment-hidden-csrf'      => 'csrf_is_replaced',
+                'form-add_comment-textarea-comment' => \chr(99999999),
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_comment">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_comment" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
         ];
     }
 
     /**
-     * @dataProvider dataCasesBlueprintPOST_AddComment
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesBlueprintPOST_AddComment')]
+    #[DataProvider('provideBlueprintPOSTAddCommentDataCases')]
     public function testBlueprintPOSTAddComment(array $sqlQueries, string $slug, ?int $userID, ?array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         // sql queries
@@ -506,7 +511,7 @@ class BlueprintPOSTAddCommentTest extends TestCase
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'comment') {
-                $value = $hasValue ? Helper::trim($params['form-add_comment-textarea-comment']) : '';
+                $value = $hasValue ? \mb_trim($params['form-add_comment-textarea-comment']) : '';
                 $this->doTestHtmlMain($response, $this->getHTMLFormAddComment($value, $hasError, $labelError));
             }
         }
@@ -519,16 +524,16 @@ class BlueprintPOSTAddCommentTest extends TestCase
         if ($hasError) {
             return <<<HTML
 <div class="form__container form__container--textarea form__container--error">
-<textarea aria-invalid="false" aria-labelledby="form-add_comment-label-comment form-add_comment-label-comment-error" aria-required="true" class="form__input form__input--textarea form__input--invisible form__input--error" data-form-error-required="Comment is required" data-form-has-container data-form-rules="required" id="form-add_comment-textarea-comment" name="form-add_comment-textarea-comment" placeholder="Markdown supported">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_comment-label-comment form-add_comment-label-comment-error" aria-required="true" class="form__input form__input--textarea form__input--invisible form__input--error" data-form-error-required="Comment is required" data-form-has-container data-form-rules="required" id="form-add_comment-textarea-comment" name="form-add_comment-textarea-comment" placeholder="Markdown supported">{$v}</textarea>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-add_comment-textarea-comment" id="form-add_comment-label-comment-error">$labelError</label>
+<label class="form__label form__label--error" for="form-add_comment-textarea-comment" id="form-add_comment-label-comment-error">{$labelError}</label>
 HTML;
         }
 
         return <<<HTML
 <div class="form__container form__container--textarea">
-<textarea aria-invalid="false" aria-labelledby="form-add_comment-label-comment" aria-required="true" class="form__input form__input--textarea form__input--invisible" data-form-error-required="Comment is required" data-form-has-container data-form-rules="required" id="form-add_comment-textarea-comment" name="form-add_comment-textarea-comment" placeholder="Markdown supported">$v</textarea>
+<textarea aria-invalid="false" aria-labelledby="form-add_comment-label-comment" aria-required="true" class="form__input form__input--textarea form__input--invisible" data-form-error-required="Comment is required" data-form-has-container data-form-rules="required" id="form-add_comment-textarea-comment" name="form-add_comment-textarea-comment" placeholder="Markdown supported">{$v}</textarea>
 <span class="form__feedback"></span>
 </div>
 HTML;

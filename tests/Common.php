@@ -6,8 +6,6 @@ declare(strict_types=1);
 
 namespace tests;
 
-use DateTime;
-use DateTimeZone;
 use Rancoud\Application\Application;
 use Rancoud\Application\ApplicationException;
 use Rancoud\Database\Configurator;
@@ -20,13 +18,11 @@ use Rancoud\Http\Message\ServerRequest;
 use Rancoud\Router\RouterException;
 use Rancoud\Security\Security;
 use Rancoud\Session\Session;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use RegexIterator;
 
 trait Common
 {
     protected static int $userID = 1;
+
     protected static int $anonymousID = 2;
 
     protected string $navBarLogoOnly = <<<'HTML'
@@ -355,7 +351,7 @@ HTML;
 
         $html = \ob_get_clean();
 
-        $now = new DateTime('now', new DateTimeZone('UTC'));
+        $now = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
 
         $search = [
             '{{URL}}',
@@ -393,9 +389,9 @@ HTML;
         $ds = \DIRECTORY_SEPARATOR;
         $storageFolder = \dirname(__DIR__) . $ds . 'tests' . $ds . 'storage_test' . $ds;
 
-        $dir = new RecursiveDirectoryIterator($storageFolder);
-        $ite = new RecursiveIteratorIterator($dir);
-        $files = new RegexIterator($ite, '/^.+\.txt$/i', RegexIterator::GET_MATCH);
+        $dir = new \RecursiveDirectoryIterator($storageFolder);
+        $ite = new \RecursiveIteratorIterator($dir);
+        $files = new \RegexIterator($ite, '/^.+\.txt$/i', \RegexIterator::GET_MATCH);
         foreach ($files as $file) {
             \unlink($file[0]);
         }
@@ -404,8 +400,8 @@ HTML;
     /** @throws \Exception */
     public static function getSince(string $publishedAt): string
     {
-        $publishedAtObject = new DateTime($publishedAt);
-        $nowObject = new DateTime();
+        $publishedAtObject = new \DateTimeImmutable($publishedAt);
+        $nowObject = new \DateTimeImmutable();
         if ($publishedAtObject > $nowObject) {
             return 'few seconds ago';
         }
@@ -425,6 +421,4 @@ HTML;
     }
 }
 
-function isPHPUnit()
-{
-}
+function isPHPUnit(): void {}

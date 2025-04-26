@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,13 +18,14 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintEditGETTest extends TestCase
 {
     use Common;
 
     /**
-     * @throws DatabaseException
      * @throws \Rancoud\Crypt\CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {
@@ -63,120 +63,125 @@ class BlueprintEditGETTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesAccess(): array
+    public static function provideAccessDataCases(): iterable
     {
-        return [
-            'redirect - blueprint not exist' => [
-                'sqlQueries'  => [],
-                'slug'        => '/blueprint/4564879864564/edit/',
-                'location'    => '/blueprint/4564879864564/',
-                'userID'      => null,
-                'contentHead' => null,
+        yield 'redirect - blueprint not exist' => [
+            'sqlQueries'  => [],
+            'slug'        => '/blueprint/4564879864564/edit/',
+            'location'    => '/blueprint/4564879864564/',
+            'userID'      => null,
+            'contentHead' => null,
+        ];
+
+        yield 'redirect - visitor' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public')",
             ],
-            'redirect - visitor' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                ],
-                'slug'        => '/blueprint/slug_public/edit/',
-                'location'    => '/blueprint/slug_public/',
-                'userID'      => null,
-                'contentHead' => null,
+            'slug'        => '/blueprint/slug_public/edit/',
+            'location'    => '/blueprint/slug_public/',
+            'userID'      => null,
+            'contentHead' => null,
+        ];
+
+        yield 'redirect - user connected' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public')",
             ],
-            'redirect - user connected' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                ],
-                'slug'        => '/blueprint/slug_public/edit/',
-                'location'    => '/blueprint/slug_public/',
-                'userID'      => 199,
-                'contentHead' => null,
+            'slug'        => '/blueprint/slug_public/edit/',
+            'location'    => '/blueprint/slug_public/',
+            'userID'      => 199,
+            'contentHead' => null,
+        ];
+
+        yield 'redirect - anonymous user connected (not possible)' => [
+            'sqlQueries'  => [],
+            'slug'        => '/blueprint/slug_public/edit/',
+            'location'    => '/blueprint/slug_public/',
+            'userID'      => 2,
+            'contentHead' => null,
+        ];
+
+        yield 'redirect - user connected but not exists in database (not possible)' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public')",
             ],
-            'redirect - anonymous user connected (not possible)' => [
-                'sqlQueries'  => [],
-                'slug'        => '/blueprint/slug_public/edit/',
-                'location'    => '/blueprint/slug_public/',
-                'userID'      => 2,
-                'contentHead' => null,
+            'slug'        => '/blueprint/slug_public/edit/',
+            'location'    => '/blueprint/slug_public/',
+            'userID'      => 50,
+            'contentHead' => null,
+        ];
+
+        yield 'redirect - user is author - blueprint deleted' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, deleted_at) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp())",
             ],
-            'redirect - user connected but not exists in database (not possible)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                ],
-                'slug'        => '/blueprint/slug_public/edit/',
-                'location'    => '/blueprint/slug_public/',
-                'userID'      => 50,
-                'contentHead' => null,
+            'slug'        => '/blueprint/slug_public/edit/',
+            'location'    => '/blueprint/slug_public/',
+            'userID'      => 189,
+            'contentHead' => null,
+        ];
+
+        yield 'redirect - user is author - blueprint expired' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, expiration) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp() - interval 1 day)",
             ],
-            'redirect - user is author - blueprint deleted' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, deleted_at) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp())",
-                ],
-                'slug'        => '/blueprint/slug_public/edit/',
-                'location'    => '/blueprint/slug_public/',
-                'userID'      => 189,
-                'contentHead' => null,
+            'slug'        => '/blueprint/slug_public/edit/',
+            'location'    => '/blueprint/slug_public/',
+            'userID'      => 189,
+            'contentHead' => null,
+        ];
+
+        yield 'OK - user is author - no thumbnail' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
             ],
-            'redirect - user is author - blueprint expired' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, expiration) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp() - interval 1 day)",
-                ],
-                'slug'        => '/blueprint/slug_public/edit/',
-                'location'    => '/blueprint/slug_public/',
-                'userID'      => 189,
-                'contentHead' => null,
+            'slug'        => '/blueprint/slug_public/edit/',
+            'location'    => null,
+            'userID'      => 189,
+            'contentHead' => [
+                'title'       => 'Edit blueprint title_public | This is a base title',
+                'description' => 'Edit blueprint title_public'
             ],
-            'OK - user is author - no thumbnail' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                ],
-                'slug'        => '/blueprint/slug_public/edit/',
-                'location'    => null,
-                'userID'      => 189,
-                'contentHead' => [
-                    'title'       => 'Edit blueprint title_public | This is a base title',
-                    'description' => 'Edit blueprint title_public'
-                ],
+        ];
+
+        yield 'OK - user is author - has thumbnail' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '<script>alert(1)</script>')",
+                "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
             ],
-            'OK - user is author - has thumbnail' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'public', '<script>alert(1)</script>')",
-                    "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                ],
-                'slug'        => '/blueprint/slug_public/edit/',
-                'location'    => null,
-                'userID'      => 189,
-                'contentHead' => [
-                    'title'       => 'Edit blueprint title_public | This is a base title',
-                    'description' => 'Edit blueprint title_public'
-                ],
+            'slug'        => '/blueprint/slug_public/edit/',
+            'location'    => null,
+            'userID'      => 189,
+            'contentHead' => [
+                'title'       => 'Edit blueprint title_public | This is a base title',
+                'description' => 'Edit blueprint title_public'
             ],
-            'OK - user is author - has thumbnail (private exposure)' => [
-                'sqlQueries' => [
-                    "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'private', '<script>alert(1)</script>')",
-                    "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                ],
-                'slug'        => '/blueprint/slug_public/edit/',
-                'location'    => null,
-                'userID'      => 189,
-                'contentHead' => [
-                    'title'       => 'Edit blueprint title_public | This is a base title',
-                    'description' => 'Edit blueprint title_public'
-                ],
+        ];
+
+        yield 'OK - user is author - has thumbnail (private exposure)' => [
+            'sqlQueries' => [
+                "REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, thumbnail) VALUES (1, 189, 'slug_public', 'file', 'title_public', 1, utc_timestamp(), utc_timestamp(), 'private', '<script>alert(1)</script>')",
+                "REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+            ],
+            'slug'        => '/blueprint/slug_public/edit/',
+            'location'    => null,
+            'userID'      => 189,
+            'contentHead' => [
+                'title'       => 'Edit blueprint title_public | This is a base title',
+                'description' => 'Edit blueprint title_public'
             ],
         ];
     }
 
     /**
-     * @dataProvider dataCasesAccess
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesAccess')]
+    #[DataProvider('provideAccessDataCases')]
     public function testBlueprintEditGET(array $sqlQueries, string $slug, ?string $location, ?int $userID, ?array $contentHead): void
     {
         static::setDatabase();
@@ -221,7 +226,7 @@ class BlueprintEditGETTest extends TestCase
         // verif thumbnail
         if ($thumbnail === null) {
             /* @noinspection RequiredAttributes */
-            $this->doTestHtmlBody($response, <<<HTML
+            $this->doTestHtmlBody($response, <<<'HTML'
 <div class="profile__avatar-container" id="current-thumbnail">
 <img alt="blueprint thumbnail" class="profile__avatar-container profile__avatar-container--hidden" id="upload-current-thumbnail"/>
 <div class="profile__avatar-container profile__avatar-container--background" id="upload-fallback-thumbnail">
@@ -235,7 +240,7 @@ HTML);
             $v = Security::escAttr($thumbnail);
             $this->doTestHtmlBody($response, <<<HTML
 <div class="profile__avatar-container" id="current-thumbnail">
-<img alt="blueprint thumbnail" class="profile__avatar-container" id="upload-current-thumbnail" src="&#x2F;medias&#x2F;blueprints&#x2F;$v"/>
+<img alt="blueprint thumbnail" class="profile__avatar-container" id="upload-current-thumbnail" src="&#x2F;medias&#x2F;blueprints&#x2F;{$v}"/>
 </div>
 HTML);
         }

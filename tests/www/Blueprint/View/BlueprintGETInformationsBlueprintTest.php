@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -19,6 +18,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintGETInformationsBlueprintTest extends TestCase
 {
     use Common;
@@ -42,134 +42,136 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintGET_InformationsBlueprint(): array
+    public static function provideBlueprintGETInformationsBlueprintDataCases(): iterable
     {
-        return [
-            'no thumbnail / type blueprint / exposure public / no expiration / ue version 4.12' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'       => 'slug_public',
-                'thumbnail'  => null,
-                'type'       => 'blueprint',
-                'title'      => '<script>alert(1)</script>my title',
-                'exposure'   => 'public',
-                'expiration' => null,
-                'ueVersion'  => '4.12',
+        yield 'no thumbnail / type blueprint / exposure public / no expiration / ue version 4.12' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'no thumbnail / type metasound / exposure public / no expiration / ue version 5.0' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'metasound', '5.0')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'       => 'slug_public',
-                'thumbnail'  => null,
-                'type'       => 'metasound',
-                'title'      => '<script>alert(1)</script>my title',
-                'exposure'   => 'public',
-                'expiration' => null,
-                'ueVersion'  => '5.0',
+            'slug'       => 'slug_public',
+            'thumbnail'  => null,
+            'type'       => 'blueprint',
+            'title'      => '<script>alert(1)</script>my title',
+            'exposure'   => 'public',
+            'expiration' => null,
+            'ueVersion'  => '4.12',
+        ];
+
+        yield 'no thumbnail / type metasound / exposure public / no expiration / ue version 5.0' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'metasound', '5.0')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'no thumbnail / type niagara / exposure public / no expiration / ue version 5.0' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'niagara', '5.0')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'       => 'slug_public',
-                'thumbnail'  => null,
-                'type'       => 'niagara',
-                'title'      => '<script>alert(1)</script>my title',
-                'exposure'   => 'public',
-                'expiration' => null,
-                'ueVersion'  => '5.0',
+            'slug'       => 'slug_public',
+            'thumbnail'  => null,
+            'type'       => 'metasound',
+            'title'      => '<script>alert(1)</script>my title',
+            'exposure'   => 'public',
+            'expiration' => null,
+            'ueVersion'  => '5.0',
+        ];
+
+        yield 'no thumbnail / type niagara / exposure public / no expiration / ue version 5.0' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'niagara', '5.0')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'no thumbnail / type pcg / exposure public / no expiration / ue version 5.0' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg', '5.0')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'       => 'slug_public',
-                'thumbnail'  => null,
-                'type'       => 'pcg',
-                'title'      => '<script>alert(1)</script>my title',
-                'exposure'   => 'public',
-                'expiration' => null,
-                'ueVersion'  => '5.0',
+            'slug'       => 'slug_public',
+            'thumbnail'  => null,
+            'type'       => 'niagara',
+            'title'      => '<script>alert(1)</script>my title',
+            'exposure'   => 'public',
+            'expiration' => null,
+            'ueVersion'  => '5.0',
+        ];
+
+        yield 'no thumbnail / type pcg / exposure public / no expiration / ue version 5.0' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (1, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'pcg', '5.0')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'has thumbnail / type material / exposure unlisted / expiration in 1h / ue version 4.14' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, expiration, thumbnail) VALUES (1, 'slug_unlisted', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'material', '4.14', utc_timestamp() + interval 1 hour,  'thu\"><script>alert(1)</script>mbnail.jpg')",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'       => 'slug_unlisted',
-                'thumbnail'  => '/medias/blueprints/thu"><script>alert(1)</script>mbnail.jpg',
-                'type'       => 'material',
-                'title'      => '<script>alert(1)</script>my title',
-                'exposure'   => 'unlisted',
-                'expiration' => '59 min left',
-                'ueVersion'  => '4.14',
+            'slug'       => 'slug_public',
+            'thumbnail'  => null,
+            'type'       => 'pcg',
+            'title'      => '<script>alert(1)</script>my title',
+            'exposure'   => 'public',
+            'expiration' => null,
+            'ueVersion'  => '5.0',
+        ];
+
+        yield 'has thumbnail / type material / exposure unlisted / expiration in 1h / ue version 4.14' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, expiration, thumbnail) VALUES (1, 'slug_unlisted', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'material', '4.14', utc_timestamp() + interval 1 hour,  'thu\"><script>alert(1)</script>mbnail.jpg')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'no thumbnail / type animation / exposure private / expiration in 1d / ue version 4.16' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, expiration) VALUES (1, 'slug_private', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'private', 'animation', '4.16', utc_timestamp() + interval 1 day)",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'       => 'slug_private',
-                'thumbnail'  => null,
-                'type'       => 'animation',
-                'title'      => '<script>alert(1)</script>my title',
-                'exposure'   => 'private',
-                'expiration' => '1 days left',
-                'ueVersion'  => '4.16',
+            'slug'       => 'slug_unlisted',
+            'thumbnail'  => '/medias/blueprints/thu"><script>alert(1)</script>mbnail.jpg',
+            'type'       => 'material',
+            'title'      => '<script>alert(1)</script>my title',
+            'exposure'   => 'unlisted',
+            'expiration' => '59 min left',
+            'ueVersion'  => '4.14',
+        ];
+
+        yield 'no thumbnail / type animation / exposure private / expiration in 1d / ue version 4.16' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, expiration) VALUES (1, 'slug_private', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'private', 'animation', '4.16', utc_timestamp() + interval 1 day)",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
-            'no thumbnail / type behavior_tree / exposure public / expiration in 1w / ue version 4.10' => [
-                'sqlQueries' => [
-                    'TRUNCATE TABLE blueprints',
-                    'TRUNCATE TABLE blueprints_version',
-                    "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, expiration) VALUES (1, 'slug_public_2', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'behavior_tree', '4.10', utc_timestamp() + interval 1 week)",
-                    "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
-                    "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
-                ],
-                'slug'       => 'slug_public_2',
-                'thumbnail'  => null,
-                'type'       => 'behavior tree',
-                'title'      => '<script>alert(1)</script>my title',
-                'exposure'   => 'public',
-                'expiration' => '7 days left',
-                'ueVersion'  => '4.10',
+            'slug'       => 'slug_private',
+            'thumbnail'  => null,
+            'type'       => 'animation',
+            'title'      => '<script>alert(1)</script>my title',
+            'exposure'   => 'private',
+            'expiration' => '1 days left',
+            'ueVersion'  => '4.16',
+        ];
+
+        yield 'no thumbnail / type behavior_tree / exposure public / expiration in 1w / ue version 4.10' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version, expiration) VALUES (1, 'slug_public_2', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'behavior_tree', '4.10', utc_timestamp() + interval 1 week)",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (1, 'member', null, 'member', 'member@mail', utc_timestamp())",
             ],
+            'slug'       => 'slug_public_2',
+            'thumbnail'  => null,
+            'type'       => 'behavior tree',
+            'title'      => '<script>alert(1)</script>my title',
+            'exposure'   => 'public',
+            'expiration' => '7 days left',
+            'ueVersion'  => '4.10',
         ];
     }
 
     /**
-     * @dataProvider dataCasesBlueprintGET_InformationsBlueprint
-     *
-     * @throws DatabaseException
      * @throws ApplicationException
+     * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesBlueprintGET_InformationsBlueprint')]
+    #[DataProvider('provideBlueprintGETInformationsBlueprintDataCases')]
     public function testBlueprintGETInformationsBlueprint(array $sqlQueries, string $slug, ?string $thumbnail, string $type, string $title, string $exposure, ?string $expiration, string $ueVersion): void
     {
         // sql queries

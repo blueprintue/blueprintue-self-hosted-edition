@@ -7,8 +7,11 @@ namespace app\helpers;
 class FormHelper
 {
     protected array $values = [];
+
     protected array $errors = [];
+
     protected ?string $errorMessage = null;
+
     protected ?string $successMessage = null;
 
     public function setErrorMessage(?string $errorMessage): void

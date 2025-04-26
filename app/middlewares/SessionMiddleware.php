@@ -15,10 +15,10 @@ use Rancoud\Session\Session;
 class SessionMiddleware implements MiddlewareInterface
 {
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Session\SessionException
-     * @throws \Exception
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -36,9 +36,9 @@ class SessionMiddleware implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
-     * @throws \Exception
      */
     protected function setDriver(): void
     {

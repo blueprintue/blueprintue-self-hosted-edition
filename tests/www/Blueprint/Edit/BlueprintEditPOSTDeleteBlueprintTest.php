@@ -1,13 +1,11 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
 
 namespace tests\www\Blueprint\Edit;
 
-use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\Application;
@@ -19,13 +17,14 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
 {
     use Common;
 
     /**
-     * @throws DatabaseException
      * @throws \Rancoud\Crypt\CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {
@@ -58,433 +57,442 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
         }
     }
 
-    public static function dataCasesDeleteBlueprint(): array
+    public static function provideDeleteBlueprintDataCases(): iterable
     {
-        return [
-            'delete OK - give blueprint - public blueprint' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-delete_blueprint-select-ownership' => 'give',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+        yield 'delete OK - give blueprint - public blueprint' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
             ],
-            'delete OK - give blueprint - unlisted blueprint' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-delete_blueprint-select-ownership' => 'give',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                'form-delete_blueprint-select-ownership' => 'give',
             ],
-            'delete KO - give blueprint - private blueprint' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-delete_blueprint-select-ownership' => 'give',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error(s) on ownership</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['ownership'],
-                'fieldsHasValue'   => ['ownership'],
-                'fieldsLabelError' => [
-                    'ownership' => 'Ownership is invalid, you can&#039;t give blueprint when having private exposure'
-                ],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
             ],
-            'delete OK - delete blueprint - public blueprint' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-delete_blueprint-select-ownership' => 'delete',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete OK - give blueprint - unlisted blueprint' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
             ],
-            'delete OK - delete blueprint - unlisted blueprint' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-delete_blueprint-select-ownership' => 'delete',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                'form-delete_blueprint-select-ownership' => 'give',
             ],
-            'delete OK - delete blueprint - private blueprint' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-delete_blueprint-select-ownership' => 'delete',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
             ],
-            'delete OK - no anonymous user - delete blueprint even if "give" sent - public blueprint' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-delete_blueprint-select-ownership' => 'give',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => false
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete KO - give blueprint - private blueprint' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-hidden-csrf'      => 'incorrect_csrf',
-                    'form-delete_blueprint-select-ownership' => 'delete',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                'form-delete_blueprint-select-ownership' => 'give',
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-select-ownership' => 'delete',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error(s) on ownership</div>'
+                ]
             ],
-            'missing fields - no ownership' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => ['ownership'],
+            'fieldsHasValue'   => ['ownership'],
+            'fieldsLabelError' => [
+                'ownership' => 'Ownership is invalid, you can&#039;t give blueprint when having private exposure'
             ],
-            'empty fields - ownership' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-delete_blueprint-select-ownership' => ' ',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error(s) on ownership</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['ownership'],
-                'fieldsHasValue'   => ['ownership'],
-                'fieldsLabelError' => [
-                    'ownership' => 'Ownership is invalid'
-                ],
-                'hasAnonymousUser' => true
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete OK - delete blueprint - public blueprint' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
             ],
-            'invalid fields - ownership invalid' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-delete_blueprint-select-ownership' => 'invalid',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error(s) on ownership</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['ownership'],
-                'fieldsHasValue'   => ['ownership'],
-                'fieldsLabelError' => [
-                    'ownership' => 'Ownership is invalid'
-                ],
-                'hasAnonymousUser' => true
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                'form-delete_blueprint-select-ownership' => 'delete',
             ],
-            'invalid fields - ownership give is not possible with private exposure' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-delete_blueprint-select-ownership' => 'give',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error(s) on ownership</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['ownership'],
-                'fieldsHasValue'   => ['ownership'],
-                'fieldsLabelError' => [
-                    'ownership' => 'Ownership is invalid, you can&#039;t give blueprint when having private exposure'
-                ],
-                'hasAnonymousUser' => true
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
             ],
-            'invalid encoding fields - select-ownership' => [
-                'sqlQueries' => [
-                    'REPLACE INTO users_infos (`id_user`) VALUES (189)',
-                    "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-                    "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
-                    'form-delete_blueprint-select-ownership' => \chr(99999999),
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error(s) on ownership</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-                'hasAnonymousUser' => true
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete OK - delete blueprint - unlisted blueprint' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'unlisted')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
             ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                'form-delete_blueprint-select-ownership' => 'delete',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete OK - delete blueprint - private blueprint' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                'form-delete_blueprint-select-ownership' => 'delete',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete OK - no anonymous user - delete blueprint even if "give" sent - public blueprint' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                'form-delete_blueprint-select-ownership' => 'give',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => false
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'incorrect_csrf',
+                'form-delete_blueprint-select-ownership' => 'delete',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-select-ownership' => 'delete',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'missing fields - no ownership' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'empty fields - ownership' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                'form-delete_blueprint-select-ownership' => ' ',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error(s) on ownership</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['ownership'],
+            'fieldsHasValue'   => ['ownership'],
+            'fieldsLabelError' => [
+                'ownership' => 'Ownership is invalid'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid fields - ownership invalid' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                'form-delete_blueprint-select-ownership' => 'invalid',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error(s) on ownership</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['ownership'],
+            'fieldsHasValue'   => ['ownership'],
+            'fieldsLabelError' => [
+                'ownership' => 'Ownership is invalid'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid fields - ownership give is not possible with private exposure' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                'form-delete_blueprint-select-ownership' => 'give',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error(s) on ownership</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['ownership'],
+            'fieldsHasValue'   => ['ownership'],
+            'fieldsLabelError' => [
+                'ownership' => 'Ownership is invalid, you can&#039;t give blueprint when having private exposure'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'invalid encoding fields - select-ownership' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                'form-delete_blueprint-select-ownership' => \chr(99999999),
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">Error(s) on ownership</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
         ];
     }
 
     /**
-     * @dataProvider dataCasesDeleteBlueprint
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesDeleteBlueprint')]
+    #[DataProvider('provideDeleteBlueprintDataCases')]
     public function testBlueprintEditPOSTDeleteBlueprint(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError, bool $hasAnonymousUser): void
     {
         static::setDatabase();
@@ -602,7 +610,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'ownership') {
-                $value = $hasValue ? Helper::trim($params['form-delete_blueprint-select-ownership']) : '';
+                $value = $hasValue ? \mb_trim($params['form-delete_blueprint-select-ownership']) : '';
                 $this->doTestHtmlForm($response, '#form-delete_blueprint', $this->getHTMLFieldOwnership($value, $hasError, $labelError, $blueprintBefore['exposure'] === 'private'));
             }
         }
@@ -623,11 +631,11 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
 <label class="form__label" for="form-delete_blueprint-select-ownership" id="form-delete_blueprint-label-ownership">Blueprints ownership</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-delete_blueprint-label-ownership form-delete_blueprint-label-ownership-error" aria-required="true" class="form__input form__input--select form__input--error" id="form-delete_blueprint-select-ownership" name="form-delete_blueprint-select-ownership">
-<option value="give"$give>Give my blueprint to anonymous user</option>
-<option value="delete"$delete>Delete my blueprint</option>
+<option value="give"{$give}>Give my blueprint to anonymous user</option>
+<option value="delete"{$delete}>Delete my blueprint</option>
 </select>
 </div>
-<label class="form__label form__label--error" for="form-delete_blueprint-select-ownership" id="form-delete_blueprint-label-ownership-error">$labelError</label>
+<label class="form__label form__label--error" for="form-delete_blueprint-select-ownership" id="form-delete_blueprint-label-ownership-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -637,8 +645,8 @@ HTML;
 <label class="form__label" for="form-delete_blueprint-select-ownership" id="form-delete_blueprint-label-ownership">Blueprints ownership</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-delete_blueprint-label-ownership" aria-required="true" class="form__input form__input--select" id="form-delete_blueprint-select-ownership" name="form-delete_blueprint-select-ownership">
-<option value="give"$give>Give my blueprint to anonymous user</option>
-<option value="delete"$delete>Delete my blueprint</option>
+<option value="give"{$give}>Give my blueprint to anonymous user</option>
+<option value="delete"{$delete}>Delete my blueprint</option>
 </select>
 </div>
 </div>

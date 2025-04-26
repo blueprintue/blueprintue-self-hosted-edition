@@ -12,6 +12,13 @@ use Rancoud\Model\Model;
 
 class UserModel extends Model
 {
+    public function __construct(Database $database)
+    {
+        $this->addInternalsCallbacks();
+
+        parent::__construct($database);
+    }
+
     /** @throws FieldException */
     protected function setFields(): void
     {
@@ -37,13 +44,6 @@ class UserModel extends Model
     protected function setTable(): void
     {
         $this->table = 'users';
-    }
-
-    public function __construct(Database $database)
-    {
-        $this->addInternalsCallbacks();
-
-        parent::__construct($database);
     }
 
     protected function addInternalsCallbacks(): void
@@ -167,7 +167,7 @@ class UserModel extends Model
         $sql = <<<SQL
             SELECT id, username, slug, avatar
             FROM users
-            WHERE id IN ($inStr);
+            WHERE id IN ({$inStr});
         SQL;
 
         $rows = $this->database->selectAll($sql);

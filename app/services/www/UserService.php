@@ -9,8 +9,6 @@ use app\helpers\MailerHelper;
 use app\models\UserApiModel;
 use app\models\UserInfosModel;
 use app\models\UserModel;
-use DateTime;
-use DateTimeZone;
 use PHPUnit\Framework\Exception;
 use Rancoud\Application\Application;
 use Rancoud\Crypt\Crypt;
@@ -19,6 +17,7 @@ use Rancoud\Security\Security;
 class UserService
 {
     protected static int $minLenPasword = 10;
+
     protected static string $regexPassword = "/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9\s:])([^\s]){8,}$/";
 
     /**
@@ -46,9 +45,9 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public static function generateRememberToken(int $userID): string
     {
@@ -178,7 +177,7 @@ class UserService
                  * For covering we have to mock the database
                  */
                 Application::getDatabase()->rollbackTransaction();
-            // @codeCoverageIgnoreEnd
+                // @codeCoverageIgnoreEnd
             } else {
                 /* @noinspection NullPointerExceptionInspection */
                 Application::getDatabase()->completeTransaction();
@@ -190,8 +189,8 @@ class UserService
 
     /**
      * @throws \Rancoud\Application\ApplicationException
-     * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
      */
     public static function getPublicProfileInfos(string $username): ?array
     {
@@ -214,8 +213,8 @@ class UserService
 
     /**
      * @throws \Rancoud\Application\ApplicationException
-     * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
      */
     public static function getPrivateProfileInfos(int $userID): ?array
     {
@@ -389,8 +388,8 @@ class UserService
     }
 
     /**
-     * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      */
     protected static function getNewApiKey(UserApiModel $userApiModel): string
     {
@@ -412,8 +411,8 @@ class UserService
 
     /**
      * @throws \Rancoud\Application\ApplicationException
-     * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
      */
     public static function generateApiKey(int $userID): void
     {
@@ -427,7 +426,7 @@ class UserService
 
     public static function slugify(string $string): string
     {
-        $string = Helper::trim($string);
+        $string = \mb_trim($string);
         $string = \mb_strtolower($string);
         $string = \str_replace(['.', ' ', '@'], ['-', '-', ''], $string);
 
@@ -435,10 +434,10 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      *
      * @return array [?string $token, bool $userFound, ?string $username]
      */
@@ -451,8 +450,8 @@ class UserService
         }
 
         if ($user['password_reset_at'] !== null) {
-            $nowTimestamp = (new DateTime('now', new DateTimeZone('UTC')))->getTimestamp();
-            $actionDoneTimestamp = (new DateTime($user['password_reset_at'], new DateTimeZone('UTC')))->getTimestamp();
+            $nowTimestamp = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->getTimestamp();
+            $actionDoneTimestamp = (new \DateTimeImmutable($user['password_reset_at'], new \DateTimeZone('UTC')))->getTimestamp();
             if (($nowTimestamp - $actionDoneTimestamp) < 300) {
                 return [null, true, null];
             }
@@ -554,9 +553,9 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      *
      * @return array [bool $isConfirmedAccount, bool $hasToSendEmail]
      */
@@ -585,8 +584,8 @@ class UserService
         if ($user['confirmed_sent_at'] === null) {
             $hasToSendEmail = true;
         } else {
-            $nowTimestamp = (new DateTime('now', new DateTimeZone('UTC')))->getTimestamp();
-            $actionDoneTimestamp = (new DateTime($user['confirmed_sent_at'], new DateTimeZone('UTC')))->getTimestamp();
+            $nowTimestamp = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->getTimestamp();
+            $actionDoneTimestamp = (new \DateTimeImmutable($user['confirmed_sent_at'], new \DateTimeZone('UTC')))->getTimestamp();
             if (($nowTimestamp - $actionDoneTimestamp) > 300) {
                 $hasToSendEmail = true;
             }
@@ -596,12 +595,12 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \PHPMailer\PHPMailer\Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public static function generateAndSendConfirmAccountEmail(int $userID, string $from): bool
     {
@@ -670,10 +669,10 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Security\SecurityException
-     * @throws \Exception
      */
     protected static function getConfirmAccountEmailHTML(string $token, string $username): string
     {
@@ -683,7 +682,7 @@ class UserService
 
         $html = \ob_get_clean();
 
-        $now = new DateTime('now', new DateTimeZone('UTC'));
+        $now = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
 
         $search = [
             '{{TOKEN}}',
@@ -709,10 +708,10 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public static function validateAccountWithConfirmedToken(string $confirmedToken): bool
     {
@@ -737,9 +736,9 @@ class UserService
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     public static function saveLastLogin(int $userID): bool
     {

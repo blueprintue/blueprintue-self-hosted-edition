@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace app\middlewares;
 
 use app\controllers\FormTrait;
-use app\helpers\Helper;
 use app\services\www\UserService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -29,9 +28,9 @@ class LoginMiddleware implements MiddlewareInterface
     protected string $rememberInputCheckbox = 'form-login-checkbox-remember';
 
     /**
-     * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
+     * @throws \Rancoud\Database\DatabaseException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -61,7 +60,7 @@ class LoginMiddleware implements MiddlewareInterface
         $rawParams = $request->getParsedBody();
         foreach ($rawParams as $key => $rawParam) {
             if (\in_array($key, $htmlNames, true)) {
-                $params[$key] = Helper::trim($rawParam);
+                $params[$key] = \mb_trim($rawParam);
             }
         }
 
@@ -91,9 +90,9 @@ class LoginMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Database\DatabaseException
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
+     * @throws \Rancoud\Database\DatabaseException
      *
      * @return ResponseInterface|null
      */
@@ -187,8 +186,8 @@ class LoginMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
+     * @throws \Rancoud\Application\ApplicationException
      */
     public function login(int $userID): bool
     {
@@ -240,8 +239,8 @@ class LoginMiddleware implements MiddlewareInterface
 
     /**
      * @throws \Rancoud\Application\ApplicationException
-     * @throws \Rancoud\Environment\EnvironmentException
      * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Environment\EnvironmentException
      */
     protected function deleteRememberToken(int $userID): void
     {
@@ -257,9 +256,9 @@ class LoginMiddleware implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
-     * @throws \Exception
      */
     protected function tryToRememberUser(ServerRequestInterface $request): ?ResponseInterface
     {

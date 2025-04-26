@@ -1,14 +1,11 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
 
 namespace tests\www\Lists;
 
-use DateTime;
-use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -20,6 +17,7 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class MostDiscussedListTest extends TestCase
 {
     use Common;
@@ -81,22 +79,23 @@ class MostDiscussedListTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCases1PublicBlueprint(): array
+    public static function provide1PublicBlueprintDataCases(): iterable
     {
-        return [
-            '1 blueprint public - no comment - no show' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+        yield '1 blueprint public - no comment - no show' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')
+                    SQL,
+            ],
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -105,25 +104,28 @@ class MostDiscussedListTest extends TestCase
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield '1 blueprint public - comments but comment hidden - no show' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`, `comments_hidden`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 1, 1)
+                    SQL,
             ],
-            '1 blueprint public - comments but comment hidden - no show' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`, `comments_hidden`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 1, 1)",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -132,25 +134,28 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield '1 blueprint public - comments but comment closed - show' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`, `comments_closed`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 1, 1)
+                    SQL,
             ],
-            '1 blueprint public - comments but comment closed - show' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`, `comments_closed`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', 1, 1)",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -182,7 +187,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -190,7 +195,6 @@ HTML,
 </li>
 </ul>
 HTML,
-            ],
         ];
     }
 
@@ -199,24 +203,25 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases3PublicUnlistedPrivateBlueprint(): array
+    public static function provide3PublicUnlistedPrivateBlueprintDataCases(): iterable
     {
-        return [
-            '3 blueprints public/unlisted/private - created but not published - (visitor profile)' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `comments_count`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '1')",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+        yield '3 blueprints public/unlisted/private - created but not published - (visitor profile)' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `comments_count`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '1')
+                    SQL,
+            ],
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -225,27 +230,30 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield '3 blueprints public/unlisted/private - created but not published - (public profile)' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `comments_count`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '1')
+                    SQL,
             ],
-            '3 blueprints public/unlisted/private - created but not published - (public profile)' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `comments_count`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '1')",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -254,27 +262,30 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield '3 blueprints public/unlisted/private - created but not published - (author profile)' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `comments_count`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '1')
+                    SQL,
             ],
-            '3 blueprints public/unlisted/private - created but not published - (author profile)' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `exposure`, `comments_count`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), 'public', '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), 'unlisted', '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), 'private', '1')",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -283,27 +294,30 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield '3 blueprints public/unlisted/private - deleted - (visitor profile)' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `comments_count`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), '1')
+                    SQL,
             ],
-            '3 blueprints public/unlisted/private - deleted - (visitor profile)' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `comments_count`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), '1')",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -312,27 +326,30 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield '3 blueprints public/unlisted/private - deleted - (public profile)' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `comments_count`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), '1')
+                    SQL,
             ],
-            '3 blueprints public/unlisted/private - deleted - (public profile)' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `comments_count`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), '1')",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -341,27 +358,30 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield '3 blueprints public/unlisted/private - deleted - (author profile)' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `comments_count`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), '1')
+                    SQL,
             ],
-            '3 blueprints public/unlisted/private - deleted - (author profile)' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `deleted_at`, `comments_count`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', utc_timestamp(), '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', utc_timestamp(), '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', utc_timestamp(), '1')",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -370,27 +390,30 @@ HTML,
 <div class="block__element">
 <p>No blueprints for the moment</p>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 </ul>
 HTML,
+        ];
+
+        yield '3 blueprints public/unlisted/private - (visitor profile)' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1')
+                    SQL,
             ],
-            '3 blueprints public/unlisted/private - (visitor profile)' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1')",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -422,7 +445,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -430,22 +453,25 @@ HTML,
 </li>
 </ul>
 HTML,
+        ];
+
+        yield '3 blueprints public/unlisted/private - (public profile)' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1')
+                    SQL,
             ],
-            '3 blueprints public/unlisted/private - (public profile)' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1')",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -477,7 +503,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -485,22 +511,25 @@ HTML,
 </li>
 </ul>
 HTML,
+        ];
+
+        yield '3 blueprints public/unlisted/private - (author profile)' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`) VALUES
+                                           (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1'),
+                                           (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1'),
+                                           (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1')
+                    SQL,
             ],
-            '3 blueprints public/unlisted/private - (author profile)' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`) VALUES
-                                            (159, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public', '1'),
-                                            (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', '1'),
-                                            (159, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp(), utc_timestamp(), 'private', '1')",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<'HTML'
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -560,7 +589,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -568,7 +597,6 @@ HTML,
 </li>
 </ul>
 HTML,
-            ],
         ];
     }
 
@@ -577,17 +605,17 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases30PublicUnlistedPrivateBlueprintPage1(): array
+    public static function provide30PublicUnlistedPrivateBlueprintPage1DataCases(): iterable
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
-            $formattedDates['-' . $i . ' days'] = static::getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
+            $formattedDates['-' . $i . ' days'] = static::getSince((new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
         }
 
-        return [
-            '30 blueprints public/unlisted/private - (visitor profile) - page 1' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`)
+        yield '30 blueprints public/unlisted/private - (visitor profile) - page 1' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', 1),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', 5),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', 1),
@@ -630,16 +658,17 @@ HTML,
                                (169, 'slug_40', 'file_40', 'title_40', 1, utc_timestamp() - interval 40 day, utc_timestamp() - interval 40 day, 'private', 1),
                                (159, 'slug_41', 'file_41', 'title_41', 1, utc_timestamp() - interval 41 day, utc_timestamp() - interval 41 day, 'public', 1),
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', 1),
-                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 1)",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 1)
+                    SQL,
+            ],
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -937,7 +966,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -951,10 +980,12 @@ HTML,
 </li>
 </ul>
 HTML,
-            ],
-            '30 blueprints public/unlisted/private - (public profile) - page 1' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`)
+        ];
+
+        yield '30 blueprints public/unlisted/private - (public profile) - page 1' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', 1),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', 5),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', 1),
@@ -997,16 +1028,17 @@ HTML,
                                (169, 'slug_40', 'file_40', 'title_40', 1, utc_timestamp() - interval 40 day, utc_timestamp() - interval 40 day, 'private', 1),
                                (159, 'slug_41', 'file_41', 'title_41', 1, utc_timestamp() - interval 41 day, utc_timestamp() - interval 41 day, 'public', 1),
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', 1),
-                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 1)",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 1)
+                    SQL,
+            ],
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -1304,7 +1336,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1318,10 +1350,12 @@ HTML,
 </li>
 </ul>
 HTML,
-            ],
-            '30 blueprints public/unlisted/private - (author profile) - page 1' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`)
+        ];
+
+        yield '30 blueprints public/unlisted/private - (author profile) - page 1' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', 1),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', 5),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', 1),
@@ -1364,16 +1398,17 @@ HTML,
                                (169, 'slug_40', 'file_40', 'title_40', 1, utc_timestamp() - interval 40 day, utc_timestamp() - interval 40 day, 'private', 1),
                                (159, 'slug_41', 'file_41', 'title_41', 1, utc_timestamp() - interval 41 day, utc_timestamp() - interval 41 day, 'public', 1),
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', 1),
-                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 1)",
-                ],
-                'slug'        => '/most-discussed-blueprints/1/',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 1)
+                    SQL,
+            ],
+            'slug'        => '/most-discussed-blueprints/1/',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 1 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -1671,7 +1706,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1685,7 +1720,6 @@ HTML,
 </li>
 </ul>
 HTML,
-            ],
         ];
     }
 
@@ -1694,17 +1728,17 @@ HTML,
      *
      * @return array[]
      */
-    public static function dataCases30PublicUnlistedPrivateBlueprintPage2(): array
+    public static function provide30PublicUnlistedPrivateBlueprintPage2DataCases(): iterable
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
-            $formattedDates['-' . $i . ' days'] = static::getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
+            $formattedDates['-' . $i . ' days'] = static::getSince((new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
         }
 
-        return [
-            '30 blueprints public/unlisted/private - (visitor profile) - page 2' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`)
+        yield '30 blueprints public/unlisted/private - (visitor profile) - page 2' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', 1),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', 5),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', 1),
@@ -1747,16 +1781,17 @@ HTML,
                                (169, 'slug_40', 'file_40', 'title_40', 1, utc_timestamp() - interval 40 day, utc_timestamp() - interval 40 day, 'private', 1),
                                (159, 'slug_41', 'file_41', 'title_41', 1, utc_timestamp() - interval 41 day, utc_timestamp() - interval 41 day, 'public', 1),
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', 1),
-                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 1)",
-                ],
-                'slug'        => '/most-discussed-blueprints/2/',
-                'location'    => null,
-                'userID'      => null,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 2 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 1)
+                    SQL,
+            ],
+            'slug'        => '/most-discussed-blueprints/2/',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 2 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -1914,7 +1949,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -1928,10 +1963,12 @@ HTML,
 </li>
 </ul>
 HTML,
-            ],
-            '30 blueprints public/unlisted/private - (public profile) - page 2' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`)
+        ];
+
+        yield '30 blueprints public/unlisted/private - (public profile) - page 2' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', 1),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', 5),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', 1),
@@ -1974,16 +2011,17 @@ HTML,
                                (169, 'slug_40', 'file_40', 'title_40', 1, utc_timestamp() - interval 40 day, utc_timestamp() - interval 40 day, 'private', 1),
                                (159, 'slug_41', 'file_41', 'title_41', 1, utc_timestamp() - interval 41 day, utc_timestamp() - interval 41 day, 'public', 1),
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', 1),
-                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 1)",
-                ],
-                'slug'        => '/most-discussed-blueprints/2/',
-                'location'    => null,
-                'userID'      => 179,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 2 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 1)
+                    SQL,
+            ],
+            'slug'        => '/most-discussed-blueprints/2/',
+            'location'    => null,
+            'userID'      => 179,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 2 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -2155,7 +2193,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -2169,10 +2207,12 @@ HTML,
 </li>
 </ul>
 HTML,
-            ],
-            '30 blueprints public/unlisted/private - (author profile) - page 2' => [
-                'sqlQueries' => [
-                    "INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`)
+        ];
+
+        yield '30 blueprints public/unlisted/private - (author profile) - page 2' => [
+            'sqlQueries' => [
+                <<<'SQL'
+                    INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `comments_count`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', 1),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', 5),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', 1),
@@ -2215,16 +2255,17 @@ HTML,
                                (169, 'slug_40', 'file_40', 'title_40', 1, utc_timestamp() - interval 40 day, utc_timestamp() - interval 40 day, 'private', 1),
                                (159, 'slug_41', 'file_41', 'title_41', 1, utc_timestamp() - interval 41 day, utc_timestamp() - interval 41 day, 'public', 1),
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', 1),
-                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 1)",
-                ],
-                'slug'        => '/most-discussed-blueprints/2/',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Most discussed blueprints | Page 2 | This is a base title',
-                    'description' => 'Blueprints with the most comments'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', 1)
+                    SQL,
+            ],
+            'slug'        => '/most-discussed-blueprints/2/',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Most discussed blueprints | Page 2 | This is a base title',
+                'description' => 'Blueprints with the most comments'
+            ],
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--first block__container--last">
 <div class="block__element">
 <h2 class="block__title">Most discussed <span class="block__title--emphasis">blueprints</span></h2>
@@ -2522,7 +2563,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item">
@@ -2536,26 +2577,20 @@ HTML,
 </li>
 </ul>
 HTML,
-            ],
         ];
     }
 
     /**
-     * @dataProvider dataCases1PublicBlueprint
-     * @dataProvider dataCases3PublicUnlistedPrivateBlueprint
-     * @dataProvider dataCases30PublicUnlistedPrivateBlueprintPage1
-     * @dataProvider dataCases30PublicUnlistedPrivateBlueprintPage2
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCases1PublicBlueprint')]
-    #[DataProvider('dataCases3PublicUnlistedPrivateBlueprint')]
-    #[DataProvider('dataCases30PublicUnlistedPrivateBlueprintPage1')]
-    #[DataProvider('dataCases30PublicUnlistedPrivateBlueprintPage2')]
+    #[DataProvider('provide1PublicBlueprintDataCases')]
+    #[DataProvider('provide3PublicUnlistedPrivateBlueprintDataCases')]
+    #[DataProvider('provide30PublicUnlistedPrivateBlueprintPage1DataCases')]
+    #[DataProvider('provide30PublicUnlistedPrivateBlueprintPage2DataCases')]
     public function testMostDiscussedListGET(array $sqlQueries, string $slug, ?string $location, ?int $userID, ?array $contentHead, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();

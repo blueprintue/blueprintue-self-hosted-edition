@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -8,11 +7,10 @@ declare(strict_types=1);
 namespace tests\www\IntegrationTest\Helper;
 
 use app\helpers\Helper;
-use DateTime;
-use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
+/** @internal */
 class HelperTest extends TestCase
 {
     // region getSince
@@ -23,37 +21,34 @@ class HelperTest extends TestCase
      *
      * @return string[][]
      */
-    public static function dataCasesSince(): array
+    public static function provideSinceDataCases(): iterable
     {
-        $future = (new DateTime('now', new DateTimeZone('UTC')))->modify('+1 minutes')->format('Y-m-d H:i:s');
-        $nowMinus5Years = (new DateTime('now', new DateTimeZone('UTC')))->modify('-5 years')->format('Y-m-d H:i:s');
+        $future = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('+1 minutes')->format('Y-m-d H:i:s');
+        $nowMinus5Years = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('-5 years')->format('Y-m-d H:i:s');
 
-        return [
-            'empty string = few seconds ago' => [
-                'in'  => '',
-                'out' => 'few seconds ago',
-            ],
-            'invalid string = few seconds ago' => [
-                'in'  => 'invalid',
-                'out' => 'few seconds ago',
-            ],
-            'future = few seconds ago' => [
-                'in'  => $future,
-                'out' => 'few seconds ago',
-            ],
-            'now - 5 years = 5 years ago' => [
-                'in'  => $nowMinus5Years,
-                'out' => '5 years ago',
-            ]
+        yield 'empty string = few seconds ago' => [
+            'in'  => '',
+            'out' => 'few seconds ago',
+        ];
+
+        yield 'invalid string = few seconds ago' => [
+            'in'  => 'invalid',
+            'out' => 'few seconds ago',
+        ];
+
+        yield 'future = few seconds ago' => [
+            'in'  => $future,
+            'out' => 'few seconds ago',
+        ];
+
+        yield 'now - 5 years = 5 years ago' => [
+            'in'  => $nowMinus5Years,
+            'out' => '5 years ago',
         ];
     }
 
-    /**
-     * @dataProvider dataCasesSince
-     *
-     * @throws \Exception
-     */
-    #[DataProvider('dataCasesSince')]
+    /** @throws \Exception */
+    #[DataProvider('provideSinceDataCases')]
     public function testSince(string $in, string $out): void
     {
         static::assertSame($out, Helper::getSince($in));
@@ -66,41 +61,39 @@ class HelperTest extends TestCase
      *
      * @throws \Exception
      */
-    public static function dataCasesTimeleft(): array
+    public static function provideTimeleftDataCases(): iterable
     {
-        $past = (new DateTime('now', new DateTimeZone('UTC')))->modify('-1 minutes')->format('Y-m-d H:i:s');
-        $nowPlus2Hours = (new DateTime('now', new DateTimeZone('UTC')))->modify('+2 hours +30 minutes +59 seconds')->format('Y-m-d H:i:s');
+        $past = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('-1 minutes')->format('Y-m-d H:i:s');
+        $nowPlus2Hours = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('+2 hours +30 minutes +59 seconds')->format('Y-m-d H:i:s');
 
-        return [
-            'null = null' => [
-                'in'  => null,
-                'out' => null,
-            ],
-            'empty string = few seconds left' => [
-                'in'  => '',
-                'out' => 'few seconds left',
-            ],
-            'invalid string = few seconds left' => [
-                'in'  => 'invalid',
-                'out' => 'few seconds left',
-            ],
-            'past = few seconds left' => [
-                'in'  => $past,
-                'out' => 'few seconds left',
-            ],
-            'now + 2 hours and 30 minutes = 2 h and 30 min left' => [
-                'in'  => $nowPlus2Hours,
-                'out' => '2 h and 30 min left',
-            ],
+        yield 'null = null' => [
+            'in'  => null,
+            'out' => null,
+        ];
+
+        yield 'empty string = few seconds left' => [
+            'in'  => '',
+            'out' => 'few seconds left',
+        ];
+
+        yield 'invalid string = few seconds left' => [
+            'in'  => 'invalid',
+            'out' => 'few seconds left',
+        ];
+
+        yield 'past = few seconds left' => [
+            'in'  => $past,
+            'out' => 'few seconds left',
+        ];
+
+        yield 'now + 2 hours and 30 minutes = 2 h and 30 min left' => [
+            'in'  => $nowPlus2Hours,
+            'out' => '2 h and 30 min left',
         ];
     }
 
-    /**
-     * @dataProvider dataCasesTimeleft
-     *
-     * @throws \Exception
-     */
-    #[DataProvider('dataCasesTimeleft')]
+    /** @throws \Exception */
+    #[DataProvider('provideTimeleftDataCases')]
     public function testTimeleft(?string $in, ?string $out): void
     {
         try {
@@ -116,44 +109,46 @@ class HelperTest extends TestCase
     // endregion
 
     // region getFitSentence
-    public static function dataCasesFitSentence(): array
+    public static function provideFitSentenceDataCases(): iterable
     {
-        return [
-            'empty string + max 0 = empty string' => [
-                'in'  => '',
-                'max' => 0,
-                'out' => '',
-            ],
-            '"aaa" + max 0 = empty string' => [
-                'in'  => 'aaa',
-                'max' => 0,
-                'out' => '',
-            ],
-            '"aaa" + max 5 = "aaa"' => [
-                'in'  => 'aaa',
-                'max' => 5,
-                'out' => 'aaa',
-            ],
-            '"aaa" + max 2 = empty string' => [
-                'in'  => 'aaa',
-                'max' => 2,
-                'out' => '',
-            ],
-            '"aa a" + max 2 = "aa"' => [
-                'in'  => 'aa a',
-                'max' => 2,
-                'out' => 'aa',
-            ],
-            '"a b c" + max 2 = "a"' => [
-                'in'  => 'a b c',
-                'max' => 2,
-                'out' => 'a',
-            ],
+        yield 'empty string + max 0 = empty string' => [
+            'in'  => '',
+            'max' => 0,
+            'out' => '',
+        ];
+
+        yield '"aaa" + max 0 = empty string' => [
+            'in'  => 'aaa',
+            'max' => 0,
+            'out' => '',
+        ];
+
+        yield '"aaa" + max 5 = "aaa"' => [
+            'in'  => 'aaa',
+            'max' => 5,
+            'out' => 'aaa',
+        ];
+
+        yield '"aaa" + max 2 = empty string' => [
+            'in'  => 'aaa',
+            'max' => 2,
+            'out' => '',
+        ];
+
+        yield '"aa a" + max 2 = "aa"' => [
+            'in'  => 'aa a',
+            'max' => 2,
+            'out' => 'aa',
+        ];
+
+        yield '"a b c" + max 2 = "a"' => [
+            'in'  => 'a b c',
+            'max' => 2,
+            'out' => 'a',
         ];
     }
 
-    /** @dataProvider dataCasesFitSentence */
-    #[DataProvider('dataCasesFitSentence')]
+    #[DataProvider('provideFitSentenceDataCases')]
     public function testFitSentence(string $in, int $max, string $out): void
     {
         static::assertSame($out, Helper::getFitSentence($in, $max));

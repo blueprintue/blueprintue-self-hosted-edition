@@ -11,8 +11,6 @@ use app\helpers\Helper;
 use app\services\www\BlueprintService;
 use app\services\www\TagService;
 use app\services\www\UserService;
-use DateTime;
-use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -28,9 +26,13 @@ class BlueprintEditController implements MiddlewareInterface
     use TemplateTrait;
 
     protected ?int $userID = null;
+
     protected ?int $blueprintID = null;
+
     protected string $exposure = 'public';
+
     protected ?string $expiration = null;
+
     protected string $blueprintEditURL = '/';
 
     protected array $formCsrfKeys = [
@@ -87,9 +89,9 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
-     * @throws \Exception
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -224,7 +226,7 @@ class BlueprintEditController implements MiddlewareInterface
         $rawParams = $request->getParsedBody();
         foreach ($rawParams as $key => $rawParam) {
             if (\in_array($key, $htmlNames, true)) {
-                $params[$key] = Helper::trim($rawParam);
+                $params[$key] = \mb_trim($rawParam);
             }
         }
 
@@ -233,9 +235,9 @@ class BlueprintEditController implements MiddlewareInterface
 
     // region Delete Thumbnail
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Model\ModelException
-     * @throws \Exception
      */
     protected function doProcessDeleteThumbnail(): ResponseInterface
     {
@@ -311,8 +313,8 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
+     * @throws \Rancoud\Application\ApplicationException
      */
     protected function doProcessEditInformations(?array $params): ?ResponseInterface
     {
@@ -423,8 +425,8 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
-     * @throws \Rancoud\Application\ApplicationException
      * @throws \Exception
+     * @throws \Rancoud\Application\ApplicationException
      */
     protected function doProcessEditProperties(?array $params): ?ResponseInterface
     {
@@ -450,9 +452,9 @@ class BlueprintEditController implements MiddlewareInterface
             ];
 
             $startDate = $this->expiration ?? 'now';
-            $date = (new DateTime($startDate, new DateTimeZone('UTC')));
-            $date->modify('+1 ' . $convert[$params['expiration']]);
-            $properties['expiration'] = $date->format('Y-m-d H:i:s');
+            $startDateAsDateTime = (new \DateTimeImmutable($startDate, new \DateTimeZone('UTC')));
+            $expirationDateTime = $startDateAsDateTime->modify('+1 ' . $convert[$params['expiration']]);
+            $properties['expiration'] = $expirationDateTime->format('Y-m-d H:i:s');
         }
 
         // ue_version
@@ -517,9 +519,9 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     protected function doProcessAddVersion(?array $params): ?ResponseInterface
     {
@@ -575,9 +577,9 @@ class BlueprintEditController implements MiddlewareInterface
     }
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     protected function doProcessDeleteBlueprint(?array $params): ?ResponseInterface
     {
@@ -624,9 +626,9 @@ class BlueprintEditController implements MiddlewareInterface
     // endregion
 
     /**
+     * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
-     * @throws \Exception
      */
     protected function computeDataForRender(array $blueprint): void
     {

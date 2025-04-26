@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -18,6 +17,7 @@ use Rancoud\Security\Security;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class BlueprintPOSTDeleteCommentTest extends TestCase
 {
     use Common;
@@ -28,7 +28,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::setDatabaseEmptyStructure();
 
         // user
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO users (`id`, `username`, `slug`, `grade`, `created_at`)
             VALUES (65, 'user_65', 'user_65', 'member', utc_timestamp()),
                    (66, 'user_66', 'user_66', 'member', utc_timestamp())
@@ -36,7 +36,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::$db->exec($sql);
 
         // user infos
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO users_infos (id_user, count_public_comment, count_private_comment)
             VALUES (65, 1, 3),
                    (66, 0, 0)
@@ -44,7 +44,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::$db->exec($sql);
 
         // blueprints
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure)
             VALUES (966, 65, 'slug_public',   'a1', 'my title 1', 1, utc_timestamp(), utc_timestamp(), 'public'),
                    (967, 65, 'slug_unlisted', 'a2', 'my title 2', 1, utc_timestamp(), utc_timestamp(), 'unlisted'),
@@ -53,7 +53,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::$db->exec($sql);
 
         // blueprints version
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO blueprints_version (id_blueprint, version, reason, created_at, published_at)
             VALUES (966, 1, 'First commit', utc_timestamp(), utc_timestamp()),
                    (967, 1, 'First commit', utc_timestamp(), utc_timestamp()),
@@ -66,7 +66,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
     protected function setUp(): void
     {
         // comment
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO comments (id, id_author, id_blueprint, content, created_at)
             VALUES (10, 65, 966, 'com 1 public', utc_timestamp()),
                    (11, 65, 967, 'com 1 unlisted', utc_timestamp()),
@@ -75,7 +75,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::$db->exec($sql);
 
         // user infos
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO users_infos (id_user, count_public_comment, count_private_comment)
             VALUES (65, 1, 3),
                    (66, 0, 0)
@@ -83,7 +83,7 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         static::$db->exec($sql);
 
         // blueprints
-        $sql = <<<SQL
+        $sql = <<<'SQL'
             REPLACE INTO blueprints (id, id_author, slug, file_id, title, current_version, created_at, published_at, exposure, comments_count, comments_closed, comments_hidden)
             VALUES (966, 65, 'slug_public',   'a1', 'my title 1', 1, utc_timestamp(), utc_timestamp(), 'public', 1, 0, 0),
                    (967, 65, 'slug_unlisted', 'a2', 'my title 2', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 1, 0, 0),
@@ -104,333 +104,341 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintPOST_DeleteComment(): array
+    public static function provideBlueprintPOSTDeleteCommentDataCases(): iterable
     {
-        return [
-            'delete comment OK - public blueprint' => [
-                'sqlQueries'      => [],
-                'slug'            => 'slug_public',
-                'userID'          => 65,
-                'commentID'       => 10,
-                'hasButtonDelete' => true,
-                'params'          => [
-                    'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
-                    'form-delete_comment-hidden-id'   => '10',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">Your comment has been deleted</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
-                    ]
-                ],
+        yield 'delete comment OK - public blueprint' => [
+            'sqlQueries'      => [],
+            'slug'            => 'slug_public',
+            'userID'          => 65,
+            'commentID'       => 10,
+            'hasButtonDelete' => true,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
+                'form-delete_comment-hidden-id'   => '10',
             ],
-            'delete comment OK - unlisted blueprint' => [
-                'sqlQueries'      => [],
-                'slug'            => 'slug_unlisted',
-                'userID'          => 65,
-                'commentID'       => 11,
-                'hasButtonDelete' => true,
-                'params'          => [
-                    'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
-                    'form-delete_comment-hidden-id'   => '11',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">Your comment has been deleted</div>'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">Your comment has been deleted</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
+                ]
             ],
-            'delete comment OK - private blueprint' => [
-                'sqlQueries'      => [],
-                'slug'            => 'slug_private',
-                'userID'          => 65,
-                'commentID'       => 12,
-                'hasButtonDelete' => true,
-                'params'          => [
-                    'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
-                    'form-delete_comment-hidden-id'   => '12',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">Your comment has been deleted</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
-                    ]
-                ],
+        ];
+
+        yield 'delete comment OK - unlisted blueprint' => [
+            'sqlQueries'      => [],
+            'slug'            => 'slug_unlisted',
+            'userID'          => 65,
+            'commentID'       => 11,
+            'hasButtonDelete' => true,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
+                'form-delete_comment-hidden-id'   => '11',
             ],
-            'delete comment KO - comments close' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_closed = 1 WHERE id = 966'
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">Your comment has been deleted</div>'
                 ],
-                'slug'            => 'slug_public',
-                'userID'          => 65,
-                'commentID'       => 10,
-                'hasButtonDelete' => false,
-                'params'          => [
-                    'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
-                    'form-delete_comment-hidden-id'   => '10',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
+                ]
             ],
-            'delete comment KO - comments hidden' => [
-                'sqlQueries' => [
-                    'UPDATE blueprints SET comments_hidden = 1 WHERE id = 966'
-                ],
-                'slug'            => 'slug_public',
-                'userID'          => 65,
-                'commentID'       => 10,
-                'hasButtonDelete' => false,
-                'params'          => [
-                    'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
-                    'form-delete_comment-hidden-id'   => '10',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
-                    ]
-                ],
+        ];
+
+        yield 'delete comment OK - private blueprint' => [
+            'sqlQueries'      => [],
+            'slug'            => 'slug_private',
+            'userID'          => 65,
+            'commentID'       => 12,
+            'hasButtonDelete' => true,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
+                'form-delete_comment-hidden-id'   => '12',
             ],
-            'delete comment KO - ownership incorrect' => [
-                'sqlQueries'      => [],
-                'slug'            => 'slug_public',
-                'userID'          => 66,
-                'commentID'       => 10,
-                'hasButtonDelete' => false,
-                'params'          => [
-                    'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
-                    'form-delete_comment-hidden-id'   => '10',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">Your comment has been deleted</div>'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">Error, this comment does not belong to you</div>'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
+                ]
             ],
-            'csrf incorrect' => [
-                'sqlQueries'      => [],
-                'slug'            => 'slug_public',
-                'userID'          => 65,
-                'commentID'       => 10,
-                'hasButtonDelete' => true,
-                'params'          => [
-                    'form-delete_comment-hidden-csrf' => 'incorrect_csrf',
-                    'form-delete_comment-hidden-id'   => '10',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
-                    ]
-                ],
+        ];
+
+        yield 'delete comment KO - comments close' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_closed = 1 WHERE id = 966'
             ],
-            'missing fields - no fields' => [
-                'sqlQueries'         => [],
-                'slug'               => 'slug_public',
-                'userID'             => 65,
-                'commentID'          => 10,
-                'hasButtonDelete'    => true,
-                'params'             => [],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
-                    ]
-                ],
+            'slug'            => 'slug_public',
+            'userID'          => 65,
+            'commentID'       => 10,
+            'hasButtonDelete' => false,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
+                'form-delete_comment-hidden-id'   => '10',
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries'      => [],
-                'slug'            => 'slug_public',
-                'userID'          => 65,
-                'commentID'       => 10,
-                'hasButtonDelete' => true,
-                'params'          => [
-                    'form-delete_comment-hidden-id' => '10',
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
                 ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
+                ]
             ],
-            'missing fields - no id' => [
-                'sqlQueries'      => [],
-                'slug'            => 'slug_public',
-                'userID'          => 65,
-                'commentID'       => 10,
-                'hasButtonDelete' => true,
-                'params'          => [
-                    'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">Error, missing fields</div>'
-                    ]
-                ],
+        ];
+
+        yield 'delete comment KO - comments hidden' => [
+            'sqlQueries' => [
+                'UPDATE blueprints SET comments_hidden = 1 WHERE id = 966'
             ],
-            'empty fields - id empty' => [
-                'sqlQueries'      => [],
-                'slug'            => 'slug_public',
-                'userID'          => 65,
-                'commentID'       => 10,
-                'hasButtonDelete' => true,
-                'params'          => [
-                    'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
-                    'form-delete_comment-hidden-id'   => ' ',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
+            'slug'            => 'slug_public',
+            'userID'          => 65,
+            'commentID'       => 10,
+            'hasButtonDelete' => false,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
+                'form-delete_comment-hidden-id'   => '10',
             ],
-            'invalid fields - id invalid' => [
-                'sqlQueries'      => [],
-                'slug'            => 'slug_public',
-                'userID'          => 65,
-                'commentID'       => 10,
-                'hasButtonDelete' => true,
-                'params'          => [
-                    'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
-                    'form-delete_comment-hidden-id'   => 'iezhfio',
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">Error, fields are invalid or required</div>'
-                    ]
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
+                ]
             ],
-            'invalid encoding fields - id' => [
-                'sqlQueries'      => [],
-                'slug'            => 'slug_public',
-                'userID'          => 65,
-                'commentID'       => 10,
-                'hasButtonDelete' => true,
-                'params'          => [
-                    'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
-                    'form-delete_comment-hidden-id'   => \chr(99999999),
+        ];
+
+        yield 'delete comment KO - ownership incorrect' => [
+            'sqlQueries'      => [],
+            'slug'            => 'slug_public',
+            'userID'          => 66,
+            'commentID'       => 10,
+            'hasButtonDelete' => false,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
+                'form-delete_comment-hidden-id'   => '10',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
-                    ]
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">Error, this comment does not belong to you</div>'
+                ]
+            ],
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries'      => [],
+            'slug'            => 'slug_public',
+            'userID'          => 65,
+            'commentID'       => 10,
+            'hasButtonDelete' => true,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'incorrect_csrf',
+                'form-delete_comment-hidden-id'   => '10',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
                 ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'missing fields - no fields' => [
+            'sqlQueries'         => [],
+            'slug'               => 'slug_public',
+            'userID'             => 65,
+            'commentID'          => 10,
+            'hasButtonDelete'    => true,
+            'params'             => [],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries'      => [],
+            'slug'            => 'slug_public',
+            'userID'          => 65,
+            'commentID'       => 10,
+            'hasButtonDelete' => true,
+            'params'          => [
+                'form-delete_comment-hidden-id' => '10',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'missing fields - no id' => [
+            'sqlQueries'      => [],
+            'slug'            => 'slug_public',
+            'userID'          => 65,
+            'commentID'       => 10,
+            'hasButtonDelete' => true,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">Error, missing fields</div>'
+                ]
+            ],
+        ];
+
+        yield 'empty fields - id empty' => [
+            'sqlQueries'      => [],
+            'slug'            => 'slug_public',
+            'userID'          => 65,
+            'commentID'       => 10,
+            'hasButtonDelete' => true,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
+                'form-delete_comment-hidden-id'   => ' ',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+        ];
+
+        yield 'invalid fields - id invalid' => [
+            'sqlQueries'      => [],
+            'slug'            => 'slug_public',
+            'userID'          => 65,
+            'commentID'       => 10,
+            'hasButtonDelete' => true,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
+                'form-delete_comment-hidden-id'   => 'iezhfio',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+        ];
+
+        yield 'invalid encoding fields - id' => [
+            'sqlQueries'      => [],
+            'slug'            => 'slug_public',
+            'userID'          => 65,
+            'commentID'       => 10,
+            'hasButtonDelete' => true,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
+                'form-delete_comment-hidden-id'   => \chr(99999999),
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
+                ]
             ],
         ];
     }
 
     /**
-     * @dataProvider dataCasesBlueprintPOST_DeleteComment
-     *
+     * @throws \Rancoud\Security\SecurityException
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Security\SecurityException
      */
-    #[DataProvider('dataCasesBlueprintPOST_DeleteComment')]
+    #[DataProvider('provideBlueprintPOSTDeleteCommentDataCases')]
     public function testBlueprintPOSTDeleteComment(array $sqlQueries, string $slug, ?int $userID, ?int $commentID, bool $hasButtonDelete, ?array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages): void
     {
         // sql queries
@@ -463,11 +471,11 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
         $html = <<<HTML
 <div class="comment__actions">
 <form class="form__inline" data-form-confirm data-form-confirm-no="No" data-form-confirm-question="Are you sure you want to delete this comment?" data-form-confirm-yes="Yes" method="post">
-<input name="form-delete_comment-hidden-id" type="hidden" value="$commentID"/>
-<input name="form-delete_comment-hidden-csrf" type="hidden" value="$csrf"/>
+<input name="form-delete_comment-hidden-id" type="hidden" value="{$commentID}"/>
+<input name="form-delete_comment-hidden-csrf" type="hidden" value="{$csrf}"/>
 <button class="form__button form__button--warning form__button--block_link" type="submit">Delete</button>
 </form>
-<a class="block__link block__link--no-margin" id="edit_comment-btn-edit-comment-$commentID" href="#">Edit</a>
+<a class="block__link block__link--no-margin" id="edit_comment-btn-edit-comment-{$commentID}" href="#">Edit</a>
 </div>
 HTML;
 

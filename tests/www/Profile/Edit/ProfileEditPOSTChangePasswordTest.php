@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -17,13 +16,14 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ProfileEditPOSTChangePasswordTest extends TestCase
 {
     use Common;
 
     /**
-     * @throws DatabaseException
      * @throws \Rancoud\Crypt\CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {
@@ -78,512 +78,526 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
         }
     }
 
-    public static function dataCasesChangePassword(): array
+    public static function provideChangePasswordDataCases(): iterable
     {
-        return [
-            'edit OK' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => 'My_secret_password_01*',
-                    'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">Your new password has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+        yield 'edit OK' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => 'My_secret_password_01*',
+                'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
             ],
-            'edit OK - xss' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => 'My_secret_password_01*<script>alert("facebook");</script>',
-                    'form-change_password-input-new_password_confirm' => 'My_secret_password_01*<script>alert("facebook");</script>',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">Your new password has been saved</div>'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">Your new password has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
+                ]
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'incorrect_csrf',
-                    'form-change_password-input-new_password'         => 'My_secret_password_01*',
-                    'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'edit OK - xss' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => 'My_secret_password_01*<script>alert("facebook");</script>',
+                'form-change_password-input-new_password_confirm' => 'My_secret_password_01*<script>alert("facebook");</script>',
             ],
-            'missing fields - no fields (password is null)' => [
-                'sqlQueries' => [
-                    'UPDATE users SET password = NULL WHERE id = 189',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">Your new password has been saved</div>'
                 ],
-                'userID'               => 189,
-                'params'               => [],
-                'useCsrfFromSession'   => false,
-                'hasRedirection'       => false,
-                'isFormSuccess'        => false,
-                'flashMessages'        => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
+                ]
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-input-new_password'         => 'My_secret_password_01*',
-                    'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'incorrect_csrf',
+                'form-change_password-input-new_password'         => 'My_secret_password_01*',
+                'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
             ],
-            'missing fields - no new_password' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
+                ]
             ],
-            'missing fields - no new_password_confirm' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-change_password-input-new_password' => 'My_secret_password_01*',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no fields (password is null)' => [
+            'sqlQueries' => [
+                'UPDATE users SET password = NULL WHERE id = 189',
             ],
-            'empty fields - new_password empty' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => ' ',
-                    'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
+            'userID'               => 189,
+            'params'               => [],
+            'useCsrfFromSession'   => false,
+            'hasRedirection'       => false,
+            'isFormSuccess'        => false,
+            'flashMessages'        => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_password'],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [
-                    'new_password' => 'Password must be at least 10 characters in length',
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
+                ]
             ],
-            'empty fields - new_password_confirm empty' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => 'My_secret_password_01*',
-                    'form-change_password-input-new_password_confirm' => ' ',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on confirm new password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_password_confirm'],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [
-                    'new_password_confirm' => 'Password must be at least 10 characters in length',
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-input-new_password'         => 'My_secret_password_01*',
+                'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
             ],
-            'invalid fields - new_password incorrect length' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => 'aze',
-                    'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_password'],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [
-                    'new_password' => 'Password must be at least 10 characters in length',
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
+                ]
             ],
-            'invalid fields - new_password incorrect format (miss lowercase)' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => '_*_123RTYY',
-                    'form-change_password-input-new_password_confirm' => '_*_123RTYY',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_password'],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [
-                    'new_password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters',
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no new_password' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
             ],
-            'invalid fields - new_password incorrect format (miss uppercase)' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => 'aaze123_*_',
-                    'form-change_password-input-new_password_confirm' => 'aaze123_*_',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_password'],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [
-                    'new_password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters',
-                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'invalid fields - new_password incorrect format (miss digit)' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => 'aaze_*_RTY',
-                    'form-change_password-input-new_password_confirm' => 'aaze_*_RTY',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_password'],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [
-                    'new_password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters',
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no new_password_confirm' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'        => 'csrf_is_replaced',
+                'form-change_password-input-new_password' => 'My_secret_password_01*',
             ],
-            'invalid fields - new_password incorrect format (miss special characters)' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => 'aaze123RTY',
-                    'form-change_password-input-new_password_confirm' => 'aaze123RTY',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_password'],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [
-                    'new_password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters',
-                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error, missing fields</div>'
+                ]
             ],
-            'invalid fields - new_password_confirm incorrect length' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => 'My_secret_password_01*',
-                    'form-change_password-input-new_password_confirm' => 'aze',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on confirm new password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_password_confirm'],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [
-                    'new_password_confirm' => 'Password must be at least 10 characters in length',
-                ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'empty fields - new_password empty' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => ' ',
+                'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
             ],
-            'invalid fields - new_password and new_password_confirm incorrect length' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => 'aze',
-                    'form-change_password-input-new_password_confirm' => 'aze',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password, confirm new password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_password', 'new_password_confirm'],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [
-                    'new_password'         => 'Password must be at least 10 characters in length',
-                    'new_password_confirm' => 'Password must be at least 10 characters in length',
-                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
+                ]
             ],
-            'invalid fields - new_password and new_password_confirm are different' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => 'my_secret_pasword_01*',
-                    'form-change_password-input-new_password_confirm' => 'my_secret_pasword_02*',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on confirm new password</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_password_confirm'],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [
-                    'new_password_confirm' => 'Confirm Password must be the same as Password',
-                ],
+            'fieldsHasError'   => ['new_password'],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [
+                'new_password' => 'Password must be at least 10 characters in length',
             ],
-            'invalid encoding fields - new_password' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => \chr(99999999),
-                    'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+        ];
+
+        yield 'empty fields - new_password_confirm empty' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => 'My_secret_password_01*',
+                'form-change_password-input-new_password_confirm' => ' ',
             ],
-            'invalid encoding fields - new_password_confirm' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
-                    'form-change_password-input-new_password'         => 'My_secret_password_01*',
-                    'form-change_password-input-new_password_confirm' => \chr(99999999),
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on confirm new password</div>'
+                ]
             ],
+            'fieldsHasError'   => ['new_password_confirm'],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [
+                'new_password_confirm' => 'Password must be at least 10 characters in length',
+            ],
+        ];
+
+        yield 'invalid fields - new_password incorrect length' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => 'aze',
+                'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_password'],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [
+                'new_password' => 'Password must be at least 10 characters in length',
+            ],
+        ];
+
+        yield 'invalid fields - new_password incorrect format (miss lowercase)' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => '_*_123RTYY',
+                'form-change_password-input-new_password_confirm' => '_*_123RTYY',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_password'],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [
+                'new_password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters',
+            ],
+        ];
+
+        yield 'invalid fields - new_password incorrect format (miss uppercase)' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => 'aaze123_*_',
+                'form-change_password-input-new_password_confirm' => 'aaze123_*_',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_password'],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [
+                'new_password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters',
+            ],
+        ];
+
+        yield 'invalid fields - new_password incorrect format (miss digit)' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => 'aaze_*_RTY',
+                'form-change_password-input-new_password_confirm' => 'aaze_*_RTY',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_password'],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [
+                'new_password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters',
+            ],
+        ];
+
+        yield 'invalid fields - new_password incorrect format (miss special characters)' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => 'aaze123RTY',
+                'form-change_password-input-new_password_confirm' => 'aaze123RTY',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_password'],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [
+                'new_password' => 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters',
+            ],
+        ];
+
+        yield 'invalid fields - new_password_confirm incorrect length' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => 'My_secret_password_01*',
+                'form-change_password-input-new_password_confirm' => 'aze',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on confirm new password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_password_confirm'],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [
+                'new_password_confirm' => 'Password must be at least 10 characters in length',
+            ],
+        ];
+
+        yield 'invalid fields - new_password and new_password_confirm incorrect length' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => 'aze',
+                'form-change_password-input-new_password_confirm' => 'aze',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on new password, confirm new password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_password', 'new_password_confirm'],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [
+                'new_password'         => 'Password must be at least 10 characters in length',
+                'new_password_confirm' => 'Password must be at least 10 characters in length',
+            ],
+        ];
+
+        yield 'invalid fields - new_password and new_password_confirm are different' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => 'my_secret_pasword_01*',
+                'form-change_password-input-new_password_confirm' => 'my_secret_pasword_02*',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on confirm new password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_password_confirm'],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [
+                'new_password_confirm' => 'Confirm Password must be the same as Password',
+            ],
+        ];
+
+        yield 'invalid encoding fields - new_password' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => \chr(99999999),
+                'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid encoding fields - new_password_confirm' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => 'My_secret_password_01*',
+                'form-change_password-input-new_password_confirm' => \chr(99999999),
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
         ];
     }
 
     /**
-     * @dataProvider dataCasesChangePassword
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('dataCasesChangePassword')]
+    #[DataProvider('provideChangePasswordDataCases')]
     public function testProfileEditPOSTChangePassword(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();
@@ -677,7 +691,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
 <input aria-describedby="form-change_password-span-new_password" aria-invalid="false" aria-labelledby="form-change_password-label-new_password form-change_password-label-new_password-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-min="Password must be at least 10 characters in length" data-form-error-regex="Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters" data-form-has-container data-form-rules="min:10|regex:^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9\s:])([^\s]){8,}$" id="form-change_password-input-new_password" name="form-change_password-input-new_password" type="password"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-change_password-input-new_password" id="form-change_password-label-new_password-error">$labelError</label>
+<label class="form__label form__label--error" for="form-change_password-input-new_password" id="form-change_password-label-new_password-error">{$labelError}</label>
 <span class="form__help" id="form-change_password-span-new_password">Minimum of 10 characters with 1 digit and 1 uppercase and 1 lowercase and 1 special characters</span>
 </div>
 HTML;
@@ -705,12 +719,12 @@ HTML;
 <input aria-describedby="form-change_password-span-new_password_confirm" aria-invalid="false" aria-labelledby="form-change_password-label-new_password_confirm form-change_password-label-new_password_confirm-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-equal_field="Confirm Password must be the same as Password" data-form-error-required="Confirm Password is required" data-form-has-container data-form-rules="required|equal_field:form-change_password-input-new_password" id="form-change_password-input-new_password_confirm" name="form-change_password-input-new_password_confirm" type="password"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-change_password-input-new_password_confirm" id="form-change_password-label-new_password_confirm-error">$labelError</label>
+<label class="form__label form__label--error" for="form-change_password-input-new_password_confirm" id="form-change_password-label-new_password_confirm-error">{$labelError}</label>
 </div>
 HTML;
         }
 
-        return <<<HTML
+        return <<<'HTML'
 <div class="form__element">
 <label class="form__label" for="form-change_password-input-new_password_confirm" id="form-change_password-label-new_password_confirm">Confirm New Password</label>
 <div class="form__container">

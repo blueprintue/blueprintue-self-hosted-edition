@@ -1,13 +1,11 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
 
 namespace tests\www\Profile\Edit;
 
-use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -20,13 +18,14 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class ProfileEditPOSTChangeUsernameTest extends TestCase
 {
     use Common;
 
     /**
-     * @throws DatabaseException
      * @throws \Rancoud\Crypt\CryptException
+     * @throws DatabaseException
      */
     public static function setUpBeforeClass(): void
     {
@@ -81,275 +80,280 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
         }
     }
 
-    public static function dataCasesChangeUsername(): array
+    public static function provideChangeUsernameDataCases(): iterable
     {
-        return [
-            'edit OK' => [
-                'sqlQueries' => [
-                    "UPDATE users SET slug = 'user_189', username = 'user_189' WHERE id = 189"
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-change_username-input-new_username' => 'user_user',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => true,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">Your new username has been saved</div>'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+        yield 'edit OK' => [
+            'sqlQueries' => [
+                "UPDATE users SET slug = 'user_189', username = 'user_189' WHERE id = 189"
             ],
-            'edit KO - xss' => [
-                'sqlQueries' => [
-                    "UPDATE users SET slug = 'user_189', username = 'user_189' WHERE id = 189"
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-change_username-input-new_username' => 'user_user<script>alert("facebook");</script>',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">Error(s) on new username</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_username'],
-                'fieldsHasValue'   => ['new_username'],
-                'fieldsLabelError' => [
-                    'new_username' => 'Username is invalid',
-                ],
+            'userID' => 189,
+            'params' => [
+                'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
+                'form-change_username-input-new_username' => 'user_user',
             ],
-            'csrf incorrect' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_username-hidden-csrf'        => 'incorrect_csrf',
-                    'form-change_username-input-new_username' => 'user_user'
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">Your new username has been saved</div>'
                 ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">'
+                ]
             ],
-            'missing fields - no fields' => [
-                'sqlQueries'         => [],
-                'userID'             => 189,
-                'params'             => [],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'edit KO - xss' => [
+            'sqlQueries' => [
+                "UPDATE users SET slug = 'user_189', username = 'user_189' WHERE id = 189"
             ],
-            'missing fields - no csrf' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_username-input-new_username' => 'user_user',
-                ],
-                'useCsrfFromSession' => false,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+            'userID' => 189,
+            'params' => [
+                'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
+                'form-change_username-input-new_username' => 'user_user<script>alert("facebook");</script>',
             ],
-            'missing fields - no username' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_username-hidden-csrf' => 'csrf_is_replaced',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">Error, missing fields</div>'
-                    ]
-                ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">Error(s) on new username</div>'
+                ]
             ],
-            'empty fields - username empty' => [
-                'sqlQueries' => [
-                    "UPDATE users SET slug = 'user_189', username = 'user_189' WHERE id = 189"
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-change_username-input-new_username' => ' ',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">Error(s) on new username</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_username'],
-                'fieldsHasValue'   => ['new_username'],
-                'fieldsLabelError' => [
-                    'new_username' => 'Username is required',
-                ],
+            'fieldsHasError'   => ['new_username'],
+            'fieldsHasValue'   => ['new_username'],
+            'fieldsLabelError' => [
+                'new_username' => 'Username is invalid',
             ],
-            'invalid fields - invalid username' => [
-                'sqlQueries' => [
-                    "UPDATE users SET slug = 'user_189', username = 'user_189' WHERE id = 189"
-                ],
-                'userID' => 189,
-                'params' => [
-                    'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-change_username-input-new_username' => 'user<script>alert("facebook");</script>',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">Error(s) on new username</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_username'],
-                'fieldsHasValue'   => ['new_username'],
-                'fieldsLabelError' => [
-                    'new_username' => 'Username is invalid',
-                ],
+        ];
+
+        yield 'csrf incorrect' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_username-hidden-csrf'        => 'incorrect_csrf',
+                'form-change_username-input-new_username' => 'user_user'
             ],
-            'invalid fields - unavailable username' => [
-                'sqlQueries' => [
-                    "UPDATE users SET slug = 'user_189', username = 'user_189' WHERE id = 189"
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
                 ],
-                'userID' => 189,
-                'params' => [
-                    'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-change_username-input-new_username' => 'user_189',
-                ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => true,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
-                    ],
-                    'error' => [
-                        'has'     => true,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">Error(s) on new username</div>'
-                    ]
-                ],
-                'fieldsHasError'   => ['new_username'],
-                'fieldsHasValue'   => ['new_username'],
-                'fieldsLabelError' => [
-                    'new_username' => 'Username is unavailable',
-                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">'
+                ]
             ],
-            'invalid encoding fields - new_username' => [
-                'sqlQueries' => [],
-                'userID'     => 189,
-                'params'     => [
-                    'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
-                    'form-change_username-input-new_username' => \chr(99999999)
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no fields' => [
+            'sqlQueries'         => [],
+            'userID'             => 189,
+            'params'             => [],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
                 ],
-                'useCsrfFromSession' => true,
-                'hasRedirection'     => false,
-                'isFormSuccess'      => false,
-                'flashMessages'      => [
-                    'success' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
-                    ],
-                    'error' => [
-                        'has'     => false,
-                        'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">'
-                    ]
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no csrf' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_username-input-new_username' => 'user_user',
+            ],
+            'useCsrfFromSession' => false,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
                 ],
-                'fieldsHasError'   => [],
-                'fieldsHasValue'   => [],
-                'fieldsLabelError' => [],
-            ]
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'missing fields - no username' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_username-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'empty fields - username empty' => [
+            'sqlQueries' => [
+                "UPDATE users SET slug = 'user_189', username = 'user_189' WHERE id = 189"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
+                'form-change_username-input-new_username' => ' ',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">Error(s) on new username</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_username'],
+            'fieldsHasValue'   => ['new_username'],
+            'fieldsLabelError' => [
+                'new_username' => 'Username is required',
+            ],
+        ];
+
+        yield 'invalid fields - invalid username' => [
+            'sqlQueries' => [
+                "UPDATE users SET slug = 'user_189', username = 'user_189' WHERE id = 189"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
+                'form-change_username-input-new_username' => 'user<script>alert("facebook");</script>',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">Error(s) on new username</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_username'],
+            'fieldsHasValue'   => ['new_username'],
+            'fieldsLabelError' => [
+                'new_username' => 'Username is invalid',
+            ],
+        ];
+
+        yield 'invalid fields - unavailable username' => [
+            'sqlQueries' => [
+                "UPDATE users SET slug = 'user_189', username = 'user_189' WHERE id = 189"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
+                'form-change_username-input-new_username' => 'user_189',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">Error(s) on new username</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['new_username'],
+            'fieldsHasValue'   => ['new_username'],
+            'fieldsLabelError' => [
+                'new_username' => 'Username is unavailable',
+            ],
+        ];
+
+        yield 'invalid encoding fields - new_username' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
+                'form-change_username-input-new_username' => \chr(99999999)
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
         ];
     }
 
     /**
-     * @dataProvider dataCasesChangeUsername
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesChangeUsername')]
+    #[DataProvider('provideChangeUsernameDataCases')]
     public function testProfileEditPOSTChangeUsername(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();
@@ -401,7 +405,7 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
 
         if ($isFormSuccess) {
             static::assertNotSame($userBefore, $userAfter);
-            static::assertSame(Helper::trim($params['form-change_username-input-new_username']), $userAfter['username']);
+            static::assertSame(\mb_trim($params['form-change_username-input-new_username']), $userAfter['username']);
         } else {
             static::assertSame($userBefore, $userAfter);
         }
@@ -424,7 +428,7 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
         $this->doTestHtmlForm($response, '#form-change_username', <<<HTML
 <div class="form__element">
 <label class="form__label" for="form-change_username-input-current_username" id="form-change_username-label-current_username">Current Username</label>
-<input aria-labelledby="form-change_username-label-current_username" class="form__input form__input--disabled" disabled id="form-change_username-input-current_username" name="form-change_username-input-current_username" type="text" value="$currentUsername"/>
+<input aria-labelledby="form-change_username-label-current_username" class="form__input form__input--disabled" disabled id="form-change_username-input-current_username" name="form-change_username-input-current_username" type="text" value="{$currentUsername}"/>
 </div>
 HTML);
 
@@ -436,7 +440,7 @@ HTML);
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'new_username') {
-                $value = $hasValue ? Helper::trim($params['form-change_username-input-new_username']) : '';
+                $value = $hasValue ? \mb_trim($params['form-change_username-input-new_username']) : '';
                 $this->doTestHtmlForm($response, '#form-change_username', $this->getHTMLFieldNewUsername($value, $hasError, $labelError));
             }
         }
@@ -452,10 +456,10 @@ HTML);
 <div class="form__element">
 <label class="form__label" for="form-change_username-input-new_username" id="form-change_username-label-new_username">New Username</label>
 <div class="form__container form__container--error">
-<input aria-invalid="false" aria-labelledby="form-change_username-label-new_username form-change_username-label-new_username-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-change_username-input-new_username" name="form-change_username-input-new_username" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-change_username-label-new_username form-change_username-label-new_username-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-change_username-input-new_username" name="form-change_username-input-new_username" type="text" value="{$v}"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
-<label class="form__label form__label--error" for="form-change_username-input-new_username" id="form-change_username-label-new_username-error">$labelError</label>
+<label class="form__label form__label--error" for="form-change_username-input-new_username" id="form-change_username-label-new_username-error">{$labelError}</label>
 </div>
 HTML;
         }
@@ -464,7 +468,7 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-change_username-input-new_username" id="form-change_username-label-new_username">New Username</label>
 <div class="form__container">
-<input aria-invalid="false" aria-labelledby="form-change_username-label-new_username" aria-required="true" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-change_username-input-new_username" name="form-change_username-input-new_username" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-change_username-label-new_username" aria-required="true" class="form__input form__input--invisible" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-change_username-input-new_username" name="form-change_username-input-new_username" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
 </div>

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace app\models;
 
-use app\helpers\Helper;
 use Rancoud\Model\Field;
 use Rancoud\Model\FieldException;
 use Rancoud\Model\Model;
@@ -32,7 +31,7 @@ class TagModel extends Model
      */
     public function getTagsWithListIDs(string $listIDs): ?array
     {
-        $listIDs = Helper::trim($listIDs);
+        $listIDs = \mb_trim($listIDs);
         if (empty($listIDs)) {
             // @codeCoverageIgnoreStart
             /*
@@ -56,7 +55,7 @@ class TagModel extends Model
         $sql = <<<SQL
             SELECT *
             FROM tags
-            WHERE id IN ($inStr);
+            WHERE id IN ({$inStr});
         SQL;
 
         $rows = $this->database->selectAll($sql);
@@ -74,8 +73,6 @@ class TagModel extends Model
     /**
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return null
      */
     public function findTagWithSlug(string $slug): ?array
     {
@@ -125,7 +122,7 @@ class TagModel extends Model
         $sql = <<<SQL
             SELECT *
             FROM tags
-            WHERE $sqlPart
+            WHERE {$sqlPart}
         SQL;
         // @codeCoverageIgnoreEnd
 

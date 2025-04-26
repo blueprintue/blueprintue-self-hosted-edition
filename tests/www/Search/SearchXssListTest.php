@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -8,8 +7,6 @@ declare(strict_types=1);
 namespace tests\www\Search;
 
 use app\helpers\Helper;
-use DateTime;
-use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -21,13 +18,12 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
+/** @internal */
 class SearchXssListTest extends TestCase
 {
     use Common;
 
-    /**
-     * @throws DatabaseException
-     */
+    /** @throws DatabaseException */
     public static function setUpBeforeClass(): void
     {
         static::setDatabaseEmptyStructure();
@@ -71,7 +67,8 @@ class SearchXssListTest extends TestCase
         ];
         static::$db->insert($sql, $userParams);
 
-        static::$db->exec("INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `description`)
+        static::$db->exec(<<<'SQL'
+            INSERT INTO blueprints (`id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `description`)
                         VALUES (179, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp() - interval 2 day, utc_timestamp() - interval 2 day, 'public', '<script>alert(1)</script>'),
                                (159, 'slug_2', 'file_2', 'title_2', 1, utc_timestamp() - interval 10 day, utc_timestamp() - interval 10 day, 'public', '<script>alert(1)</script>'),
                                (169, 'slug_3', 'file_3', 'title_3', 1, utc_timestamp() - interval 3 day, utc_timestamp() - interval 3 day, 'public', '<script>alert(1)</script>'),
@@ -114,7 +111,8 @@ class SearchXssListTest extends TestCase
                                (169, 'slug_40', 'file_40', 'title_40', 1, utc_timestamp() - interval 40 day, utc_timestamp() - interval 40 day, 'private', '<script>alert(1)</script>'),
                                (159, 'slug_41', 'file_41', 'title_41', 1, utc_timestamp() - interval 41 day, utc_timestamp() - interval 41 day, 'public', '<script>alert(1)</script>'),
                                (159, 'slug_42', 'file_42', 'title_42', 1, utc_timestamp() - interval 42 day, utc_timestamp() - interval 42 day, 'public', '<script>alert(1)</script>'),
-                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', '<script>alert(1)</script>')");
+                               (159, 'slug_43', 'file_43', 'title_43', 1, utc_timestamp() - interval 43 day, utc_timestamp() - interval 43 day, 'public', '<script>alert(1)</script>')
+            SQL);
     }
 
     protected function tearDown(): void
@@ -129,25 +127,24 @@ class SearchXssListTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
-            $formattedDates['-' . $i . ' days'] = static::getSince((new DateTime('now', new DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
+            $formattedDates['-' . $i . ' days'] = static::getSince((new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->modify('-' . $i . ' days')->format('Y-m-d H:i:s'));
         }
 
-        return [
-            '30 blueprints public/unlisted/private - xss form-search-input-query' => [
-                'sqlQueries'  => [],
-                'slugInput'   => '/search/?form-search-input-query=<script>alert(1)</script>',
-                'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
-                    'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+        yield '30 blueprints public/unlisted/private - xss form-search-input-query' => [
+            'sqlQueries'  => [],
+            'slugInput'   => '/search/?form-search-input-query=<script>alert(1)</script>',
+            'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
+                'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
+            ],
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">&lt;script&gt;alert(1)&lt;&#47;script&gt;</span></h2>
@@ -445,7 +442,7 @@ class SearchXssListTest extends TestCase
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -459,18 +456,19 @@ HTML,
 </li>
 </ul>
 HTML,
+        ];
+
+        yield '30 blueprints public/unlisted/private - xss query' => [
+            'sqlQueries'  => [],
+            'slugInput'   => '/search/?query=<script>alert(1)</script>',
+            'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
+                'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
             ],
-            '30 blueprints public/unlisted/private - xss query' => [
-                'sqlQueries'  => [],
-                'slugInput'   => '/search/?query=<script>alert(1)</script>',
-                'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
-                    'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">&lt;script&gt;alert(1)&lt;&#47;script&gt;</span></h2>
@@ -768,7 +766,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -782,18 +780,19 @@ HTML,
 </li>
 </ul>
 HTML,
+        ];
+
+        yield '30 blueprints public/unlisted/private - xss in all fields' => [
+            'sqlQueries'  => [],
+            'slugInput'   => '/search/?form-search-input-query=<script>alert(1)</script>&form-search-select-type=<script>alert(1)</script>&form-search-select-ue_version=<script>alert(1)</script>&page=<script>alert(1)</script>',
+            'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
+            'location'    => null,
+            'userID'      => 159,
+            'contentHead' => [
+                'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
+                'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
             ],
-            '30 blueprints public/unlisted/private - xss in all fields' => [
-                'sqlQueries'  => [],
-                'slugInput'   => '/search/?form-search-input-query=<script>alert(1)</script>&form-search-select-type=<script>alert(1)</script>&form-search-select-ue_version=<script>alert(1)</script>&page=<script>alert(1)</script>',
-                'slugOutput'  => '/search/?form-search-input-query=<script>alert(1)</script>&page=1',
-                'location'    => null,
-                'userID'      => 159,
-                'contentHead' => [
-                    'title'       => 'Search "<script>alert(1)</script>" | Page 1 | This is a base title',
-                    'description' => 'Search "<script>alert(1)</script>" in blueprints pasted'
-                ],
-                'contentBlueprintsHTML' => <<<HTML
+            'contentBlueprintsHTML' => <<<HTML
 <div class="block__container block__container--white-grey block__container--shadow-top block__container--last">
 <div class="block__element">
 <h2 class="block__title">Search Results <span class="block__title--emphasis">&lt;script&gt;alert(1)&lt;&#47;script&gt;</span></h2>
@@ -1091,7 +1090,7 @@ HTML,
 </li>
 </ul>
 HTML,
-                'contentPaginationHTML' => <<<HTML
+            'contentPaginationHTML' => <<<'HTML'
 <nav aria-label="Pagination" class="pagination">
 <ul class="pagination__items">
 <li class="pagination__item pagination__item--current">
@@ -1105,20 +1104,17 @@ HTML,
 </li>
 </ul>
 HTML,
-            ],
         ];
     }
 
     /**
-     * @dataProvider dataCases
-     *
      * @throws ApplicationException
      * @throws DatabaseException
      * @throws EnvironmentException
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testSearchXssListGET(array $sqlQueries, string $slugInput, string $slugOutput, ?string $location, ?int $userID, ?array $contentHead, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();
@@ -1170,9 +1166,7 @@ HTML,
         $this->doTestHtmlMain($response, $this->getHTMLFieldVersion($queryParams));
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldQuery(array $queryParams): string
     {
         $v = Security::escAttr($queryParams['query'] ?? $queryParams['form-search-input-query'] ?? '');
@@ -1180,7 +1174,7 @@ HTML,
         return <<<HTML
 <div class="form__element home__form--title">
 <label class="form__label" for="form-search-input-query" id="form-search-label-query">Terms to search</label>
-<input aria-invalid="false" aria-labelledby="form-search-label-query" class="form__input" id="form-search-input-query" name="form-search-input-query" type="text" value="$v"/>
+<input aria-invalid="false" aria-labelledby="form-search-label-query" class="form__input" id="form-search-input-query" name="form-search-input-query" type="text" value="{$v}"/>
 </div>
 HTML;
     }
@@ -1207,23 +1201,21 @@ HTML;
 <label class="form__label" for="form-search-select-type" id="form-search-label-type">Type</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-search-label-type" aria-required="true" class="form__input form__input--select" id="form-search-select-type" name="form-search-select-type">
-<option value=""$all>All</option>
-<option value="animation"$animation>Animation</option>
-<option value="behavior-tree"$behaviorTree>Behavior Tree</option>
-<option value="blueprint"$blueprint>Blueprint</option>
-<option value="material"$material>Material</option>
-<option value="metasound"$metasound>Metasound</option>
-<option value="niagara"$niagara>Niagara</option>
-<option value="pcg"$pcg>PCG</option>
+<option value=""{$all}>All</option>
+<option value="animation"{$animation}>Animation</option>
+<option value="behavior-tree"{$behaviorTree}>Behavior Tree</option>
+<option value="blueprint"{$blueprint}>Blueprint</option>
+<option value="material"{$material}>Material</option>
+<option value="metasound"{$metasound}>Metasound</option>
+<option value="niagara"{$niagara}>Niagara</option>
+<option value="pcg"{$pcg}>PCG</option>
 </select>
 </div>
 </div>
 HTML;
     }
 
-    /**
-     * @throws SecurityException
-     */
+    /** @throws SecurityException */
     protected function getHTMLFieldVersion(array $queryParams): string
     {
         $value = $queryParams['form-search-select-ue_version'] ?? '';
@@ -1243,8 +1235,8 @@ HTML;
 <label class="form__label" for="form-search-select-ue_version" id="form-search-label-ue_version">UE version</label>
 <div class="form__container form__container--select">
 <select aria-invalid="false" aria-labelledby="form-search-label-ue_version" aria-required="true" class="form__input form__input--select" id="form-search-select-ue_version" name="form-search-select-ue_version">
-<option value=""$all>All</option>
-$str</select>
+<option value=""{$all}>All</option>
+{$str}</select>
 </div>
 </div>
 HTML;

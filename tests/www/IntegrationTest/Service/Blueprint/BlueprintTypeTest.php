@@ -1,6 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
 /* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
@@ -11,48 +10,53 @@ use app\services\www\BlueprintService;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
+/** @internal */
 class BlueprintTypeTest extends TestCase
 {
-    public static function dataCases(): array
+    public static function provideDataCases(): iterable
     {
-        return [
-            'BehaviorTreeGraphNode_ = behavior_tree' => [
-                'content' => 'BehaviorTreeGraphNode_',
-                'type'    => 'behavior_tree',
-            ],
-            'BehaviorTreeDecoratorGraphNode_ = behavior_tree' => [
-                'content' => 'BehaviorTreeDecoratorGraphNode_',
-                'type'    => 'behavior_tree',
-            ],
-            'MaterialGraphNode = material' => [
-                'content' => 'MaterialGraphNode',
-                'type'    => 'material',
-            ],
-            'AnimGraphNode_ = animation' => [
-                'content' => 'AnimGraphNode_',
-                'type'    => 'animation',
-            ],
-            '/Script/MetasoundEditor = metasound' => [
-                'content' => '/Script/MetasoundEditor',
-                'type'    => 'metasound',
-            ],
-            '/Script/NiagaraEditor = niagara' => [
-                'content' => '/Script/NiagaraEditor',
-                'type'    => 'niagara',
-            ],
-            'PCGEditorGraphNode = pcg' => [
-                'content' => 'PCGEditorGraphNode',
-                'type'    => 'pcg',
-            ],
-            'empty = blueprint' => [
-                'content' => '',
-                'type'    => 'blueprint',
-            ],
+        yield 'BehaviorTreeGraphNode_ = behavior_tree' => [
+            'content' => 'BehaviorTreeGraphNode_',
+            'type'    => 'behavior_tree',
+        ];
+
+        yield 'BehaviorTreeDecoratorGraphNode_ = behavior_tree' => [
+            'content' => 'BehaviorTreeDecoratorGraphNode_',
+            'type'    => 'behavior_tree',
+        ];
+
+        yield 'MaterialGraphNode = material' => [
+            'content' => 'MaterialGraphNode',
+            'type'    => 'material',
+        ];
+
+        yield 'AnimGraphNode_ = animation' => [
+            'content' => 'AnimGraphNode_',
+            'type'    => 'animation',
+        ];
+
+        yield '/Script/MetasoundEditor = metasound' => [
+            'content' => '/Script/MetasoundEditor',
+            'type'    => 'metasound',
+        ];
+
+        yield '/Script/NiagaraEditor = niagara' => [
+            'content' => '/Script/NiagaraEditor',
+            'type'    => 'niagara',
+        ];
+
+        yield 'PCGEditorGraphNode = pcg' => [
+            'content' => 'PCGEditorGraphNode',
+            'type'    => 'pcg',
+        ];
+
+        yield 'empty = blueprint' => [
+            'content' => '',
+            'type'    => 'blueprint',
         ];
     }
 
-    /** @dataProvider dataCases */
-    #[DataProvider('dataCases')]
+    #[DataProvider('provideDataCases')]
     public function testFindBlueprintType(string $content, string $type): void
     {
         static::assertSame($type, BlueprintService::findBlueprintType($content));

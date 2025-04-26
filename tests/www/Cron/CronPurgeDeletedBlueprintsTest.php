@@ -13,6 +13,7 @@ use Rancoud\Environment\EnvironmentException;
 use Rancoud\Router\RouterException;
 use tests\Common;
 
+/** @internal */
 class CronPurgeDeletedBlueprintsTest extends TestCase
 {
     use Common;
@@ -24,18 +25,18 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
     }
 
     /**
+     * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     public function testCronPurgeDeletedBlueprintsGET(): void
     {
         $storageFolder = \dirname(__DIR__, 3) . \DIRECTORY_SEPARATOR . 'tests' . \DIRECTORY_SEPARATOR . 'storage_test';
 
         $sqls = [
-            <<<SQL
+            <<<'SQL'
                 INSERT INTO `users` (`id`, `username`, `password`, `slug`, `email`, `password_reset`, `password_reset_at`, `grade`, `avatar`, `remember_token`, `created_at`, `confirmed_token`, `confirmed_sent_at`, `confirmed_at`, `last_login_at`)
                 VALUES (101, 'user_101', NULL, 'user_101', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
                        (102, 'user_102', NULL, 'user_102', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
@@ -48,7 +49,7 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
                        (109, 'user_109', NULL, 'user_109', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
                        (110, 'user_110', NULL, 'user_110', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL);
             SQL,
-            <<<SQL
+            <<<'SQL'
                 INSERT INTO `users_infos` (`id_user`, `count_public_blueprint`, `count_public_comment`, `count_private_blueprint`, `count_private_comment`)
                 VALUES (101,  5,  6,  2, 3),
                        (102,  7, 60, 32, 0),
@@ -61,7 +62,7 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
                        (109,  0, 10,  3, 0),
                        (110,  0,  1,  4, 0);
             SQL,
-            <<<SQL
+            <<<'SQL'
                 INSERT INTO `blueprints` (`id`, `id_author`, `slug`, `file_id`, `title`, `type`, `ue_version`, `current_version`, `thumbnail`, `created_at`, `published_at`, `exposure`, `deleted_at`, `expiration`)
                 VALUES (201, 101, 'bp_01', 'azerty01', 'title_01', 'blueprint', '5.1', '2', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'public',   NULL, NULL),
                        (202, 101, 'bp_02', 'azerty02', 'title_02', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'private',  NULL, '2000-01-01 00:00:00'),
@@ -76,7 +77,7 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
                        (211, 101, 'bp_11', 'azerty11', 'title_11', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'private',  NULL, UTC_TIMESTAMP() + interval 60 day),
                        (212, 102, 'bp_12', 'azerty12', 'title_12', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'public',   NULL, UTC_TIMESTAMP() + interval 60 day);
             SQL,
-            <<<SQL
+            <<<'SQL'
                 INSERT INTO `blueprints_version` (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES
                 (700, 201, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
                 (701, 201, '2', 'Second commit', UTC_TIMESTAMP(), UTC_TIMESTAMP()),
@@ -95,7 +96,7 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
                 (714, 251, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
                 (715, 261, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP())
             SQL,
-            <<<SQL
+            <<<'SQL'
                 INSERT INTO `comments` (`id`, `id_author`, `id_blueprint`, `name_fallback`, `content`, `created_at`)
                 VALUES (301, 110, 201, NULL, 'a', UTC_TIMESTAMP()),
                        (302, 110, 202, NULL, 'b', UTC_TIMESTAMP()),
@@ -177,7 +178,7 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
             }
 
             if (!\is_dir($storageFolder . \DIRECTORY_SEPARATOR . $subfolder)) {
-                \mkdir($storageFolder . \DIRECTORY_SEPARATOR . $subfolder, 0777, true);
+                \mkdir($storageFolder . \DIRECTORY_SEPARATOR . $subfolder, 0o777, true);
             }
 
             $fullpath = $storageFolder . \DIRECTORY_SEPARATOR . $subfolder . $dir['fileID'] . '-1.txt';
@@ -272,16 +273,16 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
     }
 
     /**
+     * @throws \Exception
+     * @throws \Rancoud\Database\DatabaseException
      * @throws ApplicationException
      * @throws EnvironmentException
      * @throws RouterException
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Exception
      */
     public function testAbortCronPurgeDeletedBlueprintsGET(): void
     {
         $sqls = [
-            <<<SQL
+            <<<'SQL'
                 INSERT INTO `users` (`id`, `username`, `password`, `slug`, `email`, `password_reset`, `password_reset_at`, `grade`, `avatar`, `remember_token`, `created_at`, `confirmed_token`, `confirmed_sent_at`, `confirmed_at`, `last_login_at`)
                 VALUES (101, 'user_101', NULL, 'user_101', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
                        (102, 'user_102', NULL, 'user_102', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
@@ -294,7 +295,7 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
                        (109, 'user_109', NULL, 'user_109', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL),
                        (110, 'user_110', NULL, 'user_110', NULL, NULL, NULL, 'member', NULL, NULL, UTC_TIMESTAMP(), NULL, NULL, UTC_TIMESTAMP(), NULL);
             SQL,
-            <<<SQL
+            <<<'SQL'
                 INSERT INTO `users_infos` (`id_user`, `count_public_blueprint`, `count_public_comment`, `count_private_blueprint`, `count_private_comment`)
                 VALUES (101,  5,  6,  2, 3),
                        (102,  7, 60, 32, 0),
@@ -307,7 +308,7 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
                        (109,  0, 10,  3, 0),
                        (110,  0,  1,  4, 0);
             SQL,
-            <<<SQL
+            <<<'SQL'
                 INSERT INTO `blueprints` (`id`, `id_author`, `slug`, `file_id`, `title`, `type`, `ue_version`, `current_version`, `thumbnail`, `created_at`, `published_at`, `exposure`, `deleted_at`, `expiration`)
                 VALUES (201, 101, 'bp_01', 'azerty01', 'title_01', 'blueprint', '5.1', '2', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'public',   NULL, NULL),
                        (202, 101, 'bp_02', 'azerty02', 'title_02', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'private',  NULL, '2000-01-01 00:00:00'),
@@ -322,7 +323,7 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
                        (211, 101, 'bp_11', 'azerty11', 'title_11', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'private',  NULL, UTC_TIMESTAMP() + interval 60 day),
                        (212, 102, 'bp_12', 'azerty12', 'title_12', 'blueprint', '5.1', '1', NULL, UTC_TIMESTAMP(), UTC_TIMESTAMP(), 'public',   NULL, UTC_TIMESTAMP() + interval 60 day);
             SQL,
-            <<<SQL
+            <<<'SQL'
                 INSERT INTO `blueprints_version` (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES
                 (700, 201, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
                 (701, 201, '2', 'Second commit', UTC_TIMESTAMP(), UTC_TIMESTAMP()),
@@ -341,7 +342,7 @@ class CronPurgeDeletedBlueprintsTest extends TestCase
                 (714, 251, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP()),
                 (715, 261, '1', 'First commit',  UTC_TIMESTAMP(), UTC_TIMESTAMP())
             SQL,
-            <<<SQL
+            <<<'SQL'
                 INSERT INTO `comments` (`id`, `id_author`, `id_blueprint`, `name_fallback`, `content`, `created_at`)
                 VALUES (301, 110, 201, NULL, 'a', UTC_TIMESTAMP()),
                        (302, 110, 202, NULL, 'b', UTC_TIMESTAMP()),
