@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace tests\www\Register;
 
-use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -1072,12 +1071,12 @@ class RegisterTest extends TestCase
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'username') {
-                $value = $hasValue ? Helper::trim($params['form-register-input-username']) : '';
+                $value = $hasValue ? \mb_trim($params['form-register-input-username']) : '';
                 $this->doTestHtmlForm($response, '#popin-register', $this->getHTMLFieldUsername($value, $hasError, $labelError));
             }
 
             if ($field === 'email') {
-                $value = $hasValue ? Helper::trim($params['form-register-input-email']) : '';
+                $value = $hasValue ? \mb_trim($params['form-register-input-email']) : '';
                 $this->doTestHtmlForm($response, '#popin-register', $this->getHTMLFieldEmail($value, $hasError, $labelError));
             }
 

@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace tests\www\Blueprint\Edit;
 
-use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -899,16 +898,16 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
 
         if ($isFormSuccess) {
             // title
-            static::assertSame(Helper::trim($params['form-edit_informations-input-title']), $blueprintAfter['title']);
+            static::assertSame(\mb_trim($params['form-edit_informations-input-title']), $blueprintAfter['title']);
 
             // description
-            if (Helper::trim($params['form-edit_informations-textarea-description']) === '') {
+            if (\mb_trim($params['form-edit_informations-textarea-description']) === '') {
                 static::assertNull($blueprintAfter['description']);
             } else {
-                static::assertSame(Helper::trim($params['form-edit_informations-textarea-description']), $blueprintAfter['description']);
+                static::assertSame(\mb_trim($params['form-edit_informations-textarea-description']), $blueprintAfter['description']);
             }
 
-            if (Helper::trim($params['form-edit_informations-textarea-tags']) === '') {
+            if (\mb_trim($params['form-edit_informations-textarea-tags']) === '') {
                 static::assertNull($blueprintAfter['tags']);
             } else {
                 $tagIDs = [];
@@ -934,7 +933,7 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
             }
 
             // video
-            if (Helper::trim($params['form-edit_informations-input-video']) === '') {
+            if (\mb_trim($params['form-edit_informations-input-video']) === '') {
                 static::assertNull($blueprintAfter['video']);
                 static::assertNull($blueprintAfter['video_provider']);
             } elseif ($params['form-edit_informations-input-video'] === 'youtu.be/5qap5aO4i9A' || $params['form-edit_informations-input-video'] === 'youtu.be/5qap5aO4i9A&=<script>alert(1)</script>"/><script>alert(1)</script>') {
@@ -974,7 +973,7 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
 
             if ($field === 'title') {
                 if (isset($params['form-edit_informations-input-title'])) {
-                    $value = $hasValue ? Helper::trim($params['form-edit_informations-input-title']) : '';
+                    $value = $hasValue ? \mb_trim($params['form-edit_informations-input-title']) : '';
                     if ($params['form-edit_informations-input-title'] === \chr(99999999)) {
                         $value = 'title_1';
                     }
@@ -985,7 +984,7 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
             }
 
             if ($field === 'description') {
-                $value = $hasValue ? Helper::trim($params['form-edit_informations-textarea-description']) : '';
+                $value = $hasValue ? \mb_trim($params['form-edit_informations-textarea-description']) : '';
                 if (isset($params['form-edit_informations-textarea-description']) && $params['form-edit_informations-textarea-description'] === \chr(99999999)) {
                     $value = '';
                 }
@@ -1000,7 +999,7 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
             }
 
             if ($field === 'video') {
-                $value = $hasValue ? Helper::trim($params['form-edit_informations-input-video']) : '';
+                $value = $hasValue ? \mb_trim($params['form-edit_informations-input-video']) : '';
                 if (isset($params['form-edit_informations-input-video']) && $params['form-edit_informations-input-video'] === \chr(99999999)) {
                     $value = '';
                 }

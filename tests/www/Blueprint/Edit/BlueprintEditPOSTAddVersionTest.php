@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace tests\www\Blueprint\Edit;
 
-use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -574,12 +573,12 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'blueprint') {
-                $value = $hasValue ? Helper::trim($params['form-add_version-textarea-blueprint']) : '';
+                $value = $hasValue ? \mb_trim($params['form-add_version-textarea-blueprint']) : '';
                 $this->doTestHtmlForm($response, '#form-add_version', $this->getHTMLFieldBlueprint($value, $hasError, $labelError));
             }
 
             if ($field === 'reason') {
-                $value = $hasValue ? Helper::trim($params['form-add_version-textarea-reason']) : '';
+                $value = $hasValue ? \mb_trim($params['form-add_version-textarea-reason']) : '';
                 $this->doTestHtmlForm($response, '#form-add_version', $this->getHTMLFieldReason($value, $hasError, $labelError));
             }
         }

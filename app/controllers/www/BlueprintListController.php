@@ -213,9 +213,9 @@ class BlueprintListController implements MiddlewareInterface
 
         $this->params['query'] = '';
         if (isset($queryParams['query'])) {
-            $this->params['query'] = Helper::trim($queryParams['query']);
+            $this->params['query'] = \mb_trim($queryParams['query']);
         } elseif (isset($queryParams['form-search-input-query'])) {
-            $this->params['query'] = Helper::trim($queryParams['form-search-input-query']);
+            $this->params['query'] = \mb_trim($queryParams['form-search-input-query']);
         }
         if ($this->params['query'] !== '') {
             $urlParts[] = 'form-search-input-query=' . $this->params['query'];
@@ -223,7 +223,7 @@ class BlueprintListController implements MiddlewareInterface
 
         $this->params['type_slug'] = '';
         if (isset($queryParams['form-search-select-type']) && \in_array($queryParams['form-search-select-type'], ['animation', 'behavior-tree', 'blueprint', 'material', 'metasound', 'niagara', 'pcg'], true)) {
-            $this->params['type_slug'] = Helper::trim($queryParams['form-search-select-type']);
+            $this->params['type_slug'] = \mb_trim($queryParams['form-search-select-type']);
             $urlParts[] = 'form-search-select-type=' . $this->params['type_slug'];
 
             $this->params['type'] = $this->params['type_slug'];
@@ -234,7 +234,7 @@ class BlueprintListController implements MiddlewareInterface
 
         $this->params['ue_version'] = '';
         if (isset($queryParams['form-search-select-ue_version']) && \in_array($queryParams['form-search-select-ue_version'], Helper::getAllUEVersion(), true)) {
-            $this->params['ue_version'] = Helper::trim($queryParams['form-search-select-ue_version']);
+            $this->params['ue_version'] = \mb_trim($queryParams['form-search-select-ue_version']);
             $urlParts[] = 'form-search-select-ue_version=' . $this->params['ue_version'];
         }
 

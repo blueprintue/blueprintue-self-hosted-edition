@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace tests\www\Contact;
 
-use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -611,17 +610,17 @@ class ContactTest extends TestCase
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'name') {
-                $value = $hasValue ? Helper::trim($params['form-contact-input-name']) : '';
+                $value = $hasValue ? \mb_trim($params['form-contact-input-name']) : '';
                 $this->doTestHtmlForm($response, '/contact/', $this->getHTMLFieldName($value, $hasError, $labelError));
             }
 
             if ($field === 'email') {
-                $value = $hasValue ? Helper::trim($params['form-contact-input-email']) : '';
+                $value = $hasValue ? \mb_trim($params['form-contact-input-email']) : '';
                 $this->doTestHtmlForm($response, '/contact/', $this->getHTMLFieldEmail($value, $hasError, $labelError));
             }
 
             if ($field === 'message') {
-                $value = $hasValue ? Helper::trim($params['form-contact-textarea-message']) : '';
+                $value = $hasValue ? \mb_trim($params['form-contact-textarea-message']) : '';
                 $this->doTestHtmlForm($response, '/contact/', $this->getHTMLFieldMessage($value, $hasError, $labelError));
             }
         }

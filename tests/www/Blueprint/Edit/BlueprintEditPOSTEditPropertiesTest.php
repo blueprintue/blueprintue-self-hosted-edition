@@ -1145,7 +1145,7 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
 
             if ($field === 'exposure') {
                 if (isset($params['form-edit_properties-select-exposure']) && $params['form-edit_properties-select-exposure'] !== \chr(99999999)) {
-                    $value = $hasValue ? Helper::trim($params['form-edit_properties-select-exposure']) : '';
+                    $value = $hasValue ? \mb_trim($params['form-edit_properties-select-exposure']) : '';
                 } else {
                     $value = 'private';
                 }
@@ -1156,7 +1156,7 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
                 if ($isFormSuccess) {
                     $value = '';
                 } elseif (isset($params['form-edit_properties-select-expiration']) && $params['form-edit_properties-select-expiration'] !== \chr(99999999)) {
-                    $value = $hasValue ? Helper::trim($params['form-edit_properties-select-expiration']) : '';
+                    $value = $hasValue ? \mb_trim($params['form-edit_properties-select-expiration']) : '';
                 } else {
                     $value = '';
                 }
@@ -1165,7 +1165,7 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
 
             if ($field === 'ue_version') {
                 if (isset($params['form-edit_properties-select-ue_version']) && $params['form-edit_properties-select-ue_version'] !== \chr(99999999)) {
-                    $value = $hasValue ? Helper::trim($params['form-edit_properties-select-ue_version']) : '';
+                    $value = $hasValue ? \mb_trim($params['form-edit_properties-select-ue_version']) : '';
                 } else {
                     $value = '4.0';
                 }
@@ -1174,7 +1174,7 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
 
             if ($field === 'comment') {
                 if (isset($params['form-edit_properties-select-comment']) && $params['form-edit_properties-select-comment'] !== \chr(99999999)) {
-                    $value = $hasValue ? Helper::trim($params['form-edit_properties-select-comment']) : '';
+                    $value = $hasValue ? \mb_trim($params['form-edit_properties-select-comment']) : '';
                 } else {
                     $value = 'open';
                 }

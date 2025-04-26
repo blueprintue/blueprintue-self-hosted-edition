@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace tests\www\ForgotPassword;
 
-use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -846,7 +845,7 @@ HTML);
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'email') {
-                $value = $hasValue ? Helper::trim($params['form-reset_password-input-email']) : '';
+                $value = $hasValue ? \mb_trim($params['form-reset_password-input-email']) : '';
                 $this->doTestHtmlForm($response, '/reset-password/?reset_token=' . Security::escAttr($resetToken), $this->getHTMLFieldEmail($value, $hasError, $labelError));
             }
 

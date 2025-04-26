@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace tests\www\Profile\Edit;
 
-use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\ApplicationException;
@@ -1068,12 +1067,12 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
 
         if ($isFormSuccess) {
             static::assertNotSame($usersInfosBefore, $usersInfosAfter);
-            static::assertSame(Helper::trim($params['form-edit_socials-input-facebook']), $usersInfosAfter['link_facebook']);
-            static::assertSame(Helper::trim($params['form-edit_socials-input-twitter']), $usersInfosAfter['link_twitter']);
-            static::assertSame(Helper::trim($params['form-edit_socials-input-github']), $usersInfosAfter['link_github']);
-            static::assertSame(Helper::trim($params['form-edit_socials-input-youtube']), $usersInfosAfter['link_youtube']);
-            static::assertSame(Helper::trim($params['form-edit_socials-input-twitch']), $usersInfosAfter['link_twitch']);
-            static::assertSame(Helper::trim($params['form-edit_socials-input-unreal']), $usersInfosAfter['link_unreal']);
+            static::assertSame(\mb_trim($params['form-edit_socials-input-facebook']), $usersInfosAfter['link_facebook']);
+            static::assertSame(\mb_trim($params['form-edit_socials-input-twitter']), $usersInfosAfter['link_twitter']);
+            static::assertSame(\mb_trim($params['form-edit_socials-input-github']), $usersInfosAfter['link_github']);
+            static::assertSame(\mb_trim($params['form-edit_socials-input-youtube']), $usersInfosAfter['link_youtube']);
+            static::assertSame(\mb_trim($params['form-edit_socials-input-twitch']), $usersInfosAfter['link_twitch']);
+            static::assertSame(\mb_trim($params['form-edit_socials-input-unreal']), $usersInfosAfter['link_unreal']);
         } else {
             static::assertSame($usersInfosBefore, $usersInfosAfter);
         }
@@ -1100,32 +1099,32 @@ class ProfileEditPOSTEditSocialsTest extends TestCase
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'facebook') {
-                $value = $hasValue ? Helper::trim($params['form-edit_socials-input-facebook']) : '';
+                $value = $hasValue ? \mb_trim($params['form-edit_socials-input-facebook']) : '';
                 $this->doTestHtmlForm($response, '#form-edit_socials', $this->getHTMLFieldFacebook($value, $hasError, $labelError));
             }
 
             if ($field === 'twitter') {
-                $value = $hasValue ? Helper::trim($params['form-edit_socials-input-twitter']) : '';
+                $value = $hasValue ? \mb_trim($params['form-edit_socials-input-twitter']) : '';
                 $this->doTestHtmlForm($response, '#form-edit_socials', $this->getHTMLFieldTwitter($value, $hasError, $labelError));
             }
 
             if ($field === 'github') {
-                $value = $hasValue ? Helper::trim($params['form-edit_socials-input-github']) : '';
+                $value = $hasValue ? \mb_trim($params['form-edit_socials-input-github']) : '';
                 $this->doTestHtmlForm($response, '#form-edit_socials', $this->getHTMLFieldGithub($value, $hasError, $labelError));
             }
 
             if ($field === 'youtube') {
-                $value = $hasValue ? Helper::trim($params['form-edit_socials-input-youtube']) : '';
+                $value = $hasValue ? \mb_trim($params['form-edit_socials-input-youtube']) : '';
                 $this->doTestHtmlForm($response, '#form-edit_socials', $this->getHTMLFieldYoutube($value, $hasError, $labelError));
             }
 
             if ($field === 'twitch') {
-                $value = $hasValue ? Helper::trim($params['form-edit_socials-input-twitch']) : '';
+                $value = $hasValue ? \mb_trim($params['form-edit_socials-input-twitch']) : '';
                 $this->doTestHtmlForm($response, '#form-edit_socials', $this->getHTMLFieldTwitch($value, $hasError, $labelError));
             }
 
             if ($field === 'unreal') {
-                $value = $hasValue ? Helper::trim($params['form-edit_socials-input-unreal']) : '';
+                $value = $hasValue ? \mb_trim($params['form-edit_socials-input-unreal']) : '';
                 $this->doTestHtmlForm($response, '#form-edit_socials', $this->getHTMLFieldUnreal($value, $hasError, $labelError));
             }
         }

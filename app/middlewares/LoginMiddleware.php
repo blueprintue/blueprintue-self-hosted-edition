@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace app\middlewares;
 
 use app\controllers\FormTrait;
-use app\helpers\Helper;
 use app\services\www\UserService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -61,7 +60,7 @@ class LoginMiddleware implements MiddlewareInterface
         $rawParams = $request->getParsedBody();
         foreach ($rawParams as $key => $rawParam) {
             if (\in_array($key, $htmlNames, true)) {
-                $params[$key] = Helper::trim($rawParam);
+                $params[$key] = \mb_trim($rawParam);
             }
         }
 

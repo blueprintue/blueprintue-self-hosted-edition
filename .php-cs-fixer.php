@@ -5,50 +5,18 @@ declare(strict_types=1);
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
-$rules = [
-    '@Symfony'       => true,
-    '@Symfony:risky' => true,
-    'array_syntax'   => [
-        'syntax' => 'short'
-    ],
-    'binary_operator_spaces' => [
-        'operators' => [
-            '=>' => 'align'
-        ]
-    ],
-    'concat_space' => [
-        'spacing' => 'one'
-    ],
-    'declare_strict_types'        => true,
-    'get_class_to_class_keyword'  => false,
-    'global_namespace_import'     => false,
-    'linebreak_after_opening_tag' => true,
-    'mb_str_functions'            => false, // turn off because of PHP 8.4
-    'native_function_invocation'  => [
-        'include' => [
-            '@all'
-        ]
-    ],
-    'no_php4_constructor'                              => true,
-    'no_superfluous_phpdoc_tags'                       => true,
-    'no_unreachable_default_argument_value'            => true,
-    'no_useless_else'                                  => true,
-    'no_useless_return'                                => true,
-    'nullable_type_declaration_for_default_null_value' => true,
-    'ordered_imports'                                  => true,
-    'php_unit_strict'                                  => true,
-    'phpdoc_order'                                     => true,
-    'semicolon_after_instruction'                      => true,
-    'single_import_per_statement'                      => false,
-    'strict_comparison'                                => true,
-    'strict_param'                                     => true,
-    'single_line_throw'                                => false,
-    'trailing_comma_in_multiline'                      => false,
-    'yoda_style'                                       => [
-        'equal'            => false,
-        'identical'        => false,
-        'less_and_greater' => false
-    ],
+$aliasRules = [
+    'array_push'                        => true,
+    'backtick_to_shell_exec'            => true,
+    'ereg_to_preg'                      => true,
+    'mb_str_functions'                  => true,
+    'modernize_strpos'                  => ['modernize_stripos' => true],
+    'no_alias_functions'                => ['sets' => ['@all']],
+    'no_alias_language_construct_call'  => true,
+    'no_mixed_echo_print'               => ['use' => 'echo'],
+    'pow_to_exponentiation'             => true,
+    'random_api_migration'              => ['replacements' => ['getrandmax' => 'mt_getrandmax', 'srand' => 'mt_srand', 'mt_rand' => 'random_int', 'rand' => 'random_int']],
+    'set_type_to_cast'                  => true
 ];
 
 $arrayNotationRules = [
@@ -397,7 +365,8 @@ $whitespaceRules = [
     'types_spaces'                      => ['space' => 'none', 'space_multiple_catch' => 'none']
 ];
 
-$rules = \array_merge($rules,
+$rules = \array_merge(
+    $aliasRules,
     $arrayNotationRules,
     $attributeNotationRules,
     $basicRules,

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace app\models;
 
-use app\helpers\Helper;
 use Rancoud\Model\Field;
 use Rancoud\Model\FieldException;
 use Rancoud\Model\Model;
@@ -32,7 +31,7 @@ class TagModel extends Model
      */
     public function getTagsWithListIDs(string $listIDs): ?array
     {
-        $listIDs = Helper::trim($listIDs);
+        $listIDs = \mb_trim($listIDs);
         if (empty($listIDs)) {
             // @codeCoverageIgnoreStart
             /*

@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace tests\www\Profile\Edit;
 
-use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rancoud\Application\Application;
@@ -936,12 +935,12 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
             $labelError = $fieldsLabelError[$field] ?? '';
 
             if ($field === 'blueprints_ownership') {
-                $value = $hasValue ? Helper::trim($params['form-delete_profile-select-blueprints_ownership']) : '';
+                $value = $hasValue ? \mb_trim($params['form-delete_profile-select-blueprints_ownership']) : '';
                 $this->doTestHtmlForm($response, '#form-delete_profile', $this->getHTMLFieldBlueprintsOwnership($value, $hasError, $labelError));
             }
 
             if ($field === 'comments_ownership') {
-                $value = $hasValue ? Helper::trim($params['form-delete_profile-select-comments_ownership']) : '';
+                $value = $hasValue ? \mb_trim($params['form-delete_profile-select-comments_ownership']) : '';
                 $this->doTestHtmlForm($response, '#form-delete_profile', $this->getHTMLFieldCommentsOwnership($value, $hasError, $labelError));
             }
         }
