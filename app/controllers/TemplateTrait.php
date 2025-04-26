@@ -54,7 +54,10 @@ trait TemplateTrait
 
     abstract protected function setTemplateProperties(array $data = []): void;
 
-    /** @throws \Rancoud\Application\ApplicationException */
+    /**
+     * @throws \Rancoud\Application\ApplicationException
+     * @noinspection PhpUnusedParameterInspection
+     */
     protected function getFullTemplate(string $file, array $data = []): string
     {
         \ob_start();
@@ -84,7 +87,9 @@ trait TemplateTrait
 
     protected function redirect($url): \Psr\Http\Message\ResponseInterface
     {
-        return (new Factory())->createResponse(301)->withHeader('Location', $url);
+        return (new Factory())
+            ->createResponse(301)
+            ->withHeader('Location', $url);
     }
 
     protected function addCurrentPageForNavBarData(): void

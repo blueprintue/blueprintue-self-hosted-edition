@@ -43,8 +43,7 @@ class MailerHelper
         $this->mailer->setFrom($mailAddress, $mailName);
 
         if ($useCustomEmailValidation) {
-            /* @noinspection PhpUndefinedVariableInspection */
-            $this->mailer::$validator = static function ($address) {
+            $this->mailer::$validator = static function (string $address): bool {
                 if (\mb_strpos($address, "\n") !== false || \mb_strpos($address, "\r") !== false) {
                     return false;
                 }
@@ -64,7 +63,7 @@ class MailerHelper
 
     public function setHTMLEmail(string $subject, string $html, string $text): void
     {
-        $this->mailer->isHTML(true);
+        $this->mailer->isHTML();
 
         $this->mailer->Subject = $subject;
         $this->mailer->Body = $html;

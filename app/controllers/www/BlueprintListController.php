@@ -207,7 +207,7 @@ class BlueprintListController implements MiddlewareInterface
             foreach ($queryParams as $queryParam) {
                 Security::escHTML($queryParam);
             }
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return false;
         }
 

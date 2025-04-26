@@ -45,7 +45,7 @@ trait FormTrait
             // avoid bad encoding string
             try {
                 Security::escHTML($rawParams[$input]);
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 return false;
             }
         }

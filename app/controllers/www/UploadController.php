@@ -66,7 +66,7 @@ class UploadController implements MiddlewareInterface
 
         try {
             $folder = Application::getFolder('MEDIAS_AVATARS');
-        } catch (ApplicationException $e) {
+        } catch (ApplicationException) {
             $this->cleanFiles($nameInFiles);
 
             return $this->sendError('folder for avatars not found');
@@ -117,7 +117,7 @@ class UploadController implements MiddlewareInterface
 
         try {
             $folder = Application::getFolder('MEDIAS_BLUEPRINTS');
-        } catch (ApplicationException $e) {
+        } catch (ApplicationException) {
             $this->cleanFiles($nameInFiles);
 
             return $this->sendError('folder for thumbnails not found');
@@ -186,7 +186,7 @@ class UploadController implements MiddlewareInterface
             $filename = $this->writeImageInStorage($imgDest, $folder);
 
             \imagedestroy($imgDest);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             if ($imgDest !== null) {
                 // @codeCoverageIgnoreStart
                 // I don't know how to produce this error
@@ -321,7 +321,7 @@ class UploadController implements MiddlewareInterface
     }
 
     /** @throws \Exception */
-    protected function writeImageInStorage($imgDest, string $folder): ?string
+    protected function writeImageInStorage(\GdImage $imgDest, string $folder): ?string
     {
         do {
             $file = \mb_strtolower(Helper::getRandomString(60) . '.png');

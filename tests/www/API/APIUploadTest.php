@@ -1,7 +1,5 @@
 <?php
 
-/* @noinspection PhpTooManyParametersInspection */
-
 declare(strict_types=1);
 
 namespace tests\www\API;

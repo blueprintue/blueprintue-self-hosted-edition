@@ -12,7 +12,7 @@ use Rancoud\Application\Application;
 class BlueprintService
 {
     /** @throws \Rancoud\Application\ApplicationException */
-    public static function getBlueprintContent($fileID, $version): ?string
+    public static function getBlueprintContent(string $fileID, int $version): ?string
     {
         static $storageFolder = null;
         if ($storageFolder === null) {
@@ -35,7 +35,7 @@ class BlueprintService
     }
 
     /** @throws \Rancoud\Application\ApplicationException */
-    public static function setBlueprintContent($fileID, $version, $content): void
+    public static function setBlueprintContent(string $fileID, int $version, string $content): void
     {
         static $storageFolder = null;
         if ($storageFolder === null) {
@@ -157,7 +157,7 @@ class BlueprintService
                 $blueprintParams['current_version'],
                 $params['blueprint']
             );
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             $forceRollback = true;
 
             return [null, $errorCode];
@@ -260,7 +260,7 @@ class BlueprintService
 
     /**
      * @param string $pageType [profile,last,most-discussed,type,tag,search]
-     * @param array  $params   [page,count]
+     * @param array  $params   [page,count_per_page,id_author,type,tag.id,query,type,ue_version]
      *
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
@@ -305,7 +305,8 @@ class BlueprintService
      */
     public static function getFromSlug(string $slug): ?array
     {
-        return (new BlueprintModel(Application::getDatabase()))->getFromSlug($slug);
+        return (new BlueprintModel(Application::getDatabase()))
+            ->getFromSlug($slug);
     }
 
     /**
@@ -315,7 +316,8 @@ class BlueprintService
      */
     public static function getAllVersions(int $blueprintID): ?array
     {
-        return (new BlueprintVersionModel(Application::getDatabase()))->getAllVersions($blueprintID);
+        return (new BlueprintVersionModel(Application::getDatabase()))
+            ->getAllVersions($blueprintID);
     }
 
     /** @throws \Exception */
@@ -361,7 +363,8 @@ class BlueprintService
      */
     public static function changeAuthor(int $fromID, int $toID): void
     {
-        (new BlueprintModel(Application::getDatabase()))->changeAuthor($fromID, $toID);
+        (new BlueprintModel(Application::getDatabase()))
+            ->changeAuthor($fromID, $toID);
     }
 
     /**
@@ -370,7 +373,8 @@ class BlueprintService
      */
     public static function softDeleteFromAuthor(int $id): void
     {
-        (new BlueprintModel(Application::getDatabase()))->softDeleteFromAuthor($id);
+        (new BlueprintModel(Application::getDatabase()))
+            ->softDeleteFromAuthor($id);
     }
 
     /**
@@ -379,7 +383,8 @@ class BlueprintService
      */
     public static function isAuthorBlueprint(int $blueprintID, int $userID): bool
     {
-        return (new BlueprintModel(Application::getDatabase()))->isAuthorBlueprint($blueprintID, $userID);
+        return (new BlueprintModel(Application::getDatabase()))
+            ->isAuthorBlueprint($blueprintID, $userID);
     }
 
     /**
@@ -418,7 +423,8 @@ class BlueprintService
      */
     public static function claimBlueprint(int $blueprintID, int $userID): void
     {
-        (new BlueprintModel(Application::getDatabase()))->update(['id_author' => $userID], $blueprintID);
+        (new BlueprintModel(Application::getDatabase()))
+            ->update(['id_author' => $userID], $blueprintID);
     }
 
     /**
@@ -502,7 +508,8 @@ class BlueprintService
      */
     public static function changeBlueprintAuthor(int $blueprintID, ?int $userID): void
     {
-        (new BlueprintModel(Application::getDatabase()))->update(['id_author' => $userID], $blueprintID);
+        (new BlueprintModel(Application::getDatabase()))
+            ->update(['id_author' => $userID], $blueprintID);
     }
 
     /**
@@ -512,7 +519,8 @@ class BlueprintService
      */
     public static function softDeleteBlueprint(int $blueprintID): void
     {
-        (new BlueprintModel(Application::getDatabase()))->update(['deleted_at' => Helper::getNowUTCFormatted()], $blueprintID);
+        (new BlueprintModel(Application::getDatabase()))
+            ->update(['deleted_at' => Helper::getNowUTCFormatted()], $blueprintID);
     }
 
     /**
@@ -574,7 +582,7 @@ class BlueprintService
             );
 
             $errorCode = null;
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             return $errorCode;
         } finally {
             if ($forceRollback) {
@@ -615,7 +623,7 @@ class BlueprintService
     }
 
     /**
-     * @param array $params [title,description,video_url]
+     * @param array $params [title,description,tags,video,video_provider]
      *
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
@@ -717,7 +725,8 @@ class BlueprintService
      */
     public static function updateCommentCount(int $blueprintID, int $count): void
     {
-        (new BlueprintModel(Application::getDatabase()))->updateCommentCount($blueprintID, $count);
+        (new BlueprintModel(Application::getDatabase()))
+            ->updateCommentCount($blueprintID, $count);
     }
 
     /**
@@ -781,7 +790,7 @@ class BlueprintService
                 $blueprintParams['current_version'],
                 $params['blueprint']
             );
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             $forceRollback = true;
 
             return [null, $errorCode];

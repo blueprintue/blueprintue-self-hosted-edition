@@ -5,7 +5,6 @@
 declare(strict_types=1);
 
 use app\helpers\FormHelper;
-use Rancoud\Application\Application;
 use Rancoud\Security\Security;
 use Rancoud\Session\Session;
 

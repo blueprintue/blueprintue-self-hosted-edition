@@ -70,7 +70,7 @@ class Helper
     {
         try {
             $publishedAtObject = new \DateTimeImmutable($publishedAt, new \DateTimeZone('UTC'));
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             // date is invalid so we assume it was a few seconds ago
             return 'few seconds ago';
         }
@@ -169,7 +169,7 @@ class Helper
 
         try {
             $expirationAtObject = new \DateTimeImmutable($expiration, new \DateTimeZone('UTC'));
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             // date is invalid so we assume it was a few seconds ago
             return 'few seconds left';
         }

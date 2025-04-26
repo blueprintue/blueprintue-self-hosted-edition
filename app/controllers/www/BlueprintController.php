@@ -394,7 +394,7 @@ class BlueprintController implements MiddlewareInterface
                 }
             }
             // @codeCoverageIgnoreStart
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             /*
              * In end 2 end testing we can't arrive here because requirements checkings has been done before
              * For covering we have to mock the database
@@ -463,7 +463,7 @@ class BlueprintController implements MiddlewareInterface
                 Session::setFlash('success-form-claim_blueprint', 'This blueprint is now yours');
                 Session::keepFlash(['success-form-claim_blueprint']);
                 // @codeCoverageIgnoreStart
-            } catch (\Exception $exception) {
+            } catch (\Exception) {
                 /*
                  * In end 2 end testing we can't arrive here because requirements checkings has been done before
                  * For covering we have to mock the database
@@ -557,7 +557,7 @@ class BlueprintController implements MiddlewareInterface
             Session::setFlash('success-form-delete_version_blueprint', 'Version ' . $params['version'] . ' has been deleted');
             Session::keepFlash(['success-form-delete_version_blueprint']);
             // @codeCoverageIgnoreStart
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             /*
              * In end 2 end testing we can't arrive here because requirements checkings has been done before
              * For covering we have to mock the database
@@ -653,7 +653,7 @@ class BlueprintController implements MiddlewareInterface
             Session::setFlash('form-add_comment-comment_id', $commentID);
             Session::keepFlash(['success-form-add_comment', 'form-add_comment-comment_id']);
             // @codeCoverageIgnoreStart
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             /*
              * In end 2 end testing we can't arrive here because requirements checkings has been done before
              * For covering we have to mock the database
@@ -749,7 +749,7 @@ class BlueprintController implements MiddlewareInterface
             Session::setFlash('form-edit_comment-comment_id', $params['id']);
             Session::keepFlash(['success-form-edit_comment', 'form-edit_comment-values', 'form-edit_comment-comment_id']);
             // @codeCoverageIgnoreStart
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             /*
              * In end 2 end testing we can't arrive here because requirements checkings has been done before
              * For covering we have to mock the database
@@ -837,7 +837,7 @@ class BlueprintController implements MiddlewareInterface
             Session::setFlash('success-form-delete_comment', 'Your comment has been deleted');
             Session::keepFlash(['success-form-delete_comment']);
             // @codeCoverageIgnoreStart
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             /*
              * In end 2 end testing we can't arrive here because requirements checkings has been done before
              * For covering we have to mock the database

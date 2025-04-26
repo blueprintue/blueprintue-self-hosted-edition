@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
 
@@ -43,7 +42,7 @@ class BlueprintGETFileBlueprintTest extends TestCase
      *
      * @return array[]
      */
-    public static function dataCasesBlueprintGET_FileBlueprint(): iterable
+    public static function provideBlueprintGETFileBlueprintDataCases(): iterable
     {
         yield 'get last version : file 1' => [
             'sqlQueries' => [
@@ -92,7 +91,7 @@ class BlueprintGETFileBlueprintTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('dataCasesBlueprintGET_FileBlueprint')]
+    #[DataProvider('provideBlueprintGETFileBlueprintDataCases')]
     public function testBlueprintGETFileBlueprint(array $sqlQueries, string $fileID, string $version, string $slug): void
     {
         static::cleanFiles();

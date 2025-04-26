@@ -53,7 +53,7 @@ class ConfirmAccountController implements MiddlewareInterface
             // avoid bad encoding string
             try {
                 Security::escHTML($confirmedToken);
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 return $this->redirect('/');
             }
 

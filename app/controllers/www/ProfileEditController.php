@@ -234,7 +234,7 @@ class ProfileEditController implements MiddlewareInterface
             // avoid bad encoding string
             try {
                 Security::escHTML($rawParams[$input]);
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 return null;
             }
         }
@@ -689,7 +689,7 @@ class ProfileEditController implements MiddlewareInterface
             );
 
             Session::destroy();
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->rollbackTransaction();
 

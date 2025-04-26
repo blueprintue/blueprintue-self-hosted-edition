@@ -1,7 +1,6 @@
 <?php
 
 /* @noinspection HtmlUnknownTarget */
-/* @noinspection PhpTooManyParametersInspection */
 
 declare(strict_types=1);
 

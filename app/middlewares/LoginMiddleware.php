@@ -45,11 +45,8 @@ class LoginMiddleware implements MiddlewareInterface
         }
 
         $response = $this->tryToRememberUser($request);
-        if ($response !== null) {
-            return $response;
-        }
 
-        return $handler->handle($request);
+        return $response ?? $handler->handle($request);
     }
 
     /** @throws \Exception */
@@ -93,8 +90,6 @@ class LoginMiddleware implements MiddlewareInterface
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return ResponseInterface|null
      */
     protected function doProcessLogin(ServerRequestInterface $request, ?array $params): ResponseInterface
     {
@@ -158,7 +153,7 @@ class LoginMiddleware implements MiddlewareInterface
                 $this->deleteRememberToken($userID);
             }
             // @codeCoverageIgnoreStart
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             /*
              * In end 2 end testing we can't arrive here because:
              * 1. check user ID has been done

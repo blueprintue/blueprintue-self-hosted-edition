@@ -216,7 +216,7 @@ class BlueprintGETInformationsBlueprintTest extends TestCase
         if ($expiration !== null) {
             try {
                 $this->doTestHtmlMain($response, '<li class="blueprint__property">Expiration: <span class="blueprint__property--emphasis">' . Security::escHTML($expiration) . '</span></li>');
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 if ($expiration === '7 days left') {
                     $expiration = '6 days left';
                 } elseif ($expiration === '1 days left') {

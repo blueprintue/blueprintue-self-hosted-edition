@@ -1,8 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
-/* @noinspection PhpTooManyParametersInspection */
-
 declare(strict_types=1);
 
 namespace tests\www\IntegrationTest\Middleware;

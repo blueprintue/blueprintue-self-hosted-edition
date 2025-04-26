@@ -133,6 +133,7 @@ class TagService
      */
     public static function getAllTags(): array
     {
-        return (new TagModel(Application::getDatabase()))->all(['no_limit' => 1, 'order' => 'name|asc'], ['name']);
+        return (new TagModel(Application::getDatabase()))
+            ->all(['no_limit' => 1, 'order' => 'name|asc'], ['name']);
     }
 }

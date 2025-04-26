@@ -1,7 +1,5 @@
 <?php
 
-/* @noinspection PhpTooManyParametersInspection */
-
 declare(strict_types=1);
 
 namespace tests\www\IntegrationTest\Helper;
@@ -203,7 +201,6 @@ class MailerTest extends TestCase
         $mailer = new MailerHelper($useCustomEmailValidation);
         $reflection = new \ReflectionClass($mailer);
         $reflectionProperty = $reflection->getProperty('mailer');
-        $reflectionProperty->setAccessible(true);
 
         // check construct
         $mailerProp = $reflectionProperty->getValue($mailer);

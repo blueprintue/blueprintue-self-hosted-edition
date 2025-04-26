@@ -211,7 +211,7 @@ class BlueprintEditController implements MiddlewareInterface
             // avoid bad encoding string
             try {
                 Security::escHTML($rawParams[$input]);
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 return null;
             }
         }
@@ -349,7 +349,7 @@ class BlueprintEditController implements MiddlewareInterface
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->commitTransaction();
             // @codeCoverageIgnoreStart
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->rollbackTransaction();
 
@@ -610,7 +610,7 @@ class BlueprintEditController implements MiddlewareInterface
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->commitTransaction();
             // @codeCoverageIgnoreStart
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->rollbackTransaction();
 

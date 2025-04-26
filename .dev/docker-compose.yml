@@ -33,7 +33,7 @@ services:
       - "MYSQL_PASSWORD=blueprintue-self-hosted-edition"
     restart: "always"
     ports:
-      - 3306:3306
+      - "3306:3306"
 
   blueprintue-self-hosted-edition:
     build: ../
