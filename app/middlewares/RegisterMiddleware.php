@@ -137,8 +137,6 @@ class RegisterMiddleware implements MiddlewareInterface
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return ResponseInterface|null
      */
     protected function doProcessRegister(ServerRequestInterface $request, ?array $params): ResponseInterface
     {
@@ -173,7 +171,7 @@ class RegisterMiddleware implements MiddlewareInterface
 
                 throw new \Exception('Error, could not create account (' . $errorCode . ')');
             }
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             $forceRollback = true;
             unset($params['password'], $params['password_confirm']);
 

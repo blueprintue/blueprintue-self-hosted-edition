@@ -97,7 +97,7 @@ class CronController
 
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->delete($sqlDeleteUsersInfos);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $forceRollback = true;
         } finally {
             if ($forceRollback) {
@@ -152,7 +152,7 @@ class CronController
             foreach ($userIDsToCompute as $userIDToCompute) {
                 $this->updateUserCounters($userIDToCompute);
             }
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $forceRollback = true;
         } finally {
             if ($forceRollback) {
@@ -292,7 +292,7 @@ class CronController
 
             /* @noinspection NullPointerExceptionInspection */
             Application::getDatabase()->update($sqlSetSoftDeletedAnonymousPrivateBlueprints, ['userID' => $anonymousID]);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $forceRollback = true;
         } finally {
             if ($forceRollback) {

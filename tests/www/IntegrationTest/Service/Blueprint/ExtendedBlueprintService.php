@@ -1,8 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
-/* @noinspection PhpTooManyParametersInspection */
-
 declare(strict_types=1);
 
 namespace tests\www\IntegrationTest\Service\Blueprint;
@@ -88,7 +85,7 @@ class ExtendedBlueprintService extends BlueprintService
     {
         $blueprintModel = new BlueprintModel(Application::getDatabase());
         $fileID = static::getNewFileID($blueprintModel);
-        static::setBlueprintContent($fileID, '1', 'aze');
+        static::setBlueprintContent($fileID, 1, 'aze');
 
         return $fileID;
     }
@@ -114,7 +111,7 @@ class ExtendedBlueprintService extends BlueprintService
             'created_at'      => (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->format('Y-m-d H:i:s'),
         ]);
 
-        static::setBlueprintContent($fileID, '1', 'aze');
+        static::setBlueprintContent($fileID, 1, 'aze');
 
         return $fileID;
     }

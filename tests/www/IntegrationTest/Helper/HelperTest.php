@@ -1,7 +1,5 @@
 <?php
 
-/* @noinspection PhpTooManyParametersInspection */
-
 declare(strict_types=1);
 
 namespace tests\www\IntegrationTest\Helper;
@@ -98,7 +96,7 @@ class HelperTest extends TestCase
     {
         try {
             static::assertSame($out, Helper::getTimeleft($in));
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             if ($out === '2 h and 30 min left') {
                 $out = '2 h and 29 min left';
 

@@ -68,7 +68,7 @@ class APIController implements MiddlewareInterface
         // avoid bad encoding string
         try {
             Security::escHTML($apiKey);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return [null, 'api_key_incorrect'];
         }
 
@@ -101,7 +101,7 @@ class APIController implements MiddlewareInterface
         // avoid bad encoding string
         try {
             Security::escHTML($rawParams['blueprint']);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return null;
         }
 
@@ -138,7 +138,10 @@ class APIController implements MiddlewareInterface
         return (new Factory())->createResponse()->withBody(Stream::create($html))->withHeader('Content-type', 'text/html');
     }
 
-    /** @throws \Rancoud\Application\ApplicationException */
+    /**
+     * @throws \Rancoud\Application\ApplicationException
+     * @noinspection PhpUnusedParameterInspection
+     */
     protected function generateHTML(array $data): string
     {
         \ob_start();
@@ -158,7 +161,7 @@ class APIController implements MiddlewareInterface
             foreach ($rawParams as $rawParamValue) {
                 Security::escHTML($rawParamValue);
             }
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return [null, 'invalid'];
         }
 
@@ -205,7 +208,6 @@ class APIController implements MiddlewareInterface
     /**
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
-     * @throws \Rancoud\Environment\EnvironmentException
      */
     protected function doProcessUpload(int $userID, array $params): ResponseInterface
     {
@@ -233,7 +235,7 @@ class APIController implements MiddlewareInterface
             }
 
             $blueprintSlug = $blueprint['slug'];
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             $forceRollback = true;
 
             $dataError = \json_encode(['error' => $errorMessage], \JSON_THROW_ON_ERROR);

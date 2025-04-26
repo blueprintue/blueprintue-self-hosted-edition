@@ -1,7 +1,5 @@
 <?php
 
-/* @noinspection PhpTooManyParametersInspection */
-
 declare(strict_types=1);
 
 namespace tests\www\Lists;
@@ -237,7 +235,7 @@ HTML,
 
         $this->getResponseFromApplication('GET', '/contact/', [], $sessionValues);
 
-        $response = $this->getResponseFromApplication('GET', '/tags/', [], [], []);
+        $response = $this->getResponseFromApplication('GET', '/tags/');
         $this->doTestHasResponseWithStatusCode($response, 200);
         $this->doTestHtmlHead($response, [
             'title'       => Security::escHTML($contentHead['title']),

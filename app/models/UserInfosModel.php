@@ -131,6 +131,7 @@ class UserInfosModel extends Model
                     count_private_comment = count_private_comment - :count
                 WHERE id_user = :userID;
             SQL;
+
             $this->database->update($sql, ['userID' => $userID, 'count' => $count]);
         }
     }
@@ -161,6 +162,7 @@ class UserInfosModel extends Model
                 SET count_private_comment = count_private_comment - :count
                 WHERE id_user = :userID;
             SQL;
+
             $this->database->update($sql, ['userID' => $userID, 'count' => $count]);
         }
     }

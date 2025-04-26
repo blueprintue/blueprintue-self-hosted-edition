@@ -36,11 +36,7 @@ class LogoutMiddleware implements MiddlewareInterface
         return $handler->handle($request);
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return ResponseInterface|null
-     */
+    /** @throws \Exception */
     protected function doProcessLogout(ServerRequestInterface $request): ResponseInterface
     {
         $baseUri = (new Factory())->createUri($request->getUri()->getPath() . '?' . $request->getUri()->getQuery());

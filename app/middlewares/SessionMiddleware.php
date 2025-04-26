@@ -24,7 +24,7 @@ class SessionMiddleware implements MiddlewareInterface
     {
         $this->setDriver();
 
-        $this->setReadWriteMode($request);
+        $this->setReadWriteMode();
 
         $this->setOptions();
 
@@ -49,8 +49,10 @@ class SessionMiddleware implements MiddlewareInterface
         if ($sessionDriver === 'database') {
             $db = Application::getDatabase();
             if (!empty($encryptionKey)) {
+                /* @noinspection NullPointerExceptionInspection */
                 Session::useCurrentDatabaseEncryptionDriver($db, $encryptionKey);
             } else {
+                /* @noinspection NullPointerExceptionInspection */
                 Session::useCurrentDatabaseDriver($db);
             }
         } elseif (!empty($encryptionKey)) {
@@ -63,7 +65,7 @@ class SessionMiddleware implements MiddlewareInterface
 
     // protected function
 
-    protected function setReadWriteMode(ServerRequestInterface $request): void
+    protected function setReadWriteMode(): void
     {
         Session::setReadWrite();
     }

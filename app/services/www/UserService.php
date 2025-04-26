@@ -23,13 +23,11 @@ class UserService
     /**
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     * @throws \Rancoud\Model\ModelException
      */
     public static function findUserIDWithUsernameAndPassword(string $username, string $password): ?int
     {
-        $userModel = (new UserModel(Application::getDatabase()));
-
-        return $userModel->findUserIDWithUsernameAndPassword($username, $password);
+        return (new UserModel(Application::getDatabase()))
+            ->findUserIDWithUsernameAndPassword($username, $password);
     }
 
     /**
@@ -39,9 +37,8 @@ class UserService
      */
     public static function getInfosForSession(int $userID): ?array
     {
-        $userModel = (new UserModel(Application::getDatabase()));
-
-        return $userModel->getInfosForSession($userID);
+        return (new UserModel(Application::getDatabase()))
+            ->getInfosForSession($userID);
     }
 
     /**
@@ -69,8 +66,8 @@ class UserService
      */
     public static function deleteRememberToken(int $userID): void
     {
-        $userModel = (new UserModel(Application::getDatabase()));
-        $userModel->deleteRememberToken($userID);
+        (new UserModel(Application::getDatabase()))
+            ->deleteRememberToken($userID);
     }
 
     /**
@@ -79,9 +76,8 @@ class UserService
      */
     public static function getUserIDFromRememberMe(string $rememberToken): ?int
     {
-        $userModel = (new UserModel(Application::getDatabase()));
-
-        return $userModel->getUserIDFromRememberMe($rememberToken);
+        return (new UserModel(Application::getDatabase()))
+            ->getUserIDFromRememberMe($rememberToken);
     }
 
     public static function getMinLengthPassword(): int
@@ -100,9 +96,8 @@ class UserService
      */
     public static function isUsernameAvailable(string $username): bool
     {
-        $user = (new UserModel(Application::getDatabase()));
-
-        return $user->isUsernameAvailable($username, static::slugify($username));
+        return (new UserModel(Application::getDatabase()))
+            ->isUsernameAvailable($username, static::slugify($username));
     }
 
     /**
@@ -111,9 +106,8 @@ class UserService
      */
     public static function isEmailAvailable(string $email): bool
     {
-        $user = (new UserModel(Application::getDatabase()));
-
-        return $user->isEmailAvailable($email);
+        return (new UserModel(Application::getDatabase()))
+            ->isEmailAvailable($email);
     }
 
     /**
@@ -159,7 +153,7 @@ class UserService
             $errorCode = '#300';
             $userInfosModel->create(['id_user' => $userID]);
             // @codeCoverageIgnoreStart
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             $forceRollback = true;
 
             /*
@@ -264,7 +258,7 @@ class UserService
 
             $userApiModel = (new UserApiModel(Application::getDatabase()));
             $userApiModel->delete($userID);
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             $forceRollback = true;
 
             return false;
@@ -366,7 +360,8 @@ class UserService
      */
     public static function updateEmail(int $userID, string $email): void
     {
-        (new UserModel(Application::getDatabase()))->update(['email' => $email], $userID);
+        (new UserModel(Application::getDatabase()))
+            ->update(['email' => $email], $userID);
     }
 
     /**
@@ -375,7 +370,8 @@ class UserService
      */
     public static function updateUsername(int $userID, string $username): void
     {
-        (new UserModel(Application::getDatabase()))->update(['username' => $username, 'slug' => static::slugify($username)], $userID);
+        (new UserModel(Application::getDatabase()))
+            ->update(['username' => $username, 'slug' => static::slugify($username)], $userID);
     }
 
     /**
@@ -384,7 +380,8 @@ class UserService
      */
     public static function updatePassword(int $userID, string $password): void
     {
-        (new UserModel(Application::getDatabase()))->update(['password' => $password], $userID);
+        (new UserModel(Application::getDatabase()))
+            ->update(['password' => $password], $userID);
     }
 
     /**
@@ -470,7 +467,8 @@ class UserService
      */
     public static function findUserIDFromEmailAndToken(string $email, string $token): ?int
     {
-        return (new UserModel(Application::getDatabase()))->findUserIDFromEmailAndToken($email, $token);
+        return (new UserModel(Application::getDatabase()))
+            ->findUserIDFromEmailAndToken($email, $token);
     }
 
     /**
@@ -479,7 +477,8 @@ class UserService
      */
     public static function resetPassword(int $userID, string $password): void
     {
-        (new UserModel(Application::getDatabase()))->update(['password' => $password, 'password_reset' => null, 'password_reset_at' => null], $userID);
+        (new UserModel(Application::getDatabase()))
+            ->update(['password' => $password, 'password_reset' => null, 'password_reset_at' => null], $userID);
     }
 
     /**
@@ -488,8 +487,8 @@ class UserService
      */
     public static function updatePublicAndPrivateCommentCountWithComments(array $comments): void
     {
-        $userInfosModel = new UserInfosModel(Application::getDatabase());
-        $userInfosModel->updatePublicAndPrivateCommentCountWithComments($comments);
+        (new UserInfosModel(Application::getDatabase()))
+            ->updatePublicAndPrivateCommentCountWithComments($comments);
     }
 
     /**
@@ -498,8 +497,8 @@ class UserService
      */
     public static function updatePrivateCommentCountWithComments(array $comments): void
     {
-        $userInfosModel = new UserInfosModel(Application::getDatabase());
-        $userInfosModel->updatePrivateCommentCountWithComments($comments);
+        (new UserInfosModel(Application::getDatabase()))
+            ->updatePrivateCommentCountWithComments($comments);
     }
 
     /**
@@ -509,7 +508,8 @@ class UserService
      */
     public static function getInfosFromIdAuthorIndex(array $items): array
     {
-        return (new UserModel(Application::getDatabase()))->getInfosFromIdAuthorIndex($items);
+        return (new UserModel(Application::getDatabase()))
+            ->getInfosFromIdAuthorIndex($items);
     }
 
     /**
@@ -518,8 +518,8 @@ class UserService
      */
     public static function updatePublicAndPrivateBlueprintCount(int $userID, int $count): void
     {
-        $userInfosModel = new UserInfosModel(Application::getDatabase());
-        $userInfosModel->updatePublicAndPrivateBlueprintCount($userID, $count);
+        (new UserInfosModel(Application::getDatabase()))
+            ->updatePublicAndPrivateBlueprintCount($userID, $count);
     }
 
     /**
@@ -528,8 +528,8 @@ class UserService
      */
     public static function updatePrivateBlueprintCount(int $userID, int $count): void
     {
-        $userInfosModel = new UserInfosModel(Application::getDatabase());
-        $userInfosModel->updatePrivateBlueprintCount($userID, $count);
+        (new UserInfosModel(Application::getDatabase()))
+            ->updatePrivateBlueprintCount($userID, $count);
     }
 
     /**
@@ -538,8 +538,8 @@ class UserService
      */
     public static function updatePublicAndPrivateCommentCount(int $userID, int $count): void
     {
-        $userInfosModel = new UserInfosModel(Application::getDatabase());
-        $userInfosModel->updatePublicAndPrivateCommentCount($userID, $count);
+        (new UserInfosModel(Application::getDatabase()))
+            ->updatePublicAndPrivateCommentCount($userID, $count);
     }
 
     /**
@@ -548,8 +548,8 @@ class UserService
      */
     public static function updatePrivateCommentCount(int $userID, int $count): void
     {
-        $userInfosModel = new UserInfosModel(Application::getDatabase());
-        $userInfosModel->updatePrivateCommentCount($userID, $count);
+        (new UserInfosModel(Application::getDatabase()))
+            ->updatePrivateCommentCount($userID, $count);
     }
 
     /**
@@ -732,7 +732,8 @@ class UserService
      */
     public static function findUserIDWithApiKey(string $apiKey): ?int
     {
-        return (new UserApiModel(Application::getDatabase()))->getUserID($apiKey);
+        return (new UserApiModel(Application::getDatabase()))
+            ->getUserID($apiKey);
     }
 
     /**

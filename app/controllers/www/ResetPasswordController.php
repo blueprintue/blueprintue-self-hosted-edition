@@ -177,7 +177,7 @@ class ResetPasswordController implements MiddlewareInterface
         try {
             UserService::resetPassword($userID, $params['password']);
             // @codeCoverageIgnoreStart
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             /*
              * In end 2 end testing we can't arrive here because user requirements has been done before
              * For covering we have to mock the database

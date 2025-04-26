@@ -145,7 +145,10 @@ class RenderController implements MiddlewareInterface
         return $blueprint;
     }
 
-    /** @throws \Rancoud\Application\ApplicationException */
+    /**
+     * @throws \Rancoud\Application\ApplicationException
+     * @noinspection PhpUnusedParameterInspection
+     */
     protected function generateHTML(array $data): string
     {
         \ob_start();

@@ -28,11 +28,8 @@ class CommentService
      */
     public static function addComment(int $blueprintID, int $userID, string $comment): int
     {
-        $now = Helper::getNowUTCFormatted();
-
-        $commentModel = new CommentModel(Application::getDatabase());
-
-        return $commentModel->create(['id_blueprint' => $blueprintID, 'id_author' => $userID, 'content' => $comment, 'created_at' => $now]);
+        return (new CommentModel(Application::getDatabase()))
+            ->create(['id_blueprint' => $blueprintID, 'id_author' => $userID, 'content' => $comment, 'created_at' => Helper::getNowUTCFormatted()]);
     }
     // endregion
 
@@ -42,9 +39,8 @@ class CommentService
      */
     public static function editComment(int $commentID, string $comment): void
     {
-        $commentModel = new CommentModel(Application::getDatabase());
-
-        $commentModel->update(['content' => $comment], $commentID);
+        (new CommentModel(Application::getDatabase()))
+            ->update(['content' => $comment], $commentID);
     }
 
     /**
@@ -53,9 +49,8 @@ class CommentService
      */
     public static function deleteComment(int $commentID): void
     {
-        $commentModel = new CommentModel(Application::getDatabase());
-
-        $commentModel->delete($commentID);
+        (new CommentModel(Application::getDatabase()))
+            ->delete($commentID);
     }
 
     /**
@@ -64,8 +59,8 @@ class CommentService
      */
     public static function deleteCommentsWithBlueprintID(int $blueprintID): void
     {
-        $commentModel = new CommentModel(Application::getDatabase());
-        $commentModel->deleteCommentsWithBlueprintID($blueprintID);
+        (new CommentModel(Application::getDatabase()))
+            ->deleteCommentsWithBlueprintID($blueprintID);
     }
 
     /**
@@ -74,7 +69,8 @@ class CommentService
      */
     public static function keepComments(int $userID, string $nameFallback): void
     {
-        (new CommentModel(Application::getDatabase()))->changeAuthor($userID, null, $nameFallback);
+        (new CommentModel(Application::getDatabase()))
+            ->changeAuthor($userID, null, $nameFallback);
     }
 
     /**
@@ -83,7 +79,8 @@ class CommentService
      */
     public static function anonymizeComments(int $userID): void
     {
-        (new CommentModel(Application::getDatabase()))->changeAuthor($userID, null, 'Guest');
+        (new CommentModel(Application::getDatabase()))
+            ->changeAuthor($userID, null, 'Guest');
     }
 
     /**
@@ -92,7 +89,8 @@ class CommentService
      */
     public static function deleteFromAuthor(int $userID): void
     {
-        (new CommentModel(Application::getDatabase()))->deleteFromAuthor($userID);
+        (new CommentModel(Application::getDatabase()))
+            ->deleteFromAuthor($userID);
     }
 
     /**
@@ -101,6 +99,7 @@ class CommentService
      */
     public static function isCommentBelongToAuthor(int $commentID, int $userID): bool
     {
-        return (new CommentModel(Application::getDatabase()))->isCommentBelongToAuthor($commentID, $userID);
+        return (new CommentModel(Application::getDatabase()))
+            ->isCommentBelongToAuthor($commentID, $userID);
     }
 }

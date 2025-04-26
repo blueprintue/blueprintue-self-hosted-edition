@@ -31,8 +31,6 @@ class ContactController implements MiddlewareInterface
     /**
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
-     *
-     * @noinspection PhpUnusedParameterInspection
      */
     protected function setTemplateProperties(array $data = []): void
     {
@@ -68,7 +66,7 @@ class ContactController implements MiddlewareInterface
 
         if ($this->hasSentForm($request, 'POST', $this->inputs, 'error-form-contact')) {
             $cleanedParams = $this->treatFormContact($request);
-            $this->doProcessContact($request, $cleanedParams);
+            $this->doProcessContact($cleanedParams);
 
             return $this->redirect(Application::getRouter()->generateUrl('contact'));
         }
@@ -136,7 +134,7 @@ class ContactController implements MiddlewareInterface
     }
 
     /** @throws \Exception */
-    protected function doProcessContact(ServerRequestInterface $request, ?array $params): void
+    protected function doProcessContact(?array $params): void
     {
         if ($params === null) {
             return;

@@ -29,11 +29,7 @@ class BlueprintVersionModel extends Model
         $this->table = 'blueprints_version';
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return array|null
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function getNextVersion(int $blueprintID): ?int
     {
         $sql = <<<'SQL'
@@ -54,8 +50,6 @@ class BlueprintVersionModel extends Model
     /**
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return mixed
      */
     public function getAllVersions(int $blueprintID): ?array
     {

@@ -89,8 +89,6 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
      * @throws \Exception
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return ResponseInterface|null
      */
     protected function doProcessForgotPassword(ServerRequestInterface $request, ?array $params): ResponseInterface
     {
@@ -125,7 +123,7 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
 
                 throw new \Exception($errorMessage);
             }
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             $forceRollback = true;
 
             Session::setFlash('error-form-forgot_password', $errorMessage);

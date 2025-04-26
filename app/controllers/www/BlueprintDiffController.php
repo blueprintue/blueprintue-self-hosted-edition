@@ -129,7 +129,7 @@ class BlueprintDiffController implements MiddlewareInterface
         $hasFoundLeftVersion = false;
         $hasFoundRightVersion = false;
 
-        foreach ($blueprint['versions'] as $k => $v) {
+        foreach ($blueprint['versions'] as $v) {
             if ($v['version'] === $previousVersion) {
                 $hasFoundLeftVersion = true;
             }

@@ -1,8 +1,5 @@
 <?php
 
-/* @noinspection PhpMethodNamingConventionInspection */
-/* @noinspection PhpTooManyParametersInspection */
-
 declare(strict_types=1);
 
 namespace tests\www\IntegrationTest\Service\Blueprint;
@@ -97,7 +94,7 @@ class BlueprintFolderTest extends TestCase
 
         try {
             ExtendedBlueprintService::testNewFileIDOnDatabase();
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $exceptionLaunched = true;
         }
 
@@ -120,7 +117,7 @@ class BlueprintFolderTest extends TestCase
 
         try {
             ExtendedBlueprintService::testNewFileIDOnFileSystem();
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $exceptionLaunched = true;
         }
 
@@ -143,7 +140,7 @@ class BlueprintFolderTest extends TestCase
 
         try {
             ExtendedBlueprintService::testNewFileIDBoth();
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $exceptionLaunched = true;
         }
 

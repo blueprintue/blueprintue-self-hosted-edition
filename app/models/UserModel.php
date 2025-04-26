@@ -55,7 +55,7 @@ class UserModel extends Model
     {
         $this->addBeforeCreate(
             'cryptPassword',
-            static function ($sql, $params) {
+            static function (string $sql, array $params): array {
                 if ($params['password'] !== null) {
                     $params['password'] = Crypt::hash($params['password']);
                 }
@@ -66,10 +66,9 @@ class UserModel extends Model
 
         $this->addBeforeUpdate(
             'cryptPassword',
-            static function ($sql, $params) {
+            static function (string $sql, array $params): ?array {
                 if (!\array_key_exists('password', $params)) {
-                    /* @noinspection PhpInconsistentReturnPointsInspection */
-                    return;
+                    return null;
                 }
 
                 if ($params['password'] !== null) {
@@ -81,10 +80,7 @@ class UserModel extends Model
         );
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     * @throws \Rancoud\Model\ModelException
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function findUserIDWithUsernameAndPassword(string $login, string $password): ?int
     {
         $sql = <<<'SQL'

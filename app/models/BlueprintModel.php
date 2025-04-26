@@ -75,7 +75,7 @@ class BlueprintModel extends Model
     }
 
     /** @throws \Rancoud\Database\DatabaseException */
-    public function isNewFileIDAvailable(string $fileID): ?bool
+    public function isNewFileIDAvailable(string $fileID): bool
     {
         $sql = <<<'SQL'
             SELECT COUNT(slug)
@@ -159,7 +159,7 @@ class BlueprintModel extends Model
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      */
-    public function searchWithAuthor(int $userID, bool $showOnlyPublic, array $pagination): ?array
+    public function searchWithAuthor(int $userID, bool $showOnlyPublic, array $pagination): array
     {
         [$count, $offset] = \Rancoud\Model\Helper::getLimitOffsetCount($pagination);
 
@@ -219,7 +219,7 @@ class BlueprintModel extends Model
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      */
-    public function searchLast(?int $connectedUserID, array $pagination): ?array
+    public function searchLast(?int $connectedUserID, array $pagination): array
     {
         [$count, $offset] = \Rancoud\Model\Helper::getLimitOffsetCount($pagination);
 
@@ -289,7 +289,7 @@ class BlueprintModel extends Model
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      */
-    public function searchMostDiscussed(?int $connectedUserID, array $pagination): ?array
+    public function searchMostDiscussed(?int $connectedUserID, array $pagination): array
     {
         [$count, $offset] = \Rancoud\Model\Helper::getLimitOffsetCount($pagination);
 
@@ -367,7 +367,7 @@ class BlueprintModel extends Model
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      */
-    public function searchType(string $type, ?int $connectedUserID, array $pagination): ?array
+    public function searchType(string $type, ?int $connectedUserID, array $pagination): array
     {
         [$count, $offset] = \Rancoud\Model\Helper::getLimitOffsetCount($pagination);
 
@@ -441,7 +441,7 @@ class BlueprintModel extends Model
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      */
-    public function searchTag(int $tagID, ?int $connectedUserID, array $pagination): ?array
+    public function searchTag(int $tagID, ?int $connectedUserID, array $pagination): array
     {
         [$count, $offset] = \Rancoud\Model\Helper::getLimitOffsetCount($pagination);
 
@@ -517,7 +517,7 @@ class BlueprintModel extends Model
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      */
-    public function search(array $params, ?int $connectedUserID, array $pagination): ?array
+    public function search(array $params, ?int $connectedUserID, array $pagination): array
     {
         [$count, $offset] = \Rancoud\Model\Helper::getLimitOffsetCount($pagination);
 
@@ -539,8 +539,6 @@ class BlueprintModel extends Model
         }
 
         if ($connectedUserID !== null) {
-            // just for IDE
-            $limit = 'LIMIT :offset, :count';
             $sqlRows = <<<SQL
                 SELECT *
                 FROM blueprints
@@ -553,7 +551,7 @@ class BlueprintModel extends Model
                   {$typeSQL}
                   {$ueVersionSQL}
                 ORDER BY published_at DESC
-                {$limit};
+                LIMIT :offset, :count;
             SQL;
             $sqlCountRows = <<<SQL
                 SELECT COUNT(*)
@@ -570,21 +568,6 @@ class BlueprintModel extends Model
 
             $paramsRows = ['userID' => $connectedUserID, 'count' => $count, 'offset' => $offset];
             $paramsCountRows = ['userID' => $connectedUserID];
-
-            if ($querySQL !== '') {
-                $paramsRows['query'] = $queryValue;
-                $paramsCountRows['query'] = $queryValue;
-            }
-
-            if ($typeSQL !== '') {
-                $paramsRows['type'] = $params['type'];
-                $paramsCountRows['type'] = $params['type'];
-            }
-
-            if ($ueVersionSQL !== '') {
-                $paramsRows['ue_version'] = $params['ue_version'];
-                $paramsCountRows['ue_version'] = $params['ue_version'];
-            }
         } else {
             $sqlRows = <<<SQL
                 SELECT *
@@ -615,21 +598,21 @@ class BlueprintModel extends Model
 
             $paramsRows = ['count' => $count, 'offset' => $offset];
             $paramsCountRows = [];
+        }
 
-            if ($querySQL !== '') {
-                $paramsRows['query'] = $queryValue;
-                $paramsCountRows['query'] = $queryValue;
-            }
+        if ($querySQL !== '') {
+            $paramsRows['query'] = $queryValue;
+            $paramsCountRows['query'] = $queryValue;
+        }
 
-            if ($typeSQL !== '') {
-                $paramsRows['type'] = $params['type'];
-                $paramsCountRows['type'] = $params['type'];
-            }
+        if ($typeSQL !== '') {
+            $paramsRows['type'] = $params['type'];
+            $paramsCountRows['type'] = $params['type'];
+        }
 
-            if ($ueVersionSQL !== '') {
-                $paramsRows['ue_version'] = $params['ue_version'];
-                $paramsCountRows['ue_version'] = $params['ue_version'];
-            }
+        if ($ueVersionSQL !== '') {
+            $paramsRows['ue_version'] = $params['ue_version'];
+            $paramsCountRows['ue_version'] = $params['ue_version'];
         }
 
         $rows = $this->database->selectAll($sqlRows, $paramsRows);
@@ -662,29 +645,29 @@ class BlueprintModel extends Model
     {
         if ($connectedUserID !== null) {
             $sql = <<<'SQL'
-            SELECT tags
-            FROM blueprints
-            WHERE deleted_at IS NULL
-              AND id_author IS NOT NULL
-              AND published_at IS NOT NULL
-              AND (exposure = 'public' OR id_author = :userID)
-              AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())
-              AND tags <> ''
-              AND tags IS NOT NULL
-        SQL;
+                SELECT tags
+                FROM blueprints
+                WHERE deleted_at IS NULL
+                  AND id_author IS NOT NULL
+                  AND published_at IS NOT NULL
+                  AND (exposure = 'public' OR id_author = :userID)
+                  AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())
+                  AND tags <> ''
+                  AND tags IS NOT NULL
+            SQL;
             $params = ['userID' => $connectedUserID];
         } else {
             $sql = <<<'SQL'
-            SELECT tags
-            FROM blueprints
-            WHERE deleted_at IS NULL
-              AND id_author IS NOT NULL
-              AND published_at IS NOT NULL
-              AND exposure = 'public'
-              AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())
-              AND tags <> ''
-              AND tags IS NOT NULL
-        SQL;
+                SELECT tags
+                FROM blueprints
+                WHERE deleted_at IS NULL
+                  AND id_author IS NOT NULL
+                  AND published_at IS NOT NULL
+                  AND exposure = 'public'
+                  AND (expiration IS NULL OR expiration > UTC_TIMESTAMP())
+                  AND tags <> ''
+                  AND tags IS NOT NULL
+            SQL;
             $params = [];
         }
 

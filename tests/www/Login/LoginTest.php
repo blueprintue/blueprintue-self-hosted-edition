@@ -24,6 +24,7 @@ class LoginTest extends TestCase
     use Common;
 
     /**
+     * @throws \DateMalformedStringException
      * @throws CryptException
      * @throws DatabaseException
      */

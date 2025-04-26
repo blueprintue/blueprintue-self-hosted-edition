@@ -31,8 +31,6 @@ class CommentModel extends Model
     /**
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
-     *
-     * @return mixed
      */
     public function getAllCommentsWithBlueprintID(int $blueprintID): ?array
     {
@@ -56,11 +54,7 @@ class CommentModel extends Model
         return $rows;
     }
 
-    /**
-     * @throws \Rancoud\Database\DatabaseException
-     *
-     * @return mixed
-     */
+    /** @throws \Rancoud\Database\DatabaseException */
     public function deleteCommentsWithBlueprintID(int $blueprintID): void
     {
         $sql = <<<'SQL'

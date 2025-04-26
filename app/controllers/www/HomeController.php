@@ -34,8 +34,6 @@ class HomeController implements MiddlewareInterface
     /**
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
-     *
-     * @noinspection PhpUnusedParameterInspection
      */
     protected function setTemplateProperties(array $data = []): void
     {
@@ -188,7 +186,7 @@ class HomeController implements MiddlewareInterface
 
             $blueprintID = $blueprint['id'];
             $blueprintSlug = $blueprint['slug'];
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             $forceRollback = true;
 
             Session::setFlash('error-form-add_blueprint', $errorMessage);
