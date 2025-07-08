@@ -81,7 +81,7 @@ class TagListTest extends TestCase
      *
      * @return array[]
      */
-    public static function provideTagAccessDataCases(): iterable
+    public static function provideTagListGETDataCases(): iterable
     {
         yield 'tag not found' => [
             'sqlQueries'  => [],
@@ -2856,7 +2856,7 @@ HTML,
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provideTagAccessDataCases')]
+    #[DataProvider('provideTagListGETDataCases')]
     #[DataProvider('provide3PublicUnlistedPrivateBlueprintTagNotGoodDataCases')]
     #[DataProvider('provide3PublicUnlistedPrivateBlueprintTagGoodDataCases')]
     #[DataProvider('provide30PublicUnlistedPrivateBlueprintTagGoodPage1DataCases')]

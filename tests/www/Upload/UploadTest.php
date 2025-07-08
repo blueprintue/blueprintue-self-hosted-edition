@@ -122,7 +122,7 @@ class UploadTest extends TestCase
         }
     }
 
-    public static function provideURL404DataCases(): iterable
+    public static function provideUploadDataCases(): iterable
     {
         yield 'invalid url - user/thumbnail' => [
             'slug'               => '/upload/user/1/thumbnail/',
@@ -1099,7 +1099,7 @@ class UploadTest extends TestCase
      * @throws \Rancoud\Router\RouterException
      * @throws DatabaseException
      */
-    #[DataProvider('provideURL404DataCases')]
+    #[DataProvider('provideUploadDataCases')]
     #[DataProvider('provideUserAvatarDataCases')]
     #[DataProvider('provideBlueprintThumbnailDataCases')]
     public function testUpload(string $slug, int $statusCode, string $responseContent, ?int $userID, array $params, array $file, array $additionalsFolders, bool $isUploaded): void

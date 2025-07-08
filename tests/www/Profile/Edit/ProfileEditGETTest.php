@@ -83,7 +83,7 @@ class ProfileEditGETTest extends TestCase
      *
      * @return array[]
      */
-    public static function provideAccessDataCases(): iterable
+    public static function provideProfileEditGETDataCases(): iterable
     {
         yield 'redirect - user not exist' => [
             'slug'        => '4564879864564',
@@ -147,7 +147,7 @@ class ProfileEditGETTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provideAccessDataCases')]
+    #[DataProvider('provideProfileEditGETDataCases')]
     public function testProfileEditGET(string $slug, ?string $location, ?int $userID, ?array $contentHead): void
     {
         $sessionValues = [

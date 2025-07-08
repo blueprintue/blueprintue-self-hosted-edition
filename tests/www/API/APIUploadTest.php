@@ -29,7 +29,7 @@ class APIUploadTest extends TestCase
         static::$db->insert('INSERT INTO users_infos (id_user) VALUES (1)');
     }
 
-    public static function provideDataCases(): iterable
+    public static function provideUploadPOSTDataCases(): iterable
     {
         yield 'upload - OK' => [
             'headers' => [
@@ -284,7 +284,7 @@ class APIUploadTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('provideDataCases')]
+    #[DataProvider('provideUploadPOSTDataCases')]
     public function testUploadPOST(array $headers, array $params, int $responseCode, string $responseContent): void
     {
         $ds = \DIRECTORY_SEPARATOR;

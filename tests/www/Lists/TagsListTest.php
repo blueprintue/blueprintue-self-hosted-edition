@@ -82,7 +82,7 @@ class TagsListTest extends TestCase
      *
      * @return array[]
      */
-    public static function provideDataCases(): iterable
+    public static function provideTagsListGETDataCases(): iterable
     {
         yield 'empty page - no tags linked to blueprints (tags null)' => [
             'sqlQueries' => [
@@ -212,7 +212,7 @@ HTML,
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provideDataCases')]
+    #[DataProvider('provideTagsListGETDataCases')]
     public function testTagsListGET(array $sqlQueries, ?int $userID, ?array $contentHead, string $contentHTML): void
     {
         static::setDatabase();

@@ -71,7 +71,7 @@ class StaticTest extends TestCase
         return $response;
     }
 
-    public static function provideDataCases(): iterable
+    public static function provideStaticPageDataCases(): iterable
     {
         yield 'terms of service' => [
             'url'     => '/terms-of-service/',
@@ -98,7 +98,7 @@ class StaticTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('provideDataCases')]
+    #[DataProvider('provideStaticPageDataCases')]
     public function testStaticPage(string $url, array $headers, string $content): void
     {
         $response = $this->getResponseFromApplicationWithStatic($url);

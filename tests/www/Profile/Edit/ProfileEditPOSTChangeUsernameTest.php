@@ -80,7 +80,7 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
         }
     }
 
-    public static function provideChangeUsernameDataCases(): iterable
+    public static function provideProfileEditPOSTChangeUsernameDataCases(): iterable
     {
         yield 'edit OK' => [
             'sqlQueries' => [
@@ -353,7 +353,7 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provideChangeUsernameDataCases')]
+    #[DataProvider('provideProfileEditPOSTChangeUsernameDataCases')]
     public function testProfileEditPOSTChangeUsername(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();

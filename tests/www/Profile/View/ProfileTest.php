@@ -79,7 +79,7 @@ class ProfileTest extends TestCase
      *
      * @return array[]
      */
-    public static function provideAccessDataCases(): iterable
+    public static function provideProfileGETDataCases(): iterable
     {
         yield 'user not exist' => [
             'sqlQueries'            => [],
@@ -4846,7 +4846,7 @@ HTML,
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provideAccessDataCases')]
+    #[DataProvider('provideProfileGETDataCases')]
     #[DataProvider('provideProfileInfosDataCases')]
     #[DataProvider('provide1PrivateBlueprintDataCases')]
     #[DataProvider('provide1UnlistedBlueprintDataCases')]

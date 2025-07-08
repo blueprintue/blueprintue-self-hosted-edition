@@ -55,7 +55,7 @@ class HomeTest extends TestCase
         $this->doTestNavBarHasLinkHomeActive($response);
     }
 
-    public static function provideCreateBlueprintDataCases(): iterable
+    public static function provideHomePOSTCreateBlueprintDataCases(): iterable
     {
         yield 'xss - create blueprint OK' => [
             'userID' => static::$anonymousID,
@@ -945,7 +945,7 @@ class HomeTest extends TestCase
      * @throws \Exception
      * @throws DatabaseException
      */
-    #[DataProvider('provideCreateBlueprintDataCases')]
+    #[DataProvider('provideHomePOSTCreateBlueprintDataCases')]
     public function testHomePOSTCreateBlueprint(int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError, bool $hasAnonymousUser): void
     {
         // set user in $_SESSION

@@ -76,22 +76,6 @@ class SearchListTest extends TestCase
     }
 
     /** @throws \Exception */
-    public static function provideDataCases(): iterable
-    {
-        $cases = [];
-
-        $cases = static::addSearchError($cases);
-        $cases = static::addSearchQuery($cases);
-        $cases = static::addSearchQueryType($cases);
-        $cases = static::addSearchQueryTypeVersion($cases);
-        $cases = static::addSearchQueryVersion($cases);
-        $cases = static::addSearchType($cases);
-        $cases = static::addSearchTypeVersion($cases);
-
-        return static::addSearchVersion($cases);
-    }
-
-    /** @throws \Exception */
     protected static function addSearchError(array $cases): array
     {
         $cases['Search - Error Invalid Term'] = [
@@ -305,6 +289,22 @@ class SearchListTest extends TestCase
         return $cases;
     }
 
+    /** @throws \Exception */
+    public static function provideSearchQueryListGETDataCases(): iterable
+    {
+        $cases = [];
+
+        $cases = static::addSearchError($cases);
+        $cases = static::addSearchQuery($cases);
+        $cases = static::addSearchQueryType($cases);
+        $cases = static::addSearchQueryTypeVersion($cases);
+        $cases = static::addSearchQueryVersion($cases);
+        $cases = static::addSearchType($cases);
+        $cases = static::addSearchTypeVersion($cases);
+
+        return static::addSearchVersion($cases);
+    }
+
     /**
      * @throws ApplicationException
      * @throws DatabaseException
@@ -312,7 +312,7 @@ class SearchListTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provideDataCases')]
+    #[DataProvider('provideSearchQueryListGETDataCases')]
     public function testSearchQueryListGET(array $sqlQueries, string $slug, ?string $location, ?int $userID, ?array $contentHead, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();

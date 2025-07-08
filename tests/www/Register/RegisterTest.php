@@ -80,7 +80,7 @@ class RegisterTest extends TestCase
      *
      * @return array[]
      */
-    public static function provideRegisterDataCases(): iterable
+    public static function provideRegisterPOSTDataCases(): iterable
     {
         yield 'xss - register OK - mail OK' => [
             'params' => [
@@ -994,7 +994,7 @@ class RegisterTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provideRegisterDataCases')]
+    #[DataProvider('provideRegisterPOSTDataCases')]
     public function testRegisterPOST(array $params, bool $useCsrfFromSession, int $mailCalled, string $mailHTML, string $mailText, bool $mailSent, bool $isUserCreated, ?array $userDB, bool $hasRedirection, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         $sessionValues = [

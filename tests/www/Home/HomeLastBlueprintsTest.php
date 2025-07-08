@@ -41,7 +41,7 @@ class HomeLastBlueprintsTest extends TestCase
      *
      * @return array[]
      */
-    public static function provideLastBlueprintsDataCases(): iterable
+    public static function provideHomeGETLastBlueprintsDataCases(): iterable
     {
         yield 'no blueprints - nothing in database' => [
             'sqlQueries' => [
@@ -151,7 +151,7 @@ class HomeLastBlueprintsTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('provideLastBlueprintsDataCases')]
+    #[DataProvider('provideHomeGETLastBlueprintsDataCases')]
     public function testHomeGETLastBlueprints(array $sqlQueries, bool $hasHeader, string $content): void
     {
         static::setDatabase();

@@ -58,7 +58,7 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
         }
     }
 
-    public static function provideAddVersionDataCases(): iterable
+    public static function provideBlueprintEditPOSTAddVersionDataCases(): iterable
     {
         yield 'update OK - add version' => [
             'sqlQueries' => [
@@ -455,7 +455,7 @@ class BlueprintEditPOSTAddVersionTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provideAddVersionDataCases')]
+    #[DataProvider('provideBlueprintEditPOSTAddVersionDataCases')]
     public function testBlueprintEditPOSTAddVersion(array $sqlQueries, int $userID, int $countVersions, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();

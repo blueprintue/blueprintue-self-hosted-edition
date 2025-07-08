@@ -102,7 +102,7 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
     }
 
     /** @throws \Exception */
-    public static function provideDeleteAvatarDataCases(): iterable
+    public static function provideProfileEditPOSTDeleteAvatarDataCases(): iterable
     {
         $randomAvatarsName = [];
         for ($i = 0; $i < 2; ++$i) {
@@ -271,7 +271,7 @@ class ProfileEditPOSTDeleteAvatarTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('provideDeleteAvatarDataCases')]
+    #[DataProvider('provideProfileEditPOSTDeleteAvatarDataCases')]
     public function testProfileEditPOSTDeleteAvatar(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, ?string $fileOrDirOnDisk, bool $isFile): void
     {
         static::setDatabase();

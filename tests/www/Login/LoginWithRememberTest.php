@@ -61,7 +61,7 @@ class LoginWithRememberTest extends TestCase
         }
     }
 
-    public static function provideLoginWithRememberDataCases(): iterable
+    public static function provideLoginGETLoginWithRememberDataCases(): iterable
     {
         yield 'error - no login because remember invalid' => [
             'rememberToken'   => 'poi',
@@ -82,7 +82,7 @@ class LoginWithRememberTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('provideLoginWithRememberDataCases')]
+    #[DataProvider('provideLoginGETLoginWithRememberDataCases')]
     public function testLoginGETLoginWithRemember(string $rememberToken, array $bodyContains, array $bodyNotContains): void
     {
         $validRememberToken = 'XDYtGT691XiPWiUZSUGCt21zWF7svbnEbmqjrxDmdP1Wqs3fkIEuSu98iwSJcddVH8shXtaznY5UNbZlF8Qbyp6m4vxbKlY7GWBLL8V9wAPd4xr0yHfnlZokaPMKfJY3nQkrgHq3xxUkARPe8NhxgaHPpWw8F99rtSn9Tpalf0QiKIwsOG9T0S7ssNUtOENB1lPal2jW4kuqdnAS7Jvy19bYeJasy7koLOyrCo6aqt6UfuSgLI6ClhNVsAtKkm0';
