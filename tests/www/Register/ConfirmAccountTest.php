@@ -51,7 +51,7 @@ class ConfirmAccountTest extends TestCase
         }
     }
 
-    public static function provideConfirmAccountDataCases(): iterable
+    public static function provideConfirmAccountPOSTDataCases(): iterable
     {
         yield 'user is logged - redirect' => [
             'slug'               => '/confirm-account/',
@@ -128,7 +128,7 @@ class ConfirmAccountTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('provideConfirmAccountDataCases')]
+    #[DataProvider('provideConfirmAccountPOSTDataCases')]
     public function testConfirmAccountPOST(string $slug, ?string $location, ?int $userID, ?array $contentHead, bool $hasRedirection, ?bool $isConfirmedAccount, ?string $text, ?string $jsRedirect): void
     {
         $sessionValues = [

@@ -80,7 +80,7 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
         }
     }
 
-    public static function provideEditBasicInfosDataCases(): iterable
+    public static function provideProfileEditPOSTEditBasicInfosDataCases(): iterable
     {
         yield 'edit OK' => [
             'sqlQueries' => [
@@ -391,7 +391,7 @@ class ProfileEditPOSTEditBasicInfosTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provideEditBasicInfosDataCases')]
+    #[DataProvider('provideProfileEditPOSTEditBasicInfosDataCases')]
     public function testProfileEditPOSTEditBasicInfos(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue): void
     {
         static::setDatabase();

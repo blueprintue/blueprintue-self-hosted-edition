@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /** @internal */
 class BlueprintTypeTest extends TestCase
 {
-    public static function provideDataCases(): iterable
+    public static function provideFindBlueprintTypeDataCases(): iterable
     {
         yield 'BehaviorTreeGraphNode_ = behavior_tree' => [
             'content' => 'BehaviorTreeGraphNode_',
@@ -54,7 +54,7 @@ class BlueprintTypeTest extends TestCase
         ];
     }
 
-    #[DataProvider('provideDataCases')]
+    #[DataProvider('provideFindBlueprintTypeDataCases')]
     public function testFindBlueprintType(string $content, string $type): void
     {
         static::assertSame($type, BlueprintService::findBlueprintType($content));

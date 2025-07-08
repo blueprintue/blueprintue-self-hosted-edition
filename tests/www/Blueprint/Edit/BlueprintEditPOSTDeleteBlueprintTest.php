@@ -57,7 +57,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
         }
     }
 
-    public static function provideDeleteBlueprintDataCases(): iterable
+    public static function provideBlueprintEditPOSTDeleteBlueprintDataCases(): iterable
     {
         yield 'delete OK - give blueprint - public blueprint' => [
             'sqlQueries' => [
@@ -492,7 +492,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('provideDeleteBlueprintDataCases')]
+    #[DataProvider('provideBlueprintEditPOSTDeleteBlueprintDataCases')]
     public function testBlueprintEditPOSTDeleteBlueprint(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError, bool $hasAnonymousUser): void
     {
         static::setDatabase();

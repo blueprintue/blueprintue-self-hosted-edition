@@ -79,7 +79,7 @@ class LastListTest extends TestCase
      *
      * @return array[]
      */
-    public static function provide3PublicUnlistedPrivateBlueprintDataCases(): iterable
+    public static function provideLastListGETDataCases(): iterable
     {
         yield '3 blueprints public/unlisted/private - created but not published - (visitor profile)' => [
             'sqlQueries' => [
@@ -2463,7 +2463,7 @@ HTML,
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provide3PublicUnlistedPrivateBlueprintDataCases')]
+    #[DataProvider('provideLastListGETDataCases')]
     #[DataProvider('provide30PublicUnlistedPrivateBlueprintPage1DataCases')]
     #[DataProvider('provide30PublicUnlistedPrivateBlueprintPage2DataCases')]
     public function testLastListGET(array $sqlQueries, string $slug, ?string $location, ?int $userID, ?array $contentHead, string $contentBlueprintsHTML, string $contentPaginationHTML): void

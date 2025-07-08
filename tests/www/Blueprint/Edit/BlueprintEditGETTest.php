@@ -61,7 +61,7 @@ class BlueprintEditGETTest extends TestCase
      *
      * @return array[]
      */
-    public static function provideAccessDataCases(): iterable
+    public static function provideBlueprintEditGETDataCases(): iterable
     {
         yield 'redirect - blueprint not exist' => [
             'sqlQueries'  => [],
@@ -179,7 +179,7 @@ class BlueprintEditGETTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provideAccessDataCases')]
+    #[DataProvider('provideBlueprintEditGETDataCases')]
     public function testBlueprintEditGET(array $sqlQueries, string $slug, ?string $location, ?int $userID, ?array $contentHead): void
     {
         static::setDatabase();

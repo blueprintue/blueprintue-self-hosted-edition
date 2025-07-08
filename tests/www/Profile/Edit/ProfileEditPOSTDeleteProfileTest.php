@@ -79,7 +79,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
         }
     }
 
-    public static function provideDeleteProfileDataCases(): iterable
+    public static function provideProfileEditPOSTDeleteProfileDataCases(): iterable
     {
         yield 'delete OK - give blueprints - keep comments' => [
             'sqlQueries' => [
@@ -793,7 +793,7 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('provideDeleteProfileDataCases')]
+    #[DataProvider('provideProfileEditPOSTDeleteProfileDataCases')]
     public function testProfileEditPOSTDeleteProfile(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError, bool $hasAnonymousUser): void
     {
         static::setDatabase();

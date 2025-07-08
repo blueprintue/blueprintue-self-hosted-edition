@@ -59,7 +59,7 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
         }
     }
 
-    public static function provideEditPropertiesDataCases(): iterable
+    public static function provideBlueprintEditPOSTEditPropertiesDataCases(): iterable
     {
         yield 'update OK - edit properties - no changes' => [
             'sqlQueries' => [
@@ -1043,7 +1043,7 @@ class BlueprintEditPOSTEditPropertiesTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provideEditPropertiesDataCases')]
+    #[DataProvider('provideBlueprintEditPOSTEditPropertiesDataCases')]
     public function testBlueprintEditPOSTEditProperties(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();

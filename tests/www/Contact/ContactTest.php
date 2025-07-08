@@ -65,7 +65,7 @@ class ContactTest extends TestCase
         $this->doTestNavBarHasNoLinkActive($response);
     }
 
-    public static function provideDataCases(): iterable
+    public static function provideContactPOSTDataCases(): iterable
     {
         yield 'xss email - OK' => [
             'params' => [
@@ -551,7 +551,7 @@ class ContactTest extends TestCase
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provideDataCases')]
+    #[DataProvider('provideContactPOSTDataCases')]
     public function testContactPOST(array $params, bool $useCsrfFromSession, int $mailCalled, string $mailText, bool $mailSent, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         // set how mail must return in $_SESSION

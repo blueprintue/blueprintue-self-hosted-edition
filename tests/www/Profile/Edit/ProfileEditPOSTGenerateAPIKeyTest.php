@@ -78,7 +78,7 @@ class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
         }
     }
 
-    public static function provideGenerateApiKeyDataCases(): iterable
+    public static function provideProfileEditPOSTGenerateApiKeyDataCases(): iterable
     {
         yield 'edit OK' => [
             'sqlQueries' => [],
@@ -148,7 +148,7 @@ class ProfileEditPOSTGenerateAPIKeyTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('provideGenerateApiKeyDataCases')]
+    #[DataProvider('provideProfileEditPOSTGenerateApiKeyDataCases')]
     public function testProfileEditPOSTGenerateApiKey(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages): void
     {
         static::setDatabase();

@@ -84,7 +84,7 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
      *
      * @return array[]
      */
-    public static function provideDeleteThumbnailDataCases(): iterable
+    public static function provideBlueprintEditPOSTDeleteThumbnailDataCases(): iterable
     {
         $randomThumbailsName = [];
         for ($i = 0; $i < 2; ++$i) {
@@ -259,7 +259,7 @@ class BlueprintEditPOSTDeleteThumbnailTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('provideDeleteThumbnailDataCases')]
+    #[DataProvider('provideBlueprintEditPOSTDeleteThumbnailDataCases')]
     public function testBlueprintEditPOSTDeleteThumbnail(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, ?string $fileOrDirOnDisk, bool $isFile): void
     {
         static::setDatabase();

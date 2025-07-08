@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /** @internal */
 class VideoTest extends TestCase
 {
-    public static function provideNoVideoDataCases(): iterable
+    public static function provideVideoDataCases(): iterable
     {
         yield 'url empty' => [
             'videoURL'      => '',
@@ -764,7 +764,7 @@ class VideoTest extends TestCase
         ];
     }
 
-    #[DataProvider('provideNoVideoDataCases')]
+    #[DataProvider('provideVideoDataCases')]
     #[DataProvider('provideYoutubeDataCases')]
     #[DataProvider('provideVimeoDataCases')]
     #[DataProvider('provideDailymotionDataCases')]

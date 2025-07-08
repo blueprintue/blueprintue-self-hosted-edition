@@ -79,7 +79,7 @@ class TypeListTest extends TestCase
      *
      * @return array[]
      */
-    public static function provide3PublicUnlistedPrivateAnimationBlueprintDataCases(): iterable
+    public static function provideTypeListGETDataCases(): iterable
     {
         yield '3 animation blueprints public/unlisted/private - created but not published - (visitor profile)' => [
             'sqlQueries' => [
@@ -4473,7 +4473,7 @@ HTML,
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provide3PublicUnlistedPrivateAnimationBlueprintDataCases')]
+    #[DataProvider('provideTypeListGETDataCases')]
     #[DataProvider('provide3PublicUnlistedPrivateBehaviorTreeBlueprintDataCases')]
     #[DataProvider('provide3PublicUnlistedPrivateBlueprintDataCases')]
     #[DataProvider('provide3PublicUnlistedPrivateMaterialBlueprintDataCases')]

@@ -78,7 +78,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
         }
     }
 
-    public static function provideChangePasswordDataCases(): iterable
+    public static function provideProfileEditPOSTChangePasswordDataCases(): iterable
     {
         yield 'edit OK' => [
             'sqlQueries' => [],
@@ -597,7 +597,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('provideChangePasswordDataCases')]
+    #[DataProvider('provideProfileEditPOSTChangePasswordDataCases')]
     public function testProfileEditPOSTChangePassword(array $sqlQueries, int $userID, array $params, bool $useCsrfFromSession, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         static::setDatabase();

@@ -17,7 +17,7 @@ class MailerTest extends TestCase
     use Common;
 
     /** @return string[][] */
-    public static function provideDataCases(): iterable
+    public static function provideMailerDataCases(): iterable
     {
         yield 'mail text' => [
             'envFile'                  => 'mail.env',
@@ -178,7 +178,7 @@ class MailerTest extends TestCase
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      */
-    #[DataProvider('provideDataCases')]
+    #[DataProvider('provideMailerDataCases')]
     public function testMailer(string $envFile, bool $useCustomEmailValidation, array $constructAssertions, array $content): void
     {
         // setup app

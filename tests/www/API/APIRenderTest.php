@@ -27,7 +27,7 @@ class APIRenderTest extends TestCase
         static::$db->insert("INSERT INTO users_api (id_user, api_key) VALUES (1, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')");
     }
 
-    public static function provideDataCases(): iterable
+    public static function provideRenderPOSTDataCases(): iterable
     {
         yield 'render - OK' => [
             'headers' => [
@@ -171,7 +171,7 @@ HTML,
      * @throws EnvironmentException
      * @throws RouterException
      */
-    #[DataProvider('provideDataCases')]
+    #[DataProvider('provideRenderPOSTDataCases')]
     public function testRenderPOST(array $headers, array $params, int $responseCode, string $responseContent): void
     {
         $ds = \DIRECTORY_SEPARATOR;

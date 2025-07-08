@@ -127,7 +127,7 @@ class SearchXssListTest extends TestCase
      *
      * @return array[]
      */
-    public static function provideDataCases(): iterable
+    public static function provideSearchXssListGETDataCases(): iterable
     {
         $formattedDates = [];
         for ($i = 0; $i < 46; ++$i) {
@@ -1114,7 +1114,7 @@ HTML,
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provideDataCases')]
+    #[DataProvider('provideSearchXssListGETDataCases')]
     public function testSearchXssListGET(array $sqlQueries, string $slugInput, string $slugOutput, ?string $location, ?int $userID, ?array $contentHead, string $contentBlueprintsHTML, string $contentPaginationHTML): void
     {
         static::setDatabase();

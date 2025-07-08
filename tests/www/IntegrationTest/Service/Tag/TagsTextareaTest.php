@@ -15,7 +15,7 @@ class TagsTextareaTest extends TestCase
 {
     use Common;
 
-    public static function provideEmptyTextareaDataCases(): iterable
+    public static function provideCreateDataCases(): iterable
     {
         yield 'empty textarea - no tag before' => [
             'tagsSQLBefore' => null,
@@ -133,7 +133,7 @@ class TagsTextareaTest extends TestCase
      * @throws \Rancoud\Model\ModelException
      * @throws \Rancoud\Router\RouterException
      */
-    #[DataProvider('provideEmptyTextareaDataCases')]
+    #[DataProvider('provideCreateDataCases')]
     #[DataProvider('provideOneTagInTextareaDataCases')]
     #[DataProvider('provideTwoTagsInTextareaDataCases')]
     #[DataProvider('provideCaseSensitiveTagsDataCases')]

@@ -79,7 +79,7 @@ class MostDiscussedListTest extends TestCase
      *
      * @return array[]
      */
-    public static function provide1PublicBlueprintDataCases(): iterable
+    public static function provideMostDiscussedListGETDataCases(): iterable
     {
         yield '1 blueprint public - no comment - no show' => [
             'sqlQueries' => [
@@ -2587,7 +2587,7 @@ HTML,
      * @throws RouterException
      * @throws SecurityException
      */
-    #[DataProvider('provide1PublicBlueprintDataCases')]
+    #[DataProvider('provideMostDiscussedListGETDataCases')]
     #[DataProvider('provide3PublicUnlistedPrivateBlueprintDataCases')]
     #[DataProvider('provide30PublicUnlistedPrivateBlueprintPage1DataCases')]
     #[DataProvider('provide30PublicUnlistedPrivateBlueprintPage2DataCases')]
