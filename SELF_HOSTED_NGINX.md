@@ -6,46 +6,56 @@ Authors: [@unquietwiki](https://github.com/unquietwiki)
 
 The basic instructions for using this software, assume you are either using Docker, or uploading to a shared Apache host.
 
-These instructions are geared towards a fully self-hosted install, using Nginx. This example assumes you are doing a fresh install, using the latest version of [Nginx](https://nginx.org/en/), and [Debian 12 Linux](https://www.debian.org/). For editing text files, we'll assume you'll be using [nano](https://www.nano-editor.org/).
+These instructions are geared towards a fully self-hosted install, using Nginx. This example assumes you are doing a fresh install, using a recent version of [Nginx](https://nginx.org/en/), and [Debian 12 Linux](https://www.debian.org/) or [Ubuntu 24.04 Linux](https://www.ubuntu.com/). For editing text files, we'll assume you'll be using [nano](https://www.nano-editor.org/).
 
 Actual system requirements are quite low. This example was largely developed on an AWS [**t4g.medium** ARM64 instance](https://aws.amazon.com/ec2/instance-types/t4/). AWS provides a `admin` user with sudo-privileges; you should have a similar user on your own setup.
 
 ## Installing pre-requisites
 
-[Nginx installation](https://nginx.org/en/linux_packages.html#Debian); note, the vendor-provided Nginx uses `/etc/nginx/conf.d` instead of `sites-available` or `sites-enabled` for site configuration. We'll be using the `default.conf` for this install.
+First of all, you need to be up to date with apt, and add the necessary repos that will provide more current version of PHP.
 
-If you're planning on hosting this on an external HTTPS website, you'll need to [setup Let's Encrypt](https://linuxcapable.com/how-to-secure-nginx-with-lets-encrypt-on-debian-linux/); please adjust for the new config file location.
-
-You'll also need PHP 8.4 and MariaDB.
-
-First of all, you need to be up to date with apt:
 ```shell
 sudo apt update
+sudo apt install software-properties-common -y
+sudo add-apt-repository ppa:ondrej/php -y
+```
+
+The PHP PPA author also maintains an active Nginx installer, with a fairly recent version. If you wish to use the official release instead, disregard this step, [follow those instructions](https://nginx.org/en/linux_packages.html#instructions), and use ``nginx`` in place of ``www-data`` in subsequent commands.
+
+```shell
+sudo add-apt-repository ppa:ondrej/nginx -y
 ```
 
 Then you can install packages:
 ```shell
-sudo apt install -y mariadb-server mariadb-client php-composer php-curl php-fpm php-gd php-mbstring php-mysql php-xml
+sudo apt install nginx php8.4-fpm mariadb-server mariadb-client composer php-curl php-fpm php-gd php-mbstring php-mysql php-xml -y
 ```
+
+If you're planning on hosting this on an external HTTPS website, you'll need to [setup Let's Encrypt](https://linuxcapable.com/how-to-secure-nginx-with-lets-encrypt-on-debian-linux/); please adjust for the new config file location.
 
 ## Loading the software
 
 ### Software install
 
-Make a location to extract BlueprintUE to; it can even be a mount on an external partition (compressed BTRFS is a good use for this). For this example, we'll use `/opt/blueprintue`; download and extract the latest version to that location:
+Make a location to extract BlueprintUE to. For this example, we'll use `/opt/blueprintue`; download and extract the latest version (check the releases page & update the "wget" command accordingly) to that location:
 ```shell
+cd /opt
+wget https://github.com/blueprintue/blueprintue-self-hosted-edition/archive/refs/tags/v4.1.0.tar.gz
+tar xvf v4.1.0.tar.gz
+mv blueprintue-self-hosted-edition-4.1.0 blueprintue
+rm v4.1.0.tar.gz
+chown -R admin:www-data /opt/blueprintue
+useradd -m -s /bin/bash admin
+su - admin
 cd /opt/blueprintue && composer install
-```
-
-This has to be done outside of root/sudo. Afterwards, you'll want to change the owner:
-```shell
-chown -R admin:nginx /opt/blueprintue
+exit
+chown -R admin:www-data /opt/blueprintue
 ```
 
 ### MariaDB import database
 Connect to MariaDB with mysql command:
 ```shell
-mysql
+mysql -u root
 ```
 
 Create database, user and permissions:
@@ -68,7 +78,7 @@ You can disable the caching env file:
 ```shell
 nano www/index.php
 ```
-Then you comment the line `$env->enableCache();` and save.
+Then you comment the line `$env->enableCache();` with `//` and save.
 
 Finally you can remove the `.env.cache.php` if it was generated:
 ```shell
@@ -90,7 +100,7 @@ nano .env
 ## Configuration of PHP and Nginx
 
 ### PHP
-Update values of `user`, `group`, `listen.owner`, and `listen.group` to equal `nginx`.
+Update values of `user`, `group`, `listen.owner`, and `listen.group` to equal `www-data`.
 ```shell
 sudo nano /etc/php/8.4/fpm/pool.d/www.conf
 ```
@@ -113,7 +123,7 @@ server {
     root   /opt/blueprintue/www;
     index index.php;
 
-    access_log  /var/log/nginx/host.access.log  main;
+    access_log  /var/log/nginx/host.access.log;
 
     location / {
         try_files $uri $uri/ /index.php?$query_string;
