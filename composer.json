@@ -31,7 +31,7 @@
         "ext-fileinfo": "*",
         "ext-gd": "*",
         "ext-json": "*",
-        "phpmailer/phpmailer": "^6.2"
+        "phpmailer/phpmailer": "^7.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
