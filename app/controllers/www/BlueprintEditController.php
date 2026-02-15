@@ -601,10 +601,10 @@ class BlueprintEditController implements MiddlewareInterface
                 BlueprintService::softDeleteBlueprint($this->blueprintID);
             }
 
-            if ($this->exposure === 'private') {
-                UserService::updatePrivateBlueprintCount($this->userID, -1);
-            } else {
+            if ($this->exposure === 'public') {
                 UserService::updatePublicAndPrivateBlueprintCount($this->userID, -1);
+            } else {
+                UserService::updatePrivateBlueprintCount($this->userID, -1);
             }
 
             /* @noinspection NullPointerExceptionInspection */
