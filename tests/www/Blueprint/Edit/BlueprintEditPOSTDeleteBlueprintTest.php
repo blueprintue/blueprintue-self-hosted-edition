@@ -615,13 +615,20 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 // blueprint
                 static::assertSame(static::$anonymousID, (int) $blueprintAfter['id_author']);
 
-                // counters
+                // counters anonymous
+                static::assertNotSame($userInfosAnonymousBefore, $userInfosAnonymousAfter);
+                static::assertSame(((int) $userInfosAnonymousBefore['count_private_blueprint']) + 1, (int) $userInfosAnonymousAfter['count_private_blueprint']);
+                if ($blueprintBefore['exposure'] === 'public') {
+                    static::assertSame(((int) $userInfosAnonymousBefore['count_public_blueprint']) + 1, (int) $userInfosAnonymousAfter['count_public_blueprint']);
+                } else {
+                    static::assertSame((int) $userInfosAnonymousBefore['count_public_blueprint'], (int) $userInfosAnonymousAfter['count_public_blueprint']);
+                }
+
+                // counters user
                 static::assertSame(\max(((int) $userInfosBefore['count_private_blueprint']) - 1, 0), (int) $userInfosAfter['count_private_blueprint']);
                 if ($blueprintBefore['exposure'] === 'public') {
-                    static::assertNotSame($userInfosAnonymousBefore, $userInfosAnonymousAfter);
                     static::assertSame(\max(((int) $userInfosBefore['count_public_blueprint']) - 1, 0), (int) $userInfosAfter['count_public_blueprint']);
                 } else {
-                    static::assertSame($userInfosAnonymousBefore, $userInfosAnonymousAfter);
                     static::assertSame((int) $userInfosBefore['count_public_blueprint'], (int) $userInfosAfter['count_public_blueprint']);
                 }
             } elseif ($params['form-delete_blueprint-select-ownership'] === 'delete') {
@@ -629,8 +636,10 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 static::assertNotNull($blueprintAfter['deleted_at']);
                 static::assertSame(0, (int) $blueprintAfter['id_author']);
 
-                // counters
+                // counters anonymous
                 static::assertSame($userInfosAnonymousBefore, $userInfosAnonymousAfter);
+
+                // counters user
                 static::assertSame(\max(((int) $userInfosBefore['count_private_blueprint']) - 1, 0), (int) $userInfosAfter['count_private_blueprint']);
                 if ($blueprintBefore['exposure'] === 'public') {
                     static::assertSame(\max(((int) $userInfosBefore['count_public_blueprint']) - 1, 0), (int) $userInfosAfter['count_public_blueprint']);

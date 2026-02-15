@@ -595,7 +595,12 @@ class BlueprintEditController implements MiddlewareInterface
 
             if ($params['ownership'] === 'give' && $anonymousID > 0) {
                 BlueprintService::changeBlueprintAuthor($this->blueprintID, $anonymousID);
-                UserService::updatePublicAndPrivateBlueprintCount($anonymousID, 1);
+
+                if ($this->exposure === 'public') {
+                    UserService::updatePublicAndPrivateBlueprintCount($anonymousID, 1);
+                } else {
+                    UserService::updatePrivateBlueprintCount($anonymousID, 1);
+                }
             } else {
                 BlueprintService::changeBlueprintAuthor($this->blueprintID, null);
                 BlueprintService::softDeleteBlueprint($this->blueprintID);
