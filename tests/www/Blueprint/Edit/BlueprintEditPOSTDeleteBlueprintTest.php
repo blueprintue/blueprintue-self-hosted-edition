@@ -617,7 +617,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
 
                 // counters
                 static::assertSame(\max(((int) $userInfosBefore['count_private_blueprint']) - 1, 0), (int) $userInfosAfter['count_private_blueprint']);
-                if ($blueprintBefore['exposure'] !== 'private') {
+                if ($blueprintBefore['exposure'] === 'public') {
                     static::assertNotSame($userInfosAnonymousBefore, $userInfosAnonymousAfter);
                     static::assertSame(\max(((int) $userInfosBefore['count_public_blueprint']) - 1, 0), (int) $userInfosAfter['count_public_blueprint']);
                 } else {
@@ -632,7 +632,7 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 // counters
                 static::assertSame($userInfosAnonymousBefore, $userInfosAnonymousAfter);
                 static::assertSame(\max(((int) $userInfosBefore['count_private_blueprint']) - 1, 0), (int) $userInfosAfter['count_private_blueprint']);
-                if ($blueprintBefore['exposure'] !== 'private') {
+                if ($blueprintBefore['exposure'] === 'public') {
                     static::assertSame(\max(((int) $userInfosBefore['count_public_blueprint']) - 1, 0), (int) $userInfosAfter['count_public_blueprint']);
                 } else {
                     static::assertSame((int) $userInfosBefore['count_public_blueprint'], (int) $userInfosAfter['count_public_blueprint']);
