@@ -181,6 +181,36 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
             'hasAnonymousUser' => true
         ];
 
+        yield 'delete OK - delete blueprint - public blueprint - count_private_blueprint is 0' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 0, 2), (' . static::$anonymousID . ', 0, 0)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                'form-delete_blueprint-select-ownership' => 'delete',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
         yield 'delete OK - delete blueprint - unlisted blueprint' => [
             'sqlQueries' => [
                 'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
@@ -214,6 +244,36 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
         yield 'delete OK - delete blueprint - private blueprint' => [
             'sqlQueries' => [
                 'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 1, 1), (' . static::$anonymousID . ', 1, 1)',
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
+                "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_blueprint-hidden-csrf'      => 'csrf_is_replaced',
+                'form-delete_blueprint-select-ownership' => 'delete',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_blueprint">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_blueprint" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
+        yield 'delete OK - delete blueprint - private blueprint - count_public_blueprint is 0' => [
+            'sqlQueries' => [
+                'REPLACE INTO users_infos (`id_user`, `count_private_blueprint`, `count_public_blueprint`) VALUES (189, 2, 0), (' . static::$anonymousID . ', 10, 10)',
                 "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
                 "REPLACE INTO blueprints_version (`id`, `id_blueprint`, `version`, `reason`, `created_at`, `published_at`) VALUES (900, 80, 1, 'Initial', utc_timestamp(), utc_timestamp())",
             ],
@@ -556,10 +616,10 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
                 static::assertSame(static::$anonymousID, (int) $blueprintAfter['id_author']);
 
                 // counters
-                static::assertSame(((int) $userInfosBefore['count_private_blueprint']) - 1, (int) $userInfosAfter['count_private_blueprint']);
+                static::assertSame(\max(((int) $userInfosBefore['count_private_blueprint']) - 1, 0), (int) $userInfosAfter['count_private_blueprint']);
                 if ($blueprintBefore['exposure'] !== 'private') {
                     static::assertNotSame($userInfosAnonymousBefore, $userInfosAnonymousAfter);
-                    static::assertSame(((int) $userInfosBefore['count_public_blueprint']) - 1, (int) $userInfosAfter['count_public_blueprint']);
+                    static::assertSame(\max(((int) $userInfosBefore['count_public_blueprint']) - 1, 0), (int) $userInfosAfter['count_public_blueprint']);
                 } else {
                     static::assertSame($userInfosAnonymousBefore, $userInfosAnonymousAfter);
                     static::assertSame((int) $userInfosBefore['count_public_blueprint'], (int) $userInfosAfter['count_public_blueprint']);
@@ -571,9 +631,9 @@ class BlueprintEditPOSTDeleteBlueprintTest extends TestCase
 
                 // counters
                 static::assertSame($userInfosAnonymousBefore, $userInfosAnonymousAfter);
-                static::assertSame(((int) $userInfosBefore['count_private_blueprint']) - 1, (int) $userInfosAfter['count_private_blueprint']);
+                static::assertSame(\max(((int) $userInfosBefore['count_private_blueprint']) - 1, 0), (int) $userInfosAfter['count_private_blueprint']);
                 if ($blueprintBefore['exposure'] !== 'private') {
-                    static::assertSame(((int) $userInfosBefore['count_public_blueprint']) - 1, (int) $userInfosAfter['count_public_blueprint']);
+                    static::assertSame(\max(((int) $userInfosBefore['count_public_blueprint']) - 1, 0), (int) $userInfosAfter['count_public_blueprint']);
                 } else {
                     static::assertSame((int) $userInfosBefore['count_public_blueprint'], (int) $userInfosAfter['count_public_blueprint']);
                 }

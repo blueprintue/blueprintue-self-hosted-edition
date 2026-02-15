@@ -54,59 +54,165 @@ class UserInfosModel extends Model
         ];
     }
 
-    /** @throws \Rancoud\Database\DatabaseException */
+    /**
+     * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
+     */
     public function updatePublicAndPrivateBlueprintCount(int $userID, int $count): void
     {
+        $countPublicBlueprint = $count;
+        $countPrivateBlueprint = $count;
+
+        if ($count < 0) {
+            $values = $this->getBlueprintsAndCommentsCount($userID);
+            if (empty($values)) {
+                // @codeCoverageIgnoreStart
+                /*
+                 * It is not possible to reach this statement because user is checked before.
+                 */
+                return;
+                // @codeCoverageIgnoreEnd
+            }
+
+            if (($values['count_public_blueprint'] + $count) < 0) {
+                $countPublicBlueprint = 0;
+            }
+
+            if (($values['count_private_blueprint'] + $count) < 0) {
+                $countPrivateBlueprint = 0;
+            }
+        }
+
         $sql = <<<'SQL'
             UPDATE users_infos
-            SET count_public_blueprint = count_public_blueprint + :number,
-                count_private_blueprint = count_private_blueprint + :number
+            SET count_public_blueprint = count_public_blueprint + :countPublicBlueprint,
+                count_private_blueprint = count_private_blueprint + :countPrivateBlueprint
             WHERE id_user = :userID;
         SQL;
 
-        $this->database->update($sql, ['userID' => $userID, 'number' => $count]);
+        $this->database->update($sql, [
+            'userID'                => $userID,
+            'countPublicBlueprint'  => $countPublicBlueprint,
+            'countPrivateBlueprint' => $countPrivateBlueprint
+        ]);
     }
 
-    /** @throws \Rancoud\Database\DatabaseException */
+    /**
+     * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
+     */
     public function updatePrivateBlueprintCount(int $userID, int $count): void
     {
+        $countPrivateBlueprint = $count;
+
+        if ($count < 0) {
+            $values = $this->getBlueprintsAndCommentsCount($userID);
+            if (empty($values)) {
+                // @codeCoverageIgnoreStart
+                /*
+                 * It is not possible to reach this statement because user is checked before.
+                 */
+                return;
+                // @codeCoverageIgnoreEnd
+            }
+
+            if (($values['count_private_blueprint'] + $count) < 0) {
+                $countPrivateBlueprint = 0;
+            }
+        }
+
         $sql = <<<'SQL'
             UPDATE users_infos
-            SET count_private_blueprint = count_private_blueprint + :number
+            SET count_private_blueprint = count_private_blueprint + :countPrivateBlueprint
             WHERE id_user = :userID;
         SQL;
 
-        $this->database->update($sql, ['userID' => $userID, 'number' => $count]);
+        $this->database->update($sql, ['userID' => $userID, 'countPrivateBlueprint' => $countPrivateBlueprint]);
     }
 
-    /** @throws \Rancoud\Database\DatabaseException */
+    /**
+     * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
+     */
     public function updatePublicAndPrivateCommentCount(int $userID, int $count): void
     {
+        $countPublicComment = $count;
+        $countPrivateComment = $count;
+
+        if ($count < 0) {
+            $values = $this->getBlueprintsAndCommentsCount($userID);
+            if (empty($values)) {
+                // @codeCoverageIgnoreStart
+                /*
+                 * It is not possible to reach this statement because user is checked before.
+                 */
+                return;
+                // @codeCoverageIgnoreEnd
+            }
+
+            if (($values['count_public_comment'] + $count) < 0) {
+                $countPublicComment = 0;
+            }
+
+            if (($values['count_private_comment'] + $count) < 0) {
+                $countPrivateComment = 0;
+            }
+        }
+
         $sql = <<<'SQL'
             UPDATE users_infos
-            SET count_public_comment = count_public_comment + :number,
-                count_private_comment = count_private_comment + :number
+            SET count_public_comment = count_public_comment + :countPublicComment,
+                count_private_comment = count_private_comment + :countPrivateComment
             WHERE id_user = :userID;
         SQL;
 
-        $this->database->update($sql, ['userID' => $userID, 'number' => $count]);
+        $this->database->update($sql, [
+            'userID'              => $userID,
+            'countPublicComment'  => $countPublicComment,
+            'countPrivateComment' => $countPrivateComment
+        ]);
     }
 
-    /** @throws \Rancoud\Database\DatabaseException */
+    /**
+     * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
+     */
     public function updatePrivateCommentCount(int $userID, int $count): void
     {
+        $countPrivateComment = $count;
+
+        if ($count < 0) {
+            $values = $this->getBlueprintsAndCommentsCount($userID);
+            if (empty($values)) {
+                // @codeCoverageIgnoreStart
+                /*
+                 * It is not possible to reach this statement because user is checked before.
+                 */
+                return;
+                // @codeCoverageIgnoreEnd
+            }
+
+            if (($values['count_private_comment'] + $count) < 0) {
+                $countPrivateComment = 0;
+            }
+        }
+
         $sql = <<<'SQL'
             UPDATE users_infos
-            SET count_private_comment = count_private_comment + :number
+            SET count_private_comment = count_private_comment + :countPrivateComment
             WHERE id_user = :userID;
         SQL;
 
-        $this->database->update($sql, ['userID' => $userID, 'number' => $count]);
+        $this->database->update($sql, ['userID' => $userID, 'countPrivateComment' => $countPrivateComment]);
     }
 
-    /** @throws \Rancoud\Database\DatabaseException */
+    /**
+     * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
+     */
     public function updatePublicAndPrivateCommentCountWithComments(array $comments): void
     {
+        // always +n
         $users = [];
         foreach ($comments as $comment) {
             if (!isset($users[$comment['id_author']])) {
@@ -125,18 +231,46 @@ class UserInfosModel extends Model
         // @codeCoverageIgnoreEnd
 
         foreach ($users as $userID => $count) {
+            $countPublicComment = $count;
+            $countPrivateComment = $count;
+
+            $values = $this->getBlueprintsAndCommentsCount($userID);
+            if (empty($values)) {
+                // @codeCoverageIgnoreStart
+                /*
+                 * It is not possible to reach this statement because user is checked before.
+                 */
+                continue;
+                // @codeCoverageIgnoreEnd
+            }
+
+            if (($values['count_public_comment'] - $count) < 0) {
+                $countPublicComment = 0;
+            }
+
+            if (($values['count_private_comment'] - $count) < 0) {
+                $countPrivateComment = 0;
+            }
+
             $sql = <<<'SQL'
                 UPDATE users_infos
-                SET count_public_comment = count_public_comment - :count,
-                    count_private_comment = count_private_comment - :count
+                SET count_public_comment = count_public_comment - :countPublicComment,
+                    count_private_comment = count_private_comment - :countPrivateComment
                 WHERE id_user = :userID;
             SQL;
 
-            $this->database->update($sql, ['userID' => $userID, 'count' => $count]);
+            $this->database->update($sql, [
+                'userID'              => $userID,
+                'countPublicComment'  => $countPublicComment,
+                'countPrivateComment' => $countPrivateComment,
+            ]);
         }
     }
 
-    /** @throws \Rancoud\Database\DatabaseException */
+    /**
+     * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
+     */
     public function updatePrivateCommentCountWithComments(array $comments): void
     {
         $users = [];
@@ -157,13 +291,54 @@ class UserInfosModel extends Model
         // @codeCoverageIgnoreEnd
 
         foreach ($users as $userID => $count) {
+            $countPrivateComment = $count;
+
+            $values = $this->getBlueprintsAndCommentsCount($userID);
+            if (empty($values)) {
+                // @codeCoverageIgnoreStart
+                /*
+                 * It is not possible to reach this statement because user is checked before.
+                 */
+                continue;
+                // @codeCoverageIgnoreEnd
+            }
+
+            if (($values['count_private_comment'] - $count) < 0) {
+                $countPrivateComment = 0;
+            }
+
             $sql = <<<'SQL'
                 UPDATE users_infos
-                SET count_private_comment = count_private_comment - :count
+                SET count_private_comment = count_private_comment - :countPrivateComment
                 WHERE id_user = :userID;
             SQL;
 
-            $this->database->update($sql, ['userID' => $userID, 'count' => $count]);
+            $this->database->update($sql, ['userID' => $userID, 'countPrivateComment' => $countPrivateComment]);
         }
+    }
+
+    /**
+     * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
+     */
+    protected function getBlueprintsAndCommentsCount(int $userID): ?array
+    {
+        $sql = <<<'SQL'
+                SELECT count_public_blueprint, count_private_blueprint, count_public_comment, count_private_comment
+                FROM users_infos
+                WHERE id_user = :userID;
+            SQL;
+
+        $row = $this->database->selectRow($sql, ['userID' => $userID]);
+        if (empty($row)) {
+            // @codeCoverageIgnoreStart
+            /*
+             * It is not possible to reach this statement because user is checked before.
+             */
+            return null;
+            // @codeCoverageIgnoreEnd
+        }
+
+        return $this->formatValues($row);
     }
 }

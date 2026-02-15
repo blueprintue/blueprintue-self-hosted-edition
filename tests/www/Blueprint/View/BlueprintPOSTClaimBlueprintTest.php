@@ -221,6 +221,40 @@ class BlueprintPOSTClaimBlueprintTest extends TestCase
             ],
         ];
 
+        yield 'do valid claim action on public blueprint - anonymous public counter is 0' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_public', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'public', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member', null, 'member', 'member@mail', utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (55, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (2, 0, 2)',
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (55, 0, 0)',
+            ],
+            'slug'                => 'slug_public',
+            'userID'              => 55,
+            'anonymousBlueprints' => [1, 2, 3],
+            'hasButtonClaim'      => true,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-claim_blueprint-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">This blueprint is now yours</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
+                ]
+            ],
+        ];
+
         yield 'do valid claim action on unlisted blueprint' => [
             'sqlQueries' => [
                 'TRUNCATE TABLE blueprints',
@@ -230,6 +264,40 @@ class BlueprintPOSTClaimBlueprintTest extends TestCase
                 "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member', null, 'member', 'member@mail', utc_timestamp())",
                 "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (55, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
                 'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (2, 0, 1)',
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (55, 0, 0)',
+            ],
+            'slug'                => 'slug_unlisted',
+            'userID'              => 55,
+            'anonymousBlueprints' => [1, 2, 3],
+            'hasButtonClaim'      => true,
+            'doPostAction'        => true,
+            'params'              => [
+                'form-claim_blueprint-hidden-csrf' => 'csrf_is_replaced',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-claim_blueprint">This blueprint is now yours</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-claim_blueprint" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'do valid claim action on unlisted blueprint - anonymous private counter is 0' => [
+            'sqlQueries' => [
+                'TRUNCATE TABLE blueprints',
+                'TRUNCATE TABLE blueprints_version',
+                "INSERT INTO blueprints (id_author, slug, file_id, title, current_version, created_at, published_at, exposure, type, ue_version) VALUES (2, 'slug_unlisted', 'a', '<script>alert(1)</script>my title', 1, utc_timestamp(), utc_timestamp(), 'unlisted', 'blueprint', '4.12')",
+                "INSERT INTO blueprints_version (id_blueprint, version, reason, created_at, published_at) VALUES (1, 1, 'First commit', utc_timestamp(), utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (2, 'member', null, 'member', 'member@mail', utc_timestamp())",
+                "REPLACE INTO users (id, username, password, slug, email, created_at) VALUES (55, 'member2', null, 'member2', 'member2@mail', utc_timestamp())",
+                'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (2, 2, 0)',
                 'REPLACE INTO users_infos (id_user, count_public_blueprint, count_private_blueprint) VALUES (55, 0, 0)',
             ],
             'slug'                => 'slug_unlisted',
@@ -495,14 +563,14 @@ class BlueprintPOSTClaimBlueprintTest extends TestCase
             $countersOldAuthorAfter = static::$db->selectRow('SELECT count_public_blueprint, count_private_blueprint FROM users_infos WHERE id_user = 2');
             $countersNewAuthorAfter = static::$db->selectRow('SELECT count_public_blueprint, count_private_blueprint FROM users_infos WHERE id_user = 55');
             if ($slug === 'slug_public') {
-                static::assertSame((int) $countersOldAuthorBefore['count_public_blueprint'] - 1, (int) $countersOldAuthorAfter['count_public_blueprint']);
-                static::assertSame((int) $countersOldAuthorBefore['count_private_blueprint'] - 1, (int) $countersOldAuthorAfter['count_private_blueprint']);
+                static::assertSame(\max((int) $countersOldAuthorBefore['count_public_blueprint'] - 1, 0), (int) $countersOldAuthorAfter['count_public_blueprint']);
+                static::assertSame(\max((int) $countersOldAuthorBefore['count_private_blueprint'] - 1, 0), (int) $countersOldAuthorAfter['count_private_blueprint']);
 
                 static::assertSame((int) $countersNewAuthorBefore['count_public_blueprint'] + 1, (int) $countersNewAuthorAfter['count_public_blueprint']);
                 static::assertSame((int) $countersNewAuthorBefore['count_private_blueprint'] + 1, (int) $countersNewAuthorAfter['count_private_blueprint']);
             } else {
                 static::assertSame((int) $countersOldAuthorBefore['count_public_blueprint'], (int) $countersOldAuthorAfter['count_public_blueprint']);
-                static::assertSame((int) $countersOldAuthorBefore['count_private_blueprint'] - 1, (int) $countersOldAuthorAfter['count_private_blueprint']);
+                static::assertSame(\max((int) $countersOldAuthorBefore['count_private_blueprint'] - 1, 0), (int) $countersOldAuthorAfter['count_private_blueprint']);
 
                 static::assertSame((int) $countersNewAuthorBefore['count_public_blueprint'], (int) $countersNewAuthorAfter['count_public_blueprint']);
                 static::assertSame((int) $countersNewAuthorBefore['count_private_blueprint'] + 1, (int) $countersNewAuthorAfter['count_private_blueprint']);
