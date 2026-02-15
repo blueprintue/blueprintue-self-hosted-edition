@@ -131,6 +131,31 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
             ],
         ];
 
+        yield 'delete comment OK - public blueprint - counters set to 0' => [
+            'sqlQueries'      => ['REPLACE INTO users_infos (id_user, count_public_comment, count_private_comment) VALUES (65, 0, 0), (66, 0, 0)'],
+            'slug'            => 'slug_public',
+            'userID'          => 65,
+            'commentID'       => 10,
+            'hasButtonDelete' => true,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
+                'form-delete_comment-hidden-id'   => '10',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">Your comment has been deleted</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
+                ]
+            ],
+        ];
+
         yield 'delete comment OK - unlisted blueprint' => [
             'sqlQueries'      => [],
             'slug'            => 'slug_unlisted',
@@ -156,8 +181,58 @@ class BlueprintPOSTDeleteCommentTest extends TestCase
             ],
         ];
 
+        yield 'delete comment OK - unlisted blueprint - counters set to 0' => [
+            'sqlQueries'      => ['REPLACE INTO users_infos (id_user, count_public_comment, count_private_comment) VALUES (65, 0, 0), (66, 0, 0)'],
+            'slug'            => 'slug_unlisted',
+            'userID'          => 65,
+            'commentID'       => 11,
+            'hasButtonDelete' => true,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
+                'form-delete_comment-hidden-id'   => '11',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">Your comment has been deleted</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
+                ]
+            ],
+        ];
+
         yield 'delete comment OK - private blueprint' => [
             'sqlQueries'      => [],
+            'slug'            => 'slug_private',
+            'userID'          => 65,
+            'commentID'       => 12,
+            'hasButtonDelete' => true,
+            'params'          => [
+                'form-delete_comment-hidden-csrf' => 'csrf_is_replaced',
+                'form-delete_comment-hidden-id'   => '12',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => true,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_comment">Your comment has been deleted</div>'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_comment" role="alert">'
+                ]
+            ],
+        ];
+
+        yield 'delete comment OK - private blueprint - counters set to 0' => [
+            'sqlQueries'      => ['REPLACE INTO users_infos (id_user, count_public_comment, count_private_comment) VALUES (65, 0, 0), (66, 0, 0)'],
             'slug'            => 'slug_private',
             'userID'          => 65,
             'commentID'       => 12,
@@ -527,11 +602,11 @@ HTML;
             static::assertEqualsCanonicalizing($countersUsersAfter[1], $countersUsersBefore[1]);
 
             if ($slug === 'slug_public') {
-                static::assertSame((int) $countersUsersAfter[0]['count_public_comment'], (int) $countersUsersBefore[0]['count_public_comment'] - 1);
-                static::assertSame((int) $countersUsersAfter[0]['count_private_comment'], (int) $countersUsersBefore[0]['count_private_comment'] - 1);
+                static::assertSame((int) $countersUsersAfter[0]['count_public_comment'], \max((int) $countersUsersBefore[0]['count_public_comment'] - 1, 0));
+                static::assertSame((int) $countersUsersAfter[0]['count_private_comment'], \max((int) $countersUsersBefore[0]['count_private_comment'] - 1, 0));
             } else {
                 static::assertSame((int) $countersUsersAfter[0]['count_public_comment'], (int) $countersUsersBefore[0]['count_public_comment']);
-                static::assertSame((int) $countersUsersAfter[0]['count_private_comment'], (int) $countersUsersBefore[0]['count_private_comment'] - 1);
+                static::assertSame((int) $countersUsersAfter[0]['count_private_comment'], \max((int) $countersUsersBefore[0]['count_private_comment'] - 1, 0));
             }
         } else {
             static::assertCount(3, $commentsAfter);
