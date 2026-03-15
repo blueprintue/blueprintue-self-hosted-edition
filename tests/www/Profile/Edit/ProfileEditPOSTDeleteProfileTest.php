@@ -17,7 +17,9 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class ProfileEditPOSTDeleteProfileTest extends TestCase
 {
     use Common;

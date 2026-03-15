@@ -14,7 +14,9 @@ use Rancoud\Http\Message\ServerRequest;
 use Rancoud\Router\RouterException;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class APIRenderTest extends TestCase
 {
     use Common;

@@ -15,7 +15,9 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class LoginWithRememberTest extends TestCase
 {
     use Common;

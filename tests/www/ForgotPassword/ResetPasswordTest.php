@@ -19,7 +19,9 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class ResetPasswordTest extends TestCase
 {
     use Common;

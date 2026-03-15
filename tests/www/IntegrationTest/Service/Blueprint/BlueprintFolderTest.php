@@ -13,7 +13,9 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class BlueprintFolderTest extends TestCase
 {
     use Common;

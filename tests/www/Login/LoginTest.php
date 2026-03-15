@@ -18,7 +18,9 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class LoginTest extends TestCase
 {
     use Common;

@@ -8,7 +8,9 @@ use app\services\www\BlueprintService;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/** @internal */
+/**
+ * @internal
+ */
 class BlueprintTypeTest extends TestCase
 {
     public static function provideFindBlueprintTypeDataCases(): iterable

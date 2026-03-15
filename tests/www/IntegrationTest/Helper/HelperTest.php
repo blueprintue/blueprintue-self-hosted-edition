@@ -8,7 +8,9 @@ use app\helpers\Helper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/** @internal */
+/**
+ * @internal
+ */
 class HelperTest extends TestCase
 {
     // region getSince
