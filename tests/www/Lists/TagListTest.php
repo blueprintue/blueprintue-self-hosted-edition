@@ -17,7 +17,9 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class TagListTest extends TestCase
 {
     use Common;

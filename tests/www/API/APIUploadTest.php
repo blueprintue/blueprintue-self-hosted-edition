@@ -15,7 +15,9 @@ use Rancoud\Http\Message\ServerRequest;
 use Rancoud\Router\RouterException;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class APIUploadTest extends TestCase
 {
     use Common;

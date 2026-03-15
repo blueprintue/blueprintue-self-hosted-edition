@@ -16,7 +16,9 @@ use Rancoud\Security\Security;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class ConfirmAccountTest extends TestCase
 {
     use Common;

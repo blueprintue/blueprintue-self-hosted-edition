@@ -16,7 +16,9 @@ use Rancoud\Router\RouterException;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class BlueprintPOSTDeleteBlueprintTest extends TestCase
 {
     use Common;

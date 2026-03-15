@@ -10,7 +10,9 @@ use PHPUnit\Framework\TestCase;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class TagsTextareaTest extends TestCase
 {
     use Common;

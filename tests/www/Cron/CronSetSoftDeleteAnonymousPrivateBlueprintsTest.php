@@ -10,7 +10,9 @@ use Rancoud\Environment\EnvironmentException;
 use Rancoud\Router\RouterException;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class CronSetSoftDeleteAnonymousPrivateBlueprintsTest extends TestCase
 {
     use Common;

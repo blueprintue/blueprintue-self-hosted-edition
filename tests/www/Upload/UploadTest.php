@@ -13,7 +13,9 @@ use Rancoud\Http\Message\UploadedFile;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class UploadTest extends TestCase
 {
     use Common;

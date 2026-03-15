@@ -11,7 +11,9 @@ use Rancoud\Http\Message\ServerRequest;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class DatabaseTest extends TestCase
 {
     use Common;

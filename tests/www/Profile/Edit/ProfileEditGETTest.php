@@ -16,7 +16,9 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class ProfileEditGETTest extends TestCase
 {
     use Common;

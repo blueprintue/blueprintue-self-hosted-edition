@@ -17,7 +17,9 @@ use Rancoud\Security\SecurityException;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class HomeLastBlueprintsTest extends TestCase
 {
     use Common;

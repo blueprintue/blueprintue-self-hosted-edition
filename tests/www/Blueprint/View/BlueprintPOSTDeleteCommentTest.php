@@ -17,7 +17,9 @@ use Rancoud\Security\Security;
 use Rancoud\Session\Session;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class BlueprintPOSTDeleteCommentTest extends TestCase
 {
     use Common;

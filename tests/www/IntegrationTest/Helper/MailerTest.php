@@ -11,7 +11,9 @@ use Rancoud\Application\Application;
 use Rancoud\Environment\Environment;
 use tests\Common;
 
-/** @internal */
+/**
+ * @internal
+ */
 class MailerTest extends TestCase
 {
     use Common;
