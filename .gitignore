@@ -1,6 +1,8 @@
-# IntelliJ
+# IDEs
 .idea
 *.iml
+.vscode
+.zed
 
 # Composer
 vendor/
