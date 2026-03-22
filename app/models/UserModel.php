@@ -110,6 +110,29 @@ class UserModel extends Model
      * @throws \Rancoud\Database\DatabaseException
      * @throws \Rancoud\Model\ModelException
      */
+    public function isPasswordMatchForUserID(int $userID, string $password): bool
+    {
+        $sql = <<<'SQL'
+            SELECT password
+            FROM users
+            WHERE id = :id
+              AND password IS NOT NULL;
+        SQL;
+        $params = ['id' => $userID];
+
+        $hashFromDB = $this->database->selectVar($sql, $params);
+
+        if (empty($hashFromDB)) {
+            return false;
+        }
+
+        return Crypt::verify($password, $hashFromDB);
+    }
+
+    /**
+     * @throws \Rancoud\Database\DatabaseException
+     * @throws \Rancoud\Model\ModelException
+     */
     public function getInfosForSession(int $userID): ?array
     {
         $sql = <<<'SQL'

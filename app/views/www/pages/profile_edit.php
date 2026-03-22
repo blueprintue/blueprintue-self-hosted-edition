@@ -305,6 +305,17 @@ use Rancoud\Session\Session;
                         <?php } ?>
 
                         <div class="form__element">
+                            <label class="form__label" for="form-change_password-input-current_password" id="form-change_password-label-current_password">Current Password</label>
+                            <div class="form__container<?php echo $formChangePassword->getClassError('current_password', ' form__container--error'); ?>">
+                                <input aria-invalid="false" aria-labelledby="form-change_password-label-current_password<?php echo $formChangePassword->getClassError('current_password', ' form-change_password-label-current_password-error'); ?>" aria-required="true" class="form__input form__input--invisible<?php echo $formChangePassword->getClassError('current_password', ' form__input--error'); ?>" data-form-error-required="Current Password is required" data-form-has-container data-form-rules="required" id="form-change_password-input-current_password" name="form-change_password-input-current_password" type="password"/>
+                                <span class="form__feedback<?php echo $formChangePassword->getClassError('current_password', ' form__feedback--error'); ?>"></span>
+                            </div>
+                            <?php if ($formChangePassword->getInputError('current_password') !== '') { ?>
+                                <label class="form__label form__label--error" for="form-change_password-input-current_password" id="form-change_password-label-current_password-error"><?php echo Security::escHTML($formChangePassword->getInputError('current_password')); ?></label>
+                            <?php } ?>
+                        </div>
+
+                        <div class="form__element">
                             <label class="form__label" for="form-change_password-input-new_password" id="form-change_password-label-new_password">New Password</label>
                             <div class="form__container<?php echo $formChangePassword->getClassError('new_password', ' form__container--error'); ?>">
                                 <input aria-describedby="form-change_password-span-new_password" aria-invalid="false" aria-labelledby="form-change_password-label-new_password<?php echo $formChangePassword->getClassError('new_password', ' form-change_password-label-new_password-error'); ?>" aria-required="true" class="form__input form__input--invisible<?php echo $formChangePassword->getClassError('new_password', ' form__input--error'); ?>" data-form-error-min="Password must be at least 10 characters in length" data-form-error-regex="Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters" data-form-has-container data-form-rules="min:10|regex:^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9\s:])([^\s]){8,}$" id="form-change_password-input-new_password" name="form-change_password-input-new_password" type="password"/>
@@ -319,7 +330,7 @@ use Rancoud\Session\Session;
                         <div class="form__element">
                             <label class="form__label" for="form-change_password-input-new_password_confirm" id="form-change_password-label-new_password_confirm">Confirm New Password</label>
                             <div class="form__container<?php echo $formChangePassword->getClassError('new_password_confirm', ' form__container--error'); ?>">
-                                <input aria-describedby="form-change_password-span-new_password_confirm" aria-invalid="false" aria-labelledby="form-change_password-label-new_password_confirm<?php echo $formChangePassword->getClassError('new_password_confirm', ' form-change_password-label-new_password_confirm-error'); ?>" aria-required="true" class="form__input form__input--invisible<?php echo $formChangePassword->getClassError('new_password_confirm', ' form__input--error'); ?>" data-form-error-equal_field="Confirm Password must be the same as Password" data-form-error-required="Confirm Password is required" data-form-has-container data-form-rules="required|equal_field:form-change_password-input-new_password" id="form-change_password-input-new_password_confirm" name="form-change_password-input-new_password_confirm" type="password"/>
+                                <input aria-invalid="false" aria-labelledby="form-change_password-label-new_password_confirm<?php echo $formChangePassword->getClassError('new_password_confirm', ' form-change_password-label-new_password_confirm-error'); ?>" aria-required="true" class="form__input form__input--invisible<?php echo $formChangePassword->getClassError('new_password_confirm', ' form__input--error'); ?>" data-form-error-equal_field="Confirm Password must be the same as Password" data-form-error-required="Confirm Password is required" data-form-has-container data-form-rules="required|equal_field:form-change_password-input-new_password" id="form-change_password-input-new_password_confirm" name="form-change_password-input-new_password_confirm" type="password"/>
                                 <span class="form__feedback<?php echo $formChangePassword->getClassError('new_password_confirm', ' form__feedback--error'); ?>"></span>
                             </div>
                             <?php if ($formChangePassword->getInputError('new_password_confirm') !== '') { ?>

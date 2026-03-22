@@ -69,6 +69,7 @@ class ProfileEditController implements MiddlewareInterface
             'CSRF'         => 'form-change_username-hidden-csrf'
         ],
         'change_password' => [
+            'current_password'     => 'form-change_password-input-current_password',
             'new_password'         => 'form-change_password-input-new_password',
             'new_password_confirm' => 'form-change_password-input-new_password_confirm',
             'CSRF'                 => 'form-change_password-hidden-csrf'
@@ -523,6 +524,7 @@ class ProfileEditController implements MiddlewareInterface
         $values = [];
 
         // password
+        $values['current_password'] = $params[$inputs['current_password']];
         $values['new_password'] = $params[$inputs['new_password']];
         $values['new_password_confirm'] = $params[$inputs['new_password_confirm']];
         $minLengthPassword = UserService::getMinLengthPassword();
@@ -546,6 +548,9 @@ class ProfileEditController implements MiddlewareInterface
         } elseif (!UserService::isPasswordMatchFormat($values['new_password'])) {
             $errorsForMessage[] = 'new password';
             $errors['new_password'] = 'Password must have 1 digit and 1 uppercase and 1 lowercase and 1 special characters';
+        } elseif ($values['current_password'] === '') {
+            $errorsForMessage[] = 'current password';
+            $errors['current_password'] = 'Current password is required';
         }
 
         if (\count($errors) > 0) {
@@ -567,6 +572,13 @@ class ProfileEditController implements MiddlewareInterface
     protected function doProcessChangePassword(?array $params): ?ResponseInterface
     {
         if ($params === null) {
+            return $this->redirect($this->profileEditURL);
+        }
+
+        if (!UserService::isPasswordMatchForUserID($this->userID, $params['current_password'])) {
+            Session::setFlash('error-form-change_password', 'Error, invalid credentials');
+            Session::keepFlash(['error-form-change_password']);
+
             return $this->redirect($this->profileEditURL);
         }
 

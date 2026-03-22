@@ -83,10 +83,13 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
     public static function provideProfileEditPOSTChangePasswordDataCases(): iterable
     {
         yield 'edit OK' => [
-            'sqlQueries' => [],
+            'sqlQueries' => [
+                "UPDATE users SET password = '" . Crypt::hash('password_user_189') . "' WHERE id = 189",
+            ],
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => 'My_secret_password_01*',
                 'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
             ],
@@ -109,10 +112,13 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
         ];
 
         yield 'edit OK - xss' => [
-            'sqlQueries' => [],
+            'sqlQueries' => [
+                "UPDATE users SET password = '" . Crypt::hash('password_user_189') . "' WHERE id = 189",
+            ],
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => 'My_secret_password_01*<script>alert("facebook");</script>',
                 'form-change_password-input-new_password_confirm' => 'My_secret_password_01*<script>alert("facebook");</script>',
             ],
@@ -139,6 +145,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'incorrect_csrf',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => 'My_secret_password_01*',
                 'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
             ],
@@ -188,6 +195,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'sqlQueries' => [],
             'userID'     => 189,
             'params'     => [
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => 'My_secret_password_01*',
                 'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
             ],
@@ -209,11 +217,38 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'fieldsLabelError' => [],
         ];
 
+        yield 'missing fields - no current_password' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-new_password'         => 'My_secret_password_01*',
+                'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
         yield 'missing fields - no new_password' => [
             'sqlQueries' => [],
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
             ],
             'useCsrfFromSession' => true,
@@ -238,8 +273,9 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'sqlQueries' => [],
             'userID'     => 189,
             'params'     => [
-                'form-change_password-hidden-csrf'        => 'csrf_is_replaced',
-                'form-change_password-input-new_password' => 'My_secret_password_01*',
+                'form-change_password-hidden-csrf'            => 'csrf_is_replaced',
+                'form-change_password-input-current_password' => 'password_user_189',
+                'form-change_password-input-new_password'     => 'My_secret_password_01*',
             ],
             'useCsrfFromSession' => true,
             'hasRedirection'     => false,
@@ -259,11 +295,41 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'fieldsLabelError' => [],
         ];
 
+        yield 'empty fields - current_password empty' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => ' ',
+                'form-change_password-input-new_password'         => 'My_secret_password_01*',
+                'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error(s) on current password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['current_password'],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [
+                'current_password' => 'Current password is required',
+            ],
+        ];
+
         yield 'empty fields - new_password empty' => [
             'sqlQueries' => [],
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => ' ',
                 'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
             ],
@@ -292,6 +358,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => 'My_secret_password_01*',
                 'form-change_password-input-new_password_confirm' => ' ',
             ],
@@ -348,6 +415,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => '_*_123RTYY',
                 'form-change_password-input-new_password_confirm' => '_*_123RTYY',
             ],
@@ -376,6 +444,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => 'aaze123_*_',
                 'form-change_password-input-new_password_confirm' => 'aaze123_*_',
             ],
@@ -404,6 +473,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => 'aaze_*_RTY',
                 'form-change_password-input-new_password_confirm' => 'aaze_*_RTY',
             ],
@@ -432,6 +502,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => 'aaze123RTY',
                 'form-change_password-input-new_password_confirm' => 'aaze123RTY',
             ],
@@ -460,6 +531,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => 'My_secret_password_01*',
                 'form-change_password-input-new_password_confirm' => 'aze',
             ],
@@ -488,6 +560,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => 'aze',
                 'form-change_password-input-new_password_confirm' => 'aze',
             ],
@@ -517,6 +590,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => 'my_secret_pasword_01*',
                 'form-change_password-input-new_password_confirm' => 'my_secret_pasword_02*',
             ],
@@ -540,11 +614,39 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             ],
         ];
 
+        yield 'invalid encoding fields - current_password' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => \chr(99999999),
+                'form-change_password-input-new_password'         => 'My_secret_password_01*',
+                'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
         yield 'invalid encoding fields - new_password' => [
             'sqlQueries' => [],
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => \chr(99999999),
                 'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
             ],
@@ -571,6 +673,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => 'My_secret_password_01*',
                 'form-change_password-input-new_password_confirm' => \chr(99999999),
             ],
@@ -585,6 +688,35 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                 'error' => [
                     'has'     => false,
                     'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid current_password' => [
+            'sqlQueries' => [
+                "UPDATE users SET password = '" . Crypt::hash('password_user_189') . "' WHERE id = 189",
+            ],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password',
+                'form-change_password-input-new_password'         => 'My_secret_password_01*',
+                'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error, invalid credentials</div>'
                 ]
             ],
             'fieldsHasError'   => [],
@@ -668,10 +800,14 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
         }
 
         // test fields HTML
-        $fields = ['new_password', 'new_password_confirm'];
+        $fields = ['current_password', 'new_password', 'new_password_confirm'];
         foreach ($fields as $field) {
             $hasError = \in_array($field, $fieldsHasError, true);
             $labelError = $fieldsLabelError[$field] ?? '';
+
+            if ($field === 'current_password') {
+                $this->doTestHtmlForm($response, '#form-change_password', $this->getHTMLFieldCurrentPassword($hasError, $labelError));
+            }
 
             if ($field === 'new_password') {
                 $this->doTestHtmlForm($response, '#form-change_password', $this->getHTMLFieldNewPassword($hasError, $labelError));
@@ -681,6 +817,32 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
                 $this->doTestHtmlForm($response, '#form-change_password', $this->getHTMLFieldNewPasswordConfirm($hasError, $labelError));
             }
         }
+    }
+
+    protected function getHTMLFieldCurrentPassword(bool $hasError, string $labelError): string
+    {
+        if ($hasError) {
+            return <<<HTML
+<div class="form__element">
+<label class="form__label" for="form-change_password-input-current_password" id="form-change_password-label-current_password">Current Password</label>
+<div class="form__container form__container--error">
+<input aria-invalid="false" aria-labelledby="form-change_password-label-current_password form-change_password-label-current_password-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-required="Current Password is required" data-form-has-container data-form-rules="required" id="form-change_password-input-current_password" name="form-change_password-input-current_password" type="password"/>
+<span class="form__feedback form__feedback--error"></span>
+</div>
+<label class="form__label form__label--error" for="form-change_password-input-current_password" id="form-change_password-label-current_password-error">{$labelError}</label>
+</div>
+HTML;
+        }
+
+        return <<<'HTML'
+<div class="form__element">
+<label class="form__label" for="form-change_password-input-current_password" id="form-change_password-label-current_password">Current Password</label>
+<div class="form__container">
+<input aria-invalid="false" aria-labelledby="form-change_password-label-current_password" aria-required="true" class="form__input form__input--invisible" data-form-error-required="Current Password is required" data-form-has-container data-form-rules="required" id="form-change_password-input-current_password" name="form-change_password-input-current_password" type="password"/>
+<span class="form__feedback"></span>
+</div>
+</div>
+HTML;
     }
 
     protected function getHTMLFieldNewPassword(bool $hasError, string $labelError): string
@@ -718,7 +880,7 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-change_password-input-new_password_confirm" id="form-change_password-label-new_password_confirm">Confirm New Password</label>
 <div class="form__container form__container--error">
-<input aria-describedby="form-change_password-span-new_password_confirm" aria-invalid="false" aria-labelledby="form-change_password-label-new_password_confirm form-change_password-label-new_password_confirm-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-equal_field="Confirm Password must be the same as Password" data-form-error-required="Confirm Password is required" data-form-has-container data-form-rules="required|equal_field:form-change_password-input-new_password" id="form-change_password-input-new_password_confirm" name="form-change_password-input-new_password_confirm" type="password"/>
+<input aria-invalid="false" aria-labelledby="form-change_password-label-new_password_confirm form-change_password-label-new_password_confirm-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-equal_field="Confirm Password must be the same as Password" data-form-error-required="Confirm Password is required" data-form-has-container data-form-rules="required|equal_field:form-change_password-input-new_password" id="form-change_password-input-new_password_confirm" name="form-change_password-input-new_password_confirm" type="password"/>
 <span class="form__feedback form__feedback--error"></span>
 </div>
 <label class="form__label form__label--error" for="form-change_password-input-new_password_confirm" id="form-change_password-label-new_password_confirm-error">{$labelError}</label>
@@ -730,7 +892,7 @@ HTML;
 <div class="form__element">
 <label class="form__label" for="form-change_password-input-new_password_confirm" id="form-change_password-label-new_password_confirm">Confirm New Password</label>
 <div class="form__container">
-<input aria-describedby="form-change_password-span-new_password_confirm" aria-invalid="false" aria-labelledby="form-change_password-label-new_password_confirm" aria-required="true" class="form__input form__input--invisible" data-form-error-equal_field="Confirm Password must be the same as Password" data-form-error-required="Confirm Password is required" data-form-has-container data-form-rules="required|equal_field:form-change_password-input-new_password" id="form-change_password-input-new_password_confirm" name="form-change_password-input-new_password_confirm" type="password"/>
+<input aria-invalid="false" aria-labelledby="form-change_password-label-new_password_confirm" aria-required="true" class="form__input form__input--invisible" data-form-error-equal_field="Confirm Password must be the same as Password" data-form-error-required="Confirm Password is required" data-form-has-container data-form-rules="required|equal_field:form-change_password-input-new_password" id="form-change_password-input-new_password_confirm" name="form-change_password-input-new_password_confirm" type="password"/>
 <span class="form__feedback"></span>
 </div>
 </div>

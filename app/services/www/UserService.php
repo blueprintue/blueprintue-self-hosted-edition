@@ -761,4 +761,15 @@ class UserService
 
         return true;
     }
+
+    /**
+     * @throws \Rancoud\Application\ApplicationException
+     * @throws \Rancoud\Model\ModelException
+     * @throws DatabaseException
+     */
+    public static function isPasswordMatchForUserID(int $userID, string $password): bool
+    {
+        return (new UserModel(Application::getDatabase()))
+            ->isPasswordMatchForUserID($userID, $password);
+    }
 }
