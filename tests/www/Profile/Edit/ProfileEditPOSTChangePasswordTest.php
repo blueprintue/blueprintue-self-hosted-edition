@@ -387,6 +387,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
             'userID'     => 189,
             'params'     => [
                 'form-change_password-hidden-csrf'                => 'csrf_is_replaced',
+                'form-change_password-input-current_password'     => 'password_user_189',
                 'form-change_password-input-new_password'         => 'aze',
                 'form-change_password-input-new_password_confirm' => 'My_secret_password_01*',
             ],
