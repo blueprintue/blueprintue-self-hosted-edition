@@ -125,6 +125,7 @@ You can use msmtp as service docker for smtp relay and set smtp authentication i
 * GET `/cron/purge_sessions/`: remove old sessions in database (if using sessions database)
 * GET `/cron/purge_users_not_confirmed/`: remove users that didn't confirmed their accounts registration after 30 days
 * GET `/cron/purge_deleted_blueprints/`: remove expired blueprints
+* GET `/cron/purge_expired_forgot_password_token/`: remove expired forgot password token after 1 hour
 * GET `/cron/set_soft_delete_anonymous_private_blueprints/`: set soft delete for anonymous private blueprints
 
 ## FAQ

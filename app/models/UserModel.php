@@ -123,7 +123,13 @@ class UserModel extends Model
         $hashFromDB = $this->database->selectVar($sql, $params);
 
         if (empty($hashFromDB)) {
+            // @codeCoverageIgnoreStart
+            /*
+             * In end 2 end testing we can't arrive here because checks has been done before
+             * For covering we have to test function only
+             */
             return false;
+            // @codeCoverageIgnoreEnd
         }
 
         return Crypt::verify($password, $hashFromDB);
@@ -337,7 +343,8 @@ class UserModel extends Model
             SELECT id
             FROM users
             WHERE email = :email
-              AND password_reset = :token;
+              AND password_reset = :token
+              AND password_reset_at >= (UTC_TIMESTAMP() - INTERVAL 1 HOUR);
         SQL;
         $params = ['email' => $email, 'token' => $token];
 

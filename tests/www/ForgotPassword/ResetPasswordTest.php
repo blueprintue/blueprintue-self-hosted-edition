@@ -57,6 +57,22 @@ class ResetPasswordTest extends TestCase
             'password_reset' => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr'
         ];
         static::$db->insert($sql, $userParams);
+
+        // user generation
+        $sql = <<<'SQL'
+            INSERT INTO `users` (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `password_reset`, `password_reset_at`)
+                VALUES (:id, :username, :hash, :slug, :email, :grade, UTC_TIMESTAMP(), :password_reset, UTC_TIMESTAMP() - INTERVAL 2 HOUR);
+        SQL;
+        $userParams = [
+            'id'             => 40,
+            'username'       => 'user_40',
+            'hash'           => Crypt::hash('azertyuiop'),
+            'slug'           => 'user_40',
+            'email'          => 'user_40@example.com',
+            'grade'          => 'member',
+            'password_reset' => '123'
+        ];
+        static::$db->insert($sql, $userParams);
     }
 
     protected function tearDown(): void
@@ -151,7 +167,7 @@ HTML);
                 ],
                 'error' => [
                     'has'     => true,
-                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error, email and&#47;or reset token are invalid</div>'
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error, email and&#47;or reset token are invalid or expired</div>'
                 ]
             ],
             'fieldsHasError'   => [],
@@ -177,7 +193,33 @@ HTML);
                 ],
                 'error' => [
                     'has'     => true,
-                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error, email and&#47;or reset token are invalid</div>'
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error, email and&#47;or reset token are invalid or expired</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => ['email'],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'reset password KO - expired token' => [
+            'params' => [
+                'form-reset_password-hidden-csrf'            => 'csrf_is_replaced',
+                'form-reset_password-input-email'            => 'user_40@example.com',
+                'form-reset_password-input-password'         => 'My_password01$',
+                'form-reset_password-input-password_confirm' => 'My_password01$'
+            ],
+            'resetToken'         => 'token',
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-reset_password">Your new password has been saved successfully</div>'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-reset_password" role="alert">Error, email and&#47;or reset token are invalid or expired</div>'
                 ]
             ],
             'fieldsHasError'   => [],

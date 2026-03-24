@@ -123,7 +123,7 @@ class ForgotPasswordTest extends TestCase
 
     protected static function getEmailText(): string
     {
-        $text = 'You have received this email because a password reset request was received for the account user_20.' . "\n";
+        $text = 'You have received this email because a password reset request was received for the account user_20. This link expires in 1 hour.' . "\n";
         $text .= 'Copy the URL below to complete the process:' . "\n\n";
         $text .= 'https://blueprintue.test/reset-password/?reset_token={{TOKEN}}' . "\n\n";
         $text .= 'If you did not request a password reset, no further action is required on your part.';

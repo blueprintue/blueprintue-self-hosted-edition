@@ -342,6 +342,15 @@ $config = [
         ],
         [
             'methods'     => ['GET'],
+            'url'         => '/cron/purge_expired_forgot_password_token/',
+            'callback'    => app\controllers\www\CronController::class,
+            'name'        => 'cron_purge_expired_forgot_password_token',
+            'middlewares' => [
+                app\middlewares\DatabaseMiddleware::class,
+            ]
+        ],
+        [
+            'methods'     => ['GET'],
             'url'         => '/cron/set_soft_delete_anonymous_private_blueprints/',
             'callback'    => app\controllers\www\CronController::class,
             'name'        => 'cron_set_soft_delete_anonymous_private_blueprints',
