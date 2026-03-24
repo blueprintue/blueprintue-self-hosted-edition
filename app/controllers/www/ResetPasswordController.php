@@ -167,7 +167,7 @@ class ResetPasswordController implements MiddlewareInterface
         if ($userID === null || $userID === (int) Application::getConfig()->get('ANONYMOUS_ID')) {
             unset($params['password'], $params['password_confirm']);
 
-            Session::setFlash('error-form-reset_password', 'Error, email and/or reset token are invalid');
+            Session::setFlash('error-form-reset_password', 'Error, email and/or reset token are invalid or expired');
             Session::setFlash('form-reset_password-values', $params);
             Session::keepFlash(['error-form-reset_password', 'form-reset_password-values']);
 

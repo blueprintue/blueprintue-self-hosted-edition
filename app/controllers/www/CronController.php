@@ -36,6 +36,10 @@ class CronController
                 $this->purgeDeletedBlueprints();
 
                 break;
+            case 'cron_purge_expired_forgot_password_token':
+                $this->purgeExpiredForgotPasswordToken();
+
+                break;
             case 'cron_set_soft_delete_anonymous_private_blueprints':
                 $this->setSoftDeleteAnonymousPrivateBlueprints();
 
@@ -264,6 +268,39 @@ class CronController
 
         /* @noinspection NullPointerExceptionInspection */
         Application::getDatabase()->update($sqlSetUserCounters, $paramsSetUserCounters);
+    }
+
+    /**
+     * @throws ApplicationException
+     * @throws DatabaseException
+     */
+    protected function purgeExpiredForgotPasswordToken(): void
+    {
+        $forceRollback = false;
+        $sqlPurgeExpiredForgotPasswordToken = <<<'SQL'
+            UPDATE users
+            SET password_reset = NULL,
+                password_reset_at = NULL
+            WHERE UTC_TIMESTAMP() > (password_reset_at + INTERVAL 1 HOUR);
+        SQL;
+
+        try {
+            /* @noinspection NullPointerExceptionInspection */
+            Application::getDatabase()->startTransaction();
+
+            /* @noinspection NullPointerExceptionInspection */
+            Application::getDatabase()->exec($sqlPurgeExpiredForgotPasswordToken);
+        } catch (\Exception) {
+            $forceRollback = true;
+        } finally {
+            if ($forceRollback) {
+                /* @noinspection NullPointerExceptionInspection */
+                Application::getDatabase()->rollbackTransaction();
+            } else {
+                /* @noinspection NullPointerExceptionInspection */
+                Application::getDatabase()->completeTransaction();
+            }
+        }
     }
 
     /**

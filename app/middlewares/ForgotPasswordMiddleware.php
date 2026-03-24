@@ -155,7 +155,7 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
     {
         $subject = 'Reset password for ' . Application::getConfig()->get('SITE_NAME', 'blueprintUE self-hosted edition');
         $html = $this->getEmailHTML($token, $username);
-        $text = 'You have received this email because a password reset request was received for the account ' . $username . '.' . "\n";
+        $text = 'You have received this email because a password reset request was received for the account ' . $username . '. This link expires in 1 hour.' . "\n";
         $text .= 'Copy the URL below to complete the process:' . "\n\n";
         $text .= Helper::getHostname() . Application::getRouter()->generateUrl('reset-password') . '?reset_token=' . $token . "\n\n";
         $text .= 'If you did not request a password reset, no further action is required on your part.';
