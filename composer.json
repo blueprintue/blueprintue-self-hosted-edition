@@ -23,7 +23,7 @@
         "rancoud/application": "^6.0",
         "rancoud/database": "^7.0",
         "rancoud/model": "^5.0",
-        "rancoud/session": "^6.0",
+        "rancoud/session": "^6.2",
         "rancoud/crypt": "^4.0",
         "rancoud/pagination": "^4.0",
         "rancoud/security": "^4.0",
