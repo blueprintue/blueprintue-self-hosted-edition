@@ -40,6 +40,7 @@ class ResetPasswordTest extends TestCase
     {
         static::$db->truncateTables('users');
         static::$db->truncateTables('users_infos');
+        static::$db->truncateTables('sessions');
 
         // user generation
         $sql = <<<'SQL'
@@ -73,6 +74,18 @@ class ResetPasswordTest extends TestCase
             'password_reset' => '123'
         ];
         static::$db->insert($sql, $userParams);
+
+        // user sessions
+        $sql = <<<'SQL'
+            INSERT INTO `sessions` (`id`, `id_user`, `last_access`, `content`) VALUES
+                ('session_id_1', 40, UTC_TIMESTAMP(), 'foo'),
+                ('session_id_2', 30, UTC_TIMESTAMP(), 'foo'),
+                ('session_id_3', 40, UTC_TIMESTAMP(), 'foo'),
+                ('session_id_4', 30, UTC_TIMESTAMP(), 'foo'),
+                ('session_id_5', 40, UTC_TIMESTAMP(), 'foo');
+        SQL;
+
+        static::$db->insert($sql);
     }
 
     protected function tearDown(): void
@@ -852,6 +865,10 @@ HTML);
                 static::assertNotSame($userDBBefore, $userDBAfter);
                 static::assertNull($userDBAfter['password_reset']);
                 static::assertNull($userDBAfter['password_reset_at']);
+                static::assertSame(0, static::$db->count('SELECT COUNT(id) FROM sessions WHERE id_user = 30'));
+                static::assertSame(0, static::$db->count("SELECT COUNT(id) FROM sessions WHERE id_user = 30 AND content = 'foo'"));
+                static::assertSame(3, static::$db->count('SELECT COUNT(id) FROM sessions WHERE id_user = 40'));
+                static::assertSame(3, static::$db->count("SELECT COUNT(id) FROM sessions WHERE id_user = 40 AND content = 'foo'"));
             } else {
                 static::assertSame($userDBBefore, $userDBAfter);
             }

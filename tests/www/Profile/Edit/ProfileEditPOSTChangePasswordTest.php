@@ -71,6 +71,20 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
         static::$db->insert($sql, $userParams);
 
         static::$db->insert("replace into users (id, username, password, slug, email, created_at) values (2, 'anonymous', null, 'anonymous', 'anonymous@mail', utc_timestamp())");
+
+        // user sessions
+        $sql = <<<'SQL'
+            REPLACE INTO `sessions` (`id`, `id_user`, `last_access`, `content`) VALUES
+                ('session_id_1', 189, UTC_TIMESTAMP(), 'foo'),
+                ('session_id_2', 199, UTC_TIMESTAMP(), 'foo'),
+                ('session_id_3', 189, UTC_TIMESTAMP(), 'foo'),
+                ('session_id_4', 195, UTC_TIMESTAMP(), 'foo'),
+                ('session_id_5', 195, UTC_TIMESTAMP(), 'foo'),
+                ('session_id_6', 199, UTC_TIMESTAMP(), 'foo'),
+                ('session_id_7', 189, UTC_TIMESTAMP(), 'foo');
+        SQL;
+
+        static::$db->insert($sql);
     }
 
     protected function tearDown(): void
@@ -85,6 +99,16 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
         yield 'edit OK' => [
             'sqlQueries' => [
                 "UPDATE users SET password = '" . Crypt::hash('password_user_189') . "' WHERE id = 189",
+                <<<'SQL'
+                REPLACE INTO `sessions` (`id`, `id_user`, `last_access`, `content`) VALUES
+                    ('session_id_1', 189, UTC_TIMESTAMP(), 'foo'),
+                    ('session_id_2', 199, UTC_TIMESTAMP(), 'foo'),
+                    ('session_id_3', 189, UTC_TIMESTAMP(), 'foo'),
+                    ('session_id_4', 195, UTC_TIMESTAMP(), 'foo'),
+                    ('session_id_5', 195, UTC_TIMESTAMP(), 'foo'),
+                    ('session_id_6', 199, UTC_TIMESTAMP(), 'foo'),
+                    ('session_id_7', 189, UTC_TIMESTAMP(), 'foo');
+                SQL
             ],
             'userID'     => 189,
             'params'     => [
@@ -114,6 +138,16 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
         yield 'edit OK - xss' => [
             'sqlQueries' => [
                 "UPDATE users SET password = '" . Crypt::hash('password_user_189') . "' WHERE id = 189",
+                <<<'SQL'
+                REPLACE INTO `sessions` (`id`, `id_user`, `last_access`, `content`) VALUES
+                    ('session_id_1', 189, UTC_TIMESTAMP(), 'foo'),
+                    ('session_id_2', 199, UTC_TIMESTAMP(), 'foo'),
+                    ('session_id_3', 189, UTC_TIMESTAMP(), 'foo'),
+                    ('session_id_4', 195, UTC_TIMESTAMP(), 'foo'),
+                    ('session_id_5', 195, UTC_TIMESTAMP(), 'foo'),
+                    ('session_id_6', 199, UTC_TIMESTAMP(), 'foo'),
+                    ('session_id_7', 189, UTC_TIMESTAMP(), 'foo');
+                SQL
             ],
             'userID'     => 189,
             'params'     => [
@@ -776,6 +810,12 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
         if ($isFormSuccess) {
             static::assertNotSame($userBefore, $userAfter);
             static::assertTrue(Crypt::verify($params['form-change_password-input-new_password'], $userAfter['password']));
+            static::assertSame(1, static::$db->count('SELECT COUNT(id) FROM sessions WHERE id_user = 189'));
+            static::assertSame(0, static::$db->count("SELECT COUNT(id) FROM sessions WHERE id_user = 189 AND content = 'foo'"));
+            static::assertSame(2, static::$db->count('SELECT COUNT(id) FROM sessions WHERE id_user = 195'));
+            static::assertSame(2, static::$db->count("SELECT COUNT(id) FROM sessions WHERE id_user = 195 AND content = 'foo'"));
+            static::assertSame(2, static::$db->count('SELECT COUNT(id) FROM sessions WHERE id_user = 199'));
+            static::assertSame(2, static::$db->count("SELECT COUNT(id) FROM sessions WHERE id_user = 199 AND content = 'foo'"));
         } else {
             static::assertSame($userBefore, $userAfter);
         }
