@@ -176,6 +176,8 @@ class ResetPasswordController implements MiddlewareInterface
 
         try {
             UserService::resetPassword($userID, $params['password']);
+
+            Session::deleteUserSessionsInDatabase($userID);
             // @codeCoverageIgnoreStart
         } catch (\Exception) {
             /*

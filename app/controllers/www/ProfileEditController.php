@@ -584,6 +584,10 @@ class ProfileEditController implements MiddlewareInterface
 
         UserService::updatePassword($this->userID, $params['new_password']);
 
+        Session::deleteUserSessionsInDatabase($this->userID);
+
+        (new LoginMiddleware())->login($this->userID);
+
         Session::setFlash('success-form-change_password', 'Your new password has been saved');
         Session::keepFlash(['success-form-change_password']);
 
