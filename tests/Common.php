@@ -419,6 +419,38 @@ HTML;
 
         return 'few seconds ago';
     }
+
+    protected function isRateLimitDatabaseExist(): bool
+    {
+        $ds = \DIRECTORY_SEPARATOR;
+        $rateLimitDatabase = \dirname(__DIR__) . $ds . 'rate_limit.db';
+
+        return \file_exists($rateLimitDatabase);
+    }
+
+    protected function deleteRateLimitDatabase(): void
+    {
+        $ds = \DIRECTORY_SEPARATOR;
+        $rateLimitDatabase = \dirname(__DIR__) . $ds . 'rate_limit.db';
+        if (\file_exists($rateLimitDatabase)) {
+            \unlink($rateLimitDatabase);
+        }
+    }
+
+    protected function getRateLimitDatabase(): Database
+    {
+        $ds = \DIRECTORY_SEPARATOR;
+        $rateLimitDatabase = \dirname(__DIR__) . $ds . 'rate_limit.db';
+        $params = [
+            'driver'    => 'sqlite',
+            'host'      => '',
+            'user'      => '',
+            'password'  => '',
+            'database'  => $rateLimitDatabase
+        ];
+
+        return new Database(new Configurator($params));
+    }
 }
 
 function isPHPUnit(): void {}

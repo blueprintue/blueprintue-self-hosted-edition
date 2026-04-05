@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace app\helpers;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Rancoud\Application\Application;
+use Rancoud\Database\Database;
 
 class Helper
 {
@@ -310,5 +312,71 @@ class Helper
     public static function getDateFormattedWithUserTimezone(string $date, string $format = 'Y-m-d H:i:s', string $timezone = 'UTC'): string
     {
         return (new \DateTimeImmutable($date, new \DateTimeZone($timezone)))->format($format);
+    }
+
+    public static function isAboveRateLimit(string $ip, string $action, int $scopeTimeInSeconds, int $scopeLimit): bool
+    {
+        try {
+            $rateLimitDB = Application::getFromBag('rate_limit');
+            if (!\is_a($rateLimitDB, Database::class)) {
+                return false;
+            }
+
+            $sql = <<<'SQL'
+            SELECT COUNT(`id`) FROM `rate_limit`
+            WHERE `id` = :id AND (:time - `time`) < :scope ORDER BY `time` DESC LIMIT 1
+            SQL;
+
+            $id = \hash('sha512', $ip . '|' . Application::getConfig()->get('RATE_LIMIT_SALT', '') . '|' . $action);
+
+            $counter = $rateLimitDB->count($sql, ['id' => $id, 'time' => \time(), 'scope' => $scopeTimeInSeconds]);
+            if ($counter !== null && $counter >= $scopeLimit) {
+                return true;
+            }
+        } catch (\Exception) {
+            return false;
+        }
+
+        return false;
+    }
+
+    /**
+     * @throws \Rancoud\Application\ApplicationException
+     * @throws \Rancoud\Environment\EnvironmentException
+     */
+    public static function saveActionForRateLimit(string $ip, string $action): void
+    {
+        if (Application::getConfig()->get('RATE_LIMIT_DISABLE', false)) {
+            return;
+        }
+
+        try {
+            $rateLimitDB = Application::getFromBag('rate_limit');
+            if (!\is_a($rateLimitDB, Database::class)) {
+                return;
+            }
+
+            $sql = <<<'SQL'
+            INSERT INTO `rate_limit`(`id`, `time`)
+            VALUES(:id, :time)
+            SQL;
+
+            $id = \hash('sha512', $ip . '|' . Application::getConfig()->get('RATE_LIMIT_SALT', '') . '|' . $action);
+
+            $rateLimitDB->insert($sql, ['id' => $id, 'time' => \time()]);
+        } catch (\Exception) {
+            return;
+        }
+    }
+
+    public static function getIP(ServerRequestInterface $request): string
+    {
+        $serverParams = $request->getServerParams();
+
+        if (\array_key_exists('REMOTE_ADDR', $serverParams)) {
+            return $serverParams['REMOTE_ADDR'];
+        }
+
+        return 'void';
     }
 }
