@@ -320,28 +320,21 @@ class Helper
             return false;
         }
 
-        try {
-            $rateLimitDB = Application::getFromBag('rate_limit');
-            if (!\is_a($rateLimitDB, Database::class)) {
-                return false;
-            }
-
-            $sql = <<<'SQL'
-            SELECT COUNT(`id`) FROM `rate_limit`
-            WHERE `id` = :id AND (:time - `time`) < :scope ORDER BY `time` DESC LIMIT 1
-            SQL;
-
-            $id = \hash('sha512', $identifier . '|' . Application::getConfig()->get('RATE_LIMIT_SALT', '') . '|' . $action);
-
-            $counter = $rateLimitDB->count($sql, ['id' => $id, 'time' => \time(), 'scope' => $scopeTimeInSeconds]);
-            if ($counter !== null && $counter >= $maxAttempts) {
-                return true;
-            }
-        } catch (\Exception) {
+        $rateLimitDB = Application::getFromBag('rate_limit');
+        if (!\is_a($rateLimitDB, Database::class)) {
             return false;
         }
 
-        return false;
+        $sql = <<<'SQL'
+        SELECT COUNT(`id`) FROM `rate_limit`
+        WHERE `id` = :id AND (:time - `time`) < :scope ORDER BY `time` DESC LIMIT 1
+        SQL;
+
+        $id = \hash('sha512', $identifier . '|' . Application::getConfig()->get('RATE_LIMIT_SALT', '') . '|' . $action);
+
+        $counter = $rateLimitDB->count($sql, ['id' => $id, 'time' => \time(), 'scope' => $scopeTimeInSeconds]);
+
+        return $counter !== null && $counter >= $maxAttempts;
     }
 
     /**
@@ -354,23 +347,19 @@ class Helper
             return;
         }
 
-        try {
-            $rateLimitDB = Application::getFromBag('rate_limit');
-            if (!\is_a($rateLimitDB, Database::class)) {
-                return;
-            }
-
-            $sql = <<<'SQL'
-            INSERT INTO `rate_limit`(`id`, `time`)
-            VALUES(:id, :time)
-            SQL;
-
-            $id = \hash('sha512', $identifier . '|' . Application::getConfig()->get('RATE_LIMIT_SALT', '') . '|' . $action);
-
-            $rateLimitDB->insert($sql, ['id' => $id, 'time' => \time()]);
-        } catch (\Exception) {
+        $rateLimitDB = Application::getFromBag('rate_limit');
+        if (!\is_a($rateLimitDB, Database::class)) {
             return;
         }
+
+        $sql = <<<'SQL'
+        INSERT INTO `rate_limit`(`id`, `time`)
+        VALUES(:id, :time)
+        SQL;
+
+        $id = \hash('sha512', $identifier . '|' . Application::getConfig()->get('RATE_LIMIT_SALT', '') . '|' . $action);
+
+        $rateLimitDB->insert($sql, ['id' => $id, 'time' => \time()]);
     }
 
     public static function getIP(ServerRequestInterface $request): string
