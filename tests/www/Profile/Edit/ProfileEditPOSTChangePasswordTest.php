@@ -33,40 +33,43 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
 
         // user generation
         $sql = <<<'SQL'
-            INSERT INTO `users` (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`)
-                VALUES (:id, :username, :hash, :slug, :email, :grade, UTC_TIMESTAMP(), :avatar);
+            INSERT INTO `users` (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`, `remember_token`)
+                VALUES (:id, :username, :hash, :slug, :email, :grade, UTC_TIMESTAMP(), :avatar, :remember_token);
         SQL;
 
         $userParams = [
-            'id'       => 189,
-            'username' => 'user_189',
-            'hash'     => Crypt::hash('password_user_189'),
-            'slug'     => 'user_189',
-            'email'    => 'user_189@example.com',
-            'grade'    => 'member',
-            'avatar'   => null,
+            'id'             => 189,
+            'username'       => 'user_189',
+            'hash'           => Crypt::hash('password_user_189'),
+            'slug'           => 'user_189',
+            'email'          => 'user_189@example.com',
+            'grade'          => 'member',
+            'avatar'         => null,
+            'remember_token' => 'foo'
         ];
         static::$db->insert($sql, $userParams);
 
         $userParams = [
-            'id'       => 195,
-            'username' => 'user_195',
-            'hash'     => Crypt::hash('password_user_195'),
-            'slug'     => 'user_195',
-            'email'    => null,
-            'grade'    => 'member',
-            'avatar'   => 'formage.jpg',
+            'id'             => 195,
+            'username'       => 'user_195',
+            'hash'           => Crypt::hash('password_user_195'),
+            'slug'           => 'user_195',
+            'email'          => null,
+            'grade'          => 'member',
+            'avatar'         => 'formage.jpg',
+            'remember_token' => 'bar'
         ];
         static::$db->insert($sql, $userParams);
 
         $userParams = [
-            'id'       => 199,
-            'username' => 'user_199 <script>alert(1)</script>',
-            'hash'     => Crypt::hash('password_user_199'),
-            'slug'     => 'user_199',
-            'email'    => 'user_199@example.com',
-            'grade'    => 'member',
-            'avatar'   => 'mem\"><script>alert(1)</script>fromage.jpg'
+            'id'             => 199,
+            'username'       => 'user_199 <script>alert(1)</script>',
+            'hash'           => Crypt::hash('password_user_199'),
+            'slug'           => 'user_199',
+            'email'          => 'user_199@example.com',
+            'grade'          => 'member',
+            'avatar'         => 'mem\"><script>alert(1)</script>fromage.jpg',
+            'remember_token' => 'qwerty'
         ];
         static::$db->insert($sql, $userParams);
 
@@ -98,7 +101,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
     {
         yield 'edit OK' => [
             'sqlQueries' => [
-                "UPDATE users SET password = '" . Crypt::hash('password_user_189') . "' WHERE id = 189",
+                "UPDATE users SET password = '" . Crypt::hash('password_user_189') . "', remember_token = 'foo' WHERE id = 189",
                 <<<'SQL'
                 REPLACE INTO `sessions` (`id`, `id_user`, `last_access`, `content`) VALUES
                     ('session_id_1', 189, UTC_TIMESTAMP(), 'foo'),
@@ -137,7 +140,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
 
         yield 'edit OK - xss' => [
             'sqlQueries' => [
-                "UPDATE users SET password = '" . Crypt::hash('password_user_189') . "' WHERE id = 189",
+                "UPDATE users SET password = '" . Crypt::hash('password_user_189') . "', remember_token = 'foo' WHERE id = 189",
                 <<<'SQL'
                 REPLACE INTO `sessions` (`id`, `id_user`, `last_access`, `content`) VALUES
                     ('session_id_1', 189, UTC_TIMESTAMP(), 'foo'),
@@ -809,6 +812,7 @@ class ProfileEditPOSTChangePasswordTest extends TestCase
 
         if ($isFormSuccess) {
             static::assertNotSame($userBefore, $userAfter);
+            static::assertNull($userAfter['remember_token']);
             static::assertTrue(Crypt::verify($params['form-change_password-input-new_password'], $userAfter['password']));
             static::assertSame(1, static::$db->count('SELECT COUNT(id) FROM sessions WHERE id_user = 189'));
             static::assertSame(0, static::$db->count("SELECT COUNT(id) FROM sessions WHERE id_user = 189 AND content = 'foo'"));
