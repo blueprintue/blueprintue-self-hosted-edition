@@ -44,8 +44,8 @@ class ResetPasswordTest extends TestCase
 
         // user generation
         $sql = <<<'SQL'
-            INSERT INTO `users` (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `password_reset`, `password_reset_at`)
-                VALUES (:id, :username, :hash, :slug, :email, :grade, UTC_TIMESTAMP(), :password_reset, UTC_TIMESTAMP());
+            INSERT INTO `users` (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `password_reset`, `password_reset_at`, `remember_token`)
+                VALUES (:id, :username, :hash, :slug, :email, :grade, UTC_TIMESTAMP(), :password_reset, UTC_TIMESTAMP(), :remember_token);
         SQL;
 
         $userParams = [
@@ -55,7 +55,8 @@ class ResetPasswordTest extends TestCase
             'slug'           => 'user_30',
             'email'          => 'user_30@example.com',
             'grade'          => 'member',
-            'password_reset' => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr'
+            'password_reset' => 'CuTRnFaXfbJQ3gnw9e6835D6iV3irDhLL8Fv5CXM4D98dT55Eh8Ug76zk795s34p33isfjbq3N92m23R6BP9v38wEJ8J47G8U6Wu4D4eZs8w8WC82Sb7ui5TMdq7CPqnN8VJ5Nrsr2R6Ebe8g78MbYXfxbNm46DwWT24hMvLp9SFS6x9LSc7984a2sar5XpT4iPxvnuNVMNK6BZMPWp5zdWN7pLQLc3r8V5h656eB2mtBW6srMr3MA3933Ptdfr',
+            'remember_token' => 'foo',
         ];
         static::$db->insert($sql, $userParams);
 
@@ -865,6 +866,7 @@ HTML);
                 static::assertNotSame($userDBBefore, $userDBAfter);
                 static::assertNull($userDBAfter['password_reset']);
                 static::assertNull($userDBAfter['password_reset_at']);
+                static::assertNull($userDBAfter['remember_token']);
                 static::assertSame(0, static::$db->count('SELECT COUNT(id) FROM sessions WHERE id_user = 30'));
                 static::assertSame(0, static::$db->count("SELECT COUNT(id) FROM sessions WHERE id_user = 30 AND content = 'foo'"));
                 static::assertSame(3, static::$db->count('SELECT COUNT(id) FROM sessions WHERE id_user = 40'));
