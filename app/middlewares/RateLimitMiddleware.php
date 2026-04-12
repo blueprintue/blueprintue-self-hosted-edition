@@ -49,16 +49,14 @@ class RateLimitMiddleware implements MiddlewareInterface
 
         $rateLimitDB = new Database(new Configurator($params));
 
-        if (!\file_exists($db)) {
-            $sql = <<<'SQL'
-            CREATE TABLE IF NOT EXISTS `rate_limit` (
-                `id` varchar(128) NOT NULL,
-                `time` timestamp NOT NULL
-            );
-            SQL;
+        $sql = <<<'SQL'
+        CREATE TABLE IF NOT EXISTS `rate_limit` (
+            `id` varchar(128) NOT NULL,
+            `time` timestamp NOT NULL
+        );
+        SQL;
 
-            $rateLimitDB->exec($sql);
-        }
+        $rateLimitDB->exec($sql);
 
         Application::setInBag('rate_limit', $rateLimitDB);
     }
