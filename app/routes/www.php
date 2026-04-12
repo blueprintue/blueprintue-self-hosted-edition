@@ -11,6 +11,7 @@ $config = [
             'callback'    => app\controllers\www\HomeController::class,
             'name'        => 'home',
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -30,6 +31,7 @@ $config = [
                 'version' => 'last',
             ],
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -44,6 +46,7 @@ $config = [
             'callback'    => app\controllers\www\BlueprintEditController::class,
             'name'        => 'blueprint-edit',
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -68,6 +71,7 @@ $config = [
             'callback'    => app\controllers\www\BlueprintDiffController::class,
             'name'        => 'blueprint-diff',
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -84,6 +88,7 @@ $config = [
             'callback'    => app\controllers\www\ProfileController::class,
             'name'        => 'profile',
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -98,6 +103,7 @@ $config = [
             'callback'    => app\controllers\www\ProfileEditController::class,
             'name'        => 'profile-edit',
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -111,6 +117,7 @@ $config = [
             'callback'    => app\controllers\www\BlueprintListController::class,
             'name'        => 'search',
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -130,6 +137,7 @@ $config = [
                 'page' => 1
             ],
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -147,6 +155,7 @@ $config = [
                 'page' => 1
             ],
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -165,6 +174,7 @@ $config = [
             ],
             'constraints' => ['type' => 'animation|behavior-tree|blueprint|material|metasound|niagara|pcg'],
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -182,6 +192,7 @@ $config = [
                 'page' => 1
             ],
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -199,6 +210,7 @@ $config = [
                 'page' => 1
             ],
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -215,6 +227,7 @@ $config = [
             'callback'    => app\controllers\www\ContactController::class,
             'name'        => 'contact',
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -230,6 +243,7 @@ $config = [
             'callback'    => app\controllers\www\StaticController::class,
             'name'        => 'static-pages',
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
                 app\middlewares\LogoutMiddleware::class,
@@ -250,6 +264,7 @@ $config = [
             'callback'    => app\controllers\www\UploadController::class,
             'name'        => 'upload-image',
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
             ]
@@ -274,6 +289,7 @@ $config = [
             'callback'    => app\controllers\www\ResetPasswordController::class,
             'name'        => 'reset-password',
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
             ]
@@ -286,6 +302,7 @@ $config = [
             'callback'    => app\controllers\www\ConfirmAccountController::class,
             'name'        => 'confirm-account',
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
                 app\middlewares\SessionMiddleware::class,
             ]
@@ -298,6 +315,7 @@ $config = [
             'callback'    => app\controllers\www\APIController::class,
             'name'        => 'api_upload',
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
             ]
         ],
@@ -307,6 +325,7 @@ $config = [
             'callback'    => app\controllers\www\APIController::class,
             'name'        => 'api_render',
             'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
             ]
         ],
@@ -346,6 +365,16 @@ $config = [
             'callback'    => app\controllers\www\CronController::class,
             'name'        => 'cron_purge_expired_forgot_password_token',
             'middlewares' => [
+                app\middlewares\DatabaseMiddleware::class,
+            ]
+        ],
+        [
+            'methods'     => ['GET'],
+            'url'         => '/cron/purge_rate_limit_entries/',
+            'callback'    => app\controllers\www\CronController::class,
+            'name'        => 'cron_purge_rate_limit_entries',
+            'middlewares' => [
+                app\middlewares\RateLimitMiddleware::class,
                 app\middlewares\DatabaseMiddleware::class,
             ]
         ],

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace app\middlewares;
 
 use app\controllers\FormTrait;
+use app\helpers\Helper;
 use app\services\www\UserService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -101,6 +102,47 @@ class LoginMiddleware implements MiddlewareInterface
             return (new Factory())->createResponse(301)->withHeader('Location', $uriError);
         }
 
+        $ip = Helper::getIP($request);
+        $rateLimitLoginIPWindowSeconds = (int) Application::getConfig()->get('RATE_LIMIT_LOGIN_IP_WINDOW_SECONDS', 60);
+        $rateLimitLoginIPMaxAttempts = (int) Application::getConfig()->get('RATE_LIMIT_LOGIN_IP_MAX_ATTEMPTS', 3);
+
+        if (Helper::isAboveRateLimit($ip, 'post-login', $rateLimitLoginIPWindowSeconds, $rateLimitLoginIPMaxAttempts)) {
+            Session::setFlash('error-form-login', 'Error, could not login due to rate limit specific to your IP address.');
+            Session::keepFlash(['error-form-login']);
+
+            return (new Factory())->createResponse(301)->withHeader('Location', $uriError);
+        }
+
+        $rateLimitLoginErrorAccountWindowSeconds = (int) Application::getConfig()->get('RATE_LIMIT_LOGIN_ERROR_ACCOUNT_WINDOW_SECONDS', 900);
+        $rateLimitLoginErrorAccountMaxAttempts = (int) Application::getConfig()->get('RATE_LIMIT_LOGIN_ERROR_ACCOUNT_MAX_ATTEMPTS', 3);
+
+        if (Helper::isAboveRateLimit($params['username'], 'post-login-error-account', $rateLimitLoginErrorAccountWindowSeconds, $rateLimitLoginErrorAccountMaxAttempts)) {
+            Session::setFlash('error-form-login', 'Error, too many attempts.');
+            Session::keepFlash(['error-form-login']);
+
+            return (new Factory())->createResponse(301)->withHeader('Location', $uriError);
+        }
+
+        $rateLimitLoginErrorIPWindowSeconds = (int) Application::getConfig()->get('RATE_LIMIT_LOGIN_ERROR_IP_WINDOW_SECONDS', 300);
+        $rateLimitLoginErrorIPMaxAttempts = (int) Application::getConfig()->get('RATE_LIMIT_LOGIN_ERROR_IP_MAX_ATTEMPTS', 5);
+
+        if (Helper::isAboveRateLimit($ip, 'post-login-error', $rateLimitLoginErrorIPWindowSeconds, $rateLimitLoginErrorIPMaxAttempts)) {
+            Session::setFlash('error-form-login', 'Error, too many attempts.');
+            Session::keepFlash(['error-form-login']);
+
+            return (new Factory())->createResponse(301)->withHeader('Location', $uriError);
+        }
+
+        $rateLimitLoginGlobalWindowSeconds = (int) Application::getConfig()->get('RATE_LIMIT_LOGIN_GLOBAL_WINDOW_SECONDS', 60);
+        $rateLimitLoginGlobalMaxAttempts = (int) Application::getConfig()->get('RATE_LIMIT_LOGIN_GLOBAL_MAX_ATTEMPTS', 30);
+
+        if (Helper::isAboveRateLimit('global', 'post-login', $rateLimitLoginGlobalWindowSeconds, $rateLimitLoginGlobalMaxAttempts)) {
+            Session::setFlash('error-form-login', 'Error, could not login due to rate limit specific to the website.');
+            Session::keepFlash(['error-form-login']);
+
+            return (new Factory())->createResponse(301)->withHeader('Location', $uriError);
+        }
+
         $forceRollback = false;
         $errorCode = '#100';
 
@@ -111,6 +153,9 @@ class LoginMiddleware implements MiddlewareInterface
             $userID = UserService::findUserIDWithUsernameAndPassword($params['username'], $params['password']);
             if ($userID === null || $userID === (int) Application::getConfig()->get('ANONYMOUS_ID')) {
                 $forceRollback = true;
+
+                Helper::saveActionForRateLimit($ip, 'post-login-error');
+                Helper::saveActionForRateLimit($params['username'], 'post-login-error-account');
 
                 Session::setFlash('error-form-login', 'Error, invalid credentials');
                 Session::keepFlash(['error-form-login']);
@@ -152,6 +197,9 @@ class LoginMiddleware implements MiddlewareInterface
                 $errorCode = '#420';
                 $this->deleteRememberToken($userID);
             }
+
+            Helper::saveActionForRateLimit($ip, 'post-login');
+            Helper::saveActionForRateLimit('global', 'post-login');
             // @codeCoverageIgnoreStart
         } catch (\Exception) {
             /*

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace app\middlewares;
 
 use app\controllers\FormTrait;
+use app\helpers\Helper;
 use app\services\www\UserService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -147,6 +148,27 @@ class RegisterMiddleware implements MiddlewareInterface
             return (new Factory())->createResponse(301)->withHeader('Location', $uriError);
         }
 
+        $ip = Helper::getIP($request);
+        $rateLimitRegisterIPWindowSeconds = (int) Application::getConfig()->get('RATE_LIMIT_REGISTER_IP_WINDOW_SECONDS', 1800);
+        $rateLimitRegisterIPMaxAttempts = (int) Application::getConfig()->get('RATE_LIMIT_REGISTER_IP_MAX_ATTEMPTS', 1);
+
+        if (Helper::isAboveRateLimit($ip, 'post-register', $rateLimitRegisterIPWindowSeconds, $rateLimitRegisterIPMaxAttempts)) {
+            Session::setFlash('error-form-register', 'Error, could not create account due to rate limit specific to your IP address.');
+            Session::keepFlash(['error-form-register']);
+
+            return (new Factory())->createResponse(301)->withHeader('Location', $uriError);
+        }
+
+        $rateLimitRegisterGlobalWindowSeconds = (int) Application::getConfig()->get('RATE_LIMIT_REGISTER_GLOBAL_WINDOW_SECONDS', 1800);
+        $rateLimitRegisterGlobalMaxAttempts = (int) Application::getConfig()->get('RATE_LIMIT_REGISTER_GLOBAL_MAX_ATTEMPTS', 10);
+
+        if (Helper::isAboveRateLimit('global', 'post-register', $rateLimitRegisterGlobalWindowSeconds, $rateLimitRegisterGlobalMaxAttempts)) {
+            Session::setFlash('error-form-register', 'Error, could not create account due to rate limit specific to the website.');
+            Session::keepFlash(['error-form-register']);
+
+            return (new Factory())->createResponse(301)->withHeader('Location', $uriError);
+        }
+
         $forceRollback = false;
         $errorCode = '#001';
 
@@ -166,11 +188,15 @@ class RegisterMiddleware implements MiddlewareInterface
             }
 
             $emailSent = UserService::generateAndSendConfirmAccountEmail($userID, 'register');
+
             if ($emailSent === false) {
                 $errorCode = '#500';
 
                 throw new \Exception('Error, could not create account (' . $errorCode . ')');
             }
+
+            Helper::saveActionForRateLimit($ip, 'post-register');
+            Helper::saveActionForRateLimit('global', 'post-register');
         } catch (\Exception) {
             $forceRollback = true;
             unset($params['password'], $params['password_confirm']);

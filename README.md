@@ -14,6 +14,7 @@
 ## Minimum requirements
 * \>= PHP 8.4
 * \>= MySQL 8 or >= MariaDB 10.6
+* \>= SQLite for rate limit
 
 ## How to install?
 ### Docker Image
@@ -86,46 +87,100 @@ Because GDPR you will need to:
 | SESSION_REMEMBER_SAMESITE | NO        | string | Strict         | None \| Lax \| Strict | security policies on how cookies are shared, Lax is mandatory for Twitter OAuth |
 
 #### Host
-| Parameter | Mandatory | Type   | Default value | Specific values | Description                                          |
-|-----------|-----------|--------|---------------|-----------------|------------------------------------------------------|
-| HOST      | YES       | string |               |                 | hostname (e.g. blueprintue-self-hosted-edition.test) |
-| HTTPS     | YES       | bool   |               |                 | use for detect scheme (http or https)                |
+| Parameter | Mandatory | Type   | Default value | Description                                          |
+|-----------|-----------|--------|---------------|------------------------------------------------------|
+| HOST      | YES       | string |               | hostname (e.g. blueprintue-self-hosted-edition.test) |
+| HTTPS     | YES       | bool   |               | use for detect scheme (http or https)                |
 
 #### Site
-| Parameter        | Mandatory | Type   | Default value                   | Specific values | Description                                                                         |
-|------------------|-----------|--------|---------------------------------|-----------------|-------------------------------------------------------------------------------------|
-| SITE_NAME        | YES       | string | blueprintUE self-hosted edition |                 | name of the site, used for email/description (e.g. blueprintUE self-hosted edition) |
-| SITE_BASE_TITLE  | NO        | string |                                 |                 | use for complete the title tag                                                      |
-| SITE_DESCRIPTION | NO        | string |                                 |                 | use for description tag in home page                                                |
+| Parameter        | Mandatory | Type   | Default value                   | Description                                                                         |
+|------------------|-----------|--------|---------------------------------|-------------------------------------------------------------------------------------|
+| SITE_NAME        | YES       | string | blueprintUE self-hosted edition | name of the site, used for email/description (e.g. blueprintUE self-hosted edition) |
+| SITE_BASE_TITLE  | NO        | string |                                 | use for complete the title tag                                                      |
+| SITE_DESCRIPTION | NO        | string |                                 | use for description tag in home page                                                |
 
 #### Anonymous user
-| Parameter    | Mandatory | Type | Default value | Specific values | Description                                 |
-|--------------|-----------|------|---------------|-----------------|---------------------------------------------|
-| ANONYMOUS_ID | NO        | int  |               |                 | user_id for all anonymous blueprints pasted |
+| Parameter    | Mandatory | Type | Default value | Description                                 |
+|--------------|-----------|------|---------------|---------------------------------------------|
+| ANONYMOUS_ID | NO        | int  |               | user_id for all anonymous blueprints pasted |
 
 #### Mail
 PHPMailer is used as library for sending mails.  
 You can use msmtp as service docker for smtp relay and set smtp authentication inside.
 
-| Parameter             | Mandatory | Type   | Default value                                 | Specific values | Description                                                    |
-|-----------------------|-----------|--------|-----------------------------------------------|-----------------|----------------------------------------------------------------|
-| MAIL_USE_SMTP         | NO        | bool   | false                                         |                 | set PHPMailer to use SMTP                                      |
-| MAIL_SMTP_HOST        | NO        | string | localhost                                     |                 | SMTP host                                                      |
-| MAIL_SMTP_PORT        | NO        | int    | 25                                            |                 | SMTP port                                                      |
-| MAIL_USE_SMTP_AUTH    | NO        | bool   | false                                         |                 | for SMTP authentication                                        |
-| MAIL_USE_SMTP_TLS     | NO        | bool   | false                                         |                 | set to true if you need TLS like Gmail or any mail provider    |
-| MAIL_SMTP_USER        | NO        | string |                                               |                 | user for SMTP authentication                                   |
-| MAIL_SMTP_PASSWORD    | NO        | string |                                               |                 | password for SMTP authentication                               |
-| MAIL_FROM_ADDRESS     | YES       | string |                                               |                 | email display for sending emails (register and reset password) |
-| MAIL_FROM_NAME        | NO        | string |                                               |                 | name display for sendings emails (register and reset password) |
-| MAIL_CONTACT_TO       | YES       | string |                                               |                 | email receiver for the contact page                            |
-| MAIL_HEADER_LOGO_PATH | YES       | string | blueprintue-self-hosted-edition_logo-full.png |                 | header image in emails (complete by HOST parameter)            |
+| Parameter             | Mandatory | Type   | Default value                                 | Description                                                    |
+|-----------------------|-----------|--------|-----------------------------------------------|----------------------------------------------------------------|
+| MAIL_USE_SMTP         | NO        | bool   | false                                         | set PHPMailer to use SMTP                                      |
+| MAIL_SMTP_HOST        | NO        | string | localhost                                     | SMTP host                                                      |
+| MAIL_SMTP_PORT        | NO        | int    | 25                                            | SMTP port                                                      |
+| MAIL_USE_SMTP_AUTH    | NO        | bool   | false                                         | for SMTP authentication                                        |
+| MAIL_USE_SMTP_TLS     | NO        | bool   | false                                         | set to true if you need TLS like Gmail or any mail provider    |
+| MAIL_SMTP_USER        | NO        | string |                                               | user for SMTP authentication                                   |
+| MAIL_SMTP_PASSWORD    | NO        | string |                                               | password for SMTP authentication                               |
+| MAIL_FROM_ADDRESS     | YES       | string |                                               | email display for sending emails (register and reset password) |
+| MAIL_FROM_NAME        | NO        | string |                                               | name display for sendings emails (register and reset password) |
+| MAIL_CONTACT_TO       | YES       | string |                                               | email receiver for the contact page                            |
+| MAIL_HEADER_LOGO_PATH | YES       | string | blueprintue-self-hosted-edition_logo-full.png | header image in emails (complete by HOST parameter)            |
+
+#### Rate Limit
+SQLite is mandatory for that feature.  
+We store in a separate database called `rate_limit.db` at ROOT level.  
+Inside there is a table `rate_limit` with 2 fields: `id` and `time`.  
+`id` is a sha512 of ip + salt + action.
+
+We have 2 levels:
+* IP: check how many times a single IP (no fingerprint) can execute an action
+* Global: check how many times the website (all IPs combined) can execute an action
+
+Default values are:
+* contact form: 1 mail sent per 30 minutes for 1 IP
+* contact form: 10 mails sent per 30 minutes for the website
+
+* forgot form: 1 mail sent per 30 minutes for 1 IP
+* forgot form: 10 mails sent per 30 minutes for the website
+
+* login form: 3 login success per 1 minute for 1 IP
+* login form: 30 login success send per 1 minute for the website
+
+* login form error: 5 login error per 5 minutes for 1 IP
+* login form error: 3 login error per 15 minutes for 1 account
+
+* register form: 1 mail sent per 30 minutes for 1 IP
+* register form: 10 mails sent per 30 minutes for the website
+
+| Parameter                                     | Mandatory | Type   | Default value | Description                                                        |
+|-----------------------------------------------|-----------|--------|---------------|--------------------------------------------------------------------|
+| RATE_LIMIT_DISABLE                            | NO        | bool   | false         | disable rate limit feature                                         |
+| RATE_LIMIT_DB_USER                            | NO        | string |               | user for SQLite database                                           |
+| RATE_LIMIT_DB_PASSWORD                        | NO        | string |               | password for SQLite database                                       |
+| RATE_LIMIT_SALT                               | NO        | string |               | salt added for computing id: ip + salt + action                    |
+| RATE_LIMIT_CONTACT_IP_WINDOW_SECONDS          | NO        | int    | 1800          | contact page - ip level - interval in seconds                      |
+| RATE_LIMIT_CONTACT_IP_MAX_ATTEMPTS            | NO        | int    | 1             | contact page - ip level - how much requests                        |
+| RATE_LIMIT_CONTACT_GLOBAL_WINDOW_SECONDS      | NO        | int    | 1800          | contact page - global level - interval in seconds                  |
+| RATE_LIMIT_CONTACT_GLOBAL_MAX_ATTEMPTS        | NO        | int    | 10            | contact page - global level - how much requests                    |
+| RATE_LIMIT_FORGOT_IP_WINDOW_SECONDS           | NO        | int    | 1800          | forgot form - ip level - interval in seconds                       |
+| RATE_LIMIT_FORGOT_IP_MAX_ATTEMPTS             | NO        | int    | 1             | forgot form - ip level - how much requests                         |
+| RATE_LIMIT_FORGOT_GLOBAL_WINDOW_SECONDS       | NO        | int    | 1800          | forgot form - global level - interval in seconds                   |
+| RATE_LIMIT_FORGOT_GLOBAL_MAX_ATTEMPTS         | NO        | int    | 10            | forgot form - global level - how much requests                     |
+| RATE_LIMIT_LOGIN_IP_WINDOW_SECONDS            | NO        | int    | 60            | login form - ip level - interval in seconds                        |
+| RATE_LIMIT_LOGIN_IP_MAX_ATTEMPTS              | NO        | int    | 3             | login form - ip level - how much requests                          |
+| RATE_LIMIT_LOGIN_GLOBAL_WINDOW_SECONDS        | NO        | int    | 60            | login form - global level - interval in seconds                    |
+| RATE_LIMIT_LOGIN_GLOBAL_MAX_ATTEMPTS          | NO        | int    | 30            | login form - global level - how much requests                      |
+| RATE_LIMIT_LOGIN_ERROR_IP_WINDOW_SECONDS      | NO        | int    | 300           | login form but lead to error - ip level - interval in seconds      |
+| RATE_LIMIT_LOGIN_ERROR_IP_MAX_ATTEMPTS        | NO        | int    | 5             | login form but lead to error - ip level - how much requests        |
+| RATE_LIMIT_LOGIN_ERROR_ACCOUNT_WINDOW_SECONDS | NO        | int    | 900           | login form but lead to error - account level - interval in seconds |
+| RATE_LIMIT_LOGIN_ERROR_ACCOUNT_MAX_ATTEMPTS   | NO        | int    | 3             | login form but lead to error - account level - how much requests   |
+| RATE_LIMIT_REGISTER_IP_WINDOW_SECONDS         | NO        | int    | 1800          | register form - ip level - interval in seconds                     |
+| RATE_LIMIT_REGISTER_IP_MAX_ATTEMPTS           | NO        | int    | 1             | register form - ip level - how much requests                       |
+| RATE_LIMIT_REGISTER_GLOBAL_WINDOW_SECONDS     | NO        | int    | 1800          | register form - global level - interval in seconds                 |
+| RATE_LIMIT_REGISTER_GLOBAL_MAX_ATTEMPTS       | NO        | int    | 10            | register form - global level - how much requests                   |
 
 ## Crons
 * GET `/cron/purge_sessions/`: remove old sessions in database (if using sessions database)
 * GET `/cron/purge_users_not_confirmed/`: remove users that didn't confirmed their accounts registration after 30 days
 * GET `/cron/purge_deleted_blueprints/`: remove expired blueprints
 * GET `/cron/purge_expired_forgot_password_token/`: remove expired forgot password token after 1 hour
+* GET `/cron/purge_rate_limit_entries/`: remove rate limit entries after 1 day
 * GET `/cron/set_soft_delete_anonymous_private_blueprints/`: set soft delete for anonymous private blueprints
 
 ## FAQ

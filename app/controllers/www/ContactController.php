@@ -66,7 +66,7 @@ class ContactController implements MiddlewareInterface
 
         if ($this->hasSentForm($request, 'POST', $this->inputs, 'error-form-contact')) {
             $cleanedParams = $this->treatFormContact($request);
-            $this->doProcessContact($cleanedParams);
+            $this->doProcessContact($request, $cleanedParams);
 
             return $this->redirect(Application::getRouter()->generateUrl('contact'));
         }
@@ -134,17 +134,36 @@ class ContactController implements MiddlewareInterface
     }
 
     /** @throws \Exception */
-    protected function doProcessContact(?array $params): void
+    protected function doProcessContact(ServerRequestInterface $request, ?array $params): void
     {
         if ($params === null) {
             return;
         }
 
-        $this->sendMail($params);
+        $ip = Helper::getIP($request);
+        $rateLimitContactIPWindowSeconds = (int) Application::getConfig()->get('RATE_LIMIT_CONTACT_IP_WINDOW_SECONDS', 1800);
+        $rateLimitContactIPMaxAttempts = (int) Application::getConfig()->get('RATE_LIMIT_CONTACT_IP_MAX_ATTEMPTS', 1);
+
+        if (Helper::isAboveRateLimit($ip, 'post-contact', $rateLimitContactIPWindowSeconds, $rateLimitContactIPMaxAttempts)) {
+            $this->setAndKeepInfos('error-form-contact', 'Error, could not send mail due to rate limit specific to your IP address.');
+
+            return;
+        }
+
+        $rateLimitContactGlobalWindowSeconds = (int) Application::getConfig()->get('RATE_LIMIT_CONTACT_GLOBAL_WINDOW_SECONDS', 1800);
+        $rateLimitContactGlobalMaxAttempts = (int) Application::getConfig()->get('RATE_LIMIT_CONTACT_GLOBAL_MAX_ATTEMPTS', 10);
+
+        if (Helper::isAboveRateLimit('global', 'post-contact', $rateLimitContactGlobalWindowSeconds, $rateLimitContactGlobalMaxAttempts)) {
+            $this->setAndKeepInfos('error-form-contact', 'Error, could not send mail due to rate limit specific to the website.');
+
+            return;
+        }
+
+        $this->sendMail($params, $ip);
     }
 
     /** @throws \Exception */
-    protected function sendMail(array $params): void
+    protected function sendMail(array $params, string $ip): void
     {
         $to = (string) Application::getConfig()->get('MAIL_CONTACT_TO');
 
@@ -158,6 +177,9 @@ class ContactController implements MiddlewareInterface
         if (\function_exists('\tests\isPHPUnit')) {
             if (\tests\www\Contact\ContactTest::mailForPHPUnit($to, $subject, $emailMessage)) {
                 $this->setAndKeepInfos('success-form-contact', 'Message sent successfully');
+
+                Helper::saveActionForRateLimit($ip, 'post-contact');
+                Helper::saveActionForRateLimit('global', 'post-contact');
             } else {
                 $this->setAndKeepInfos('error-form-contact', 'Error, could not sent message, try later');
             }
@@ -174,6 +196,9 @@ class ContactController implements MiddlewareInterface
 
         if ($mailer->send($to)) {
             $this->setAndKeepInfos('success-form-contact', 'Message sent successfully');
+
+            Helper::saveActionForRateLimit($ip, 'post-contact');
+            Helper::saveActionForRateLimit('global', 'post-contact');
         } else {
             $this->setAndKeepInfos('error-form-contact', 'Error, could not sent message, try later');
         }

@@ -11,6 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Rancoud\Application\Application;
 use Rancoud\Application\ApplicationException;
+use Rancoud\Database\Database;
 use Rancoud\Database\DatabaseException;
 use Rancoud\Environment\EnvironmentException;
 use Rancoud\Http\Message\Factory\Factory;
@@ -38,6 +39,10 @@ class CronController
                 break;
             case 'cron_purge_expired_forgot_password_token':
                 $this->purgeExpiredForgotPasswordToken();
+
+                break;
+            case 'cron_purge_rate_limit_entries':
+                $this->purgeRateLimitEntries();
 
                 break;
             case 'cron_set_soft_delete_anonymous_private_blueprints':
@@ -300,6 +305,27 @@ class CronController
                 /* @noinspection NullPointerExceptionInspection */
                 Application::getDatabase()->completeTransaction();
             }
+        }
+    }
+
+    protected function purgeRateLimitEntries(): void
+    {
+        try {
+            $rateLimitDB = Application::getFromBag('rate_limit');
+            if (!\is_a($rateLimitDB, Database::class)) {
+                return;
+            }
+
+            $sql = <<<'SQL'
+            DELETE FROM rate_limit
+            WHERE time < :time;
+            SQL;
+
+            $rateLimitDB->delete($sql, ['time' => \time() - (24 * 60 * 60)]);
+            // @codeCoverageIgnoreStart
+        } catch (\Exception) {
+            return;
+            // @codeCoverageIgnoreEnd
         }
     }
 

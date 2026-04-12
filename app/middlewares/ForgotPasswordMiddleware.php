@@ -99,6 +99,27 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
             return (new Factory())->createResponse(301)->withHeader('Location', $uriError);
         }
 
+        $ip = Helper::getIP($request);
+        $rateLimitForgotIPWindowSeconds = (int) Application::getConfig()->get('RATE_LIMIT_FORGOT_IP_WINDOW_SECONDS', 1800);
+        $rateLimitForgotIPMaxAttempts = (int) Application::getConfig()->get('RATE_LIMIT_FORGOT_IP_MAX_ATTEMPTS', 1);
+
+        if (Helper::isAboveRateLimit($ip, 'post-forgot_password', $rateLimitForgotIPWindowSeconds, $rateLimitForgotIPMaxAttempts)) {
+            Session::setFlash('error-form-forgot_password', 'Error, could not forgot password due to rate limit specific to your IP address.');
+            Session::keepFlash(['error-form-forgot_password']);
+
+            return (new Factory())->createResponse(301)->withHeader('Location', $uriError);
+        }
+
+        $rateLimitForgotGlobalWindowSeconds = (int) Application::getConfig()->get('RATE_LIMIT_FORGOT_GLOBAL_WINDOW_SECONDS', 1800);
+        $rateLimitForgotGlobalMaxAttempts = (int) Application::getConfig()->get('RATE_LIMIT_FORGOT_GLOBAL_MAX_ATTEMPTS', 10);
+
+        if (Helper::isAboveRateLimit('global', 'post-forgot_password', $rateLimitForgotGlobalWindowSeconds, $rateLimitForgotGlobalMaxAttempts)) {
+            Session::setFlash('error-form-forgot_password', 'Error, could not forgot password due to rate limit specific to the website.');
+            Session::keepFlash(['error-form-forgot_password']);
+
+            return (new Factory())->createResponse(301)->withHeader('Location', $uriError);
+        }
+
         $errorMessage = 'Error';
         $forceRollback = false;
 
@@ -123,6 +144,9 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
 
                 throw new \Exception($errorMessage);
             }
+
+            Helper::saveActionForRateLimit($ip, 'post-forgot_password');
+            Helper::saveActionForRateLimit('global', 'post-forgot_password');
         } catch (\Exception) {
             $forceRollback = true;
 
