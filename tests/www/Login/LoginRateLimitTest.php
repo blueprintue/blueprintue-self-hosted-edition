@@ -211,7 +211,8 @@ class LoginRateLimitTest extends TestCase
      */
     public function testLoginRateLimitLoginError(): void
     {
-        // 300 seconds - 5 login error per user
+        // 300 seconds - 5 login error per ip
+        // 900 seconds - 3 login error per account
 
         // generate csrf
         $this->getResponseFromApplicationWithRateLimit('GET', '/', 'localhost');
@@ -221,54 +222,62 @@ class LoginRateLimitTest extends TestCase
         $params['form-login-input-username'] = 'user_20';
         $params['form-login-input-password'] = '000';
 
-        // user 1
-        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'user_1', $params);
+        // user 1 - 3 login error - account blocked
+        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_1', $params);
         $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_1');
         $this->checkIsNotRateLimitedForUser($response);
 
-        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'user_1', $params);
+        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_1', $params);
         $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_1');
         $this->checkIsNotRateLimitedForUser($response);
 
-        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'user_1', $params);
+        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_1', $params);
         $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_1');
         $this->checkIsNotRateLimitedForUser($response);
 
-        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'user_1', $params);
-        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_1');
-        $this->checkIsNotRateLimitedForUser($response);
-
-        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'user_1', $params);
-        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_1');
-        $this->checkIsNotRateLimitedForUser($response);
-
-        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'user_1', $params);
+        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_1', $params);
         $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_1');
         $this->checkIsRateLimitedErrorForUser($response);
 
-        // user 2
-        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'user_2', $params);
-        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_2');
+        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_1_alt', $params);
+        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_1');
+        $this->checkIsRateLimitedErrorForUser($response);
+
+        // multiple users
+        $params['form-login-hidden-csrf'] = $_SESSION['csrf'];
+        $params['form-login-input-username'] = 'user_40';
+        $params['form-login-input-password'] = '000';
+
+        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_2', $params);
+        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'ip_user_2');
         $this->checkIsNotRateLimitedForUser($response);
 
-        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'user_2', $params);
-        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_2');
+        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_2', $params);
+        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'ip_user_2');
         $this->checkIsNotRateLimitedForUser($response);
 
-        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'user_2', $params);
-        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_2');
+        $params['form-login-hidden-csrf'] = $_SESSION['csrf'];
+        $params['form-login-input-username'] = 'user_50';
+        $params['form-login-input-password'] = '000';
+
+        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_2', $params);
+        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'ip_user_2');
         $this->checkIsNotRateLimitedForUser($response);
 
-        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'user_2', $params);
-        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_2');
+        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_2', $params);
+        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'ip_user_2');
         $this->checkIsNotRateLimitedForUser($response);
 
-        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'user_2', $params);
-        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_2');
+        $params['form-login-hidden-csrf'] = $_SESSION['csrf'];
+        $params['form-login-input-username'] = 'user_60';
+        $params['form-login-input-password'] = '000';
+
+        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_2', $params);
+        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'ip_user_2');
         $this->checkIsNotRateLimitedForUser($response);
 
-        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'user_2', $params);
-        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_2');
+        $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_2', $params);
+        $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'ip_user_2');
         $this->checkIsRateLimitedErrorForUser($response);
     }
 

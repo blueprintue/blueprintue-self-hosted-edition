@@ -143,34 +143,37 @@ Default values are:
 * login form: 30 login success send per 1 minute for the website
 
 * login form error: 5 login error per 5 minutes for 1 IP
+* login form error: 3 login error per 15 minutes for 1 account
 
 * register form: 1 mail sent per 30 minutes for 1 IP
 * register form: 10 mails sent per 30 minutes for the website
 
-| Parameter                                    | Mandatory | Type   | Default value | Description                                                       |
-|----------------------------------------------|-----------|--------|---------------|-------------------------------------------------------------------|
-| RATE_LIMIT_DISABLE                           | NO        | bool   | false         | disable rate limit feature                                        |
-| RATE_LIMIT_DB_USER                           | NO        | string |               | user for SQLite database                                          |
-| RATE_LIMIT_DB_PASSWORD                       | NO        | string |               | password for SQLite database                                      |
-| RATE_LIMIT_SALT                              | NO        | string |               | salt added for computing id: ip + salt + action                   |
-| RATE_LIMIT_CONTACT_IP_WINDOW_SECONDS         | NO        | int    | 1800          | contact page - ip level - interval in seconds                     |
-| RATE_LIMIT_CONTACT_IP_MAX_ATTEMPTS           | NO        | int    | 1             | contact page - ip level - how much requests                       |
-| RATE_LIMIT_CONTACT_GLOBAL_WINDOW_SECONDS     | NO        | int    | 1800          | contact page - global level - interval in seconds                 |
-| RATE_LIMIT_CONTACT_GLOBAL_MAX_ATTEMPTS       | NO        | int    | 10            | contact page - global level - how much requests                   |
-| RATE_LIMIT_FORGOT_IP_WINDOW_SECONDS          | NO        | int    | 1800          | forgot form - ip level - interval in seconds                      |
-| RATE_LIMIT_FORGOT_IP_MAX_ATTEMPTS            | NO        | int    | 1             | forgot form - ip level - how much requests                        |
-| RATE_LIMIT_FORGOT_GLOBAL_WINDOW_SECONDS      | NO        | int    | 1800          | forgot form - global level - interval in seconds                  |
-| RATE_LIMIT_FORGOT_GLOBAL_MAX_ATTEMPTS        | NO        | int    | 10            | forgot form - global level - how much requests                    |
-| RATE_LIMIT_LOGIN_IP_WINDOW_SECONDS           | NO        | int    | 60            | login form - ip level - interval in seconds                       |
-| RATE_LIMIT_LOGIN_IP_MAX_ATTEMPTS             | NO        | int    | 3             | login form - ip level - how much requests                         |
-| RATE_LIMIT_LOGIN_GLOBAL_WINDOW_SECONDS       | NO        | int    | 60            | login form - global level - interval in seconds                   |
-| RATE_LIMIT_LOGIN_GLOBAL_MAX_ATTEMPTS         | NO        | int    | 30            | login form - global level - how much requests                     |
-| RATE_LIMIT_LOGIN_ERROR_IP_WINDOW_SECONDS     | NO        | int    | 300           | login form but lead to error - ip level - interval in seconds     |
-| RATE_LIMIT_LOGIN_ERROR_IP_MAX_ATTEMPTS       | NO        | int    | 5             | login form but lead to error - ip level - how much requests       |
-| RATE_LIMIT_REGISTER_IP_WINDOW_SECONDS        | NO        | int    | 1800          | register form - ip level - interval in seconds                    |
-| RATE_LIMIT_REGISTER_IP_MAX_ATTEMPTS          | NO        | int    | 1             | register form - ip level - how much requests                      |
-| RATE_LIMIT_REGISTER_GLOBAL_WINDOW_SECONDS    | NO        | int    | 1800          | register form - global level - interval in seconds                |
-| RATE_LIMIT_REGISTER_GLOBAL_MAX_ATTEMPTS      | NO        | int    | 10            | register form - global level - how much requests                  |
+| Parameter                                     | Mandatory | Type   | Default value | Description                                                        |
+|-----------------------------------------------|-----------|--------|---------------|--------------------------------------------------------------------|
+| RATE_LIMIT_DISABLE                            | NO        | bool   | false         | disable rate limit feature                                         |
+| RATE_LIMIT_DB_USER                            | NO        | string |               | user for SQLite database                                           |
+| RATE_LIMIT_DB_PASSWORD                        | NO        | string |               | password for SQLite database                                       |
+| RATE_LIMIT_SALT                               | NO        | string |               | salt added for computing id: ip + salt + action                    |
+| RATE_LIMIT_CONTACT_IP_WINDOW_SECONDS          | NO        | int    | 1800          | contact page - ip level - interval in seconds                      |
+| RATE_LIMIT_CONTACT_IP_MAX_ATTEMPTS            | NO        | int    | 1             | contact page - ip level - how much requests                        |
+| RATE_LIMIT_CONTACT_GLOBAL_WINDOW_SECONDS      | NO        | int    | 1800          | contact page - global level - interval in seconds                  |
+| RATE_LIMIT_CONTACT_GLOBAL_MAX_ATTEMPTS        | NO        | int    | 10            | contact page - global level - how much requests                    |
+| RATE_LIMIT_FORGOT_IP_WINDOW_SECONDS           | NO        | int    | 1800          | forgot form - ip level - interval in seconds                       |
+| RATE_LIMIT_FORGOT_IP_MAX_ATTEMPTS             | NO        | int    | 1             | forgot form - ip level - how much requests                         |
+| RATE_LIMIT_FORGOT_GLOBAL_WINDOW_SECONDS       | NO        | int    | 1800          | forgot form - global level - interval in seconds                   |
+| RATE_LIMIT_FORGOT_GLOBAL_MAX_ATTEMPTS         | NO        | int    | 10            | forgot form - global level - how much requests                     |
+| RATE_LIMIT_LOGIN_IP_WINDOW_SECONDS            | NO        | int    | 60            | login form - ip level - interval in seconds                        |
+| RATE_LIMIT_LOGIN_IP_MAX_ATTEMPTS              | NO        | int    | 3             | login form - ip level - how much requests                          |
+| RATE_LIMIT_LOGIN_GLOBAL_WINDOW_SECONDS        | NO        | int    | 60            | login form - global level - interval in seconds                    |
+| RATE_LIMIT_LOGIN_GLOBAL_MAX_ATTEMPTS          | NO        | int    | 30            | login form - global level - how much requests                      |
+| RATE_LIMIT_LOGIN_ERROR_IP_WINDOW_SECONDS      | NO        | int    | 300           | login form but lead to error - ip level - interval in seconds      |
+| RATE_LIMIT_LOGIN_ERROR_IP_MAX_ATTEMPTS        | NO        | int    | 5             | login form but lead to error - ip level - how much requests        |
+| RATE_LIMIT_LOGIN_ERROR_ACCOUNT_WINDOW_SECONDS | NO        | int    | 900           | login form but lead to error - account level - interval in seconds |
+| RATE_LIMIT_LOGIN_ERROR_ACCOUNT_MAX_ATTEMPTS   | NO        | int    | 3             | login form but lead to error - account level - how much requests   |
+| RATE_LIMIT_REGISTER_IP_WINDOW_SECONDS         | NO        | int    | 1800          | register form - ip level - interval in seconds                     |
+| RATE_LIMIT_REGISTER_IP_MAX_ATTEMPTS           | NO        | int    | 1             | register form - ip level - how much requests                       |
+| RATE_LIMIT_REGISTER_GLOBAL_WINDOW_SECONDS     | NO        | int    | 1800          | register form - global level - interval in seconds                 |
+| RATE_LIMIT_REGISTER_GLOBAL_MAX_ATTEMPTS       | NO        | int    | 10            | register form - global level - how much requests                   |
 
 ## Crons
 * GET `/cron/purge_sessions/`: remove old sessions in database (if using sessions database)

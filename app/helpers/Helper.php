@@ -314,8 +314,12 @@ class Helper
         return (new \DateTimeImmutable($date, new \DateTimeZone($timezone)))->format($format);
     }
 
-    public static function isAboveRateLimit(string $ip, string $action, int $scopeTimeInSeconds, int $scopeLimit): bool
+    public static function isAboveRateLimit(string $identifier, string $action, int $scopeTimeInSeconds, int $maxAttempts): bool
     {
+        if (Application::getConfig()->get('RATE_LIMIT_DISABLE', false)) {
+            return false;
+        }
+
         try {
             $rateLimitDB = Application::getFromBag('rate_limit');
             if (!\is_a($rateLimitDB, Database::class)) {
@@ -327,10 +331,10 @@ class Helper
             WHERE `id` = :id AND (:time - `time`) < :scope ORDER BY `time` DESC LIMIT 1
             SQL;
 
-            $id = \hash('sha512', $ip . '|' . Application::getConfig()->get('RATE_LIMIT_SALT', '') . '|' . $action);
+            $id = \hash('sha512', $identifier . '|' . Application::getConfig()->get('RATE_LIMIT_SALT', '') . '|' . $action);
 
             $counter = $rateLimitDB->count($sql, ['id' => $id, 'time' => \time(), 'scope' => $scopeTimeInSeconds]);
-            if ($counter !== null && $counter >= $scopeLimit) {
+            if ($counter !== null && $counter >= $maxAttempts) {
                 return true;
             }
         } catch (\Exception) {
@@ -344,7 +348,7 @@ class Helper
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Environment\EnvironmentException
      */
-    public static function saveActionForRateLimit(string $ip, string $action): void
+    public static function saveActionForRateLimit(string $identifier, string $action): void
     {
         if (Application::getConfig()->get('RATE_LIMIT_DISABLE', false)) {
             return;
@@ -361,7 +365,7 @@ class Helper
             VALUES(:id, :time)
             SQL;
 
-            $id = \hash('sha512', $ip . '|' . Application::getConfig()->get('RATE_LIMIT_SALT', '') . '|' . $action);
+            $id = \hash('sha512', $identifier . '|' . Application::getConfig()->get('RATE_LIMIT_SALT', '') . '|' . $action);
 
             $rateLimitDB->insert($sql, ['id' => $id, 'time' => \time()]);
         } catch (\Exception) {
