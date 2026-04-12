@@ -124,8 +124,9 @@ You can use msmtp as service docker for smtp relay and set smtp authentication i
 
 #### Rate Limit
 SQLite is mandatory for that feature.  
-We store in a separate database an `id` and a `time`.  
-`id` is a sha512 of ip + salt + action.  
+We store in a separate database called `rate_limit.db` at ROOT level.  
+Inside there is a table `rate_limit` with 2 fields: `id` and `time`.  
+`id` is a sha512 of ip + salt + action.
 
 We have 2 levels:
 * IP: check how many times a single IP (no fingerprint) can execute an action
