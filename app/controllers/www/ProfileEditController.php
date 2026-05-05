@@ -61,8 +61,9 @@ class ProfileEditController implements MiddlewareInterface
             'CSRF'     => 'form-edit_socials-hidden-csrf'
         ],
         'change_email' => [
-            'new_email' => 'form-change_email-input-new_email',
-            'CSRF'      => 'form-change_email-hidden-csrf'
+            'current_password' => 'form-change_email-input-current_password',
+            'new_email'        => 'form-change_email-input-new_email',
+            'CSRF'             => 'form-change_email-hidden-csrf'
         ],
         'change_username' => [
             'new_username' => 'form-change_username-input-new_username',
@@ -409,7 +410,14 @@ class ProfileEditController implements MiddlewareInterface
         $values = [];
 
         // email
+        $values['current_password'] = $params[$inputs['current_password']];
         $values['new_email'] = $params[$inputs['new_email']];
+
+        if ($values['current_password'] === '') {
+            $errorsForMessage[] = 'current password';
+            $errors['current_password'] = 'Current password is required';
+        }
+
         if ($values['new_email'] === '') {
             $errorsForMessage[] = 'email';
             $errors['new_email'] = 'Email is required';
@@ -440,6 +448,13 @@ class ProfileEditController implements MiddlewareInterface
     protected function doProcessChangeEmail(?array $params): ?ResponseInterface
     {
         if ($params === null) {
+            return $this->redirect($this->profileEditURL);
+        }
+
+        if (!UserService::isPasswordMatchForUserID($this->userID, $params['current_password'])) {
+            Session::setFlash('error-form-change_email', 'Error, invalid credentials');
+            Session::keepFlash(['error-form-change_email']);
+
             return $this->redirect($this->profileEditURL);
         }
 
