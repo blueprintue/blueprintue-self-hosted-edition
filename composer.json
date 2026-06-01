@@ -20,22 +20,23 @@
     },
     "require": {
         "php": ">=8.4.0",
-        "rancoud/application": "^6.0",
-        "rancoud/database": "^7.0",
-        "rancoud/model": "^5.0",
-        "rancoud/session": "^6.2",
-        "rancoud/crypt": "^4.0",
-        "rancoud/pagination": "^4.0",
-        "rancoud/security": "^4.0",
-        "erusev/parsedown": "^1.7",
+        "rancoud/application": "6.0.5",
+        "rancoud/database": "7.0.3",
+        "rancoud/model": "5.0.4",
+        "rancoud/session": "6.2.2",
+        "rancoud/crypt": "4.0.3",
+        "rancoud/pagination": "4.0.4",
+        "rancoud/security": "4.0.3",
+        "erusev/parsedown": "1.7.4",
         "ext-fileinfo": "*",
         "ext-gd": "*",
         "ext-json": "*",
-        "phpmailer/phpmailer": "^7.0"
+        "phpmailer/phpmailer": "7.0.2",
+        "rancoud/prometheus": "1.0.4"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.0",
-        "phpunit/phpunit": "^12.0"
+        "friendsofphp/php-cs-fixer": "3.94.2",
+        "phpunit/phpunit": "12.5.8"
     },
     "scripts": {
         "ci": [
