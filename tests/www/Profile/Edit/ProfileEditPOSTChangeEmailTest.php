@@ -120,7 +120,7 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
             'params' => [
                 'form-change_email-hidden-csrf'            => 'csrf_is_replaced',
                 'form-change_email-input-current_password' => 'password_user_195',
-                'form-change_email-input-new_email'        => 'user@user.com',
+                'form-change_email-input-new_email'        => 'user_user@user.com',
             ],
             'useCsrfFromSession' => true,
             'hasRedirection'     => true,
@@ -281,10 +281,10 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
                 ],
                 'error' => [
                     'has'     => true,
-                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error(s) on email</div>'
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error(s) on current password</div>'
                 ]
             ],
-            'fieldsHasError'   => ['new_email'],
+            'fieldsHasError'   => ['current_password'],
             'fieldsHasValue'   => ['new_email'],
             'fieldsLabelError' => [
                 'current_password' => 'Current password is required'
@@ -441,11 +441,11 @@ class ProfileEditPOSTChangeEmailTest extends TestCase
             'flashMessages'      => [
                 'success' => [
                     'has'     => false,
-                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_password">'
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_email">'
                 ],
                 'error' => [
                     'has'     => true,
-                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_password" role="alert">Error, invalid credentials</div>'
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_email" role="alert">Error, invalid credentials</div>'
                 ]
             ],
             'fieldsHasError'   => [],

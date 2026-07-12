@@ -412,7 +412,6 @@ class ProfileEditController implements MiddlewareInterface
         // email
         $values['current_password'] = $params[$inputs['current_password']];
         $values['new_email'] = $params[$inputs['new_email']];
-
         if ($values['current_password'] === '') {
             $errorsForMessage[] = 'current password';
             $errors['current_password'] = 'Current password is required';
