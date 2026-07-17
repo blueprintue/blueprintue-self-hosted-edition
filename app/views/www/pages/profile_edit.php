@@ -233,6 +233,17 @@ use Rancoud\Session\Session;
                         <?php } ?>
 
                         <div class="form__element">
+                            <label class="form__label" for="form-change_email-input-current_password" id="form-change_email-label-current_password">Current Password</label>
+                            <div class="form__container<?php echo $formChangeEmail->getClassError('current_password', ' form__container--error'); ?>">
+                                <input aria-invalid="false" aria-labelledby="form-change_email-label-current_password<?php echo $formChangeEmail->getClassError('current_password', ' form-change_email-label-current_password-error'); ?>" aria-required="true" class="form__input form__input--invisible<?php echo $formChangeEmail->getClassError('current_password', ' form__input--error'); ?>" data-form-error-required="Current Password is required" data-form-has-container data-form-rules="required" id="form-change_email-input-current_password" name="form-change_email-input-current_password" type="password"/>
+                                <span class="form__feedback<?php echo $formChangeEmail->getClassError('current_password', ' form__feedback--error'); ?>"></span>
+                            </div>
+                            <?php if ($formChangeEmail->getInputError('current_password') !== '') { ?>
+                                <label class="form__label form__label--error" for="form-change_email-input-current_password" id="form-change_email-label-current_password-error"><?php echo Security::escHTML($formChangeEmail->getInputError('current_password')); ?></label>
+                            <?php } ?>
+                        </div>
+
+                        <div class="form__element">
                             <label class="form__label" for="form-change_email-input-new_email" id="form-change_email-label-new_email">New Email</label>
                             <div class="form__container<?php echo $formChangeEmail->getClassError('new_email', ' form__container--error'); ?>">
                                 <input aria-invalid="false" aria-labelledby="form-change_email-label-new_email<?php echo $formChangeEmail->getClassError('new_email', ' form-change_email-label-new_email-error'); ?>" aria-required="true" class="form__input form__input--invisible<?php echo $formChangeEmail->getClassError('new_email', ' form__input--error'); ?>" data-form-error-email="Email is invalid" data-form-has-container data-form-rules="email" id="form-change_email-input-new_email" name="form-change_email-input-new_email" type="text" value="<?php echo Security::escAttr($formChangeEmail->getInputValue('new_email')); ?>"/>
