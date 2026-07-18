@@ -282,6 +282,17 @@ use Rancoud\Session\Session;
                         </div>
 
                         <div class="form__element">
+                            <label class="form__label" for="form-change_username-input-current_password" id="form-change_username-label-current_password">Current Password</label>
+                            <div class="form__container<?php echo $formChangeUsername->getClassError('current_password', ' form__container--error'); ?>">
+                                <input aria-invalid="false" aria-labelledby="form-change_username-label-current_password<?php echo $formChangeUsername->getClassError('current_password', ' form-change_username-label-current_password-error'); ?>" aria-required="true" class="form__input form__input--invisible<?php echo $formChangeUsername->getClassError('current_password', ' form__input--error'); ?>" data-form-error-required="Current Password is required" data-form-has-container data-form-rules="required" id="form-change_username-input-current_password" name="form-change_username-input-current_password" type="password"/>
+                                <span class="form__feedback<?php echo $formChangeUsername->getClassError('current_password', ' form__feedback--error'); ?>"></span>
+                            </div>
+                            <?php if ($formChangeUsername->getInputError('current_password') !== '') { ?>
+                                <label class="form__label form__label--error" for="form-change_username-input-current_password" id="form-change_username-label-current_password-error"><?php echo Security::escHTML($formChangeUsername->getInputError('current_password')); ?></label>
+                            <?php } ?>
+                        </div>
+
+                        <div class="form__element">
                             <label class="form__label" for="form-change_username-input-new_username" id="form-change_username-label-new_username">New Username</label>
                             <div class="form__container<?php echo $formChangeUsername->getClassError('new_username', ' form__container--error'); ?>">
                                 <input aria-invalid="false" aria-labelledby="form-change_username-label-new_username<?php echo $formChangeUsername->getClassError('new_username', ' form-change_username-label-new_username-error'); ?>" aria-required="true" class="form__input form__input--invisible<?php echo $formChangeUsername->getClassError('new_username', ' form__input--error'); ?>" data-form-error-regex="Expected username containing: digits, letters, symbols: - _ ." data-form-error-required="Username is required" data-form-has-container data-form-rules="required|regex:^[a-zA-Z0-9._ -]*$" id="form-change_username-input-new_username" name="form-change_username-input-new_username" type="text" value="<?php echo Security::escAttr($formChangeUsername->getInputValue('new_username')); ?>"/>
