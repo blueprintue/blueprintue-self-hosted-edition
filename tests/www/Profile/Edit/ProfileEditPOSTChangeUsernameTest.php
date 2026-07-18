@@ -90,8 +90,9 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
             ],
             'userID' => 189,
             'params' => [
-                'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
-                'form-change_username-input-new_username' => 'user_user',
+                'form-change_username-hidden-csrf'            => 'csrf_is_replaced',
+                'form-change_username-input-current_password' => 'password_user_189',
+                'form-change_username-input-new_username'     => 'user_user',
             ],
             'useCsrfFromSession' => true,
             'hasRedirection'     => true,
@@ -117,8 +118,9 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
             ],
             'userID' => 189,
             'params' => [
-                'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
-                'form-change_username-input-new_username' => 'user_user<script>alert("facebook");</script>',
+                'form-change_username-hidden-csrf'            => 'csrf_is_replaced',
+                'form-change_username-input-current_password' => 'password_user_189',
+                'form-change_username-input-new_username'     => 'user_user<script>alert("facebook");</script>',
             ],
             'useCsrfFromSession' => true,
             'hasRedirection'     => true,
@@ -144,8 +146,9 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
             'sqlQueries' => [],
             'userID'     => 189,
             'params'     => [
-                'form-change_username-hidden-csrf'        => 'incorrect_csrf',
-                'form-change_username-input-new_username' => 'user_user'
+                'form-change_username-hidden-csrf'            => 'incorrect_csrf',
+                'form-change_username-input-current_password' => 'password_user_189',
+                'form-change_username-input-new_username'     => 'user_user'
             ],
             'useCsrfFromSession' => false,
             'hasRedirection'     => false,
@@ -191,7 +194,8 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
             'sqlQueries' => [],
             'userID'     => 189,
             'params'     => [
-                'form-change_username-input-new_username' => 'user_user',
+                'form-change_username-input-current_password' => 'password_user_189',
+                'form-change_username-input-new_username'     => 'user_user',
             ],
             'useCsrfFromSession' => false,
             'hasRedirection'     => false,
@@ -211,11 +215,12 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
             'fieldsLabelError' => [],
         ];
 
-        yield 'missing fields - no username' => [
+        yield 'missing fields - no current_password' => [
             'sqlQueries' => [],
             'userID'     => 189,
             'params'     => [
-                'form-change_username-hidden-csrf' => 'csrf_is_replaced',
+                'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
+                'form-change_username-input-new_username' => 'user_user',
             ],
             'useCsrfFromSession' => true,
             'hasRedirection'     => false,
@@ -235,14 +240,70 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
             'fieldsLabelError' => [],
         ];
 
+        yield 'missing fields - no username' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_username-hidden-csrf'            => 'csrf_is_replaced',
+                'form-change_username-input-current_password' => 'password_user_189',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">Error, missing fields</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'empty fields - current_password empty' => [
+            'sqlQueries' => [
+                "UPDATE users SET slug = 'user_189', username = 'user_189' WHERE id = 189"
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-change_username-hidden-csrf'            => 'csrf_is_replaced',
+                'form-change_username-input-current_password' => ' ',
+                'form-change_username-input-new_username'     => 'user_user',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">Error(s) on current password</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['current_password'],
+            'fieldsHasValue'   => ['new_username'],
+            'fieldsLabelError' => [
+                'current_password' => 'Current password is required',
+            ],
+        ];
+
         yield 'empty fields - username empty' => [
             'sqlQueries' => [
                 "UPDATE users SET slug = 'user_189', username = 'user_189' WHERE id = 189"
             ],
             'userID' => 189,
             'params' => [
-                'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
-                'form-change_username-input-new_username' => ' ',
+                'form-change_username-hidden-csrf'            => 'csrf_is_replaced',
+                'form-change_username-input-current_password' => 'password_user_189',
+                'form-change_username-input-new_username'     => ' ',
             ],
             'useCsrfFromSession' => true,
             'hasRedirection'     => true,
@@ -270,8 +331,9 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
             ],
             'userID' => 189,
             'params' => [
-                'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
-                'form-change_username-input-new_username' => 'user<script>alert("facebook");</script>',
+                'form-change_username-hidden-csrf'            => 'csrf_is_replaced',
+                'form-change_username-input-current_password' => 'password_user_189',
+                'form-change_username-input-new_username'     => 'user<script>alert("facebook");</script>',
             ],
             'useCsrfFromSession' => true,
             'hasRedirection'     => true,
@@ -299,8 +361,9 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
             ],
             'userID' => 189,
             'params' => [
-                'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
-                'form-change_username-input-new_username' => 'user_189',
+                'form-change_username-hidden-csrf'            => 'csrf_is_replaced',
+                'form-change_username-input-current_password' => 'password_user_189',
+                'form-change_username-input-new_username'     => 'user_189',
             ],
             'useCsrfFromSession' => true,
             'hasRedirection'     => true,
@@ -322,12 +385,13 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
             ],
         ];
 
-        yield 'invalid encoding fields - new_username' => [
+        yield 'invalid encoding fields - current_password' => [
             'sqlQueries' => [],
             'userID'     => 189,
             'params'     => [
-                'form-change_username-hidden-csrf'        => 'csrf_is_replaced',
-                'form-change_username-input-new_username' => \chr(99999999)
+                'form-change_username-hidden-csrf'            => 'csrf_is_replaced',
+                'form-change_username-input-current_password' => \chr(99999999),
+                'form-change_username-input-new_username'     => 'user_user'
             ],
             'useCsrfFromSession' => true,
             'hasRedirection'     => false,
@@ -340,6 +404,60 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
                 'error' => [
                     'has'     => false,
                     'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid encoding fields - new_username' => [
+            'sqlQueries' => [],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_username-hidden-csrf'            => 'csrf_is_replaced',
+                'form-change_username-input-current_password' => 'password_user_189',
+                'form-change_username-input-new_username'     => \chr(99999999)
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => false,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
+                ],
+                'error' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+        ];
+
+        yield 'invalid current_password' => [
+            'sqlQueries' => [
+                "UPDATE users SET slug = 'user_189', username = 'user_189', password = '" . Crypt::hash('password_user_189') . "' WHERE id = 189",
+            ],
+            'userID'     => 189,
+            'params'     => [
+                'form-change_username-hidden-csrf'            => 'csrf_is_replaced',
+                'form-change_username-input-current_password' => 'password',
+                'form-change_username-input-new_username'     => 'user_user',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-change_username">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-change_username" role="alert">Error, invalid credentials</div>'
                 ]
             ],
             'fieldsHasError'   => [],
@@ -441,11 +559,41 @@ HTML);
             $hasValue = \in_array($field, $fieldsHasValue, true);
             $labelError = $fieldsLabelError[$field] ?? '';
 
+            if ($field === 'current_password') {
+                $this->doTestHtmlForm($response, '#form-change_username', $this->getHTMLFieldCurrentPassword($hasError, $labelError));
+            }
+
             if ($field === 'new_username') {
                 $value = $hasValue ? \mb_trim($params['form-change_username-input-new_username']) : '';
                 $this->doTestHtmlForm($response, '#form-change_username', $this->getHTMLFieldNewUsername($value, $hasError, $labelError));
             }
         }
+    }
+
+    protected function getHTMLFieldCurrentPassword(bool $hasError, string $labelError): string
+    {
+        if ($hasError) {
+            return <<<HTML
+<div class="form__element">
+<label class="form__label" for="form-change_username-input-current_password" id="form-change_username-label-current_password">Current Password</label>
+<div class="form__container form__container--error">
+<input aria-invalid="false" aria-labelledby="form-change_username-label-current_password form-change_username-label-current_password-error" aria-required="true" class="form__input form__input--invisible form__input--error" data-form-error-required="Current Password is required" data-form-has-container data-form-rules="required" id="form-change_username-input-current_password" name="form-change_username-input-current_password" type="password"/>
+<span class="form__feedback form__feedback--error"></span>
+</div>
+<label class="form__label form__label--error" for="form-change_username-input-current_password" id="form-change_username-label-current_password-error">{$labelError}</label>
+</div>
+HTML;
+        }
+
+        return <<<'HTML'
+<div class="form__element">
+<label class="form__label" for="form-change_username-input-current_password" id="form-change_username-label-current_password">Current Password</label>
+<div class="form__container">
+<input aria-invalid="false" aria-labelledby="form-change_username-label-current_password" aria-required="true" class="form__input form__input--invisible" data-form-error-required="Current Password is required" data-form-has-container data-form-rules="required" id="form-change_username-input-current_password" name="form-change_username-input-current_password" type="password"/>
+<span class="form__feedback"></span>
+</div>
+</div>
+HTML;
     }
 
     /** @throws SecurityException */

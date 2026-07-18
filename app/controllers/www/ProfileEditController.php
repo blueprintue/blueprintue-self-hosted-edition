@@ -66,8 +66,9 @@ class ProfileEditController implements MiddlewareInterface
             'CSRF'             => 'form-change_email-hidden-csrf'
         ],
         'change_username' => [
-            'new_username' => 'form-change_username-input-new_username',
-            'CSRF'         => 'form-change_username-hidden-csrf'
+            'current_password' => 'form-change_username-input-current_password',
+            'new_username'     => 'form-change_username-input-new_username',
+            'CSRF'             => 'form-change_username-hidden-csrf'
         ],
         'change_password' => [
             'current_password'     => 'form-change_password-input-current_password',
@@ -480,6 +481,7 @@ class ProfileEditController implements MiddlewareInterface
         $values = [];
 
         // username
+        $values['current_password'] = $params[$inputs['current_password']];
         $values['new_username'] = $params[$inputs['new_username']];
         if ($values['new_username'] === '') {
             $errorsForMessage[] = 'new username';
@@ -490,6 +492,9 @@ class ProfileEditController implements MiddlewareInterface
         } elseif (!UserService::isUsernameAvailable($values['new_username'])) {
             $errorsForMessage[] = 'new username';
             $errors['new_username'] = 'Username is unavailable';
+        } elseif ($values['current_password'] === '') {
+            $errorsForMessage[] = 'current password';
+            $errors['current_password'] = 'Current password is required';
         }
 
         if (\count($errors) > 0) {
@@ -512,6 +517,13 @@ class ProfileEditController implements MiddlewareInterface
     protected function doProcessChangeUsername(?array $params): ?ResponseInterface
     {
         if ($params === null) {
+            return $this->redirect($this->profileEditURL);
+        }
+
+        if (!UserService::isPasswordMatchForUserID($this->userID, $params['current_password'])) {
+            Session::setFlash('error-form-change_username', 'Error, invalid credentials');
+            Session::keepFlash(['error-form-change_username']);
+
             return $this->redirect($this->profileEditURL);
         }
 
