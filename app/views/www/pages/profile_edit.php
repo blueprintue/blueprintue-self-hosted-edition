@@ -368,7 +368,8 @@ use Rancoud\Session\Session;
                     <form action="#form-generate_api_key" data-form-speak-error="Form is invalid:" id="form-generate_api_key" method="post">
                         <h2 class="block__title block__title--form">Generate <span class="block__title--emphasis">api key</span></h2>
                         <hr class="block__hr block__hr--form"/>
-                        <p>You can use blueprintUE with an API for uploading blueprints. Documentation is available on Postman: <a href="https://www.postman.com/blueprintue/workspace/blueprintue/api/bc237829-3bc2-4476-977b-f5765e528e59" target="_blank">https://www.postman.com/blueprintue/workspace/blueprintue/api/bc237829-3bc2-4476-977b-f5765e528e59</a></p>
+                        <p>You can use blueprintUE with an API for uploading blueprints.</p>
+                        <p>Documentation is available on Postman: <a href="https://www.postman.com/blueprintue/workspace/blueprintue/api/bc237829-3bc2-4476-977b-f5765e528e59" target="_blank">https://www.postman.com/blueprintue/workspace/blueprintue/api/bc237829-3bc2-4476-977b-f5765e528e59</a></p>
 
                         <?php
                         /** @var FormHelper $formGenerateApiKey */
@@ -402,6 +403,17 @@ use Rancoud\Session\Session;
                         <?php if ($formDeleteProfile->hasErrorMessage()) { ?>
                             <div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert"><?php echo Security::escHTML($formDeleteProfile->getErrorMessage()); ?></div>
                         <?php } ?>
+
+                        <div class="form__element">
+                            <label class="form__label" for="form-delete_profile-input-current_password" id="form-delete_profile-label-current_password">Current Password</label>
+                            <div class="form__container<?php echo $formDeleteProfile->getClassError('current_password', ' form__container--error'); ?>">
+                                <input aria-invalid="false" aria-labelledby="form-delete_profile-label-current_password<?php echo $formDeleteProfile->getClassError('current_password', ' form-delete_profile-label-current_password-error'); ?>" aria-required="true" class="form__input form__input--invisible<?php echo $formDeleteProfile->getClassError('current_password', ' form__input--error'); ?>" data-form-error-required="Current Password is required" data-form-has-container data-form-rules="required" id="form-delete_profile-input-current_password" name="form-delete_profile-input-current_password" type="password"/>
+                                <span class="form__feedback<?php echo $formDeleteProfile->getClassError('current_password', ' form__feedback--error'); ?>"></span>
+                            </div>
+                            <?php if ($formDeleteProfile->getInputError('current_password') !== '') { ?>
+                                <label class="form__label form__label--error" for="form-delete_profile-input-current_password" id="form-delete_profile-label-current_password-error"><?php echo Security::escHTML($formDeleteProfile->getInputError('current_password')); ?></label>
+                            <?php } ?>
+                        </div>
 
                         <div class="form__element">
                             <label class="form__label" for="form-delete_profile-select-blueprints_ownership" id="form-delete_profile-label-blueprints_ownership">Blueprints ownership</label>
