@@ -80,6 +80,7 @@ class ProfileEditController implements MiddlewareInterface
             'CSRF'    => 'form-generate_api_key-hidden-csrf'
         ],
         'delete_profile' => [
+            'current_password'     => 'form-delete_profile-input-current_password',
             'blueprints_ownership' => 'form-delete_profile-select-blueprints_ownership',
             'comments_ownership'   => 'form-delete_profile-select-comments_ownership',
             'CSRF'                 => 'form-delete_profile-hidden-csrf'
@@ -650,6 +651,12 @@ class ProfileEditController implements MiddlewareInterface
         $errors = [];
         $values = [];
 
+        $values['current_password'] = $params[$inputs['current_password']];
+        if ($values['current_password'] === '') {
+            $errorsForMessage[] = 'current password';
+            $errors['current_password'] = 'Current password is required';
+        }
+
         // blueprints_ownership
         $values['blueprints_ownership'] = $params[$inputs['blueprints_ownership']];
         if (!\in_array($values['blueprints_ownership'], ['give', 'delete'], true)) {
@@ -684,6 +691,13 @@ class ProfileEditController implements MiddlewareInterface
     protected function doProcessDeleteProfile(?array $params): ?ResponseInterface
     {
         if ($params === null) {
+            return $this->redirect($this->profileEditURL);
+        }
+
+        if (!UserService::isPasswordMatchForUserID($this->userID, $params['current_password'])) {
+            Session::setFlash('error-form-delete_profile', 'Error, invalid credentials');
+            Session::keepFlash(['error-form-delete_profile']);
+
             return $this->redirect($this->profileEditURL);
         }
 

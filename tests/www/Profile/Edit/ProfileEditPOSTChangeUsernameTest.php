@@ -553,7 +553,7 @@ class ProfileEditPOSTChangeUsernameTest extends TestCase
 HTML);
 
         // test fields HTML
-        $fields = ['new_username'];
+        $fields = ['new_username', 'current_password'];
         foreach ($fields as $field) {
             $hasError = \in_array($field, $fieldsHasError, true);
             $hasValue = \in_array($field, $fieldsHasValue, true);
