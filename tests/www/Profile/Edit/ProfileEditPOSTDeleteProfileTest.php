@@ -877,6 +877,40 @@ class ProfileEditPOSTDeleteProfileTest extends TestCase
             'hasAnonymousUser' => true
         ];
 
+        yield 'invalid current_password' => [
+            'sqlQueries' => [
+                "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', '" . Crypt::hash('password_user_189') . "', 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
+                'REPLACE INTO users_infos (`id_user`) VALUES (189)',
+                "REPLACE INTO users_api (`id_user`, `api_key`) VALUES (189, 'ABC')",
+                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'file_1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'public')",
+                "REPLACE INTO comments (`id`, `id_author`, `id_blueprint`, `content`, `created_at`) VALUES (50, 189, 80, 'my comment', utc_timestamp())",
+            ],
+            'userID' => 189,
+            'params' => [
+                'form-delete_profile-hidden-csrf'                 => 'csrf_is_replaced',
+                'form-delete_profile-input-current_password'      => 'user',
+                'form-delete_profile-select-blueprints_ownership' => 'delete',
+                'form-delete_profile-select-comments_ownership'   => 'keep',
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-delete_profile">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-delete_profile" role="alert">Error, invalid credentials</div>'
+                ]
+            ],
+            'fieldsHasError'   => [],
+            'fieldsHasValue'   => [],
+            'fieldsLabelError' => [],
+            'hasAnonymousUser' => true
+        ];
+
         yield 'delete KO - delete user failed with exception (always to run last)' => [
             'sqlQueries' => [
                 "REPLACE INTO users (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `avatar`) VALUES (189, 'user_189', '" . Crypt::hash('password_user_189') . "', 'user_189', 'user_189@example.com', 'member', UTC_TIMESTAMP(), null)",
