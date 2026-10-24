@@ -50,7 +50,7 @@
             "php-cs-fixer fix -vvv"
         ],
         "test": [
-            "phpunit --colors --coverage-html ./coverage --coverage-clover ./coverage/clover.xml --stderr"
+            "phpunit --colors --coverage-html ./coverage --coverage-clover ./coverage/clover.xml --coverage-text --stderr"
         ]
     }
 }
