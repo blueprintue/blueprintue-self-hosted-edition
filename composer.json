@@ -19,20 +19,20 @@
         }
     },
     "require": {
-        "php": ">=8.4.0",
-        "rancoud/application": "6.0.5",
-        "rancoud/database": "7.0.3",
-        "rancoud/model": "5.0.4",
-        "rancoud/session": "6.2.2",
-        "rancoud/crypt": "4.0.3",
-        "rancoud/pagination": "4.0.4",
-        "rancoud/security": "4.0.3",
+        "php": "^8.4.27 || ^8.5.12 || ^8.6.0",
+        "rancoud/application": "6.0.6",
+        "rancoud/database": "7.0.4",
+        "rancoud/model": "5.0.5",
+        "rancoud/session": "6.2.3",
+        "rancoud/crypt": "4.0.4",
+        "rancoud/pagination": "4.0.5",
+        "rancoud/security": "4.0.4",
         "erusev/parsedown": "1.7.4",
         "ext-fileinfo": "*",
         "ext-gd": "*",
         "ext-json": "*",
         "phpmailer/phpmailer": "7.0.2",
-        "rancoud/prometheus": "1.0.4"
+        "rancoud/prometheus": "1.0.5"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "3.94.2",
@@ -50,7 +50,7 @@
             "php-cs-fixer fix -vvv"
         ],
         "test": [
-            "phpunit --colors --coverage-html ./coverage --coverage-clover ./coverage/clover.xml --coverage-text --stderr"
+            "phpunit --colors --coverage-html ./coverage --coverage-text --stderr"
         ]
     }
 }
