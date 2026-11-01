@@ -151,6 +151,7 @@ class ForgotPasswordTest extends TestCase
             'mailSent'           => true,
             'hasRedirection'     => true,
             'isFormSuccess'      => true,
+            'isDatabaseUpdated'  => true,
             'flashMessages'      => [
                 'error' => [
                     'has'     => false,
@@ -177,6 +178,7 @@ class ForgotPasswordTest extends TestCase
             'mailSent'           => true,
             'hasRedirection'     => true,
             'isFormSuccess'      => true,
+            'isDatabaseUpdated'  => true,
             'flashMessages'      => [
                 'error' => [
                     'has'     => false,
@@ -200,15 +202,16 @@ class ForgotPasswordTest extends TestCase
             'mailHTML'           => static::getEmailHTML(),
             'mailSent'           => false,
             'hasRedirection'     => true,
-            'isFormSuccess'      => false,
+            'isFormSuccess'      => true,
+            'isDatabaseUpdated'  => false,
             'flashMessages'      => [
                 'error' => [
-                    'has'     => true,
-                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">Error, could not send email for reset password</div>'
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">'
                 ]
             ],
             'fieldsHasError'   => [],
-            'fieldsHasValue'   => ['email'],
+            'fieldsHasValue'   => [],
             'fieldsLabelError' => [],
         ];
 
@@ -225,6 +228,7 @@ class ForgotPasswordTest extends TestCase
             'mailSent'           => false,
             'hasRedirection'     => false,
             'isFormSuccess'      => false,
+            'isDatabaseUpdated'  => false,
             'flashMessages'      => [
                 'error' => [
                     'has'     => false,
@@ -246,6 +250,7 @@ class ForgotPasswordTest extends TestCase
             'mailSent'              => false,
             'hasRedirection'        => false,
             'isFormSuccess'         => false,
+            'isDatabaseUpdated'     => false,
             'flashMessages'         => [
                 'error' => [
                     'has'     => false,
@@ -269,6 +274,7 @@ class ForgotPasswordTest extends TestCase
             'mailSent'           => false,
             'hasRedirection'     => false,
             'isFormSuccess'      => false,
+            'isDatabaseUpdated'  => false,
             'flashMessages'      => [
                 'error' => [
                     'has'     => false,
@@ -292,6 +298,7 @@ class ForgotPasswordTest extends TestCase
             'mailSent'           => false,
             'hasRedirection'     => false,
             'isFormSuccess'      => false,
+            'isDatabaseUpdated'  => false,
             'flashMessages'      => [
                 'error' => [
                     'has'     => true,
@@ -316,6 +323,7 @@ class ForgotPasswordTest extends TestCase
             'mailSent'           => false,
             'hasRedirection'     => true,
             'isFormSuccess'      => false,
+            'isDatabaseUpdated'  => false,
             'flashMessages'      => [
                 'error' => [
                     'has'     => true,
@@ -342,6 +350,7 @@ class ForgotPasswordTest extends TestCase
             'mailSent'           => false,
             'hasRedirection'     => true,
             'isFormSuccess'      => false,
+            'isDatabaseUpdated'  => false,
             'flashMessages'      => [
                 'error' => [
                     'has'     => true,
@@ -367,15 +376,16 @@ class ForgotPasswordTest extends TestCase
             'mailHTML'           => '',
             'mailSent'           => false,
             'hasRedirection'     => true,
-            'isFormSuccess'      => false,
+            'isFormSuccess'      => true,
+            'isDatabaseUpdated'  => false,
             'flashMessages'      => [
                 'error' => [
-                    'has'     => true,
-                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">Error, could not reset password</div>'
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">'
                 ]
             ],
             'fieldsHasError'   => [],
-            'fieldsHasValue'   => ['email'],
+            'fieldsHasValue'   => [],
             'fieldsLabelError' => [],
         ];
 
@@ -391,15 +401,16 @@ class ForgotPasswordTest extends TestCase
             'mailHTML'           => '',
             'mailSent'           => false,
             'hasRedirection'     => true,
-            'isFormSuccess'      => false,
+            'isFormSuccess'      => true,
+            'isDatabaseUpdated'  => false,
             'flashMessages'      => [
                 'error' => [
-                    'has'     => true,
-                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">Error, could not reset password</div>'
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-forgot_password" data-popin="forgot_password" role="alert">'
                 ]
             ],
             'fieldsHasError'   => [],
-            'fieldsHasValue'   => ['email'],
+            'fieldsHasValue'   => [],
             'fieldsLabelError' => [],
         ];
 
@@ -416,6 +427,7 @@ class ForgotPasswordTest extends TestCase
             'mailSent'           => false,
             'hasRedirection'     => false,
             'isFormSuccess'      => false,
+            'isDatabaseUpdated'  => false,
             'flashMessages'      => [
                 'error' => [
                     'has'     => false,
@@ -436,7 +448,7 @@ class ForgotPasswordTest extends TestCase
      * @throws SecurityException
      */
     #[DataProvider('provideForgotPasswordPOSTDataCases')]
-    public function testForgotPasswordPOST(array $sqlQueries, array $params, bool $useCsrfFromSession, int $mailCalled, string $mailText, string $mailHTML, bool $mailSent, bool $hasRedirection, bool $isFormSuccess, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
+    public function testForgotPasswordPOST(array $sqlQueries, array $params, bool $useCsrfFromSession, int $mailCalled, string $mailText, string $mailHTML, bool $mailSent, bool $hasRedirection, bool $isFormSuccess, bool $isDatabaseUpdated, array $flashMessages, array $fieldsHasError, array $fieldsHasValue, array $fieldsLabelError): void
     {
         // set how mail must return in $_SESSION
         $session = [
@@ -484,7 +496,7 @@ class ForgotPasswordTest extends TestCase
         static::assertNull($userAnonymous['password_reset']);
         static::assertNull($userAnonymous['password_reset_at']);
 
-        if ($isFormSuccess) {
+        if ($isFormSuccess && $isDatabaseUpdated) {
             static::assertNotNull($user20['password_reset']);
             static::assertNotNull($user20['password_reset_at']);
         } else {
