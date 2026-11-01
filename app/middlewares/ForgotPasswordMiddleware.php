@@ -120,6 +120,9 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
             return (new Factory())->createResponse(301)->withHeader('Location', $uriError);
         }
 
+        Helper::saveActionForRateLimit($ip, 'post-forgot_password');
+        Helper::saveActionForRateLimit('global', 'post-forgot_password');
+
         $errorMessage = 'Error';
         $forceRollback = false;
 
@@ -129,9 +132,9 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
 
             [$token, $userFound, $username] = UserService::beginResetPasswordProcess($params['email']);
             if ($userFound === false) {
-                $errorMessage = 'Error, could not reset password';
+                $forceRollback = true;
 
-                throw new \Exception($errorMessage);
+                return (new Factory())->createResponse(301)->withHeader('Location', '/reset-password/');
             }
 
             if ($token === null) {
@@ -140,13 +143,10 @@ class ForgotPasswordMiddleware implements MiddlewareInterface
 
             $mailSent = $this->sendMail($params['email'], $token, $username);
             if ($mailSent === false) {
-                $errorMessage = 'Error, could not send email for reset password';
+                $forceRollback = true;
 
-                throw new \Exception($errorMessage);
+                return (new Factory())->createResponse(301)->withHeader('Location', '/reset-password/');
             }
-
-            Helper::saveActionForRateLimit($ip, 'post-forgot_password');
-            Helper::saveActionForRateLimit('global', 'post-forgot_password');
         } catch (\Exception) {
             $forceRollback = true;
 
