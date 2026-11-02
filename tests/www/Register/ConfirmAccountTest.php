@@ -30,8 +30,8 @@ class ConfirmAccountTest extends TestCase
 
         // user generation
         $sql = <<<'SQL'
-            INSERT INTO `users` (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `confirmed_token`)
-                VALUES (:id, :username, :hash, :slug, :email, :grade, UTC_TIMESTAMP(), :confirmed_token);
+            INSERT INTO `users` (`id`, `username`, `password`, `slug`, `email`, `grade`, `created_at`, `confirmed_token`, `confirmed_sent_at`)
+                VALUES (:id, :username, :hash, :slug, :email, :grade, UTC_TIMESTAMP(), :confirmed_token, UTC_TIMESTAMP());
         SQL;
 
         $userParams = [
@@ -66,7 +66,7 @@ class ConfirmAccountTest extends TestCase
             'jsRedirect'         => null,
         ];
 
-        yield 'no token - welcome to blueprintUE.com' => [
+        yield 'no token - welcome' => [
             'slug'        => '/confirm-account/',
             'location'    => null,
             'userID'      => null,
@@ -92,7 +92,22 @@ class ConfirmAccountTest extends TestCase
             ],
             'hasRedirection'     => false,
             'isConfirmedAccount' => false,
-            'text'               => '<p>Your account is maybe already confirmed or your confirmed token is invalid.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>',
+            'text'               => '<p>Your account is maybe already confirmed or your confirmed token is invalid or expired.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>',
+            'jsRedirect'         => "<script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>",
+        ];
+
+        yield 'token expired' => [
+            'slug'        => '/confirm-account/?confirmed_token=I8jJaUjUlIRUHfWZeUf4Ntmkj0Uvo0Ij7b9vMr9bSZpSBGlIlekNK5N5cqWsdJVb98IoRu3nvxoIesT6pKW65S25vagl1bSqyuDSGZ4GTKFBmuOwrptiF7ygnY6HOnEZPiRQ2FycFn84tNXkDgVDs68keZkbqu5D9KlVs4ghlIbpKcDlpQWo83ZgYGDwlv4exw6FSxKODPEuv2lNgMLqZKvPXZHKki4fHstdGdnQU6BnGaBzToB1oebnLAHPZ2R&a=e',
+            'location'    => null,
+            'userID'      => null,
+            'contentHead' => [
+                'title'       => 'Confirm Account | This is a base title',
+                'description' => 'Confirm Account',
+                'url'         => '/confirm-account/',
+            ],
+            'hasRedirection'     => false,
+            'isConfirmedAccount' => false,
+            'text'               => '<p>Your account is maybe already confirmed or your confirmed token is invalid or expired.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>',
             'jsRedirect'         => "<script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>",
         ];
 
@@ -133,6 +148,11 @@ class ConfirmAccountTest extends TestCase
     #[DataProvider('provideConfirmAccountPOSTDataCases')]
     public function testConfirmAccountPOST(string $slug, ?string $location, ?int $userID, ?array $contentHead, bool $hasRedirection, ?bool $isConfirmedAccount, ?string $text, ?string $jsRedirect): void
     {
+        static::$db->update('UPDATE users SET confirmed_sent_at = UTC_TIMESTAMP() WHERE id = 44');
+        if (\str_ends_with($slug, '&a=e')) {
+            static::$db->update('UPDATE users SET confirmed_sent_at = UTC_TIMESTAMP() - INTERVAL 1 HOUR - INTERVAL 10 MINUTE WHERE id = 44');
+        }
+
         $sessionValues = [
             'set'    => [],
             'remove' => ['userID', 'username', 'grade', 'slug']
@@ -185,7 +205,7 @@ class ConfirmAccountTest extends TestCase
             static::assertNotNull($userAfter['confirmed_at']);
 
             $response = $this->getResponseFromApplication('GET', $slug, [], [], [], $queryParams);
-            $this->doTestHtmlMain($response, '<p>Your account is maybe already confirmed or your confirmed token is invalid.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>');
+            $this->doTestHtmlMain($response, '<p>Your account is maybe already confirmed or your confirmed token is invalid or expired.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>');
         } else {
             static::assertSame($userBefore, $userAfter);
         }

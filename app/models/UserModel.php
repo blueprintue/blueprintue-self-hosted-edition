@@ -364,7 +364,8 @@ class UserModel extends Model
             SELECT id
             FROM users
             WHERE confirmed_token = :confirmed_token
-              AND confirmed_at IS NULL;
+              AND confirmed_at IS NULL
+              AND confirmed_sent_at >= (UTC_TIMESTAMP() - INTERVAL 1 HOUR);
         SQL;
         $params = ['confirmed_token' => $confirmedToken];
 
