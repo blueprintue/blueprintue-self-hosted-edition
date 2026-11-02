@@ -227,18 +227,22 @@ class LoginRateLimitTest extends TestCase
         $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_1');
         $this->checkIsNotRateLimitedForUser($response);
 
+        $params['form-login-input-username'] = 'User_20';
         $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_1', $params);
         $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_1');
         $this->checkIsNotRateLimitedForUser($response);
 
+        $params['form-login-input-username'] = 'USer_20';
         $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_1', $params);
         $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_1');
         $this->checkIsNotRateLimitedForUser($response);
 
+        $params['form-login-input-username'] = 'USEr_20';
         $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_1', $params);
         $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_1');
         $this->checkIsRateLimitedErrorForUser($response);
 
+        $params['form-login-input-username'] = 'USER_20';
         $this->getResponseFromApplicationWithRateLimit('POST', '/', 'ip_user_1_alt', $params);
         $response = $this->getResponseFromApplicationWithRateLimit('GET', '/', 'user_1');
         $this->checkIsRateLimitedErrorForUser($response);
