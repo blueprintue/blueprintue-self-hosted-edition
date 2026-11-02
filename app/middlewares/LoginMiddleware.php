@@ -116,7 +116,7 @@ class LoginMiddleware implements MiddlewareInterface
         $rateLimitLoginErrorAccountWindowSeconds = (int) Application::getConfig()->get('RATE_LIMIT_LOGIN_ERROR_ACCOUNT_WINDOW_SECONDS', 900);
         $rateLimitLoginErrorAccountMaxAttempts = (int) Application::getConfig()->get('RATE_LIMIT_LOGIN_ERROR_ACCOUNT_MAX_ATTEMPTS', 3);
 
-        if (Helper::isAboveRateLimit($params['username'], 'post-login-error-account', $rateLimitLoginErrorAccountWindowSeconds, $rateLimitLoginErrorAccountMaxAttempts)) {
+        if (Helper::isAboveRateLimit(\mb_strtolower($params['username']), 'post-login-error-account', $rateLimitLoginErrorAccountWindowSeconds, $rateLimitLoginErrorAccountMaxAttempts)) {
             Session::setFlash('error-form-login', 'Error, too many attempts.');
             Session::keepFlash(['error-form-login']);
 
@@ -155,7 +155,7 @@ class LoginMiddleware implements MiddlewareInterface
                 $forceRollback = true;
 
                 Helper::saveActionForRateLimit($ip, 'post-login-error');
-                Helper::saveActionForRateLimit($params['username'], 'post-login-error-account');
+                Helper::saveActionForRateLimit(\mb_strtolower($params['username']), 'post-login-error-account');
 
                 Session::setFlash('error-form-login', 'Error, invalid credentials');
                 Session::keepFlash(['error-form-login']);
