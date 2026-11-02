@@ -566,7 +566,7 @@ class LoginTest extends TestCase
         if ($userID !== null) {
             $previousToken = static::$db->selectVar('SELECT confirmed_token FROM users WHERE id = ' . $userID);
         }
-        
+
         $sessionValues = [
             'set' => [
                 'phpunit_mail_called' => 0,
