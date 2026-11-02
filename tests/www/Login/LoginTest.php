@@ -100,7 +100,7 @@ class LoginTest extends TestCase
             'email'             => 'user_95@example.com',
             'grade'             => 'member',
             'remember_token'    => null,
-            'confirmed_sent_at' => (new \DateTimeImmutable('NOW', new \DateTimeZone('UTC')))->modify('-6 minutes')->format('Y-m-d H:i:s'),
+            'confirmed_sent_at' => (new \DateTimeImmutable('NOW', new \DateTimeZone('UTC')))->modify('-1 hour -1 minute')->format('Y-m-d H:i:s'),
             'confirmed_at'      => null,
         ];
         static::$db->insert($sql, $userParams);
@@ -247,7 +247,7 @@ class LoginTest extends TestCase
             'mailSent'           => false,
         ];
 
-        yield 'NO login -> credentials OK but not confirmed - email already sent but resend after 5 minutes' => [
+        yield 'NO login -> credentials OK but not confirmed - email already sent but resend after 1 hour' => [
             'userID' => 95,
             'params' => [
                 'form-login-hidden-csrf'    => 'csrf_is_replaced',
@@ -563,6 +563,10 @@ class LoginTest extends TestCase
     #[DataProvider('provideLoginPOSTDataCases')]
     public function testLoginPOST(?int $userID, array $params, bool $useCsrfFromSession, bool $isUserLogged, bool $hasRedirection, array $flashMessages, bool $redirectForConfirm, bool $isUserConfirmed, int $mailCalled, string $mailText, string $mailHTML, bool $mailSent): void
     {
+        if ($userID !== null) {
+            $previousToken = static::$db->selectVar('SELECT confirmed_token FROM users WHERE id = ' . $userID);
+        }
+
         $sessionValues = [
             'set' => [
                 'phpunit_mail_called' => 0,
@@ -643,6 +647,10 @@ class LoginTest extends TestCase
         }
 
         static::assertSame($mailCalled, $_SESSION['phpunit_mail_called']);
+
+        if ($mailCalled > 0) {
+            static::assertNotSame($previousToken, static::$db->selectVar('SELECT confirmed_token FROM users WHERE id = ' . $userID));
+        }
     }
 
     /** @throws DatabaseException */

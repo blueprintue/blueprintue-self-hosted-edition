@@ -26,7 +26,7 @@ use Rancoud\Security\Security;
                     <p>Your account is now confirmed!<br />You can now log to your account.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>
                     <script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>
                 <?php } else { ?>
-                    <p>Your account is maybe already confirmed or your confirmed token is invalid.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>
+                    <p>Your account is maybe already confirmed or your confirmed token is invalid or expired.<br /><a class="blog__link" href="/#popin-login">Go back to homepage for log in.</a></p>
                     <script>setTimeout(function(){window.location.href = '/#popin-login'}, 5000);</script>
                 <?php } ?>
             </div>

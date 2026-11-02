@@ -586,7 +586,7 @@ class UserService
         } else {
             $nowTimestamp = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->getTimestamp();
             $actionDoneTimestamp = (new \DateTimeImmutable($user['confirmed_sent_at'], new \DateTimeZone('UTC')))->getTimestamp();
-            if (($nowTimestamp - $actionDoneTimestamp) > 300) {
+            if (($nowTimestamp - $actionDoneTimestamp) > 3600) {
                 $hasToSendEmail = true;
             }
         }
@@ -616,7 +616,7 @@ class UserService
             // @codeCoverageIgnoreEnd
         }
 
-        $token = $user['confirmed_token'] ?? Helper::getRandomString(255);
+        $token = Helper::getRandomString(255);
 
         $isSent = static::sendConfirmAccountEmail($user['email'], $token, $from, $user['username']);
         if ($isSent) {
