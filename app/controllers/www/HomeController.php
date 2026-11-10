@@ -58,7 +58,7 @@ class HomeController implements MiddlewareInterface
         if ($this->hasSentForm($request, 'POST', $this->inputs, 'error-form-add_blueprint')) {
             $cleanedParams = $this->treatFormCreateBlueprint($request);
 
-            return $this->doProcessCreateBlueprint($cleanedParams);
+            return $this->doProcessCreateBlueprint($request, $cleanedParams);
         }
 
         $this->setTemplateProperties();
@@ -161,10 +161,32 @@ class HomeController implements MiddlewareInterface
      * @throws \Rancoud\Application\ApplicationException
      * @throws \Rancoud\Database\DatabaseException
      */
-    protected function doProcessCreateBlueprint(?array $params): ResponseInterface
+    protected function doProcessCreateBlueprint(ServerRequestInterface $request, ?array $params): ResponseInterface
     {
         if ($params === null) {
             return $this->redirect(Application::getRouter()->generateUrl('home'));
+        }
+
+        $ip = Helper::getIP($request);
+
+        if (Session::get('userID') === null && ((int) Application::getConfig()->get('ANONYMOUS_ID')) > 0) {
+            $rateLimitCrateBlueprintFromHomeAnonymousIPWindowSeconds = (int) Application::getConfig()->get('RATE_LIMIT_CREATE_BLUEPRINT_HOME_ANONYMOUS_IP_WINDOW_SECONDS', 1800);
+            $rateLimitCrateBlueprintFromHomeAnonymousIPMaxAttempts = (int) Application::getConfig()->get('RATE_LIMIT_CREATE_BLUEPRINT_HOME_ANONYMOUS_IP_MAX_ATTEMPTS', 3);
+
+            if (Helper::isAboveRateLimit($ip, 'post-home-anonymous', $rateLimitCrateBlueprintFromHomeAnonymousIPWindowSeconds, $rateLimitCrateBlueprintFromHomeAnonymousIPMaxAttempts)) {
+                $this->setAndKeepInfos('error-form-add_blueprint', 'Error, could not create anonymous blueprint due to rate limit specific to your IP address.');
+
+                return $this->redirect(Application::getRouter()->generateUrl('home'));
+            }
+
+            $rateLimitCrateBlueprintFromHomeAnonymousGlobalWindowSeconds = (int) Application::getConfig()->get('RATE_LIMIT_CREATE_BLUEPRINT_HOME_ANONYMOUS_GLOBAL_WINDOW_SECONDS', 1800);
+            $rateLimitCrateBlueprintFromHomeAnonymousGlobalMaxAttempts = (int) Application::getConfig()->get('RATE_LIMIT_CREATE_BLUEPRINT_HOME_ANONYMOUS_GLOBAL_MAX_ATTEMPTS', 15);
+
+            if (Helper::isAboveRateLimit('global', 'post-home-anonymous', $rateLimitCrateBlueprintFromHomeAnonymousGlobalWindowSeconds, $rateLimitCrateBlueprintFromHomeAnonymousGlobalMaxAttempts)) {
+                $this->setAndKeepInfos('error-form-add_blueprint', 'Error, could not create anonymous blueprint due to rate limit specific to the website.');
+
+                return $this->redirect(Application::getRouter()->generateUrl('home'));
+            }
         }
 
         $blueprintID = 0;
@@ -214,6 +236,9 @@ class HomeController implements MiddlewareInterface
             } else {
                 /* @noinspection NullPointerExceptionInspection */
                 Application::getDatabase()->completeTransaction();
+
+                Helper::saveActionForRateLimit($ip, 'post-home-anonymous');
+                Helper::saveActionForRateLimit('global', 'post-home-anonymous');
             }
         }
 
