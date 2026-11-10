@@ -9,7 +9,7 @@ $aliasRules = [
     'array_push'                        => true,
     'backtick_to_shell_exec'            => true,
     'ereg_to_preg'                      => true,
-    'mb_str_functions'                  => true,
+    'mb_str_functions'                  => false,
     'modernize_strpos'                  => ['modernize_stripos' => true],
     'no_alias_functions'                => ['sets' => ['@all']],
     'no_alias_language_construct_call'  => true,

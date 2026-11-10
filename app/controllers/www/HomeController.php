@@ -131,6 +131,19 @@ class HomeController implements MiddlewareInterface
             $errors['blueprint'] = 'Blueprint is invalid';
         }
 
+        // restrict blueprint size for anonymous user
+        if (Session::get('userID') === null && ((int) Application::getConfig()->get('ANONYMOUS_ID')) > 0) {
+            $blueprintSizeLimit = Application::getConfig()->get('ANONYMOUS_BLUEPRINT_MAX_SIZE', 250_000);
+            $currentBlueprintSizeLimit = \strlen($values['blueprint']);
+
+            if ($currentBlueprintSizeLimit > $blueprintSizeLimit) {
+                $errors['blueprint'] = \sprintf('Blueprint is too big, max size is %d, current blueprint size is %d', $blueprintSizeLimit, $currentBlueprintSizeLimit);
+
+                // remove the value otherwise session could not be written
+                $values['blueprint'] = '';
+            }
+        }
+
         if (\count($errors) > 0) {
             Session::setFlash('error-form-add_blueprint', 'Error, fields are invalid or required');
             Session::setFlash('form-add_blueprint-errors', $errors);

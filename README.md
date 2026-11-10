@@ -99,9 +99,10 @@ Because GDPR you will need to:
 | SITE_DESCRIPTION | NO        | string |                                 | use for description tag in home page                                                |
 
 #### Anonymous user
-| Parameter    | Mandatory | Type | Default value | Description                                 |
-|--------------|-----------|------|---------------|---------------------------------------------|
-| ANONYMOUS_ID | NO        | int  |               | user_id for all anonymous blueprints pasted |
+| Parameter                    | Mandatory | Type | Default value | Description                                 |
+|------------------------------|-----------|------|---------------|---------------------------------------------|
+| ANONYMOUS_ID                 | NO        | int  |               | user_id for all anonymous blueprints pasted |
+| ANONYMOUS_BLUEPRINT_MAX_SIZE | NO        | int  | 250000        | max blueprint size in bytes                 |
 
 #### Mail
 PHPMailer is used as library for sending mails.  
