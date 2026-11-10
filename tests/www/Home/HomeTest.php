@@ -739,6 +739,37 @@ class HomeTest extends TestCase
             'hasAnonymousUser' => true
         ];
 
+        yield 'invalid fields - blueprint too big for anonymous user' => [
+            'userID' => static::$anonymousID,
+            'params' => [
+                'form-add_blueprint-hidden-csrf'        => 'csrf_is_replaced',
+                'form-add_blueprint-input-title'        => '0',
+                'form-add_blueprint-select-exposure'    => 'unlisted',
+                'form-add_blueprint-select-expiration'  => '1d',
+                'form-add_blueprint-select-ue_version'  => '4.14',
+                'form-add_blueprint-textarea-blueprint' => 'Begin Object ' . \str_repeat('a', 250000),
+            ],
+            'useCsrfFromSession' => true,
+            'hasRedirection'     => true,
+            'isFormSuccess'      => false,
+            'flashMessages'      => [
+                'success' => [
+                    'has'     => false,
+                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-add_blueprint">'
+                ],
+                'error' => [
+                    'has'     => true,
+                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-add_blueprint" role="alert">Error, fields are invalid or required</div>'
+                ]
+            ],
+            'fieldsHasError'   => ['blueprint'],
+            'fieldsHasValue'   => ['title', 'exposure', 'expiration', 'ue_version'],
+            'fieldsLabelError' => [
+                'blueprint' => 'Blueprint is too big, max size is 250000, current blueprint size is 250013'
+            ],
+            'hasAnonymousUser' => true
+        ];
+
         yield 'throw exception in blueprint creation' => [
             'userID' => static::$anonymousID,
             'params' => [
