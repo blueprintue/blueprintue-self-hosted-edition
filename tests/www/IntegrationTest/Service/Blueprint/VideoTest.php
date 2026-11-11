@@ -523,87 +523,6 @@ class VideoTest extends TestCase
         ];
     }
 
-    public static function providePeertubeDataCases(): iterable
-    {
-        yield 'https://vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954' => [
-            'videoURL'      => 'https://vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoOut'      => '//vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoProvider' => 'peertube',
-        ];
-
-        yield 'vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954' => [
-            'videoURL'      => 'vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoOut'      => '//vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoProvider' => 'peertube',
-        ];
-
-        yield 'vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954?a=1' => [
-            'videoURL'      => 'vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954?a=1',
-            'videoOut'      => '//vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoProvider' => 'peertube',
-        ];
-
-        yield 'vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954#test' => [
-            'videoURL'      => 'vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954#test',
-            'videoOut'      => '//vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoProvider' => 'peertube',
-        ];
-
-        yield 'vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954&a' => [
-            'videoURL'      => 'vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954&a',
-            'videoOut'      => '//vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoProvider' => 'peertube',
-        ];
-
-        yield 'vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954/' => [
-            'videoURL'      => 'vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954/',
-            'videoOut'      => '//vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoProvider' => 'peertube',
-        ];
-
-        yield 'vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954' => [
-            'videoURL'      => 'vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoOut'      => '//vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoProvider' => 'peertube',
-        ];
-
-        yield 'vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954?a=1' => [
-            'videoURL'      => 'vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954?a=1',
-            'videoOut'      => '//vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoProvider' => 'peertube',
-        ];
-
-        yield 'vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954#test' => [
-            'videoURL'      => 'vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954#test',
-            'videoOut'      => '//vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoProvider' => 'peertube',
-        ];
-
-        yield 'vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954&a' => [
-            'videoURL'      => 'vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954&a',
-            'videoOut'      => '//vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoProvider' => 'peertube',
-        ];
-
-        yield 'vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954/' => [
-            'videoURL'      => 'vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954/',
-            'videoOut'      => '//vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoProvider' => 'peertube',
-        ];
-
-        yield 'invalid -> https://vloggers.social/videos/watch/5636c3ff-709-47da-af53-5f0857a26954' => [
-            'videoURL'      => 'https://vloggers.social/videos/watch/5636c3ff-709-47da-af53-5f0857a26954',
-            'videoOut'      => null,
-            'videoProvider' => null,
-        ];
-
-        yield 'invalid -> https://vloggers.social/vide0s/watch/5636c3ff-7009-47da-af53-5f0857a26954' => [
-            'videoURL'      => 'https://vloggers.social/vide0s/watch/5636c3ff-7009-47da-af53-5f0857a26954',
-            'videoOut'      => null,
-            'videoProvider' => null,
-        ];
-    }
-
     public static function provideBilibiliDataCases(): iterable
     {
         yield 'https://www.bilibili.com/video/av58844374' => [
@@ -770,7 +689,6 @@ class VideoTest extends TestCase
     #[DataProvider('provideYoutubeDataCases')]
     #[DataProvider('provideVimeoDataCases')]
     #[DataProvider('provideDailymotionDataCases')]
-    #[DataProvider('providePeertubeDataCases')]
     #[DataProvider('provideBilibiliDataCases')]
     #[DataProvider('provideNiconicoDataCases')]
     public function testVideo(?string $videoURL, ?string $videoOut, ?string $videoProvider): void

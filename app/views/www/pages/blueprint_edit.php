@@ -142,7 +142,7 @@ use Rancoud\Security\Security;
                             <?php if ($formEditInformations->getInputError('video') !== '') { ?>
                                 <label class="form__label form__label--error" for="form-edit_informations-input-video" id="form-edit_informations-label-video-error"><?php echo Security::escHTML($formEditInformations->getInputError('video')); ?></label>
                             <?php } ?>
-                            <span class="form__help" id="form-edit_informations-span-video_help">Accepts only <span class="form__help--emphasis">YouTube</span>, <span class="form__help--emphasis">Vimeo</span>, <span class="form__help--emphasis">Dailymotion</span>, <span class="form__help--emphasis">PeerTube</span>, <span class="form__help--emphasis">Bilibili</span> or <span class="form__help--emphasis">Niconico</span> urls</span>
+                            <span class="form__help" id="form-edit_informations-span-video_help">Accepts only <span class="form__help--emphasis">YouTube</span>, <span class="form__help--emphasis">Vimeo</span>, <span class="form__help--emphasis">Dailymotion</span>, <span class="form__help--emphasis">Bilibili</span> or <span class="form__help--emphasis">Niconico</span> urls</span>
                         </div>
 
                         <input name="form-edit_informations-hidden-csrf" type="hidden" value="<?php echo Security::escAttr($data['form-edit_informations-hidden-csrf']); ?>"/>
