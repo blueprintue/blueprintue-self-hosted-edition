@@ -697,20 +697,12 @@ class BlueprintService
                 'provider' => 'niconico',
                 'regex'    => '/(?:https?:\/\/)?(?:www\.)?nicovideo\.jp\/watch\/sm(\d+)/i',
                 'output'   => '//embed.nicovideo.jp/watch/sm{{1}}',
-            ],
-            [
-                'provider' => 'peertube',
-                'regex'    => '/(?:https?:\/\/)?([^\/]+)\/videos\/(?:watch|embed)\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})(?:[^#?&\/]+)?/i',
-                'output'   => '//{{1}}/videos/embed/{{2}}',
             ]
         ];
 
         foreach ($providersMatcher as $providerMatcher) {
             if (\preg_match($providerMatcher['regex'], $videoURL, $matches) === 1) {
                 $output = \str_replace('{{1}}', $matches[1], $providerMatcher['output']);
-                if ($providerMatcher['provider'] === 'peertube') {
-                    $output = \str_replace('{{2}}', $matches[2], $output);
-                }
 
                 return [$output, $providerMatcher['provider']];
             }

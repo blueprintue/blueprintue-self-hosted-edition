@@ -2752,10 +2752,6 @@ if(window.navigator.userAgent.toUpperCase().indexOf("TRIDENT") !== -1 || window.
                 var regExp = /(?:https?:\/\/)?(?:www\.)?nicovideo\.jp\/watch\/sm(\d+)/i;
                 return url.match(regExp) ? '//embed.nicovideo.jp/watch/sm' + RegExp.$1 : null;
             },
-            function matchPeertubeUrl(url) {
-                var regExp = /(?:https?:\/\/)?([^\/]+)\/videos\/(?:watch|embed)\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})(?:[^#?&\/]+)?/i;
-                return url.match(regExp) ? '//' + RegExp.$1 + '/videos/embed/' + RegExp.$2 : null;
-            },
         ];
 
         var idxMatchers = 0;
@@ -2870,10 +2866,6 @@ if(window.navigator.userAgent.toUpperCase().indexOf("TRIDENT") !== -1 || window.
             function matchNiconicoUrl(url) {
                 var regExp = /(?:https?:\/\/)?(?:www\.)?nicovideo\.jp\/watch\/sm(\d+)/i;
                 return url.match(regExp) ? '//embed.nicovideo.jp/watch/sm' + RegExp.$1 : null;
-            },
-            function matchPeertubeUrl(url) {
-                var regExp = /(?:https?:\/\/)?([^\/]+)\/videos\/(?:watch|embed)\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})(?:[^#?&\/]+)?/i;
-                return url.match(regExp) ? '//' + RegExp.$1 + '/videos/embed/' + RegExp.$2 : null;
             },
         ];
 

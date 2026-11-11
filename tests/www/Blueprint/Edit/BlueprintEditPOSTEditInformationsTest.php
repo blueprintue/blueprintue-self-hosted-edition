@@ -369,38 +369,6 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
             'tags'             => [],
         ];
 
-        yield 'update OK - video to text (peertube)' => [
-            'sqlQueries' => [
-                "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private')",
-            ],
-            'userID' => 189,
-            'params' => [
-                'form-edit_informations-hidden-csrf'          => 'csrf_is_replaced',
-                'form-edit_informations-input-title'          => 'title_1',
-                'form-edit_informations-textarea-description' => '',
-                'form-edit_informations-textarea-tags'        => '',
-                'form-edit_informations-input-video'          => 'https://vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954',
-            ],
-            'useCsrfFromSession' => true,
-            'hasRedirection'     => true,
-            'isFormSuccess'      => true,
-            'flashMessages'      => [
-                'success' => [
-                    'has'     => true,
-                    'message' => '<div class="block__info block__info--success" data-flash-success-for="form-edit_informations">Informations has been updated</div>'
-                ],
-                'error' => [
-                    'has'     => false,
-                    'message' => '<div class="block__info block__info--error" data-flash-error-for="form-edit_informations" role="alert">'
-                ]
-            ],
-            'fieldsHasError'   => [],
-            'fieldsHasValue'   => ['title', 'tags', 'video'],
-            'fieldsLabelError' => [],
-            'tagsTextarea'     => '',
-            'tags'             => [],
-        ];
-
         yield 'update OK - video to null' => [
             'sqlQueries' => [
                 "REPLACE INTO blueprints (`id`, `id_author`, `slug`, `file_id`, `title`, `current_version`, `created_at`, `published_at`, `exposure`, `video`, `video_provider`) VALUES (80, 189, 'slug_1', 'f1', 'title_1', 1, utc_timestamp(), utc_timestamp(), 'private', 'youtu.be/5qap5aO4i9A', 'youtube')",
@@ -941,9 +909,6 @@ class BlueprintEditPOSTEditInformationsTest extends TestCase
             } elseif ($params['form-edit_informations-input-video'] === 'youtu.be/5qap5aO4i9A' || $params['form-edit_informations-input-video'] === 'youtu.be/5qap5aO4i9A&=<script>alert(1)</script>"/><script>alert(1)</script>') {
                 static::assertSame('//www.youtube.com/embed/5qap5aO4i9A', $blueprintAfter['video']);
                 static::assertSame('youtube', $blueprintAfter['video_provider']);
-            } elseif ($params['form-edit_informations-input-video'] === 'https://vloggers.social/videos/watch/5636c3ff-7009-47da-af53-5f0857a26954') {
-                static::assertSame('//vloggers.social/videos/embed/5636c3ff-7009-47da-af53-5f0857a26954', $blueprintAfter['video']);
-                static::assertSame('peertube', $blueprintAfter['video_provider']);
             } else {
                 static::assertNull($blueprintAfter['video']);
                 static::assertNull($blueprintAfter['video_provider']);
@@ -1121,7 +1086,7 @@ HTML;
 <span class="form__feedback form__feedback--error"></span>
 </div>
 <label class="form__label form__label--error" for="form-edit_informations-input-video" id="form-edit_informations-label-video-error">{$labelError}</label>
-<span class="form__help" id="form-edit_informations-span-video_help">Accepts only <span class="form__help--emphasis">YouTube</span>, <span class="form__help--emphasis">Vimeo</span>, <span class="form__help--emphasis">Dailymotion</span>, <span class="form__help--emphasis">PeerTube</span>, <span class="form__help--emphasis">Bilibili</span> or <span class="form__help--emphasis">Niconico</span> urls</span>
+<span class="form__help" id="form-edit_informations-span-video_help">Accepts only <span class="form__help--emphasis">YouTube</span>, <span class="form__help--emphasis">Vimeo</span>, <span class="form__help--emphasis">Dailymotion</span>, <span class="form__help--emphasis">Bilibili</span> or <span class="form__help--emphasis">Niconico</span> urls</span>
 </div>
 HTML;
         }
@@ -1133,7 +1098,7 @@ HTML;
 <input aria-invalid="false" aria-describedby="form-edit_informations-span-video_help" aria-labelledby="form-edit_informations-label-video" class="form__input form__input--invisible" data-form-error-aria_invalid="Cannot detect video to embed" data-form-has-container data-form-rules="aria_invalid" id="form-edit_informations-input-video" name="form-edit_informations-input-video" type="text" value="{$v}"/>
 <span class="form__feedback"></span>
 </div>
-<span class="form__help" id="form-edit_informations-span-video_help">Accepts only <span class="form__help--emphasis">YouTube</span>, <span class="form__help--emphasis">Vimeo</span>, <span class="form__help--emphasis">Dailymotion</span>, <span class="form__help--emphasis">PeerTube</span>, <span class="form__help--emphasis">Bilibili</span> or <span class="form__help--emphasis">Niconico</span> urls</span>
+<span class="form__help" id="form-edit_informations-span-video_help">Accepts only <span class="form__help--emphasis">YouTube</span>, <span class="form__help--emphasis">Vimeo</span>, <span class="form__help--emphasis">Dailymotion</span>, <span class="form__help--emphasis">Bilibili</span> or <span class="form__help--emphasis">Niconico</span> urls</span>
 </div>
 HTML;
     }
