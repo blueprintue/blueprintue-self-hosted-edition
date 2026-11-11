@@ -20,8 +20,6 @@ services:
     env_file:
       - "./database.env"
     restart: "always"
-    ports:
-      - "3306:3306"
 
   msmtpd:
     image: crazymax/msmtpd
