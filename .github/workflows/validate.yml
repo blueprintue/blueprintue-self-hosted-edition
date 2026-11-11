@@ -27,6 +27,7 @@ jobs:
       mysql:
         image: mariadb:10.4
         env:
+          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: no
           MYSQL_USER: blueprintue-self-hosted-edition
           MYSQL_PASSWORD: blueprintue-self-hosted-edition
           MYSQL_DATABASE: blueprintue-self-hosted-edition
