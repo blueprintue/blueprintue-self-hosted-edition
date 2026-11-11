@@ -27,13 +27,11 @@ services:
       - "blueprintue-self-hosted-edition_db:/var/lib/mysql"
       - "../tests/sql/start.sql:/docker-entrypoint-initdb.d/init.sql"
     environment:
-      - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
+      - "MYSQL_ALLOW_EMPTY_PASSWORD=false"
       - "MYSQL_DATABASE=blueprintue-self-hosted-edition"
       - "MYSQL_USER=blueprintue-self-hosted-edition"
       - "MYSQL_PASSWORD=blueprintue-self-hosted-edition"
     restart: "always"
-    ports:
-      - "3306:3306"
 
   blueprintue-self-hosted-edition:
     build: ../

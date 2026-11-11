@@ -26,8 +26,6 @@ services:
     env_file:
       - "./database.env"
     restart: "always"
-    ports:
-      - "3306:3306"
 
   maildev:
     container_name: maildev
