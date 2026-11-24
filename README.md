@@ -22,8 +22,6 @@
 | [Docker Hub](https://hub.docker.com/r/blueprintue/blueprintue-self-hosted-edition/)                                          | `blueprintue/blueprintue-self-hosted-edition`         |
 | [GitHub Container Registry](https://github.com/users/blueprintue/packages/container/package/blueprintue-self-hosted-edition) | `ghcr.io/blueprintue/blueprintue-self-hosted-edition` |
 
-Read [docker-examples](https://github.com/blueprintue/blueprintue-self-hosted-edition/blob/main/docker-examples) about documentation and docker-compose file example.
-
 ### FTP / localhost
 Download zip file from last [release](https://github.com/blueprintue/blueprintue-self-hosted-edition/releases) or run a `composer install` to have `vendor` folder.  
 1. copy folders `app`, `storage`, `vendor` and paste **outside** of the public folder of your server
